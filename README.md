@@ -21,3 +21,31 @@ Use `LLOYDS_DIGEST__` with double underscores for nesting:
 export LLOYDS_DIGEST__CACHE__ENABLED=true
 export LLOYDS_DIGEST__OUTPUT__DIRECTORY=output
 ```
+
+## Phase 02 — Storage Layer
+### Dependencies
+```bash
+conda activate 314
+python -m pip install psycopg pymongo
+```
+
+### Postgres migrations
+```bash
+conda activate 314
+source .env
+scripts/db_init_postgres.sh
+```
+
+### Mongo indexes (Atlas or local)
+```bash
+conda activate 314
+source .env
+mongosh "$MONGODB_URI" scripts/db_init_mongo.js
+```
+
+### Smoke test connections
+```bash
+conda activate 314
+source .env
+python scripts/smoke_test_connections.py
+```
