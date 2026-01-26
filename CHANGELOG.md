@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+- _No changes yet._
+
+## v1.0.0 — 2026-01-26
 - Phase 11: ops packaging, scheduling templates, and release hygiene.
 
 ## v0.10.0
