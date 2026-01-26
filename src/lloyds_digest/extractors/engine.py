@@ -6,6 +6,7 @@ from typing import Protocol
 
 from lloyds_digest.models import ArticleRecord, Candidate, ExtractionResult
 from lloyds_digest.scoring.heuristics import evaluate_text
+from lloyds_digest.scoring.method_prefs import MethodPrefs
 from lloyds_digest.storage.mongo_repo import MongoRepo
 from lloyds_digest.storage.postgres_repo import PostgresRepo
 
@@ -28,11 +29,18 @@ class ExtractionEngine:
         postgres: PostgresRepo | None = None,
         mongo: MongoRepo | None = None,
     ) -> ArticleRecord | None:
-        for extractor in self.extractors:
+        domain = _extract_domain(candidate.source_id)
+        extractors = (
+            _order_extractors(self.extractors, postgres, domain)
+            if postgres is not None and domain
+            else self.extractors
+        )
+        for extractor in extractors:
             started_at = _utc_now()
             result = extractor.extract(html)
             decision, score = evaluate_text(result.text or "")
             ended_at = _utc_now()
+            duration_ms = int((ended_at - started_at).total_seconds() * 1000)
 
             attempt_payload = {
                 "candidate_id": candidate.candidate_id,
@@ -50,6 +58,8 @@ class ExtractionEngine:
                         "title": result.title,
                         "text": result.text,
                         "html": result.html,
+                        "metadata": result.metadata,
+                        "duration_ms": duration_ms,
                     }
                 )
             if postgres is not None:
@@ -61,8 +71,15 @@ class ExtractionEngine:
                     started_at=started_at,
                     ended_at=ended_at,
                     error=result.error,
-                    metadata={"score": score},
+                    metadata={"score": score, "duration_ms": duration_ms},
                 )
+                if domain:
+                    postgres.record_method_attempt(
+                        domain=domain,
+                        method=extractor.name,
+                        success=decision == "ACCEPT",
+                        duration_ms=duration_ms,
+                    )
 
             if decision != "ACCEPT":
                 continue
@@ -92,10 +109,42 @@ class ExtractionEngine:
                         "score": score,
                     },
                 )
+            if postgres is not None and domain:
+                postgres.update_domain_prefs(domain)
             return article
 
+        if postgres is not None and domain:
+            postgres.update_domain_prefs(domain)
         return None
 
 
 def _utc_now() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def _extract_domain(source_id: str) -> str | None:
+    if ":" not in source_id:
+        return None
+    return source_id.split(":", 1)[1]
+
+
+def _order_extractors(
+    extractors: list[Extractor],
+    postgres: PostgresRepo,
+    domain: str,
+) -> list[Extractor]:
+    prefs = postgres.get_domain_prefs(domain)
+    if prefs is None:
+        return extractors
+
+    by_name = {extractor.name: extractor for extractor in extractors}
+    ordered: list[Extractor] = []
+    if prefs.primary_method in by_name:
+        ordered.append(by_name[prefs.primary_method])
+    for name in prefs.fallback_methods:
+        if name in by_name and by_name[name] not in ordered:
+            ordered.append(by_name[name])
+    for extractor in extractors:
+        if extractor not in ordered:
+            ordered.append(extractor)
+    return ordered
