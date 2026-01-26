@@ -91,3 +91,6 @@ python -m pip install crawl4ai
 conda activate 314
 python -m pip install ollama
 ```
+
+## Phase 09 — Digest Renderer + Email
+SMTP uses the standard library `smtplib`; no extra dependencies required.
