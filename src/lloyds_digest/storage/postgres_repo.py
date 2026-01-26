@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any, Mapping
 
 from lloyds_digest.models import ArticleRecord, Candidate, RunMetrics, Source
@@ -369,6 +369,26 @@ class PostgresRepo:
                         tokens_completion,
                         dict(metadata or {}),
                     ),
+                )
+                conn.commit()
+
+    def insert_digest(
+        self,
+        run_date: date,
+        output_path: str,
+        item_count: int,
+        status: str,
+        metadata: Mapping[str, Any] | None = None,
+    ) -> None:
+        sql = """
+            INSERT INTO digests (run_date, output_path, item_count, status, metadata)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (run_date, output_path, item_count, status, dict(metadata or {})),
                 )
                 conn.commit()
 
