@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Iterable
 
 from lloyds_digest.models import Source
+from lloyds_digest.storage.postgres_repo import PostgresRepo
 from lloyds_digest.utils import unique_ordered
 
 SOURCE_TYPES = {"primary", "secondary", "additional"}
@@ -91,3 +92,11 @@ def load_sources_csv(path: Path | str) -> list[CsvSourceRow]:
 def iter_sources(rows: Iterable[CsvSourceRow]) -> Iterable[Source]:
     for row in rows:
         yield row.to_source()
+
+
+def upsert_sources(postgres: PostgresRepo, rows: Iterable[CsvSourceRow]) -> int:
+    count = 0
+    for source in iter_sources(rows):
+        postgres.upsert_source(source)
+        count += 1
+    return count

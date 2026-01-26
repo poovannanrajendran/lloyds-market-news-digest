@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from lloyds_digest.discovery.csv_loader import load_sources_csv
+from lloyds_digest.discovery.csv_loader import load_sources_csv, upsert_sources
 
 
 def test_load_sources_csv_valid(tmp_path: Path) -> None:
@@ -42,3 +42,30 @@ def test_load_sources_csv_invalid_enum(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="invalid source_type"):
         load_sources_csv(csv_path)
+
+
+def test_upsert_sources_calls_repo() -> None:
+    class StubRepo:
+        def __init__(self) -> None:
+            self.items: list[str] = []
+
+        def upsert_source(self, source) -> None:
+            self.items.append(source.source_id)
+
+    # Use real CsvSourceRow for clarity.
+    from lloyds_digest.discovery.csv_loader import CsvSourceRow
+
+    rows = [
+        CsvSourceRow(
+            source_type="primary",
+            domain="example.com",
+            url="https://example.com/feed",
+            topics=["Catastrophe"],
+            page_type="rss",
+        )
+    ]
+    repo = StubRepo()
+    count = upsert_sources(repo, rows)
+
+    assert count == 1
+    assert repo.items == ["primary:example.com"]

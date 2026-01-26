@@ -24,8 +24,10 @@ class RSSDiscoverer:
         sources: Iterable[CsvSourceRow],
         postgres: PostgresRepo | None = None,
         mongo: MongoRepo | None = None,
+        run_id: str | None = None,
     ) -> list[Candidate]:
         candidates: list[Candidate] = []
+        seen: set[str] = set()
         for source in sources:
             if source.page_type != "rss":
                 continue
@@ -40,13 +42,17 @@ class RSSDiscoverer:
                         "fetched_at": _utc_now(),
                         "entry_count": len(parsed.entries),
                         "feed": _safe_feed_summary(parsed),
+                        "run_id": run_id,
                     }
                 )
 
-            parsed_candidates = parse_feed_entries(parsed, source, snapshot_id)
-            candidates.extend(parsed_candidates)
-            if postgres is not None:
-                for candidate in parsed_candidates:
+            parsed_candidates = parse_feed_entries(parsed, source, snapshot_id, run_id)
+            for candidate in parsed_candidates:
+                if candidate.candidate_id in seen:
+                    continue
+                seen.add(candidate.candidate_id)
+                candidates.append(candidate)
+                if postgres is not None:
                     postgres.insert_candidate(candidate)
         return candidates
 
@@ -58,11 +64,11 @@ class RSSDiscoverer:
 
 
 def parse_feed_entries(
-    parsed: Any, source: CsvSourceRow, snapshot_id: str | None
+    parsed: Any, source: CsvSourceRow, snapshot_id: str | None, run_id: str | None = None
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for entry in getattr(parsed, "entries", []):
-        candidate = _candidate_from_entry(source, entry, snapshot_id)
+        candidate = _candidate_from_entry(source, entry, snapshot_id, run_id)
         if candidate is not None:
             candidates.append(candidate)
     return candidates
@@ -78,7 +84,7 @@ def _safe_feed_summary(parsed: Any) -> dict[str, Any]:
 
 
 def _candidate_from_entry(
-    source: CsvSourceRow, entry: Any, snapshot_id: str | None
+    source: CsvSourceRow, entry: Any, snapshot_id: str | None, run_id: str | None
 ) -> Candidate | None:
     link = getattr(entry, "link", None)
     if not link:
@@ -96,6 +102,7 @@ def _candidate_from_entry(
         "source_type": source.source_type,
         "page_type": source.page_type,
         "snapshot_id": snapshot_id,
+        "run_id": run_id,
         "canonical_url": canonical,
     }
 
