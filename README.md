@@ -70,3 +70,10 @@ secondary,bloomberg.com,https://example.com/listing,Market Analysis,listing
 conda activate 314
 python -m pip install tenacity
 ```
+
+## Phase 06 — Extraction Engine
+### Dependencies (optional)
+```bash
+conda activate 314
+python -m pip install trafilatura readability-lxml beautifulsoup4
+```
