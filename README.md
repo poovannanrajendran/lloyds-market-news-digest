@@ -49,3 +49,17 @@ conda activate 314
 source .env
 python scripts/smoke_test_connections.py
 ```
+
+## Phase 03 — CSV + RSS Discovery
+### Dependencies
+```bash
+conda activate 314
+python -m pip install feedparser httpx
+```
+
+### sources.csv format
+```
+source_type,domain,url,topics,page_type
+primary,insurancejournal.com,https://example.com/feed,Lloyd's;Marine,rss
+secondary,bloomberg.com,https://example.com/listing,Market Analysis,listing
+```
