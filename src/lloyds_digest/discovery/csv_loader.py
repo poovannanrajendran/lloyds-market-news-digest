@@ -9,7 +9,7 @@ from lloyds_digest.models import Source
 from lloyds_digest.storage.postgres_repo import PostgresRepo
 from lloyds_digest.utils import unique_ordered
 
-SOURCE_TYPES = {"primary", "secondary", "additional"}
+SOURCE_TYPES = {"primary", "secondary", "additional", "regulatory"}
 PAGE_TYPES = {"rss", "listing"}
 
 

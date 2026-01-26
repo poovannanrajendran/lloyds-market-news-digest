@@ -80,6 +80,7 @@ class PostgresRepo:
             "errors": run.errors,
             "notes": run.notes,
         }
+        metrics_json = json.dumps(metrics_payload)
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -89,7 +90,7 @@ class PostgresRepo:
                         run.run_date,
                         run.started_at,
                         run.ended_at,
-                        metrics_payload,
+                        metrics_json,
                     ),
                 )
                 conn.commit()
@@ -105,6 +106,7 @@ class PostgresRepo:
                 published_at = EXCLUDED.published_at,
                 metadata = EXCLUDED.metadata
         """
+        metadata_json = json.dumps(candidate.metadata)
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -116,7 +118,7 @@ class PostgresRepo:
                         candidate.title,
                         candidate.published_at,
                         candidate.discovered_at,
-                        candidate.metadata,
+                        metadata_json,
                     ),
                 )
                 conn.commit()
@@ -138,6 +140,7 @@ class PostgresRepo:
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
+        metadata_json = json.dumps(dict(metadata or {}))
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -150,7 +153,7 @@ class PostgresRepo:
                         started_at,
                         ended_at,
                         error,
-                        dict(metadata or {}),
+                        metadata_json,
                     ),
                 )
                 conn.commit()
@@ -169,6 +172,7 @@ class PostgresRepo:
                 extraction_method = EXCLUDED.extraction_method,
                 metadata = EXCLUDED.metadata
         """
+        metadata_json = json.dumps(article.metadata)
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -182,7 +186,7 @@ class PostgresRepo:
                         article.body_text,
                         article.created_at,
                         article.extraction_method,
-                        article.metadata,
+                        metadata_json,
                     ),
                 )
                 conn.commit()
@@ -351,6 +355,7 @@ class PostgresRepo:
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
+        metadata_json = json.dumps(dict(metadata or {}))
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -367,7 +372,7 @@ class PostgresRepo:
                         latency_ms,
                         tokens_prompt,
                         tokens_completion,
-                        dict(metadata or {}),
+                        metadata_json,
                     ),
                 )
                 conn.commit()
@@ -384,11 +389,12 @@ class PostgresRepo:
             INSERT INTO digests (run_date, output_path, item_count, status, metadata)
             VALUES (%s, %s, %s, %s, %s)
         """
+        metadata_json = json.dumps(dict(metadata or {}))
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     sql,
-                    (run_date, output_path, item_count, status, dict(metadata or {})),
+                    (run_date, output_path, item_count, status, metadata_json),
                 )
                 conn.commit()
 

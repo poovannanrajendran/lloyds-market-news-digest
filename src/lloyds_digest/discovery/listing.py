@@ -121,7 +121,11 @@ class ListingDiscoverer:
         return candidates
 
     def _fetch_listing(self, url: str) -> str:
-        with httpx.Client(timeout=self.timeout, headers={"User-Agent": "lloyds-digest/0.1"}) as client:
+        with httpx.Client(
+            timeout=self.timeout,
+            headers={"User-Agent": "lloyds-digest/0.1"},
+            follow_redirects=True,
+        ) as client:
             response = client.get(url)
             response.raise_for_status()
             return response.text
