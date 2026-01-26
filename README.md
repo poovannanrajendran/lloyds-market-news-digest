@@ -97,3 +97,17 @@ SMTP uses the standard library `smtplib`; no extra dependencies required.
 
 ## Phase 10 — Observability + Drift Reporting
 Outputs JSONL logs and includes Method Health section when failures exist.
+
+## Phase 11 — Ops Packaging + Scheduling
+### Quickstart
+```bash
+conda activate 314
+scripts/run_daily.sh
+```
+
+### Daily Ops (launchd)
+```bash
+cp scripts/lloyds_digest.plist ~/Library/LaunchAgents/com.lloyds.digest.daily.plist
+launchctl load ~/Library/LaunchAgents/com.lloyds.digest.daily.plist
+launchctl start com.lloyds.digest.daily
+```
