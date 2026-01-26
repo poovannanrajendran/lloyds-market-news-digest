@@ -94,3 +94,6 @@ python -m pip install ollama
 
 ## Phase 09 — Digest Renderer + Email
 SMTP uses the standard library `smtplib`; no extra dependencies required.
+
+## Phase 10 — Observability + Drift Reporting
+Outputs JSONL logs and includes Method Health section when failures exist.

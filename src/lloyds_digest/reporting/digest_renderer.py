@@ -31,11 +31,12 @@ def render_digest(
     output_dir: Path,
     config: DigestConfig | None = None,
     postgres: PostgresRepo | None = None,
+    method_health: list[tuple[str, str, float, int, bool]] | None = None,
 ) -> Path:
     config = config or DigestConfig()
     output_dir.mkdir(parents=True, exist_ok=True)
     selected = _select_items(list(items), config)
-    html = _render_html(selected, run_date)
+    html = _render_html(selected, run_date, method_health)
     output_path = output_dir / f"digest_{run_date.isoformat()}.html"
     output_path.write_text(html, encoding="utf-8")
 
@@ -61,7 +62,11 @@ def _select_items(items: list[DigestItem], config: DigestConfig) -> list[DigestI
     return filtered[: config.max_items]
 
 
-def _render_html(items: list[DigestItem], run_date: date) -> str:
+def _render_html(
+    items: list[DigestItem],
+    run_date: date,
+    method_health: list[tuple[str, str, float, int, bool]] | None,
+) -> str:
     grouped: dict[str, dict[str, list[DigestItem]]] = {}
     for item in items:
         grouped.setdefault(item.source_type or "unknown", {}).setdefault(
@@ -77,6 +82,7 @@ def _render_html(items: list[DigestItem], run_date: date) -> str:
                 sections.append(_render_card(entry))
 
     body = "\n".join(sections) if sections else "<p>No items available.</p>"
+    health = _render_method_health(method_health)
     return f"""<!DOCTYPE html>
 <html lang=\"en\">
 <head>
@@ -95,6 +101,7 @@ def _render_html(items: list[DigestItem], run_date: date) -> str:
 <body>
   <h1>Lloyd's Market News Digest</h1>
   <p class=\"meta\">Run date: {run_date.isoformat()}</p>
+  {health}
   {body}
 </body>
 </html>"""
@@ -113,4 +120,25 @@ def _render_card(item: DigestItem) -> str:
         f"{why}"
         f"{bullets}"
         "</div>"
+    )
+
+
+def _render_method_health(
+    items: list[tuple[str, str, float, int, bool]] | None,
+) -> str:
+    if not items:
+        return ""
+    rows = []
+    for domain, method, rate, attempts, drift in items:
+        flag = "⚠️" if drift else ""
+        rows.append(
+            f"<tr><td>{domain}</td><td>{method}</td><td>{rate:.2f}</td>"
+            f"<td>{attempts}</td><td>{flag}</td></tr>"
+        )
+    return (
+        "<h2>Method Health</h2>"
+        "<table class=\"card\">"
+        "<tr><th>Domain</th><th>Method</th><th>Success Rate</th><th>Attempts</th><th>Drift</th></tr>"
+        + "".join(rows)
+        + "</table>"
     )
