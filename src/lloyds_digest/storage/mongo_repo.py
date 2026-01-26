@@ -64,6 +64,14 @@ class MongoRepo:
         data["updated_at"] = _utc_now()
         collection.update_one({"key": key}, {"$set": data, "$setOnInsert": {"key": key}}, upsert=True)
 
+    def get_fetch_cache(self, key: str) -> dict[str, Any] | None:
+        collection = self._collection("fetch_cache")
+        doc = collection.find_one({"key": key})
+        if not doc:
+            return None
+        doc.pop("_id", None)
+        return doc
+
     def insert_attempt_raw(self, payload: Mapping[str, Any]) -> str:
         collection = self._collection("attempts_raw")
         data = dict(payload)

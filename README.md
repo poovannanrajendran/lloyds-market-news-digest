@@ -63,3 +63,10 @@ source_type,domain,url,topics,page_type
 primary,insurancejournal.com,https://example.com/feed,Lloyd's;Marine,rss
 secondary,bloomberg.com,https://example.com/listing,Market Analysis,listing
 ```
+
+## Phase 05 — Fetchers + Cache
+### Dependencies
+```bash
+conda activate 314
+python -m pip install tenacity
+```
