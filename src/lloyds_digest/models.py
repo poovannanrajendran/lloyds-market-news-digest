@@ -52,6 +52,7 @@ class ExtractionResult:
     html: str | None = None
     success: bool = True
     error: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

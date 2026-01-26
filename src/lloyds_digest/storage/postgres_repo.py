@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import json
 import os
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Mapping
 
 from lloyds_digest.models import ArticleRecord, Candidate, RunMetrics, Source
+from lloyds_digest.scoring.method_prefs import MethodPrefs, MethodStats, select_method_prefs
 
 
 class PostgresConfigError(RuntimeError):
@@ -185,6 +187,148 @@ class PostgresRepo:
                 )
                 conn.commit()
 
+    def record_method_attempt(
+        self,
+        domain: str,
+        method: str,
+        success: bool,
+        duration_ms: int | None,
+    ) -> None:
+        sql = """
+            INSERT INTO domain_method_stats (
+                domain, method, attempts, successes, last_attempt_at, last_success_at,
+                duration_history, median_duration_ms, updated_at
+            )
+            VALUES (%s, %s, 1, %s, NOW(), %s, %s, %s, NOW())
+            ON CONFLICT (domain, method) DO UPDATE SET
+                attempts = domain_method_stats.attempts + 1,
+                successes = domain_method_stats.successes + EXCLUDED.successes,
+                last_attempt_at = NOW(),
+                last_success_at = COALESCE(EXCLUDED.last_success_at, domain_method_stats.last_success_at),
+                duration_history = EXCLUDED.duration_history,
+                median_duration_ms = EXCLUDED.median_duration_ms,
+                updated_at = NOW()
+        """
+        history = [duration_ms] if duration_ms is not None else []
+        median_value = duration_ms if duration_ms is not None else None
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT duration_history FROM domain_method_stats WHERE domain = %s AND method = %s",
+                    (domain, method),
+                )
+                row = cur.fetchone()
+                if row and row[0]:
+                    history = list(row[0])
+                    if duration_ms is not None:
+                        history.append(duration_ms)
+                if history:
+                    history = history[-25:]
+                    median_value = _median(history)
+                cur.execute(
+                    sql,
+                    (
+                        domain,
+                        method,
+                        1 if success else 0,
+                        _utc_now() if success else None,
+                        json.dumps(history),
+                        median_value,
+                    ),
+                )
+                conn.commit()
+
+    def get_method_stats(self, domain: str) -> list[MethodStats]:
+        sql = """
+            SELECT method, attempts, successes, median_duration_ms, last_success_at, last_attempt_at
+            FROM domain_method_stats
+            WHERE domain = %s
+        """
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (domain,))
+                rows = cur.fetchall()
+        return [
+            MethodStats(
+                method=row[0],
+                attempts=row[1],
+                successes=row[2],
+                median_duration_ms=row[3],
+                last_success_at=row[4],
+                last_attempt_at=row[5],
+            )
+            for row in rows
+        ]
+
+    def get_domain_prefs(self, domain: str) -> MethodPrefs | None:
+        sql = """
+            SELECT primary_method, fallback_methods, confidence, last_changed_at,
+                   locked_until, drift_flag, drift_notes
+            FROM domain_method_prefs
+            WHERE domain = %s
+        """
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (domain,))
+                row = cur.fetchone()
+        if not row:
+            return None
+        return MethodPrefs(
+            domain=domain,
+            primary_method=row[0],
+            fallback_methods=list(row[1] or []),
+            confidence=float(row[2] or 0.0),
+            last_changed_at=row[3],
+            locked_until=row[4],
+            drift_flag=bool(row[5]),
+            drift_notes=row[6],
+        )
+
+    def upsert_domain_prefs(self, prefs: MethodPrefs) -> None:
+        sql = """
+            INSERT INTO domain_method_prefs (
+                domain, primary_method, fallback_methods, confidence,
+                last_changed_at, locked_until, drift_flag, drift_notes, updated_at
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW())
+            ON CONFLICT (domain) DO UPDATE SET
+                primary_method = EXCLUDED.primary_method,
+                fallback_methods = EXCLUDED.fallback_methods,
+                confidence = EXCLUDED.confidence,
+                last_changed_at = EXCLUDED.last_changed_at,
+                locked_until = EXCLUDED.locked_until,
+                drift_flag = EXCLUDED.drift_flag,
+                drift_notes = EXCLUDED.drift_notes,
+                updated_at = NOW()
+        """
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (
+                        prefs.domain,
+                        prefs.primary_method,
+                        prefs.fallback_methods,
+                        prefs.confidence,
+                        prefs.last_changed_at,
+                        prefs.locked_until,
+                        prefs.drift_flag,
+                        prefs.drift_notes,
+                    ),
+                )
+                conn.commit()
+
+    def update_domain_prefs(self, domain: str) -> MethodPrefs | None:
+        stats = self.get_method_stats(domain)
+        if not stats:
+            return None
+        current = self.get_domain_prefs(domain)
+        prefs = select_method_prefs(domain, stats, current, _utc_now())
+        if prefs is None:
+            return None
+        self.upsert_domain_prefs(prefs)
+        return prefs
+
 
 def build_postgres_dsn(env: Mapping[str, str]) -> str:
     host = env.get("POSTGRES_HOST")
@@ -212,3 +356,15 @@ def build_postgres_dsn(env: Mapping[str, str]) -> str:
     return (
         f"host={host} port={port} dbname={database} user={user} password={password}"
     )
+
+
+def _median(values: list[int]) -> int:
+    sorted_values = sorted(values)
+    mid = len(sorted_values) // 2
+    if len(sorted_values) % 2 == 1:
+        return sorted_values[mid]
+    return int((sorted_values[mid - 1] + sorted_values[mid]) / 2)
+
+
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)

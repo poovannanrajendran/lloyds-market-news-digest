@@ -77,3 +77,10 @@ python -m pip install tenacity
 conda activate 314
 python -m pip install trafilatura readability-lxml beautifulsoup4
 ```
+
+## Phase 07 — crawl4ai + Method Preferences
+### Dependencies (optional)
+```bash
+conda activate 314
+python -m pip install crawl4ai
+```
