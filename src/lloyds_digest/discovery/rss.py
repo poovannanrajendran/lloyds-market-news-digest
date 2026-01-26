@@ -1,15 +1,13 @@
 from __future__ import annotations
 
-import hashlib
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Any, Iterable
-from urllib.parse import urlsplit, urlunsplit
-
 import feedparser
 import httpx
 
 from lloyds_digest.discovery.csv_loader import CsvSourceRow
+from lloyds_digest.discovery.url_utils import candidate_id_from_url, canonicalise_url
 from lloyds_digest.models import Candidate
 from lloyds_digest.storage.mongo_repo import MongoRepo
 from lloyds_digest.storage.postgres_repo import PostgresRepo
@@ -25,9 +23,10 @@ class RSSDiscoverer:
         postgres: PostgresRepo | None = None,
         mongo: MongoRepo | None = None,
         run_id: str | None = None,
+        seen: set[str] | None = None,
     ) -> list[Candidate]:
         candidates: list[Candidate] = []
-        seen: set[str] = set()
+        dedup = seen if seen is not None else set()
         for source in sources:
             if source.page_type != "rss":
                 continue
@@ -48,9 +47,9 @@ class RSSDiscoverer:
 
             parsed_candidates = parse_feed_entries(parsed, source, snapshot_id, run_id)
             for candidate in parsed_candidates:
-                if candidate.candidate_id in seen:
+                if candidate.candidate_id in dedup:
                     continue
-                seen.add(candidate.candidate_id)
+                dedup.add(candidate.candidate_id)
                 candidates.append(candidate)
                 if postgres is not None:
                     postgres.insert_candidate(candidate)
@@ -90,8 +89,8 @@ def _candidate_from_entry(
     if not link:
         return None
 
-    canonical = canonical_url(link)
-    candidate_id = _candidate_id(canonical)
+    canonical = canonicalise_url(link)
+    candidate_id = candidate_id_from_url(canonical)
     title = getattr(entry, "title", None)
     published_at = _entry_datetime(entry)
     metadata = {
@@ -117,13 +116,7 @@ def _candidate_from_entry(
 
 
 def canonical_url(url: str) -> str:
-    parts = urlsplit(url)
-    normalized = parts._replace(fragment="")
-    return urlunsplit(normalized)
-
-
-def _candidate_id(url: str) -> str:
-    return hashlib.sha256(url.encode("utf-8")).hexdigest()
+    return canonicalise_url(url)
 
 
 def _entry_datetime(entry: Any) -> datetime | None:
