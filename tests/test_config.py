@@ -10,13 +10,15 @@ from lloyds_digest.config import load_config
 def test_load_config_with_env_override(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     config_path = tmp_path / "config.yaml"
     config_path.write_text(
-        """
-        topics_csv: "base"
-        cache:
-          enabled: false
-        output:
-          enabled: true
-        """.strip(),
+        "\n".join(
+            [
+                'topics_csv: "base"',
+                "cache:",
+                "  enabled: false",
+                "output:",
+                "  enabled: true",
+            ]
+        ),
         encoding="utf-8",
     )
 
@@ -32,11 +34,13 @@ def test_load_config_with_env_override(tmp_path: Path, monkeypatch: pytest.Monke
 def test_load_config_invalid_bool(tmp_path: Path) -> None:
     config_path = tmp_path / "config.yaml"
     config_path.write_text(
-        """
-        topics_csv: "base"
-        cache:
-          enabled: maybe
-        """.strip(),
+        "\n".join(
+            [
+                'topics_csv: "base"',
+                "cache:",
+                "  enabled: maybe",
+            ]
+        ),
         encoding="utf-8",
     )
 
