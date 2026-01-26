@@ -84,3 +84,10 @@ python -m pip install trafilatura readability-lxml beautifulsoup4
 conda activate 314
 python -m pip install crawl4ai
 ```
+
+## Phase 08 — AI Processing + Caching
+### Dependencies (optional)
+```bash
+conda activate 314
+python -m pip install ollama
+```

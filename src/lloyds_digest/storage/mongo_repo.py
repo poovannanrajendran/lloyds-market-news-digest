@@ -90,3 +90,11 @@ class MongoRepo:
         data = dict(payload)
         data["updated_at"] = _utc_now()
         collection.update_one({"key": key}, {"$set": data, "$setOnInsert": {"key": key}}, upsert=True)
+
+    def get_ai_cache(self, key: str) -> dict[str, Any] | None:
+        collection = self._collection("ai_cache")
+        doc = collection.find_one({"key": key})
+        if not doc:
+            return None
+        doc.pop("_id", None)
+        return doc

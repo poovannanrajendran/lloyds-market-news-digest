@@ -329,6 +329,49 @@ class PostgresRepo:
         self.upsert_domain_prefs(prefs)
         return prefs
 
+    def insert_llm_usage(
+        self,
+        run_id: str | None,
+        candidate_id: str | None,
+        stage: str,
+        model: str,
+        prompt_version: str,
+        cached: bool,
+        started_at: datetime,
+        ended_at: datetime | None,
+        latency_ms: int | None,
+        tokens_prompt: int | None = None,
+        tokens_completion: int | None = None,
+        metadata: Mapping[str, Any] | None = None,
+    ) -> None:
+        sql = """
+            INSERT INTO llm_usage (
+                run_id, candidate_id, stage, model, prompt_version, cached,
+                started_at, ended_at, latency_ms, tokens_prompt, tokens_completion, metadata
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (
+                        run_id,
+                        candidate_id,
+                        stage,
+                        model,
+                        prompt_version,
+                        cached,
+                        started_at,
+                        ended_at,
+                        latency_ms,
+                        tokens_prompt,
+                        tokens_completion,
+                        dict(metadata or {}),
+                    ),
+                )
+                conn.commit()
+
 
 def build_postgres_dsn(env: Mapping[str, str]) -> str:
     host = env.get("POSTGRES_HOST")
