@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 import feedparser
 import httpx
 
@@ -24,14 +24,19 @@ class RSSDiscoverer:
         mongo: MongoRepo | None = None,
         run_id: str | None = None,
         seen: set[str] | None = None,
+        log: Callable[[str], None] | None = None,
     ) -> list[Candidate]:
         candidates: list[Candidate] = []
         dedup = seen if seen is not None else set()
         for source in sources:
             if source.page_type != "rss":
                 continue
+            if log:
+                log(f"[rss] Fetching feed {source.url}")
             feed_content = self._fetch_feed(source.url)
             parsed = feedparser.parse(feed_content)
+            if log:
+                log(f"[rss] Parsed {len(parsed.entries)} entries from {source.domain}")
             snapshot_id = None
             if mongo is not None:
                 snapshot_id = mongo.insert_discovery_snapshot(
@@ -51,6 +56,8 @@ class RSSDiscoverer:
                     continue
                 dedup.add(candidate.candidate_id)
                 candidates.append(candidate)
+                if log:
+                    log(f"[rss] Candidate {candidate.url}")
                 if postgres is not None:
                     postgres.insert_candidate(candidate)
         return candidates

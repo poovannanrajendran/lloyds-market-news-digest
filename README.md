@@ -13,6 +13,40 @@ conda activate 314
 python -m lloyds_digest --help
 python -m lloyds_digest run --now
 python -m lloyds_digest run --run-date 2026-01-26
+python -m lloyds_digest run --now --max-candidates 20
+python -m lloyds_digest run --now --limit-articles 20
+python -m lloyds_digest run --now --force-refresh --max-candidates 50
+python -m lloyds_digest run --now --max-urls 10
+python -m lloyds_digest run --now --max-urls 10 --max-candidates 50
+
+### Boilerplate filtering (optional)
+Generate per-domain/path boilerplate rules (15 URLs per template):
+```bash
+python scripts/analyze_boilerplate.py --samples 15 --output boilerplate.yaml
+```
+Ignore certain path prefixes:
+```bash
+python scripts/analyze_boilerplate.py --samples 15 --ignore-path-prefix /newsroom --ignore-path-prefix /careers
+```
+
+### Relevance keyword gating (optional)
+Provide a YAML keyword list and set a minimum score:
+```bash
+export LLOYDS_DIGEST_KEYWORDS_FILE=relevant_keywords.yaml
+export LLOYDS_DIGEST_KEYWORDS_MIN_SCORE=2.5
+```
+
+### Recency filter
+Configure the max age in `config.yaml`:
+```yaml
+filters:
+  max_age_days: 7
+```
+
+### Verbose logging
+```bash
+python -m lloyds_digest run --now --verbose
+```
 ```
 
 ### Config overrides via env

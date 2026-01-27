@@ -38,7 +38,8 @@ class ExtractionEngine:
         for extractor in extractors:
             started_at = _utc_now()
             result = extractor.extract(html)
-            decision, score = evaluate_text(result.text or "")
+            cleaned_text = (result.text or "").replace("\x00", "")
+            decision, score = evaluate_text(cleaned_text)
             ended_at = _utc_now()
             duration_ms = int((ended_at - started_at).total_seconds() * 1000)
 
@@ -90,7 +91,7 @@ class ExtractionEngine:
                 url=candidate.url,
                 title=result.title or candidate.title,
                 published_at=candidate.published_at,
-                body_text=result.text,
+                body_text=cleaned_text,
                 extraction_method=extractor.name,
                 metadata={"score": score},
             )

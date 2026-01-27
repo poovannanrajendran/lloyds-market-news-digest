@@ -44,10 +44,19 @@ class OutputConfig:
 
 
 @dataclass
+class FilterConfig:
+    max_age_days: int = 7
+
+    def __post_init__(self) -> None:
+        self.max_age_days = int(self.max_age_days)
+
+
+@dataclass
 class AppConfig:
     topics_csv: str = ""
     cache: CacheConfig = field(default_factory=CacheConfig)
     output: OutputConfig = field(default_factory=OutputConfig)
+    filters: FilterConfig = field(default_factory=FilterConfig)
 
     def validate(self) -> None:
         if not isinstance(self.topics_csv, str):
@@ -57,8 +66,9 @@ class AppConfig:
     def from_dict(cls, data: Mapping[str, Any]) -> "AppConfig":
         cache = CacheConfig(**(data.get("cache", {}) or {}))
         output = OutputConfig(**(data.get("output", {}) or {}))
+        filters = FilterConfig(**(data.get("filters", {}) or {}))
         topics_csv = data.get("topics_csv", "")
-        config = cls(topics_csv=topics_csv, cache=cache, output=output)
+        config = cls(topics_csv=topics_csv, cache=cache, output=output, filters=filters)
         config.validate()
         return config
 

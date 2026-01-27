@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from html.parser import HTMLParser
-from typing import Iterable
+from typing import Callable, Iterable
 from urllib.parse import urljoin, urlsplit
 
 import httpx
@@ -65,6 +65,7 @@ class ListingDiscoverer:
         run_id: str | None = None,
         seen: set[str] | None = None,
         allow_external: bool = False,
+        log: Callable[[str], None] | None = None,
     ) -> list[Candidate]:
         candidates: list[Candidate] = []
         dedup = seen if seen is not None else set()
@@ -72,8 +73,12 @@ class ListingDiscoverer:
         for source in sources:
             if source.page_type != "listing":
                 continue
+            if log:
+                log(f"[listing] Fetching listing {source.url}")
             html = self._fetch_listing(source.url)
             links = extract_links(html)
+            if log:
+                log(f"[listing] Extracted {len(links)} links from {source.domain}")
             snapshot_id = None
             if mongo is not None:
                 snapshot_id = mongo.insert_discovery_snapshot(
@@ -115,6 +120,8 @@ class ListingDiscoverer:
                     metadata=metadata,
                 )
                 candidates.append(candidate)
+                if log:
+                    log(f"[listing] Candidate {candidate.url}")
                 if postgres is not None:
                     postgres.insert_candidate(candidate)
 

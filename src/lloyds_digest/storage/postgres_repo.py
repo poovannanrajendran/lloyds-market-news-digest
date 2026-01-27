@@ -107,6 +107,8 @@ class PostgresRepo:
                 metadata = EXCLUDED.metadata
         """
         metadata_json = json.dumps(candidate.metadata)
+        url = _sanitize_text(candidate.url)
+        title = _sanitize_text(candidate.title)
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -114,8 +116,8 @@ class PostgresRepo:
                     (
                         candidate.candidate_id,
                         candidate.source_id,
-                        candidate.url,
-                        candidate.title,
+                        url,
+                        title,
                         candidate.published_at,
                         candidate.discovered_at,
                         metadata_json,
@@ -173,6 +175,9 @@ class PostgresRepo:
                 metadata = EXCLUDED.metadata
         """
         metadata_json = json.dumps(article.metadata)
+        url = _sanitize_text(article.url)
+        title = _sanitize_text(article.title)
+        body_text = _sanitize_text(article.body_text)
         with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -180,16 +185,23 @@ class PostgresRepo:
                     (
                         article.article_id,
                         article.source_id,
-                        article.url,
-                        article.title,
+                        url,
+                        title,
                         article.published_at,
-                        article.body_text,
+                        body_text,
                         article.created_at,
                         article.extraction_method,
                         metadata_json,
                     ),
                 )
                 conn.commit()
+
+    def has_article(self, article_id: str) -> bool:
+        sql = "SELECT 1 FROM articles WHERE article_id = %s"
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (article_id,))
+                return cur.fetchone() is not None
 
     def record_method_attempt(
         self,
@@ -437,3 +449,9 @@ def _median(values: list[int]) -> int:
 
 def _utc_now() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def _sanitize_text(value: str | None) -> str | None:
+    if value is None:
+        return None
+    return value.replace("\x00", "")
