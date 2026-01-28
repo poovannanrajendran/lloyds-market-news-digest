@@ -1,7 +1,11 @@
 # Changelog
 
 ## Unreleased
-- _No changes yet._
+- Render-only digest generator with chunked prompts and progressive HTML output.
+- Added DeepSeek (Ollama) provider alongside local and ChatGPT for digest rendering.
+- Executive summary re-write with stricter length controls.
+- Chunk retries for empty model output; raw response capture for debugging.
+- Boilerplate stripping rules, keyword gating, and recency filtering are configurable in `config.yaml`.
 
 ## v1.0.0 — 2026-01-26
 - Phase 11: ops packaging, scheduling templates, and release hygiene.

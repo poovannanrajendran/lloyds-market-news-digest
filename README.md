@@ -18,6 +18,7 @@ python -m lloyds_digest run --now --limit-articles 20
 python -m lloyds_digest run --now --force-refresh --max-candidates 50
 python -m lloyds_digest run --now --max-urls 10
 python -m lloyds_digest run --now --max-urls 10 --max-candidates 50
+```
 
 ### Boilerplate filtering (optional)
 Generate per-domain/path boilerplate rules (15 URLs per template):
@@ -56,14 +57,39 @@ python -m lloyds_digest run --now --verbose
 ```
 
 ### LLM digest comparison (24h, render-only)
-Generate three HTML outputs (local Ollama, ChatGPT, Claude) using the last 24 hours of already-extracted articles:
+Generate three HTML outputs (local Ollama, ChatGPT, DeepSeek via Ollama) using the last 24 hours of already-extracted articles:
 ```bash
 python scripts/render_digest_llm_compare.py
 ```
 Outputs land in `output/` as:
-`digest_YYYY-MM-DD_local.html`, `digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_claude.html`
+`digest_YYYY-MM-DD_local.html`, `digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_<deepseek-model>.html`
 
 Prompt text for each provider is configured in `config.yaml` under `llm_prompts`.
+```
+
+#### Provider options
+```bash
+python scripts/render_digest_llm_compare.py --provider local
+python scripts/render_digest_llm_compare.py --provider chatgpt
+python scripts/render_digest_llm_compare.py --provider deepseek
+```
+
+#### Chunking + retries (render-only)
+```bash
+python scripts/render_digest_llm_compare.py --chunk-by domain --chunk-size 15
+python scripts/render_digest_llm_compare.py --max-chunks 2
+```
+Env overrides:
+```bash
+export DIGEST_CHUNK_SIZE=15
+export DIGEST_CHUNK_RETRIES=2
+export EXEC_SUMMARY_MAX_CHARS=500
+```
+
+#### DeepSeek via Ollama
+Set the DeepSeek model separately if desired:
+```bash
+export OLLAMA_DEEPSEEK_MODEL=deepseek-v3.2:cloud
 ```
 
 ### Config overrides via env
