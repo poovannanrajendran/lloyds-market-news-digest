@@ -46,9 +46,17 @@ class OutputConfig:
 @dataclass
 class FilterConfig:
     max_age_days: int = 7
+    keyword_min_score: float = 3.0
+    require_core_lloyds: bool = True
+    require_core_combo: bool = True
+    exclude_paths: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         self.max_age_days = int(self.max_age_days)
+        self.keyword_min_score = float(self.keyword_min_score)
+        self.require_core_lloyds = _coerce_bool(self.require_core_lloyds)
+        self.require_core_combo = _coerce_bool(self.require_core_combo)
+        self.exclude_paths = [str(item) for item in self.exclude_paths if str(item).strip()]
 
 
 @dataclass
@@ -57,6 +65,7 @@ class AppConfig:
     cache: CacheConfig = field(default_factory=CacheConfig)
     output: OutputConfig = field(default_factory=OutputConfig)
     filters: FilterConfig = field(default_factory=FilterConfig)
+    llm_prompts: dict[str, dict[str, str]] = field(default_factory=dict)
 
     def validate(self) -> None:
         if not isinstance(self.topics_csv, str):
@@ -67,8 +76,15 @@ class AppConfig:
         cache = CacheConfig(**(data.get("cache", {}) or {}))
         output = OutputConfig(**(data.get("output", {}) or {}))
         filters = FilterConfig(**(data.get("filters", {}) or {}))
+        llm_prompts = data.get("llm_prompts", {}) or {}
         topics_csv = data.get("topics_csv", "")
-        config = cls(topics_csv=topics_csv, cache=cache, output=output, filters=filters)
+        config = cls(
+            topics_csv=topics_csv,
+            cache=cache,
+            output=output,
+            filters=filters,
+            llm_prompts=llm_prompts,
+        )
         config.validate()
         return config
 

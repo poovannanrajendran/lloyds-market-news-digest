@@ -104,6 +104,7 @@ class MongoRepo:
     def upsert_ai_cache(self, key: str, payload: Mapping[str, Any]) -> None:
         collection = self._collection("ai_cache")
         data = dict(payload)
+        data.pop("key", None)
         data["updated_at"] = _utc_now()
         collection.update_one({"key": key}, {"$set": data, "$setOnInsert": {"key": key}}, upsert=True)
 

@@ -41,12 +41,29 @@ Configure the max age in `config.yaml`:
 ```yaml
 filters:
   max_age_days: 7
+  keyword_min_score: 3.0
+  require_core_lloyds: true
+  require_core_combo: true
+  exclude_paths:
+    - /privacy
+    - /cookie
+    - /terms
 ```
 
 ### Verbose logging
 ```bash
 python -m lloyds_digest run --now --verbose
 ```
+
+### LLM digest comparison (24h, render-only)
+Generate three HTML outputs (local Ollama, ChatGPT, Claude) using the last 24 hours of already-extracted articles:
+```bash
+python scripts/render_digest_llm_compare.py
+```
+Outputs land in `output/` as:
+`digest_YYYY-MM-DD_local.html`, `digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_claude.html`
+
+Prompt text for each provider is configured in `config.yaml` under `llm_prompts`.
 ```
 
 ### Config overrides via env

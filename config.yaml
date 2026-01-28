@@ -7,3 +7,35 @@ output:
   directory: "output"
 filters:
   max_age_days: 7
+  keyword_min_score: 3.0
+  require_core_lloyds: true
+  require_core_combo: true
+  exclude_paths:
+    - /privacy
+    - /cookie
+    - /cookies
+    - /terms
+    - /terms-and-conditions
+    - /terms-of-use
+    - /legal
+    - /disclaimer
+    - /subscribe
+    - /login
+    - /account
+    - /author
+    - /jobs
+    - /careers
+    - /contact
+    - /about
+    - /advertise
+    - /search
+llm_prompts:
+  local:
+    system: "Return JSON only, no markdown."
+    user: "You are a senior insurance market editor. Produce JSON only. Use a professional tone for C-suite executives and insurance consultants. Focus on Lloyd's market, global specialty, brokers, syndicates, and placement platforms. Do not include irrelevant items."
+  chatgpt:
+    system: "Return JSON only, no markdown."
+    user: "You are a senior insurance market editor. Produce JSON only. Use a professional tone for C-suite executives and insurance consultants. Focus on Lloyd's market, global specialty, brokers, syndicates, and placement platforms. Do not include irrelevant items."
+  claude:
+    system: "Return JSON only, no markdown."
+    user: "You are a senior insurance market editor. Produce JSON only. Use a professional tone for C-suite executives and insurance consultants. Focus on Lloyd's market, global specialty, brokers, syndicates, and placement platforms. Do not include irrelevant items."

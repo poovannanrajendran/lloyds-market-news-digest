@@ -38,6 +38,7 @@ def render_digest(
     selected = _select_items(list(items), config)
     html = _render_html(selected, run_date, method_health)
     output_path = output_dir / f"digest_{run_date.isoformat()}.html"
+    _rotate_existing(output_path)
     output_path.write_text(html, encoding="utf-8")
 
     if postgres is not None:
@@ -50,6 +51,17 @@ def render_digest(
         )
 
     return output_path
+
+
+def _rotate_existing(path: Path) -> None:
+    if not path.exists():
+        return
+    try:
+        ts = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y%m%d_%H%M%S")
+    except Exception:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    rotated = path.with_name(f"{ts}_{path.name}")
+    path.rename(rotated)
 
 
 def _select_items(items: list[DigestItem], config: DigestConfig) -> list[DigestItem]:

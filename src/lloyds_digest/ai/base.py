@@ -41,7 +41,8 @@ class OllamaClient:
             "prompt": prompt,
             "stream": False,
         }
-        with httpx.Client(timeout=60) as client:
+        timeout = float(os.environ.get("OLLAMA_TIMEOUT", "120"))
+        with httpx.Client(timeout=timeout) as client:
             response = client.post(self._endpoint(), json=payload)
             response.raise_for_status()
             return response.json()

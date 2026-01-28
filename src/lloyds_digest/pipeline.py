@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, datetime, timezone, timedelta
+import time
 import importlib
 import os
 from pathlib import Path
@@ -11,6 +12,7 @@ from uuid import uuid4
 from lloyds_digest.boilerplate import BoilerplateRules, load_rules, strip_boilerplate
 from lloyds_digest.config import AppConfig
 from lloyds_digest.discovery.csv_loader import load_sources_csv, upsert_sources
+from lloyds_digest.discovery.url_utils import canonicalise_url
 from lloyds_digest.extractors.bs4_heuristic import Bs4HeuristicExtractor
 from lloyds_digest.extractors.crawl4ai import Crawl4AIExtractor
 from lloyds_digest.extractors.engine import ExtractionEngine
@@ -94,6 +96,7 @@ def run_pipeline(
         total_sources=len(sources),
     )
 
+    source_urls = {canonicalise_url(source.url) for source in sources}
     candidates = _discover_candidates(sources, postgres, mongo, run_id, detail, warnings)
     if max_candidates is not None and max_candidates > 0:
         if len(candidates) > max_candidates:
@@ -130,6 +133,12 @@ def run_pipeline(
     fetch_results = []
     total_candidates = len(candidates)
     for idx, candidate in enumerate(candidates, start=1):
+        if _path_is_ignored(candidate.url, config.filters.exclude_paths):
+            detail(f"[{idx}/{total_candidates}] Skip ignored path {candidate.url}")
+            continue
+        if candidate.url in source_urls:
+            detail(f"[{idx}/{total_candidates}] Skip listing/source URL {candidate.url}")
+            continue
         if skip_seen:
             if postgres is not None and postgres.has_article(candidate.candidate_id):
                 detail(f"[{idx}/{total_candidates}] Skip existing article {candidate.url}")
@@ -171,6 +180,8 @@ def run_pipeline(
                 log=detail,
                 boilerplate_rules=boilerplate_rules,
                 keyword_rules=keyword_rules,
+                keyword_min_score=config.filters.keyword_min_score,
+                config=config,
             )
         )
 
@@ -320,6 +331,8 @@ def _article_to_items(
     log: Callable[[str], None],
     boilerplate_rules: BoilerplateRules,
     keyword_rules: KeywordRules,
+    keyword_min_score: float,
+    config: AppConfig,
 ) -> list[DigestItem]:
     topics = candidate.metadata.get("topics") if candidate.metadata else None
     topic = ", ".join(topics) if isinstance(topics, list) and topics else "General"
@@ -340,8 +353,68 @@ def _article_to_items(
     why_it_matters = None
     if keyword_rules.terms:
         gate_text = compact_text(article.title or candidate.title, raw_text)
-        min_score = float(os.environ.get("LLOYDS_DIGEST_KEYWORDS_MIN_SCORE", "2.5"))
-        score_hint, matches = keyword_rules.score(gate_text.lower())
+        excluded = keyword_rules.is_excluded(gate_text)
+        if excluded:
+            log(f"[gate] excluded term matched: {candidate.url}")
+            _record_rejection(
+                mongo=mongo,
+                candidate=candidate,
+                run_id=run_id,
+                stage="keyword_exclude",
+                reason="excluded terms matched",
+                score=None,
+                matches=excluded,
+                text=raw_text,
+            )
+            return []
+        min_score = float(
+            os.environ.get(
+                "LLOYDS_DIGEST_KEYWORDS_MIN_SCORE",
+                keyword_min_score,
+            )
+        )
+        gate_text_lower = gate_text.lower()
+        score_hint, matches = keyword_rules.score(gate_text_lower)
+        if config.filters.require_core_lloyds:
+            core_hits = keyword_rules.matches_in_group(
+                gate_text_lower, "core_lloyds_market_structure"
+            )
+            if not core_hits:
+                log(f"[gate] missing core Lloyds term: {candidate.url}")
+                _record_rejection(
+                    mongo=mongo,
+                    candidate=candidate,
+                    run_id=run_id,
+                    stage="keyword_core",
+                    reason="missing core Lloyds term",
+                    score=score_hint,
+                    matches=matches,
+                    text=raw_text,
+                )
+                return []
+        if config.filters.require_core_combo:
+            combo_groups = [
+                "brokers_distribution",
+                "company_market_global_specialty_keywords",
+                "digital_placement_platforms_modernisation",
+                "lloyds_governance_regulation_signals",
+            ]
+            combo_hits = []
+            for group in combo_groups:
+                combo_hits.extend(keyword_rules.matches_in_group(gate_text_lower, group))
+            if config.filters.require_core_lloyds and not combo_hits:
+                log(f"[gate] missing core+combo terms: {candidate.url}")
+                _record_rejection(
+                    mongo=mongo,
+                    candidate=candidate,
+                    run_id=run_id,
+                    stage="keyword_combo",
+                    reason="missing core+combo terms",
+                    score=score_hint,
+                    matches=matches,
+                    text=raw_text,
+                )
+                return []
         if score_hint < min_score:
             log(f"[gate] keyword score {score_hint:.2f} below {min_score:.2f}: {candidate.url}")
             _record_rejection(
@@ -493,11 +566,16 @@ def _run_llm_stage(
     warnings: list[str],
 ) -> Optional[dict]:
     started_at = _utc_now()
-    try:
-        result = call_fn()
-    except Exception as exc:
-        warnings.append(f"LLM {stage} failed: {exc}")
-        return None
+    result = None
+    for attempt in range(1, 4):
+        try:
+            result = call_fn()
+            break
+        except Exception as exc:
+            if attempt == 3:
+                warnings.append(f"LLM {stage} failed: {exc}")
+                return None
+            time.sleep(2**attempt)
     ended_at = _utc_now()
     latency_ms = int((ended_at - started_at).total_seconds() * 1000)
 
@@ -537,6 +615,18 @@ def _trim_text(text: str, max_chars: int = 6000) -> str:
     if len(cleaned) <= max_chars:
         return cleaned
     return cleaned[:max_chars]
+
+
+def _path_is_ignored(url: str, prefixes: list[str]) -> bool:
+    if not prefixes:
+        return False
+    from urllib.parse import urlsplit
+
+    path = urlsplit(url).path.lower()
+    for prefix in prefixes:
+        if path.startswith(prefix.lower()):
+            return True
+    return False
 
 
 def _record_rejection(
