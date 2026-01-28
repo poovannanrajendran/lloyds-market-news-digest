@@ -6,6 +6,8 @@
 - Executive summary re-write with stricter length controls.
 - Chunk retries for empty model output; raw response capture for debugging.
 - Boilerplate stripping rules, keyword gating, and recency filtering are configurable in `config.yaml`.
+- Highlight hygiene + ordering: filter non-article URLs, score likely articles, order by source category, and cap items per domain.
+- Cross-source dedupe by canonical URL or highly similar titles; keep highest-quality item.
 
 ## v1.0.0 — 2026-01-26
 - Phase 11: ops packaging, scheduling templates, and release hygiene.

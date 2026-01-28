@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>{{ title }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #0b1f3b;
@@ -37,6 +38,7 @@
       margin: 0 0 6px;
       font-size: 28px;
       letter-spacing: 0.2px;
+      font-family: "Playfair Display", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
     header .meta {
       color: rgba(255, 255, 255, 0.7);
@@ -60,6 +62,7 @@
       font-size: 18px;
       color: var(--teal);
       letter-spacing: 0.2px;
+      font-family: "Playfair Display", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
     .summary {
       font-size: 15px;
@@ -67,13 +70,27 @@
     }
     .themes ul {
       margin: 0;
-      padding-left: 18px;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       color: var(--slate);
+    }
+    .themes li {
+      background: var(--mist);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal);
     }
     .section-title {
       margin: 36px 0 12px;
       font-size: 20px;
       color: var(--ink);
+      font-family: "Playfair Display", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
     .story-grid {
       display: grid;
@@ -122,6 +139,24 @@
     @media (max-width: 860px) {
       .grid { grid-template-columns: 1fr; }
       header { padding: 22px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
     }
   </style>
 </head>

@@ -6,12 +6,13 @@ import os
 import time
 import re
 from collections import defaultdict
+from difflib import SequenceMatcher
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 
 import httpx
 
@@ -214,7 +215,7 @@ def _run_provider_chunks(
         merged = {
             "executive_summary": "\n\n".join(summaries).strip(),
             "themes": _dedupe_list(themes),
-            "items": items,
+            "items": _postprocess_items(items),
         }
         html = render_html(template, merged, run_date=run_date)
         out_path.write_text(html, encoding="utf-8")
@@ -223,7 +224,7 @@ def _run_provider_chunks(
     final_output = {
         "executive_summary": "\n\n".join(summaries).strip(),
         "themes": _dedupe_list(themes),
-        "items": items,
+        "items": _postprocess_items(items),
     }
     final_output = _resummarize_executive_summary(
         name=name,
@@ -369,6 +370,279 @@ def _has_content(result: dict[str, Any]) -> bool:
     return False
 
 
+def _postprocess_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    filtered = [item for item in items if _is_article_item(item)]
+    deduped = _dedupe_items(filtered)
+    ordered = _order_items(deduped)
+    max_per_domain = int(os.environ.get("DIGEST_MAX_PER_DOMAIN", "5"))
+    return _cap_per_domain(ordered, max_per_domain)
+
+
+def _cap_per_domain(items: list[dict[str, Any]], max_per_domain: int) -> list[dict[str, Any]]:
+    counts: dict[str, int] = {}
+    capped: list[dict[str, Any]] = []
+    for item in items:
+        domain = _domain(item.get("url", ""))
+        if not domain:
+            continue
+        counts.setdefault(domain, 0)
+        if counts[domain] >= max_per_domain:
+            continue
+        counts[domain] += 1
+        capped.append(item)
+    return capped
+
+
+def _is_article_item(item: dict[str, Any]) -> bool:
+    url = str(item.get("url") or "")
+    title = str(item.get("title") or "")
+    excerpt = str(item.get("excerpt") or "")
+
+    if not url:
+        return False
+
+    if _matches_url_blocklist(url) and _article_score(url, title, excerpt) < 2:
+        return False
+
+    title_lower = title.lower()
+    if _matches_title_blocklist(title_lower) and _article_score(url, title, excerpt) < 3:
+        return False
+
+    if _article_score(url, title, excerpt) == 0:
+        return False
+
+    return True
+
+
+def _article_score(url: str, title: str, excerpt: str) -> int:
+    score = 0
+    lower_url = url.lower()
+    if re.search(r"/20\\d{2}/|[-_/](20\\d{2})[-_/](0[1-9]|1[0-2])[-_/](0[1-9]|[12]\\d|3[01])", lower_url):
+        score += 1
+    words = [w for w in re.split(r"\\s+", title.strip()) if w]
+    if 6 <= len(words) <= 18:
+        score += 1
+    if len(excerpt) >= 400:
+        score += 1
+    if any(token in lower_url for token in ("/news/", "/press", "/release", "/insights/")):
+        score += 1
+    return score
+
+
+def _matches_url_blocklist(url: str) -> bool:
+    lower_url = url.lower()
+    patterns = [
+        "/subscribe",
+        "/subscription",
+        "/account",
+        "/login",
+        "/signin",
+        "/register",
+        "/signup",
+        "/careers",
+        "/jobs",
+        "/job",
+        "/recruit",
+        "/vacancy",
+        "/apply",
+        "/contact",
+        "/about",
+        "/help",
+        "/privacy",
+        "/cookie",
+        "/terms",
+        "/legal",
+        "/disclaimer",
+        "/author/",
+        "/authors/",
+        "/profile/",
+        "/team/",
+        "/people/",
+        "/topic/",
+        "/topics/",
+        "/tag/",
+        "/tags/",
+        "/category/",
+        "/categories/",
+    ]
+    if any(pat in lower_url for pat in patterns):
+        return True
+    if "page=" in lower_url or "offset=" in lower_url:
+        return True
+    return False
+
+
+def _matches_title_blocklist(title_lower: str) -> bool:
+    cues = [
+        "subscribe",
+        "sign in",
+        "log in",
+        "register",
+        "careers",
+        "job",
+        "vacancy",
+        "author profile",
+        "tag archive",
+        "topic index",
+        "search results",
+        "newsletter",
+    ]
+    return any(cue in title_lower for cue in cues)
+
+
+def _order_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def key(item: dict[str, Any]) -> tuple[int, str]:
+        category = _category_rank(item)
+        domain = _domain(item.get("url", ""))
+        return (category, domain)
+
+    return sorted(items, key=key)
+
+
+def _category_rank(item: dict[str, Any]) -> int:
+    url = str(item.get("url") or "").lower()
+    title = str(item.get("title") or "").lower()
+    source_id = str(item.get("source_id") or "").lower()
+    combined = f"{title} {url}"
+
+    if source_id.startswith("primary:") or "lloyd" in combined:
+        return 0
+    if source_id.startswith("secondary:"):
+        return 1
+    if _contains_any(combined, ["regulator", "regulatory", "fca", "boe", "bank of england"]):
+        return 2
+    if _contains_any(combined, ["compliance", "sanctions", "aml", "anti-money", "financial crime"]):
+        return 3
+    if _contains_any(combined, ["pra", "prudential regulation authority"]):
+        return 4
+    if _contains_any(
+        combined,
+        [
+            "insurance",
+            "reinsurance",
+            "broker",
+            "syndicate",
+            "underwriter",
+            "coverholder",
+            "placing",
+        ],
+    ):
+        return 5
+    if _contains_any(combined, ["financial", "rates", "markets", "bank", "treasury", "capital"]):
+        return 6
+    return 7
+
+
+def _contains_any(text: str, terms: list[str]) -> bool:
+    return any(term in text for term in terms)
+
+
+def _clamp_summary(text: str, max_chars: int) -> str:
+    cleaned = " ".join(text.split())
+    if len(cleaned) <= max_chars:
+        return cleaned
+    cut = cleaned[: max_chars + 1]
+    last_space = cut.rfind(" ")
+    if last_space > 0:
+        cut = cut[:last_space]
+    return cut.rstrip() + "…"
+
+
+def _dedupe_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_url: dict[str, dict[str, Any]] = {}
+    deduped: list[dict[str, Any]] = []
+    for item in items:
+        url = str(item.get("url") or "")
+        title = str(item.get("title") or "")
+        norm_url = _canonical_url(url)
+        if norm_url and norm_url in by_url:
+            by_url[norm_url] = _select_best(by_url[norm_url], item)
+            continue
+
+        matched = False
+        for existing in deduped:
+            if _titles_similar(existing, item):
+                best = _select_best(existing, item)
+                deduped[deduped.index(existing)] = best
+                matched = True
+                break
+        if matched:
+            continue
+
+        if norm_url:
+            by_url[norm_url] = item
+        deduped.append(item)
+
+    # Ensure URL-based best selection is reflected in list
+    merged: list[dict[str, Any]] = []
+    seen = set()
+    for item in deduped:
+        norm_url = _canonical_url(str(item.get("url") or ""))
+        if norm_url and norm_url in by_url:
+            item = by_url[norm_url]
+        item_id = item.get("id")
+        if item_id in seen:
+            continue
+        seen.add(item_id)
+        merged.append(item)
+    return merged
+
+
+def _canonical_url(url: str) -> str:
+    if not url:
+        return ""
+    try:
+        parts = urlsplit(url)
+    except Exception:
+        return url
+    query = [
+        (k, v)
+        for k, v in parse_qsl(parts.query, keep_blank_values=True)
+        if not k.lower().startswith("utm_")
+        and k.lower() not in {"ref", "fbclid", "gclid", "mc_cid", "mc_eid"}
+    ]
+    new_query = urlencode(query, doseq=True)
+    path = parts.path.rstrip("/")
+    return urlunsplit((parts.scheme, parts.netloc.lower(), path, new_query, ""))
+
+
+def _titles_similar(a: dict[str, Any], b: dict[str, Any]) -> bool:
+    a_title = _normalize_title(str(a.get("title") or ""))
+    b_title = _normalize_title(str(b.get("title") or ""))
+    if not a_title or not b_title:
+        return False
+    ratio = SequenceMatcher(None, a_title, b_title).ratio()
+    return ratio >= 0.92
+
+
+def _normalize_title(title: str) -> str:
+    cleaned = re.sub(r"[^a-z0-9\\s]+", " ", title.lower())
+    cleaned = re.sub(r"\\s+", " ", cleaned).strip()
+    return cleaned
+
+
+def _select_best(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
+    score_a = _item_quality_score(a)
+    score_b = _item_quality_score(b)
+    if score_b > score_a:
+        return b
+    return a
+
+
+def _item_quality_score(item: dict[str, Any]) -> int:
+    url = str(item.get("url") or "")
+    title = str(item.get("title") or "")
+    excerpt = str(item.get("excerpt") or "")
+    score = _article_score(url, title, excerpt)
+    bullets = item.get("bullets") or []
+    if isinstance(bullets, list):
+        score += len([b for b in bullets if str(b).strip()])
+    why = item.get("why")
+    if isinstance(why, str) and why.strip():
+        score += 1
+    return score
+
+
 def _resummarize_executive_summary(
     name: str,
     output: dict[str, Any],
@@ -378,7 +652,7 @@ def _resummarize_executive_summary(
     summary = output.get("executive_summary", "")
     if not isinstance(summary, str):
         return output
-    max_chars = int(os.environ.get("EXEC_SUMMARY_MAX_CHARS", "900"))
+    max_chars = int(os.environ.get("EXEC_SUMMARY_MAX_CHARS", "500"))
     if len(summary) <= max_chars:
         return output
 
@@ -412,7 +686,7 @@ def _resummarize_executive_summary(
     if isinstance(result, dict):
         new_summary = result.get("executive_summary")
     if isinstance(new_summary, str) and new_summary.strip():
-        output["executive_summary"] = new_summary.strip()
+        output["executive_summary"] = _clamp_summary(new_summary.strip(), max_chars)
     finished_at = datetime.now(timezone.utc)
     duration = (finished_at - started_at).total_seconds()
     print(
@@ -573,7 +847,10 @@ def generate_with_openai(payload: dict[str, Any], config, run_date: str) -> dict
 def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
     if not payload:
         payload = {"executive_summary": "No output produced.", "themes": [], "items": []}
+    max_chars = int(os.environ.get("EXEC_SUMMARY_MAX_CHARS", "500"))
     summary = payload.get("executive_summary", "Summary unavailable.")
+    if isinstance(summary, str):
+        summary = _clamp_summary(summary, max_chars)
     themes = payload.get("themes") or []
     items = payload.get("items") or []
 
@@ -709,6 +986,7 @@ def enrich_output(prompt_payload: dict[str, Any], output: dict[str, Any]) -> dic
         enriched_item["title"] = by_id[article_id]["title"]
         enriched_item["url"] = by_id[article_id]["url"]
         enriched_item["source"] = by_id[article_id]["source"]
+        enriched_item["excerpt"] = by_id[article_id].get("excerpt", "")
         enriched.append(enriched_item)
     output["items"] = enriched
     return output

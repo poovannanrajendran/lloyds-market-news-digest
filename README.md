@@ -83,6 +83,7 @@ Env overrides:
 ```bash
 export DIGEST_CHUNK_SIZE=15
 export DIGEST_CHUNK_RETRIES=2
+export DIGEST_MAX_PER_DOMAIN=5
 export EXEC_SUMMARY_MAX_CHARS=500
 ```
 
@@ -91,6 +92,14 @@ Set the DeepSeek model separately if desired:
 ```bash
 export OLLAMA_DEEPSEEK_MODEL=deepseek-v3.2:cloud
 ```
+
+#### Highlight ordering + hygiene
+The render-only digest applies content hygiene and ordering before HTML output:
+- Filters common non-article URLs (subscribe, careers, tag/topic pages).
+- Scores likely articles using URL/date/title/excerpt signals.
+- Orders highlights: primary (Lloyd's) → secondary → regulatory → compliance → PRA → insurance → financial → other.
+- Caps highlights per domain (default 5).
+- Dedupe across sources by canonical URL or highly similar titles; keeps highest-scoring item.
 
 ### Config overrides via env
 Use `LLOYDS_DIGEST__` with double underscores for nesting:
