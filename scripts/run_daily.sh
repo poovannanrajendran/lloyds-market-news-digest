@@ -14,4 +14,4 @@ fi
 
 cd "$ROOT_DIR"
 
-python -m lloyds_digest run --now | tee -a "$LOG_FILE"
+python -m lloyds_digest run --now --verbose | tee -a "$LOG_FILE"
