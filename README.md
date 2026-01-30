@@ -103,11 +103,28 @@ The render-only digest applies content hygiene and ordering before HTML output:
 - Dedupe across sources by canonical URL or highly similar titles; keeps highest-scoring item.
 
 #### LinkedIn artifact (ChatGPT)
-Generate a LinkedIn-ready HTML (external footer, top 6 highlights, min 3 London Market items):
+Generate a LinkedIn-ready HTML (external footer, top 12 highlights by default, min 3 London Market items):
 ```bash
 python scripts/render_digest_llm_compare.py --provider chatgpt --linkedin
 python scripts/render_digest_chatgpt_linkedin.py
 ```
+Env overrides:
+```bash
+export LINKEDIN_MAX_ITEMS=12
+export LINKEDIN_MIN_LONDON=3
+```
+
+#### GitHub Pages publish (public digest)
+The render step now writes:
+- `output/digest_YYYY-MM-DD.html` (internal)
+- `output/digest_YYYY-MM-DD_public.html` (external)
+
+Publish the external digest to GitHub Pages:
+```bash
+python scripts/render_digest_llm_compare.py --provider chatgpt
+scripts/publish_github_pages.sh
+```
+Pages source: `main` branch, `/docs` folder.
 
 ### Config overrides via env
 Use `LLOYDS_DIGEST__` with double underscores for nesting:
