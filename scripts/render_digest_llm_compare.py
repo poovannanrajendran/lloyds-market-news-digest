@@ -65,6 +65,17 @@ def main() -> None:
     if not outputs:
         return
 
+    if args.linkedin and "chatgpt" in outputs:
+        linkedin = build_linkedin_payload(
+            outputs["chatgpt"],
+            run_date=run_date,
+        )
+        html = render_html(template, linkedin, run_date=run_date)
+        out_path = Path("output") / f"digest_{run_date}_linkedin.html"
+        rotate_existing(out_path)
+        out_path.write_text(html, encoding="utf-8")
+        print(f"Wrote {out_path}")
+
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Render digest using multiple LLM providers.")
@@ -79,6 +90,11 @@ def _parse_args() -> argparse.Namespace:
         type=int,
         default=0,
         help="Limit chunks processed (0 = all).",
+    )
+    parser.add_argument(
+        "--linkedin",
+        action="store_true",
+        help="Generate a LinkedIn-ready HTML artifact from the ChatGPT output.",
     )
     parser.add_argument(
         "--chunk-by",
@@ -97,7 +113,7 @@ def _parse_args() -> argparse.Namespace:
 
 def _resolve_providers(args: argparse.Namespace) -> list[str]:
     if args.provider == "all":
-        return ["local", "chatgpt", "deepseek"]
+        return ["chatgpt", "deepseek"]
     return [args.provider]
 
 
@@ -548,6 +564,81 @@ def _clamp_summary(text: str, max_chars: int) -> str:
     return cut.rstrip() + "…"
 
 
+def build_linkedin_payload(payload: dict[str, Any], run_date: str) -> dict[str, Any]:
+    items = payload.get("items") or []
+    if not isinstance(items, list):
+        items = []
+
+    items = _postprocess_items(items)
+    items = _move_fca_to_bottom(items)
+    top = _select_linkedin_top(items, min_london=3, limit=6)
+
+    summary = payload.get("executive_summary", "")
+    summary = _clamp_summary(summary, 900)
+
+    return {
+        "executive_summary": summary,
+        "themes": payload.get("themes") or [],
+        "items": top,
+        "footer": "Daily digest of public sources. Links included for attribution.",
+    }
+
+
+def _move_fca_to_bottom(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    non_fca = []
+    fca = []
+    for item in items:
+        text = _item_text(item)
+        if "fca" in text or "financial conduct authority" in text or "warning" in text:
+            fca.append(item)
+        else:
+            non_fca.append(item)
+    return non_fca + fca
+
+
+def _select_linkedin_top(
+    items: list[dict[str, Any]],
+    min_london: int,
+    limit: int,
+) -> list[dict[str, Any]]:
+    london = [item for item in items if _is_london_market(item)]
+    other = [item for item in items if item not in london]
+    selected: list[dict[str, Any]] = []
+
+    selected.extend(london[:min_london])
+    remaining = limit - len(selected)
+    if remaining > 0:
+        selected.extend(other[:remaining])
+    return selected[:limit]
+
+
+def _is_london_market(item: dict[str, Any]) -> bool:
+    text = _item_text(item)
+    keywords = [
+        "lloyd",
+        "syndicate",
+        "broker",
+        "lma",
+        "london market",
+        "ppl",
+        "whitespace",
+        "coverholder",
+        "managing agent",
+    ]
+    return any(keyword in text for keyword in keywords)
+
+
+def _item_text(item: dict[str, Any]) -> str:
+    parts = [
+        item.get("title", ""),
+        item.get("why", ""),
+        item.get("url", ""),
+        item.get("source", ""),
+        " ".join(item.get("bullets") or []),
+    ]
+    return " ".join(str(p).lower() for p in parts if p)
+
+
 def _dedupe_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     by_url: dict[str, dict[str, Any]] = {}
     deduped: list[dict[str, Any]] = []
@@ -853,6 +944,10 @@ def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
         summary = _clamp_summary(summary, max_chars)
     themes = payload.get("themes") or []
     items = payload.get("items") or []
+    footer = payload.get(
+        "footer",
+        "Prepared for Lloyd's market leadership. Confidential and for internal use only. Created by Poovannan Rajendran.",
+    )
 
     theme_html = "\n".join(f"<li>{_escape(item)}</li>" for item in themes[:6])
     story_html = "\n".join(_render_story(item) for item in items)
@@ -864,6 +959,7 @@ def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
     html = html.replace("{{ executive_summary }}", _escape(summary))
     html = html.replace("{{ themes }}", theme_html or "<li>No themes identified.</li>")
     html = html.replace("{{ stories }}", story_html or "<p>No stories selected.</p>")
+    html = html.replace("{{ footer }}", _escape(footer))
     return html
 
 

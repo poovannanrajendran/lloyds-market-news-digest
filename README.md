@@ -57,12 +57,12 @@ python -m lloyds_digest run --now --verbose
 ```
 
 ### LLM digest comparison (24h, render-only)
-Generate three HTML outputs (local Ollama, ChatGPT, DeepSeek via Ollama) using the last 24 hours of already-extracted articles:
+Generate HTML outputs (ChatGPT + DeepSeek via Ollama) using the last 24 hours of already-extracted articles:
 ```bash
 python scripts/render_digest_llm_compare.py
 ```
 Outputs land in `output/` as:
-`digest_YYYY-MM-DD_local.html`, `digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_<deepseek-model>.html`
+`digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_<deepseek-model>.html`
 
 Prompt text for each provider is configured in `config.yaml` under `llm_prompts`.
 ```
@@ -73,6 +73,7 @@ python scripts/render_digest_llm_compare.py --provider local
 python scripts/render_digest_llm_compare.py --provider chatgpt
 python scripts/render_digest_llm_compare.py --provider deepseek
 ```
+Default `all` runs ChatGPT + DeepSeek (local is opt-in).
 
 #### Chunking + retries (render-only)
 ```bash
@@ -100,6 +101,13 @@ The render-only digest applies content hygiene and ordering before HTML output:
 - Orders highlights: primary (Lloyd's) → secondary → regulatory → compliance → PRA → insurance → financial → other.
 - Caps highlights per domain (default 5).
 - Dedupe across sources by canonical URL or highly similar titles; keeps highest-scoring item.
+
+#### LinkedIn artifact (ChatGPT)
+Generate a LinkedIn-ready HTML (external footer, top 6 highlights, min 3 London Market items):
+```bash
+python scripts/render_digest_llm_compare.py --provider chatgpt --linkedin
+python scripts/render_digest_chatgpt_linkedin.py
+```
 
 ### Config overrides via env
 Use `LLOYDS_DIGEST__` with double underscores for nesting:
