@@ -33,6 +33,23 @@
       padding: 28px 32px;
       border-radius: 18px;
       box-shadow: 0 18px 30px rgba(11, 31, 59, 0.18);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    header img {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: transparent;
+      padding: 0;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.22);
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
     header h1 {
       margin: 0 0 6px;
@@ -163,8 +180,11 @@
 <body>
   <div class="page">
     <header>
-      <h1>{{ heading }}</h1>
-      <div class="meta">{{ run_date }} · Executive Briefing</div>
+      <img src="{{ logo_src }}" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>{{ heading }}</h1>
+        <div class="meta">{{ run_date }} · Executive Briefing</div>
+      </div>
     </header>
 
     <div class="grid">

@@ -15,4 +15,5 @@ fi
 cd "$ROOT_DIR"
 
 python -m lloyds_digest run --now --verbose | tee -a "$LOG_FILE"
-python scripts/render_digest_llm_compare.py --provider chatgpt --linkedin | tee -a "$LOG_FILE"
+python scripts/render_digest_llm_compare.py | tee -a "$LOG_FILE"
+scripts/publish_github_pages.sh | tee -a "$LOG_FILE"

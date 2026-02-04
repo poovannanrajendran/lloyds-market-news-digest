@@ -591,9 +591,19 @@ def _run_llm_stage(
                 started_at=started_at,
                 ended_at=ended_at,
                 latency_ms=latency_ms,
-                tokens_prompt=None,
-                tokens_completion=None,
+                tokens_prompt=result.get("tokens_prompt"),
+                tokens_completion=result.get("tokens_completion"),
                 metadata={"parsed": result.get("parsed")},
+            )
+            _record_llm_cost(
+                postgres=postgres,
+                run_id=run_id,
+                candidate_id=candidate_id,
+                stage=stage,
+                model=model,
+                tokens_prompt=result.get("tokens_prompt"),
+                tokens_completion=result.get("tokens_completion"),
+                service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
             )
         except Exception as exc:
             warnings.append(f"Failed to record llm_usage for {stage}: {exc}")
@@ -608,6 +618,68 @@ def _llm_enabled() -> bool:
 
 def _llm_model(env_key: str, default: str) -> str:
     return os.environ.get(env_key, default)
+
+
+def _record_llm_cost(
+    postgres: PostgresRepo,
+    run_id: str | None,
+    candidate_id: str | None,
+    stage: str,
+    model: str,
+    tokens_prompt: int | None,
+    tokens_completion: int | None,
+    service_tier: str | None,
+) -> None:
+    from lloyds_digest.ai.costing import compute_cost_usd
+
+    if tokens_prompt is None or tokens_completion is None:
+        return
+    provider = _infer_provider(model)
+    tier = service_tier or os.environ.get("LLOYDS_DIGEST_COST_TIER") or "standard"
+    cost = compute_cost_usd(
+        model=model,
+        tokens_prompt=tokens_prompt,
+        tokens_completion=tokens_completion,
+        service_tier=tier,
+    )
+    if cost is None:
+        return
+    input_cost, output_cost, total_cost = cost
+    postgres.insert_llm_cost_call(
+        run_id=run_id,
+        candidate_id=candidate_id,
+        stage=stage,
+        provider=provider,
+        model=model,
+        service_tier=tier,
+        tokens_prompt=tokens_prompt,
+        tokens_completion=tokens_completion,
+        cost_input_usd=input_cost,
+        cost_output_usd=output_cost,
+        cost_total_usd=total_cost,
+        metadata={},
+    )
+    usage_date = _utc_now().date().isoformat()
+    postgres.upsert_llm_cost_stage_daily(
+        usage_date=usage_date,
+        stage=stage,
+        provider=provider,
+        model=model,
+        service_tier=tier,
+        calls=1,
+        tokens_prompt=tokens_prompt,
+        tokens_completion=tokens_completion,
+        cost_total_usd=total_cost,
+    )
+
+
+def _infer_provider(model: str) -> str:
+    lowered = model.strip().lower()
+    if lowered.startswith("gpt-") or lowered.startswith("o"):
+        return "openai"
+    if "qwen" in lowered:
+        return "ollama"
+    return "other"
 
 
 def _trim_text(text: str, max_chars: int = 6000) -> str:

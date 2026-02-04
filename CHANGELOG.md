@@ -9,6 +9,7 @@
 - Highlight hygiene + ordering: filter non-article URLs, score likely articles, order by source category, and cap items per domain.
 - Cross-source dedupe by canonical URL or highly similar titles; keep highest-quality item.
 - LinkedIn artifact generation (ChatGPT) with external footer and top 6 highlights.
+- Public digest artifact + GitHub Pages publish script.
 
 ## v1.0.0 — 2026-01-26
 - Phase 11: ops packaging, scheduling templates, and release hygiene.

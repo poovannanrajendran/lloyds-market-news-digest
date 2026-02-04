@@ -5,6 +5,7 @@ import json
 import os
 import time
 import re
+import sys
 from collections import defaultdict
 from difflib import SequenceMatcher
 from concurrent.futures import ThreadPoolExecutor
@@ -17,6 +18,7 @@ from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 import httpx
 
 from lloyds_digest.ai.base import OllamaClient
+from lloyds_digest.ai.costing import compute_cost_usd
 from lloyds_digest.config import load_config
 from lloyds_digest.storage.postgres_repo import PostgresRepo
 from lloyds_digest.utils import load_env_file
@@ -50,51 +52,43 @@ def main() -> None:
     chunk_size = int(os.environ.get("DIGEST_CHUNK_SIZE", str(args.chunk_size)))
     chunks = list(_chunk_items(items, chunk_by=chunk_by, chunk_size=chunk_size))
 
-    providers = _resolve_providers(args)
-    outputs: dict[str, dict[str, Any]] = {}
-    for name in providers:
-        outputs[name] = _run_provider_chunks(
-            name,
-            chunks=chunks,
-            config=config,
-            template=template,
-            run_date=run_date,
-            max_chunks=args.max_chunks,
-        )
-
-    if not outputs:
+    output = _run_provider_chunks(
+        "chatgpt",
+        chunks=chunks,
+        config=config,
+        template=template,
+        run_date=run_date,
+        max_chunks=args.max_chunks,
+    )
+    if not output:
         return
 
-    if args.linkedin and "chatgpt" in outputs:
-        linkedin = build_linkedin_payload(
-            outputs["chatgpt"],
-            run_date=run_date,
+    min_items = int(os.environ.get("DIGEST_MIN_ITEMS", str(args.min_items)))
+    item_count = len(output.get("items") or [])
+    if item_count < min_items:
+        print(
+            f"Digest has only {item_count} items; minimum required is {min_items}.",
+            flush=True,
         )
-        html = render_html(template, linkedin, run_date=run_date)
-        out_path = Path("output") / f"digest_{run_date}_linkedin.html"
-        rotate_existing(out_path)
-        out_path.write_text(html, encoding="utf-8")
-        print(f"Wrote {out_path}")
+        sys.exit(2)
+
+    output_dir = Path("output")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    digest_path = output_dir / f"digest_{run_date}.html"
+    rotate_existing(digest_path)
+    digest_html = render_html(template, output, run_date=run_date)
+    digest_path.write_text(digest_html, encoding="utf-8")
+    _ensure_logo_asset(output_dir)
+    print(f"Wrote {digest_path}")
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Render digest using multiple LLM providers.")
-    parser.add_argument(
-        "--provider",
-        choices=["local", "chatgpt", "deepseek", "all"],
-        default="all",
-        help="Run a single provider or all.",
-    )
+    parser = argparse.ArgumentParser(description="Render digest using ChatGPT only.")
     parser.add_argument(
         "--max-chunks",
         type=int,
         default=0,
         help="Limit chunks processed (0 = all).",
-    )
-    parser.add_argument(
-        "--linkedin",
-        action="store_true",
-        help="Generate a LinkedIn-ready HTML artifact from the ChatGPT output.",
     )
     parser.add_argument(
         "--chunk-by",
@@ -108,13 +102,13 @@ def _parse_args() -> argparse.Namespace:
         default=40,
         help="Max items per chunk (can be overridden by DIGEST_CHUNK_SIZE).",
     )
+    parser.add_argument(
+        "--min-items",
+        type=int,
+        default=10,
+        help="Minimum number of items required to write the digest.",
+    )
     return parser.parse_args()
-
-
-def _resolve_providers(args: argparse.Namespace) -> list[str]:
-    if args.provider == "all":
-        return ["chatgpt", "deepseek"]
-    return [args.provider]
 
 
 def _run_provider(name: str, payload: dict[str, Any], config, run_date: str, chunk_label: str) -> dict[str, Any]:
@@ -174,6 +168,14 @@ def _run_provider(name: str, payload: dict[str, Any], config, run_date: str, chu
         success=bool(result),
         error=error,
     )
+    _record_llm_cost(
+        config=config,
+        provider=name,
+        model=_provider_model(name),
+        stage=f"render_digest:{name}",
+        tokens_prompt=_estimate_tokens(input_size),
+        tokens_completion=_estimate_tokens(output_size),
+    )
     return result
 
 
@@ -187,12 +189,6 @@ def _run_provider_chunks(
 ) -> dict[str, Any]:
     if max_chunks and max_chunks > 0:
         chunks = chunks[:max_chunks]
-    output_dir = Path("output")
-    output_dir.mkdir(parents=True, exist_ok=True)
-    output_name = _provider_output_name(name)
-    out_path = output_dir / f"digest_{run_date}_{output_name}.html"
-    rotate_existing(out_path)
-
     summaries: list[str] = []
     themes: list[str] = []
     items: list[dict[str, Any]] = []
@@ -233,9 +229,6 @@ def _run_provider_chunks(
             "themes": _dedupe_list(themes),
             "items": _postprocess_items(items),
         }
-        html = render_html(template, merged, run_date=run_date)
-        out_path.write_text(html, encoding="utf-8")
-        print(f"[{name}] wrote partial {out_path} after chunk {chunk_label}", flush=True)
 
     final_output = {
         "executive_summary": "\n\n".join(summaries).strip(),
@@ -248,9 +241,6 @@ def _run_provider_chunks(
         config=config,
         run_date=run_date,
     )
-    html = render_html(template, final_output, run_date=run_date)
-    out_path.write_text(html, encoding="utf-8")
-    print(f"[{name}] wrote final {out_path}", flush=True)
     return final_output
 
 
@@ -333,12 +323,67 @@ def _record_llm_usage(
         print(f"[{provider}] failed to record llm_usage: {exc}", flush=True)
 
 
-def _provider_output_name(name: str) -> str:
-    if name != "deepseek":
-        return name
-    model = _provider_model(name)
-    slug = re.sub(r"[^a-zA-Z0-9]+", "-", model).strip("-").lower()
-    return slug or name
+def _record_llm_cost(
+    config,
+    provider: str,
+    model: str,
+    stage: str,
+    tokens_prompt: int | None,
+    tokens_completion: int | None,
+) -> None:
+    if provider != "chatgpt":
+        return
+    if tokens_prompt is None or tokens_completion is None:
+        return
+    cost = compute_cost_usd(
+        model=model,
+        tokens_prompt=tokens_prompt,
+        tokens_completion=tokens_completion,
+        service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+    )
+    if cost is None:
+        return
+    input_cost, output_cost, total_cost = cost
+    try:
+        dsn = build_postgres_dsn_from_env()
+    except Exception:
+        return
+    try:
+        postgres = PostgresRepo(dsn)
+        postgres.insert_llm_cost_call(
+            run_id=None,
+            candidate_id=None,
+            stage=stage,
+            provider="openai",
+            model=model,
+            service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            cost_input_usd=input_cost,
+            cost_output_usd=output_cost,
+            cost_total_usd=total_cost,
+            metadata={"program": "render_digest_llm_compare.py"},
+        )
+        usage_date = datetime.now(timezone.utc).date().isoformat()
+        postgres.upsert_llm_cost_stage_daily(
+            usage_date=usage_date,
+            stage=stage,
+            provider="openai",
+            model=model,
+            service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+            calls=1,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            cost_total_usd=total_cost,
+        )
+    except Exception as exc:
+        print(f"[{provider}] failed to record llm_cost: {exc}", flush=True)
+
+
+def _estimate_tokens(size: int) -> int | None:
+    if not size:
+        return None
+    return max(1, size // 4)
 
 
 def _chunk_items(
@@ -571,7 +616,9 @@ def build_linkedin_payload(payload: dict[str, Any], run_date: str) -> dict[str, 
 
     items = _postprocess_items(items)
     items = _move_fca_to_bottom(items)
-    top = _select_linkedin_top(items, min_london=3, limit=6)
+    limit = int(os.environ.get("LINKEDIN_MAX_ITEMS", "12"))
+    min_london = int(os.environ.get("LINKEDIN_MIN_LONDON", "3"))
+    top = _select_linkedin_top(items, min_london=min_london, limit=limit)
 
     summary = payload.get("executive_summary", "")
     summary = _clamp_summary(summary, 900)
@@ -580,7 +627,7 @@ def build_linkedin_payload(payload: dict[str, Any], run_date: str) -> dict[str, 
         "executive_summary": summary,
         "themes": payload.get("themes") or [],
         "items": top,
-        "footer": "Daily digest of public sources. Links included for attribution.",
+        "footer": "Daily digest of public sources. Links included for attribution. Created by Poovannan Rajendran.",
     }
 
 
@@ -946,8 +993,9 @@ def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
     items = payload.get("items") or []
     footer = payload.get(
         "footer",
-        "Prepared for Lloyd's market leadership. Confidential and for internal use only. Created by Poovannan Rajendran.",
+        "Daily digest of public sources. Links included for attribution. Created by Poovannan Rajendran.",
     )
+    logo_src = payload.get("logo_src", "London_Lloyds_Market_News_Digest.png")
 
     theme_html = "\n".join(f"<li>{_escape(item)}</li>" for item in themes[:6])
     story_html = "\n".join(_render_story(item) for item in items)
@@ -960,6 +1008,7 @@ def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
     html = html.replace("{{ themes }}", theme_html or "<li>No themes identified.</li>")
     html = html.replace("{{ stories }}", story_html or "<p>No stories selected.</p>")
     html = html.replace("{{ footer }}", _escape(footer))
+    html = html.replace("{{ logo_src }}", _escape(logo_src))
     return html
 
 
@@ -1061,7 +1110,7 @@ def _extract_fenced_json(text: str) -> str | None:
 
 
 def _write_raw_response(provider: str, run_date: str, text: str) -> None:
-    output_dir = Path("output")
+    output_dir = Path("output") / "raw"
     output_dir.mkdir(parents=True, exist_ok=True)
     raw_path = output_dir / f"raw_{provider}_{run_date}.txt"
     rotate_existing(raw_path)
@@ -1116,6 +1165,19 @@ def rotate_existing(path: Path) -> None:
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     rotated = path.with_name(f"{ts}_{path.name}")
     path.rename(rotated)
+
+
+def _ensure_logo_asset(target_dir: Path) -> None:
+    logo = Path("src/images/London_Lloyds_Market_News_Digest.png")
+    if not logo.exists():
+        return
+    target = target_dir / logo.name
+    if target.exists():
+        return
+    try:
+        target.write_bytes(logo.read_bytes())
+    except Exception:
+        return
 
 
 if __name__ == "__main__":

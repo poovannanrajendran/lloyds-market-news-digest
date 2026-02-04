@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from lloyds_digest.ai.base import PromptSpec, OllamaClient, build_cache_key, cached_call
+from lloyds_digest.ai.base import PromptSpec, OllamaClient, build_cache_key, cached_call, estimate_tokens
 from lloyds_digest.storage.mongo_repo import MongoRepo
 
 PROMPT = PromptSpec(name="classify", version="v1", filename="classify_v1.txt")
@@ -25,12 +25,21 @@ def classify(
             "response": response.get("response", ""),
             "model": model,
             "prompt_version": PROMPT.version,
+            "tokens_prompt": estimate_tokens(prompt),
+            "tokens_completion": estimate_tokens(response.get("response", "")),
         }
 
     result = cached_call(mongo, key, _call)
     raw = result["payload"].get("response", "")
     parsed = _safe_json(raw)
-    return {"cached": result["cached"], "raw": raw, "parsed": parsed}
+    payload = result["payload"]
+    return {
+        "cached": result["cached"],
+        "raw": raw,
+        "parsed": parsed,
+        "tokens_prompt": payload.get("tokens_prompt"),
+        "tokens_completion": payload.get("tokens_completion"),
+    }
 
 
 def _safe_json(text: str) -> dict[str, Any]:

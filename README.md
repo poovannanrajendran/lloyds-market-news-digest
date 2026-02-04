@@ -56,6 +56,13 @@ filters:
 python -m lloyds_digest run --now --verbose
 ```
 
+### Internal run dashboard (local only)
+Generate an internal HTML dashboard from recent runs (not published):
+```bash
+python scripts/render_run_dashboard.py
+```
+Open `output/dashboard/index.html` in your browser.
+
 ### LLM digest comparison (24h, render-only)
 Generate HTML outputs (ChatGPT + DeepSeek via Ollama) using the last 24 hours of already-extracted articles:
 ```bash

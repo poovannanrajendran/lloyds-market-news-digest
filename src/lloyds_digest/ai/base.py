@@ -69,3 +69,9 @@ def cached_call(
     if mongo is not None:
         mongo.upsert_ai_cache(key, result)
     return {"cached": False, "payload": result}
+
+
+def estimate_tokens(text: str) -> int:
+    if not text:
+        return 0
+    return max(1, len(text) // 4)

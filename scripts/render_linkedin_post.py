@@ -13,6 +13,8 @@ import httpx
 from bs4 import BeautifulSoup
 
 from lloyds_digest.utils import load_env_file
+from lloyds_digest.storage.postgres_repo import PostgresRepo
+from lloyds_digest.ai.costing import compute_cost_usd
 
 
 PROMPT_TEMPLATE = """You are my LinkedIn editor for the London Lloyd’s Market News Digest.
@@ -210,9 +212,16 @@ def _generate_with_openai(prompt: str) -> str:
         body["temperature"] = 0.3
     if service_tier:
         body["service_tier"] = service_tier
-    timeout = float(os.environ.get("OPENAI_TIMEOUT", "120"))
-    for attempt in range(1, 4):
+    timeout = float(os.environ.get("OPENAI_LINKEDIN_TIMEOUT", "600"))
+    max_attempts = int(os.environ.get("OPENAI_LINKEDIN_RETRIES", "3"))
+    for attempt in range(1, max_attempts + 1):
         try:
+            print(
+                f"OpenAI request start (attempt {attempt}/{max_attempts}) "
+                f"model={model} timeout_s={int(timeout)}",
+                flush=True,
+            )
+            started = time.time()
             with httpx.Client(timeout=timeout) as client:
                 resp = client.post(url, headers=headers, json=body)
                 if resp.status_code >= 500:
@@ -221,14 +230,111 @@ def _generate_with_openai(prompt: str) -> str:
                     raise RuntimeError(f"OpenAI error {resp.status_code}: {resp.text}")
                 data = resp.json()
             content = data["choices"][0]["message"]["content"]
-            return content.strip()
+            output_text = content.strip()
+            elapsed = time.time() - started
+            print(f"OpenAI request done in {elapsed:.1f}s", flush=True)
+            _record_llm_usage_and_cost(
+                model=model,
+                prompt=prompt,
+                output_text=output_text,
+                service_tier=service_tier or None,
+            )
+            return output_text
         except Exception as exc:
-            if attempt == 3:
+            if attempt == max_attempts:
                 raise
             sleep_s = 2**attempt
             print(f"OpenAI call failed (attempt {attempt}): {exc}. Retrying in {sleep_s}s...")
             time.sleep(sleep_s)
     return ""
+
+
+def _record_llm_usage_and_cost(
+    model: str,
+    prompt: str,
+    output_text: str,
+    service_tier: str | None,
+) -> None:
+    tokens_prompt = _estimate_tokens(prompt)
+    tokens_completion = _estimate_tokens(output_text)
+    try:
+        dsn = _build_postgres_dsn_from_env()
+    except Exception:
+        return
+    try:
+        postgres = PostgresRepo(dsn)
+        started_at = datetime.now()
+        postgres.insert_llm_usage(
+            run_id=None,
+            candidate_id=None,
+            stage="render_linkedin",
+            model=model,
+            prompt_version="v1",
+            cached=False,
+            started_at=started_at,
+            ended_at=started_at,
+            latency_ms=0,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            metadata={"program": "render_linkedin_post.py"},
+        )
+        cost = compute_cost_usd(
+            model=model,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            service_tier=service_tier,
+        )
+        if cost is None:
+            return
+        input_cost, output_cost, total_cost = cost
+        postgres.insert_llm_cost_call(
+            run_id=None,
+            candidate_id=None,
+            stage="render_linkedin",
+            provider="openai",
+            model=model,
+            service_tier=service_tier,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            cost_input_usd=input_cost,
+            cost_output_usd=output_cost,
+            cost_total_usd=total_cost,
+            metadata={"program": "render_linkedin_post.py"},
+        )
+        usage_date = datetime.now().date().isoformat()
+        postgres.upsert_llm_cost_stage_daily(
+            usage_date=usage_date,
+            stage="render_linkedin",
+            provider="openai",
+            model=model,
+            service_tier=service_tier,
+            calls=1,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            cost_total_usd=total_cost,
+        )
+    except Exception:
+        return
+
+
+def _estimate_tokens(text: str) -> int:
+    if not text:
+        return 0
+    return max(1, len(text) // 4)
+
+
+def _build_postgres_dsn_from_env() -> str:
+    required = ["POSTGRES_HOST", "POSTGRES_PORT", "POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD"]
+    missing = [key for key in required if not os.environ.get(key)]
+    if missing:
+        raise RuntimeError(f"Missing Postgres env vars: {', '.join(missing)}")
+    return (
+        f"host={os.environ['POSTGRES_HOST']} "
+        f"port={os.environ['POSTGRES_PORT']} "
+        f"dbname={os.environ['POSTGRES_DB']} "
+        f"user={os.environ['POSTGRES_USER']} "
+        f"password={os.environ['POSTGRES_PASSWORD']}"
+    )
 
 
 if __name__ == "__main__":

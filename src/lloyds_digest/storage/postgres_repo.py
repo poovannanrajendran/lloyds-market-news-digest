@@ -387,8 +387,94 @@ class PostgresRepo:
                         metadata_json,
                     ),
                 )
-                conn.commit()
+            conn.commit()
 
+    def insert_llm_cost_call(
+        self,
+        run_id: str | None,
+        candidate_id: str | None,
+        stage: str,
+        provider: str,
+        model: str,
+        service_tier: str | None,
+        tokens_prompt: int,
+        tokens_completion: int,
+        cost_input_usd: float,
+        cost_output_usd: float,
+        cost_total_usd: float,
+        metadata: dict | None = None,
+    ) -> None:
+        sql = """
+            INSERT INTO llm_cost_calls (
+                run_id, candidate_id, stage, provider, model, service_tier,
+                tokens_prompt, tokens_completion, cost_input_usd, cost_output_usd, cost_total_usd, metadata
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        metadata_json = json.dumps(metadata or {})
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (
+                        run_id,
+                        candidate_id,
+                        stage,
+                        provider,
+                        model,
+                        service_tier,
+                        tokens_prompt,
+                        tokens_completion,
+                        cost_input_usd,
+                        cost_output_usd,
+                        cost_total_usd,
+                        metadata_json,
+                    ),
+                )
+            conn.commit()
+
+    def upsert_llm_cost_stage_daily(
+        self,
+        usage_date: str,
+        stage: str,
+        provider: str,
+        model: str,
+        service_tier: str | None,
+        calls: int,
+        tokens_prompt: int,
+        tokens_completion: int,
+        cost_total_usd: float,
+    ) -> None:
+        sql = """
+            INSERT INTO llm_cost_stage_daily (
+                usage_date, stage, provider, model, service_tier,
+                calls, tokens_prompt, tokens_completion, cost_total_usd
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (usage_date, stage, provider, model, service_tier)
+            DO UPDATE SET
+                calls = llm_cost_stage_daily.calls + EXCLUDED.calls,
+                tokens_prompt = llm_cost_stage_daily.tokens_prompt + EXCLUDED.tokens_prompt,
+                tokens_completion = llm_cost_stage_daily.tokens_completion + EXCLUDED.tokens_completion,
+                cost_total_usd = llm_cost_stage_daily.cost_total_usd + EXCLUDED.cost_total_usd
+        """
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (
+                        usage_date,
+                        stage,
+                        provider,
+                        model,
+                        service_tier,
+                        calls,
+                        tokens_prompt,
+                        tokens_completion,
+                        cost_total_usd,
+                    ),
+                )
+            conn.commit()
     def insert_digest(
         self,
         run_date: date,
