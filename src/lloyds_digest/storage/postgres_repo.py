@@ -475,6 +475,37 @@ class PostgresRepo:
                     ),
                 )
             conn.commit()
+
+    def insert_run_phase_timing(
+        self,
+        run_id: str,
+        phase: str,
+        duration_ms: int,
+        started_at: datetime | None = None,
+        ended_at: datetime | None = None,
+        metadata: dict | None = None,
+    ) -> None:
+        sql = """
+            INSERT INTO run_phase_timings (
+                run_id, phase, started_at, ended_at, duration_ms, metadata
+            )
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        metadata_json = json.dumps(metadata or {})
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    sql,
+                    (
+                        run_id,
+                        phase,
+                        started_at,
+                        ended_at,
+                        duration_ms,
+                        metadata_json,
+                    ),
+                )
+            conn.commit()
     def insert_digest(
         self,
         run_date: date,

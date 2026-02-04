@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+STARTED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT_DIR="$ROOT_DIR/output"
@@ -71,3 +72,6 @@ PY
 git add docs
 git commit -m "publish: $(date +%Y-%m-%d)" || true
 git push
+
+ENDED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+python scripts/log_phase_timing.py --phase publish_pages --started-at "$STARTED_AT" --ended-at "$ENDED_AT" || true

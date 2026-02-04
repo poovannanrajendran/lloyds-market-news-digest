@@ -52,6 +52,7 @@ def main() -> None:
     chunk_size = int(os.environ.get("DIGEST_CHUNK_SIZE", str(args.chunk_size)))
     chunks = list(_chunk_items(items, chunk_by=chunk_by, chunk_size=chunk_size))
 
+    render_start = datetime.now(timezone.utc)
     output = _run_provider_chunks(
         "chatgpt",
         chunks=chunks,
@@ -80,6 +81,7 @@ def main() -> None:
     digest_path.write_text(digest_html, encoding="utf-8")
     _ensure_logo_asset(output_dir)
     print(f"Wrote {digest_path}")
+    _log_phase_timing("render_html", render_start, datetime.now(timezone.utc))
 
 
 def _parse_args() -> argparse.Namespace:
@@ -294,10 +296,11 @@ def _record_llm_usage(
         return
     try:
         postgres = PostgresRepo(dsn)
+        run_id = _latest_run_id(postgres)
         tokens_prompt = max(1, input_size // 4) if input_size else None
         tokens_completion = max(1, output_size // 4) if output_size else None
         postgres.insert_llm_usage(
-            run_id=None,
+            run_id=run_id,
             candidate_id=None,
             stage=f"render_digest:{provider}",
             model=model,
@@ -350,8 +353,9 @@ def _record_llm_cost(
         return
     try:
         postgres = PostgresRepo(dsn)
+        run_id = _latest_run_id(postgres)
         postgres.insert_llm_cost_call(
-            run_id=None,
+            run_id=run_id,
             candidate_id=None,
             stage=stage,
             provider="openai",
@@ -384,6 +388,40 @@ def _estimate_tokens(size: int) -> int | None:
     if not size:
         return None
     return max(1, size // 4)
+
+
+def _log_phase_timing(phase: str, started_at: datetime, ended_at: datetime) -> None:
+    try:
+        dsn = build_postgres_dsn_from_env()
+    except Exception:
+        return
+    try:
+        postgres = PostgresRepo(dsn)
+        run_id = _latest_run_id(postgres)
+        if not run_id:
+            return
+        duration_ms = int((ended_at - started_at).total_seconds() * 1000)
+        postgres.insert_run_phase_timing(
+            run_id=run_id,
+            phase=phase,
+            duration_ms=duration_ms,
+            started_at=started_at,
+            ended_at=ended_at,
+            metadata={"program": "render_digest_llm_compare.py"},
+        )
+    except Exception:
+        return
+
+
+def _latest_run_id(postgres: PostgresRepo) -> str | None:
+    sql = "SELECT run_id FROM runs ORDER BY started_at DESC LIMIT 1"
+    with postgres._connect() as conn:
+        with conn.cursor() as cur:
+            cur.execute(sql)
+            row = cur.fetchone()
+            if not row:
+                return None
+            return row[0]
 
 
 def _chunk_items(

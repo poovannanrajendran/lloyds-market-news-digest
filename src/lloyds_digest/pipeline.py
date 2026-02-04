@@ -73,6 +73,7 @@ def run_pipeline(
     if keyword_rules.terms:
         logger(f"Loaded relevance keywords: {len(keyword_rules.terms)} terms")
 
+    phase_start = _utc_now()
     try:
         sources = load_sources_csv(sources_path)
     except Exception as exc:
@@ -98,6 +99,15 @@ def run_pipeline(
 
     source_urls = {canonicalise_url(source.url) for source in sources}
     candidates = _discover_candidates(sources, postgres, mongo, run_id, detail, warnings)
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="source_discovery",
+        started_at=phase_start,
+        ended_at=_utc_now(),
+        metadata={"sources": len(sources), "candidates": len(candidates)},
+    )
+    phase_start = _utc_now()
     if max_candidates is not None and max_candidates > 0:
         if len(candidates) > max_candidates:
             warnings.append(
@@ -109,6 +119,14 @@ def run_pipeline(
         run_date,
         days=config.filters.max_age_days,
         log=detail,
+    )
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="prefilter_hygiene",
+        started_at=phase_start,
+        ended_at=_utc_now(),
+        metadata={"candidates_after": len(candidates)},
     )
     metrics.total_candidates = len(candidates)
 
@@ -130,6 +148,14 @@ def run_pipeline(
     )
 
     digest_items: list[DigestItem] = []
+    timing_totals = {
+        "fetch_ms": 0,
+        "extract_ms": 0,
+        "relevance_gate_ms": 0,
+        "llm_relevance_ms": 0,
+        "llm_summarise_ms": 0,
+        "llm_classify_ms": 0,
+    }
     fetch_results = []
     total_candidates = len(candidates)
     for idx, candidate in enumerate(candidates, start=1):
@@ -148,7 +174,9 @@ def run_pipeline(
                     detail(f"[{idx}/{total_candidates}] Skip existing article {candidate.url}")
                     continue
         detail(f"[{idx}/{total_candidates}] Fetching {candidate.url}")
+        fetch_start = time.time()
         result = fetcher.fetch(candidate.url, cache_backend)
+        timing_totals["fetch_ms"] += int((time.time() - fetch_start) * 1000)
         fetch_results.append(result)
         if result.error or not result.content:
             metrics.errors += 1
@@ -164,7 +192,9 @@ def run_pipeline(
         metrics.fetched += 1
         html = result.content.decode("utf-8", errors="ignore") if isinstance(result.content, bytes) else result.content
         detail(f"[{idx}/{total_candidates}] Extracting {candidate.url}")
+        extract_start = time.time()
         article = extraction_engine.run(candidate, html, postgres=postgres, mongo=mongo)
+        timing_totals["extract_ms"] += int((time.time() - extract_start) * 1000)
         if article is None:
             detail(f"[{idx}/{total_candidates}] No extractable content {candidate.url}")
             continue
@@ -182,6 +212,7 @@ def run_pipeline(
                 keyword_rules=keyword_rules,
                 keyword_min_score=config.filters.keyword_min_score,
                 config=config,
+                timing_totals=timing_totals,
             )
         )
 
@@ -197,12 +228,21 @@ def run_pipeline(
     if config.output.enabled:
         output_dir = output_dir_override or config.output.directory
         try:
+            render_start = _utc_now()
             output_path = render_digest(
                 digest_items,
                 run_date=run_date,
                 output_dir=output_dir,
                 config=DigestConfig(),
                 postgres=postgres,
+            )
+            _record_phase_timing(
+                postgres,
+                run_id,
+                phase="render",
+                started_at=render_start,
+                ended_at=_utc_now(),
+                metadata={"items": len(digest_items)},
             )
         except Exception as exc:
             warnings.append(f"Failed to render digest. ({exc})")
@@ -212,6 +252,55 @@ def run_pipeline(
         if failures:
             for reason, count in failures.items():
                 warnings.append(f"{count} fetch failures: {reason}")
+
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="fetch",
+        started_at=None,
+        ended_at=None,
+        duration_ms=timing_totals["fetch_ms"],
+    )
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="extract_clean",
+        started_at=None,
+        ended_at=None,
+        duration_ms=timing_totals["extract_ms"],
+    )
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="relevance_gate",
+        started_at=None,
+        ended_at=None,
+        duration_ms=timing_totals["relevance_gate_ms"],
+    )
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="llm_relevance",
+        started_at=None,
+        ended_at=None,
+        duration_ms=timing_totals["llm_relevance_ms"],
+    )
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="summarise",
+        started_at=None,
+        ended_at=None,
+        duration_ms=timing_totals["llm_summarise_ms"],
+    )
+    _record_phase_timing(
+        postgres,
+        run_id,
+        phase="classify",
+        started_at=None,
+        ended_at=None,
+        duration_ms=timing_totals["llm_classify_ms"],
+    )
 
     summary = compute_run_summary(metrics)
     logger(
@@ -333,6 +422,7 @@ def _article_to_items(
     keyword_rules: KeywordRules,
     keyword_min_score: float,
     config: AppConfig,
+    timing_totals: dict[str, int],
 ) -> list[DigestItem]:
     topics = candidate.metadata.get("topics") if candidate.metadata else None
     topic = ", ".join(topics) if isinstance(topics, list) and topics else "General"
@@ -352,6 +442,7 @@ def _article_to_items(
     summary = None
     why_it_matters = None
     if keyword_rules.terms:
+        gate_start = time.time()
         gate_text = compact_text(article.title or candidate.title, raw_text)
         excluded = keyword_rules.is_excluded(gate_text)
         if excluded:
@@ -366,6 +457,7 @@ def _article_to_items(
                 matches=excluded,
                 text=raw_text,
             )
+            timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
             return []
         min_score = float(
             os.environ.get(
@@ -391,6 +483,7 @@ def _article_to_items(
                     matches=matches,
                     text=raw_text,
                 )
+                timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
                 return []
         if config.filters.require_core_combo:
             combo_groups = [
@@ -414,6 +507,7 @@ def _article_to_items(
                     matches=matches,
                     text=raw_text,
                 )
+                timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
                 return []
         if score_hint < min_score:
             log(f"[gate] keyword score {score_hint:.2f} below {min_score:.2f}: {candidate.url}")
@@ -427,8 +521,10 @@ def _article_to_items(
                 matches=matches,
                 text=raw_text,
             )
+            timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
             return []
         log(f"[gate] keyword score {score_hint:.2f} matched {len(matches)} terms")
+        timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
     if _llm_enabled():
         text = _trim_text(raw_text)
         log(f"[llm] relevance {candidate.url}")
@@ -446,6 +542,7 @@ def _article_to_items(
             warnings=warnings,
         )
         if relevance_result:
+            timing_totals["llm_relevance_ms"] += int(relevance_result.get("latency_ms") or 0)
             parsed = relevance_result.get("parsed") or {}
             why_it_matters = parsed.get("reason")
             confidence = parsed.get("confidence")
@@ -483,6 +580,7 @@ def _article_to_items(
             warnings=warnings,
         )
         if classify_result:
+            timing_totals["llm_classify_ms"] += int(classify_result.get("latency_ms") or 0)
             parsed = classify_result.get("parsed") or {}
             label = parsed.get("label")
             if isinstance(label, str) and label.strip():
@@ -504,6 +602,7 @@ def _article_to_items(
             warnings=warnings,
         )
         if summarise_result:
+            timing_totals["llm_summarise_ms"] += int(summarise_result.get("latency_ms") or 0)
             parsed = summarise_result.get("parsed") or {}
             bullets = parsed.get("bullets")
             if isinstance(bullets, list) and bullets:
@@ -608,6 +707,8 @@ def _run_llm_stage(
         except Exception as exc:
             warnings.append(f"Failed to record llm_usage for {stage}: {exc}")
 
+    if isinstance(result, dict):
+        result["latency_ms"] = latency_ms
     return result
 
 
@@ -618,6 +719,34 @@ def _llm_enabled() -> bool:
 
 def _llm_model(env_key: str, default: str) -> str:
     return os.environ.get(env_key, default)
+
+
+def _record_phase_timing(
+    postgres: Optional[PostgresRepo],
+    run_id: str,
+    phase: str,
+    started_at: datetime | None,
+    ended_at: datetime | None,
+    metadata: dict | None = None,
+    duration_ms: int | None = None,
+) -> None:
+    if postgres is None:
+        return
+    if duration_ms is None:
+        if started_at is None or ended_at is None:
+            return
+        duration_ms = int((ended_at - started_at).total_seconds() * 1000)
+    try:
+        postgres.insert_run_phase_timing(
+            run_id=run_id,
+            phase=phase,
+            duration_ms=duration_ms,
+            started_at=started_at,
+            ended_at=ended_at,
+            metadata=metadata,
+        )
+    except Exception:
+        return
 
 
 def _record_llm_cost(

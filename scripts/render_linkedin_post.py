@@ -5,7 +5,7 @@ import json
 import os
 import re
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -87,6 +87,7 @@ def main() -> None:
         highlights="\n".join(parsed["highlights"]) or "N/A",
     )
 
+    render_start = datetime.now(timezone.utc)
     response = _generate_with_openai(prompt)
     if not response:
         print("Failed to generate LinkedIn post. Check OPENAI_API_KEY.")
@@ -99,6 +100,7 @@ def main() -> None:
     out_path = output_dir / f"linkedin_post_{digest_date}.txt"
     out_path.write_text(response.strip() + "\n", encoding="utf-8")
     print(f"\nWrote {out_path}")
+    _log_phase_timing("render_linkedin", render_start, datetime.now(timezone.utc))
 
 
 def _parse_args() -> argparse.Namespace:
@@ -263,9 +265,10 @@ def _record_llm_usage_and_cost(
         return
     try:
         postgres = PostgresRepo(dsn)
+        run_id = _latest_run_id(postgres)
         started_at = datetime.now()
         postgres.insert_llm_usage(
-            run_id=None,
+            run_id=run_id,
             candidate_id=None,
             stage="render_linkedin",
             model=model,
@@ -288,7 +291,7 @@ def _record_llm_usage_and_cost(
             return
         input_cost, output_cost, total_cost = cost
         postgres.insert_llm_cost_call(
-            run_id=None,
+            run_id=run_id,
             candidate_id=None,
             stage="render_linkedin",
             provider="openai",
@@ -315,6 +318,40 @@ def _record_llm_usage_and_cost(
         )
     except Exception:
         return
+
+
+def _log_phase_timing(phase: str, started_at: datetime, ended_at: datetime) -> None:
+    try:
+        dsn = _build_postgres_dsn_from_env()
+    except Exception:
+        return
+    try:
+        postgres = PostgresRepo(dsn)
+        run_id = _latest_run_id(postgres)
+        if not run_id:
+            return
+        duration_ms = int((ended_at - started_at).total_seconds() * 1000)
+        postgres.insert_run_phase_timing(
+            run_id=run_id,
+            phase=phase,
+            duration_ms=duration_ms,
+            started_at=started_at,
+            ended_at=ended_at,
+            metadata={"program": "render_linkedin_post.py"},
+        )
+    except Exception:
+        return
+
+
+def _latest_run_id(postgres: PostgresRepo) -> str | None:
+    sql = "SELECT run_id FROM runs ORDER BY started_at DESC LIMIT 1"
+    with postgres._connect() as conn:
+        with conn.cursor() as cur:
+            cur.execute(sql)
+            row = cur.fetchone()
+            if not row:
+                return None
+            return row[0]
 
 
 def _estimate_tokens(text: str) -> int:

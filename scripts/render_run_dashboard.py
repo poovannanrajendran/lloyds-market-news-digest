@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import os
 from datetime import datetime, timedelta, timezone
@@ -157,7 +158,23 @@ def _fetch_rejections(run_id: str) -> dict[str, int] | None:
         return None
 
 
-def _fetch_render_stats(run_started_at: datetime, run_ended_at: datetime) -> dict[str, Any]:
+def _fetch_render_stats(run_id: str, run_started_at: datetime, run_ended_at: datetime) -> dict[str, Any]:
+    sql = """
+        SELECT stage, model, COUNT(*), AVG(latency_ms), SUM(tokens_prompt), SUM(tokens_completion)
+        FROM llm_usage
+        WHERE (stage LIKE 'render_%%' OR stage LIKE 'render_digest:%%')
+          AND run_id = %s
+        GROUP BY stage, model
+        ORDER BY MAX(started_at) DESC
+    """
+    rows = []
+    with psycopg.connect(_dsn_from_env()) as conn:
+        with conn.cursor() as cur:
+            cur.execute(sql, (run_id,))
+            for row in cur.fetchall():
+                rows.append(row)
+    if rows:
+        return {"rows": rows}
     sql = """
         SELECT stage, model, COUNT(*), AVG(latency_ms), SUM(tokens_prompt), SUM(tokens_completion)
         FROM llm_usage
@@ -166,7 +183,6 @@ def _fetch_render_stats(run_started_at: datetime, run_ended_at: datetime) -> dic
         GROUP BY stage, model
         ORDER BY MAX(started_at) DESC
     """
-    rows = []
     with psycopg.connect(_dsn_from_env()) as conn:
         with conn.cursor() as cur:
             cur.execute(sql, (run_started_at, run_ended_at))
@@ -188,13 +204,51 @@ def _fetch_costs(run_date: datetime.date) -> list[tuple[Any, ...]]:
             return cur.fetchall()
 
 
+def _fetch_phase_timings(run_id: str) -> list[tuple[Any, ...]]:
+    sql = """
+        SELECT phase, started_at, ended_at, duration_ms
+        FROM run_phase_timings
+        WHERE run_id = %s
+        ORDER BY started_at NULLS LAST, phase
+    """
+    with psycopg.connect(_dsn_from_env()) as conn:
+        with conn.cursor() as cur:
+            cur.execute(sql, (run_id,))
+            return cur.fetchall()
+
+
+def _fetch_attempt_errors(run_id: str, limit: int = 25) -> list[tuple[Any, ...]]:
+    sql = """
+        SELECT
+            a.kind,
+            a.method,
+            a.status,
+            a.error,
+            c.url,
+            c.source_id,
+            a.started_at
+        FROM attempts a
+        JOIN candidates c ON c.candidate_id = a.candidate_id
+        WHERE c.metadata->>'run_id' = %s
+          AND (a.status = 'ERROR' OR a.error IS NOT NULL)
+        ORDER BY a.started_at DESC
+        LIMIT %s
+    """
+    with psycopg.connect(_dsn_from_env()) as conn:
+        with conn.cursor() as cur:
+            cur.execute(sql, (run_id, limit))
+            return cur.fetchall()
+
+
 def _render_run_page(run: dict[str, Any], runs: list[dict[str, Any]], config) -> str:
     counts = _run_counts(run, config)
     rejections = _fetch_rejections(run["run_id"])
     started_at = run["started_at"]
     ended_at = run["ended_at"] or datetime.now(timezone.utc)
-    render_stats = _fetch_render_stats(started_at, ended_at)
+    render_stats = _fetch_render_stats(run["run_id"], started_at, ended_at)
     costs = _fetch_costs(run["run_date"])
+    phase_rows = _fetch_phase_timings(run["run_id"])
+    attempt_errors = _fetch_attempt_errors(run["run_id"])
 
     metrics = run.get("metrics") or {}
     llm_counts = counts["llm_counts"]
@@ -220,6 +274,20 @@ def _render_run_page(run: dict[str, Any], runs: list[dict[str, Any]], config) ->
             "</tr>"
         )
 
+    error_rows = ""
+    for kind, method, status, error, url, source_id, started_at_err in attempt_errors:
+        error_rows += (
+            "<tr>"
+            f"<td>{html.escape(str(kind))}</td>"
+            f"<td>{html.escape(str(method))}</td>"
+            f"<td>{html.escape(str(status))}</td>"
+            f"<td>{html.escape(str(error or ''))}</td>"
+            f"<td>{html.escape(str(url or ''))}</td>"
+            f"<td>{html.escape(str(source_id))}</td>"
+            f"<td>{_format_dt(started_at_err) if started_at_err else ''}</td>"
+            "</tr>"
+        )
+
     cost_rows = ""
     if costs:
         for usage_date, stage, provider, model, service_tier, calls, total in costs:
@@ -236,6 +304,20 @@ def _render_run_page(run: dict[str, Any], runs: list[dict[str, Any]], config) ->
             )
     else:
         cost_rows = "<tr><td colspan='7'>No cost data for this run date.</td></tr>"
+
+    phase_table_rows = ""
+    if phase_rows:
+        for phase, p_start, p_end, duration_ms in phase_rows:
+            phase_table_rows += (
+                "<tr>"
+                f"<td>{phase}</td>"
+                f"<td>{_format_dt(p_start) if p_start else ''}</td>"
+                f"<td>{_format_dt(p_end) if p_end else ''}</td>"
+                f"<td>{_format_duration_ms(duration_ms)}</td>"
+                "</tr>"
+            )
+    else:
+        phase_table_rows = "<tr><td colspan='4'>No phase timing data found.</td></tr>"
 
     run_list = "".join(
         f"<option value='run_{r['run_id']}.html'>{r['run_date']} · {r['started_at'].strftime('%H:%M:%S')}</option>"
@@ -270,6 +352,9 @@ def _render_run_page(run: dict[str, Any], runs: list[dict[str, Any]], config) ->
     table {{ width:100%; border-collapse:collapse; font-size:13px; }}
     th, td {{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }}
     th {{ background:#f2f5f8; }}
+    details.collapsible {{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:8px 12px; box-shadow:0 8px 16px rgba(11,31,59,0.05); }}
+    details.collapsible summary {{ cursor:pointer; font-weight:600; color:var(--teal); margin:4px 0 8px; }}
+    details.collapsible[open] summary {{ margin-bottom:12px; }}
     .section {{ margin-top:24px; }}
     .section h2 {{ margin-bottom:10px; font-size:18px; }}
   </style>
@@ -337,6 +422,23 @@ def _render_run_page(run: dict[str, Any], runs: list[dict[str, Any]], config) ->
         {cost_rows}
       </table>
     </div>
+
+    <div class="section">
+      <h2>Run Phase Timings</h2>
+      <table>
+        <tr><th>Phase</th><th>Started</th><th>Ended</th><th>Duration</th></tr>
+        {phase_table_rows}
+      </table>
+    </div>
+    <div class="section">
+      <details class="collapsible">
+        <summary>Recent Errors</summary>
+        <table>
+          <tr><th>Kind</th><th>Method</th><th>Status</th><th>Error</th><th>URL</th><th>Source</th><th>Started</th></tr>
+          {error_rows or "<tr><td colspan='7'>No error details found.</td></tr>"}
+        </table>
+      </details>
+    </div>
   </div>
 </body>
 </html>
@@ -393,6 +495,16 @@ def _format_dt(value: datetime) -> str:
 
 def _format_duration(delta: timedelta) -> str:
     total_seconds = int(delta.total_seconds())
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+
+def _format_duration_ms(duration_ms: int | None) -> str:
+    if duration_ms is None:
+        return ""
+    total_seconds = int(duration_ms // 1000)
     hours = total_seconds // 3600
     minutes = (total_seconds % 3600) // 60
     seconds = total_seconds % 60
