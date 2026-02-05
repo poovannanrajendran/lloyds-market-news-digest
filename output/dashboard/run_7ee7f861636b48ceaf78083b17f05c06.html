@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Digest Run Dashboard · 2026-02-02</title>
+  <style>
+    :root {
+      --ink:#0b1f3b; --slate:#5b6b7a; --teal:#1f7a8c; --sand:#f6f4f0; --line:#d7dee6;
+      --accent:#c9a227;
+    }
+    body { margin:0; font-family:"Source Sans 3","Segoe UI",Arial,sans-serif; background:var(--sand); color:var(--ink); }
+    .wrap { max-width:1200px; margin:0 auto; padding:32px 24px 60px; }
+    header { background:linear-gradient(120deg,#0b1f3b 0%,#12345a 45%,#1f7a8c 100%); color:#fff; padding:24px 28px; border-radius:16px; }
+    header h1 { margin:0 0 6px; font-size:24px; }
+    header .meta { color:rgba(255,255,255,0.75); }
+    .controls { margin-top:14px; }
+    select { padding:8px 10px; border-radius:8px; border:1px solid var(--line); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:20px; }
+    .card { background:#fff; border-radius:14px; padding:16px; border:1px solid var(--line); box-shadow:0 8px 16px rgba(11,31,59,0.05); }
+    .card h2 { margin-top:0; font-size:16px; color:var(--teal); }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+    th { background:#f2f5f8; }
+    details.collapsible { background:#fff; border:1px solid var(--line); border-radius:12px; padding:8px 12px; box-shadow:0 8px 16px rgba(11,31,59,0.05); }
+    details.collapsible summary { cursor:pointer; font-weight:600; color:var(--teal); margin:4px 0 8px; }
+    details.collapsible[open] summary { margin-bottom:12px; }
+    .section { margin-top:24px; }
+    .section h2 { margin-bottom:10px; font-size:18px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Lloyd’s Market Digest · Run Dashboard</h1>
+      <div class="meta">Run date: 2026-02-02 · Started: 2026-Feb-02 09:16:24 · Ended: 2026-Feb-02 09:21:20 · Duration: 00:04:55</div>
+      <div class="controls">
+        <label for="runSelect">Other runs:</label>
+        <select id="runSelect" onchange="if(this.value) window.location.href=this.value;">
+          <option value='run_efc0202c249b4ffa82a1fa93f40a2e6e.html'>2026-02-05 · 08:29:37</option><option value='run_cdb1be1d94f7492fbb695b21f0329940.html'>2026-02-04 · 13:05:20</option><option value='run_744d8208df82465eb8b11fe0249bdb47.html'>2026-02-03 · 10:11:27</option><option value='run_7ee7f861636b48ceaf78083b17f05c06.html'>2026-02-02 · 09:16:24</option><option value='run_61754dce96cd44bc922df0fbbb36bd7d.html'>2026-02-01 · 21:44:07</option><option value='run_75b5c80854df49d8b6189acd3fc1181e.html'>2026-01-31 · 22:59:29</option><option value='run_2e0597a0a96643e9adf3d10a61fb1084.html'>2026-01-30 · 11:15:10</option><option value='run_b477ff563bb34442948e0a0ea7b7bdb5.html'>2026-01-29 · 13:10:30</option><option value='run_bc905192b4e8483faf9c6ef17fa5d34c.html'>2026-01-28 · 10:36:48</option><option value='run_69c486f2a8784dd1956608d99ff82f6e.html'>2026-01-27 · 22:15:56</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Sources & Candidates</h2>
+        <p>Total sources: 31</p>
+        <p>Total candidates: 160</p>
+        <p>Filtered by age: 1</p>
+      </div>
+      <div class="card">
+        <h2>Fetch & Extract</h2>
+        <p>Fetched: 99</p>
+        <p>Extracted: 23</p>
+        <p>Articles created: 23</p>
+      </div>
+      <div class="card">
+        <h2>LLM Stages</h2>
+        <p>Relevance calls: 2</p>
+        <p>Classify calls: 2</p>
+        <p>Summarise calls: 2</p>
+        <p>Good articles selected: 2</p>
+      </div>
+      <div class="card">
+        <h2>Errors</h2>
+        <p>Total errors: 2</p>
+        <p>Notes: {}</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Rejections by Stage</h2>
+      <table>
+        <tr><th>Stage</th><th>Count</th></tr>
+        <tr><td>keyword_core</td><td>20</td></tr><tr><td>keyword_exclude</td><td>1</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Render Stats (HTML + LinkedIn)</h2>
+      <table>
+        <tr><th>Stage</th><th>Model</th><th>Calls</th><th>Avg Latency (ms)</th><th>Prompt Tokens</th><th>Completion Tokens</th></tr>
+        <tr><td colspan='6'>No render stats found.</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Cost Summary</h2>
+      <table>
+        <tr><th>Date</th><th>Stage</th><th>Provider</th><th>Model</th><th>Tier</th><th>Calls</th><th>Total Cost</th></tr>
+        <tr><td colspan='7'>No cost data for this run date.</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Run Phase Timings</h2>
+      <table>
+        <tr><th>Phase</th><th>Started</th><th>Ended</th><th>Duration</th></tr>
+        <tr><td colspan='4'>No phase timing data found.</td></tr>
+      </table>
+    </div>
+    <div class="section">
+      <details class="collapsible">
+        <summary>Recent Errors</summary>
+        <table>
+          <tr><th>Kind</th><th>Method</th><th>Status</th><th>Error</th><th>URL</th><th>Source</th><th>Started</th></tr>
+          <tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302360097?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:23</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302369322?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:21</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302346186?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:20</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302356928?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:18</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302357484?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:17</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302369598?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:13</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302358593?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:12</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302368395?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:04</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302369275?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:03</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302362051?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:20:01</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302270853?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:59</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302292741?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:58</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302315469?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:56</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302344992?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:54</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302311320?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:53</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302340082?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:47</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302331766?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:45</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302318882?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:44</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302372528?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:42</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302369322?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:41</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302127335?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:39</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302128570?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:38</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302173819?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:36</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302253962?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:35</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1302113997?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Feb-02 09:19:33</td></tr>
+        </table>
+      </details>
+    </div>
+  </div>
+</body>
+</html>
