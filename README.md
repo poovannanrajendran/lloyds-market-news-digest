@@ -1,231 +1,116 @@
 # Lloyd’s Market News Digest
 
-Local-first news discovery + extraction + AI scoring + HTML/email digest for London Lloyd’s Market.
+Local-first news discovery + extraction + AI scoring + HTML/email digest for the London Lloyd’s Market.
 
-## Phase 01 — Quickstart
-- Conda env: `314` (Python 3.14)
-- Copy `.env.example` -> `.env` and set DB + SMTP + Ollama values
-- Ensure `config.yaml` exists in the repo root (a minimal sample is included)
+## Why This Exists
+The Lloyd’s market depends on timely, high-signal updates across insurers, brokers, regulators, and the broader financial press. This app automates discovery, extraction, and summarisation so teams can stay current without manually scanning dozens of sources daily.
 
-### Run the CLI (Phase 01)
-```bash
-conda activate 314
-python -m lloyds_digest --help
-python -m lloyds_digest run --now
-python -m lloyds_digest run --run-date 2026-01-26
-python -m lloyds_digest run --now --max-candidates 20
-python -m lloyds_digest run --now --limit-articles 20
-python -m lloyds_digest run --now --force-refresh --max-candidates 50
-python -m lloyds_digest run --now --max-urls 10
-python -m lloyds_digest run --now --max-urls 10 --max-candidates 50
-```
+## What It Serves
+- A repeatable daily digest of Lloyd’s market news.
+- A transparent, auditable pipeline with raw and processed data stored for review.
+- A local-first AI workflow with optional cloud models and budget controls.
 
-### Boilerplate filtering (optional)
-Generate per-domain/path boilerplate rules (15 URLs per template):
-```bash
-python scripts/analyze_boilerplate.py --samples 15 --output boilerplate.yaml
-```
-Ignore certain path prefixes:
-```bash
-python scripts/analyze_boilerplate.py --samples 15 --ignore-path-prefix /newsroom --ignore-path-prefix /careers
-```
+## Core Features
+- Source discovery (RSS + listing pages) with candidate de-duplication.
+- Robust HTTP fetching with retry and cache.
+- Multi-method extraction with audit logging and method learning.
+- AI relevance/classification/summarisation with cache and usage tracking.
+- HTML digest rendering (internal + public) with optional SMTP delivery.
+- Observability: run metrics, method health, and a local dashboard.
+- Publishing and social artifacts (GitHub Pages + LinkedIn assets).
 
-### Relevance keyword gating (optional)
-Provide a YAML keyword list and set a minimum score:
-```bash
-export LLOYDS_DIGEST_KEYWORDS_FILE=relevant_keywords.yaml
-export LLOYDS_DIGEST_KEYWORDS_MIN_SCORE=2.5
-```
+## Quick Start
+1. Create a Python environment named `314` and install dependencies.
+2. Copy `.env.example` to `.env` and fill in Postgres, Mongo, SMTP, and Ollama settings.
+3. Ensure `config.yaml` exists in the repo root (a minimal sample is included).
+4. Run a single digest:
+   ```bash
+   conda activate 314
+   python -m lloyds_digest run --now
+   ```
 
-### Recency filter
-Configure the max age in `config.yaml`:
-```yaml
-filters:
-  max_age_days: 7
-  keyword_min_score: 3.0
-  require_core_lloyds: true
-  require_core_combo: true
-  exclude_paths:
-    - /privacy
-    - /cookie
-    - /terms
-```
-
-### Verbose logging
-```bash
-python -m lloyds_digest run --now --verbose
-```
-
-### Internal run dashboard (local only)
-Generate an internal HTML dashboard from recent runs (not published):
-```bash
-python scripts/render_run_dashboard.py
-```
-Open `output/dashboard/index.html` in your browser.
-
-### LLM digest comparison (24h, render-only)
-Generate HTML outputs (ChatGPT + DeepSeek via Ollama) using the last 24 hours of already-extracted articles:
-```bash
-python scripts/render_digest_llm_compare.py
-```
-Outputs land in `output/` as:
-`digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_<deepseek-model>.html`
-
-Prompt text for each provider is configured in `config.yaml` under `llm_prompts`.
-```
-
-#### Provider options
-```bash
-python scripts/render_digest_llm_compare.py --provider local
-python scripts/render_digest_llm_compare.py --provider chatgpt
-python scripts/render_digest_llm_compare.py --provider deepseek
-```
-Default `all` runs ChatGPT + DeepSeek (local is opt-in).
-
-#### Chunking + retries (render-only)
-```bash
-python scripts/render_digest_llm_compare.py --chunk-by domain --chunk-size 15
-python scripts/render_digest_llm_compare.py --max-chunks 2
-```
-Env overrides:
-```bash
-export DIGEST_CHUNK_SIZE=15
-export DIGEST_CHUNK_RETRIES=2
-export DIGEST_MAX_PER_DOMAIN=5
-export EXEC_SUMMARY_MAX_CHARS=500
-```
-
-#### DeepSeek via Ollama
-Set the DeepSeek model separately if desired:
-```bash
-export OLLAMA_DEEPSEEK_MODEL=deepseek-v3.2:cloud
-```
-
-#### Highlight ordering + hygiene
-The render-only digest applies content hygiene and ordering before HTML output:
-- Filters common non-article URLs (subscribe, careers, tag/topic pages).
-- Scores likely articles using URL/date/title/excerpt signals.
-- Orders highlights: primary (Lloyd's) → secondary → regulatory → compliance → PRA → insurance → financial → other.
-- Caps highlights per domain (default 5).
-- Dedupe across sources by canonical URL or highly similar titles; keeps highest-scoring item.
-
-#### LinkedIn artifact (ChatGPT)
-Generate a LinkedIn-ready HTML (external footer, top 12 highlights by default, min 3 London Market items):
-```bash
-python scripts/render_digest_llm_compare.py --provider chatgpt --linkedin
-python scripts/render_digest_chatgpt_linkedin.py
-```
-Env overrides:
-```bash
-export LINKEDIN_MAX_ITEMS=12
-export LINKEDIN_MIN_LONDON=3
-```
-
-#### GitHub Pages publish (public digest)
-The render step now writes:
-- `output/digest_YYYY-MM-DD.html` (internal)
-- `output/digest_YYYY-MM-DD_public.html` (external)
-
-Publish the external digest to GitHub Pages:
-```bash
-python scripts/render_digest_llm_compare.py --provider chatgpt
-scripts/publish_github_pages.sh
-```
-Pages source: `main` branch, `/docs` folder.
-
-### Config overrides via env
-Use `LLOYDS_DIGEST__` with double underscores for nesting:
-```bash
-export LLOYDS_DIGEST__CACHE__ENABLED=true
-export LLOYDS_DIGEST__OUTPUT__DIRECTORY=output
-```
-
-## Phase 02 — Storage Layer
-### Dependencies
-```bash
-conda activate 314
-python -m pip install psycopg pymongo
-```
-
-### Postgres migrations
-```bash
-conda activate 314
-source .env
-scripts/db_init_postgres.sh
-```
-
-### Mongo indexes (Atlas or local)
-```bash
-conda activate 314
-source .env
-mongosh "$MONGODB_URI" scripts/db_init_mongo.js
-```
-
-### Smoke test connections
-```bash
-conda activate 314
-source .env
-python scripts/smoke_test_connections.py
-```
-
-## Phase 03 — CSV + RSS Discovery
-### Dependencies
-```bash
-conda activate 314
-python -m pip install feedparser httpx
-```
-
-### sources.csv format
-```
-source_type,domain,url,topics,page_type
-primary,insurancejournal.com,https://example.com/feed,Lloyd's;Marine,rss
-secondary,bloomberg.com,https://example.com/listing,Market Analysis,listing
-```
-
-## Phase 05 — Fetchers + Cache
-### Dependencies
-```bash
-conda activate 314
-python -m pip install tenacity
-```
-
-## Phase 06 — Extraction Engine
-### Dependencies (optional)
-```bash
-conda activate 314
-python -m pip install trafilatura readability-lxml beautifulsoup4
-```
-
-## Phase 07 — crawl4ai + Method Preferences
-### Dependencies (optional)
-```bash
-conda activate 314
-python -m pip install crawl4ai
-```
-
-## Phase 08 — AI Processing + Caching
-### Dependencies (optional)
-```bash
-conda activate 314
-python -m pip install ollama
-```
-
-## Phase 09 — Digest Renderer + Email
-SMTP uses the standard library `smtplib`; no extra dependencies required.
-
-## Phase 10 — Observability + Drift Reporting
-Outputs JSONL logs and includes Method Health section when failures exist.
-
-## Phase 11 — Ops Packaging + Scheduling
-### Quickstart
+## Daily Run (Scheduled)
+Use `scripts/run_daily.sh` for a standard daily run with environment loading.
 ```bash
 conda activate 314
 scripts/run_daily.sh
 ```
+Typical use is via `launchd` (macOS) or `cron` (Linux) using the templates in `scripts/` and guidance in `DAY2_OPS_RUNBOOK.md`.
 
-### Daily Ops (launchd)
+## Usage Steps
+### One-off run
 ```bash
-cp scripts/lloyds_digest.plist ~/Library/LaunchAgents/com.lloyds.digest.daily.plist
-launchctl load ~/Library/LaunchAgents/com.lloyds.digest.daily.plist
-launchctl start com.lloyds.digest.daily
+conda activate 314
+python -m lloyds_digest run --now
 ```
+
+### Limit candidates or sources
+```bash
+python -m lloyds_digest run --now --max-candidates 50
+python -m lloyds_digest run --now --max-sources 20
+```
+
+### Force refresh (ignore cache)
+```bash
+python -m lloyds_digest run --now --force-refresh
+```
+
+### Render digest comparison (LLM providers)
+```bash
+python scripts/render_digest_llm_compare.py
+```
+
+### LinkedIn artifacts
+```bash
+python scripts/render_digest_chatgpt_linkedin.py
+python scripts/render_linkedin_post.py
+```
+
+## Maintenance Steps
+- **Update sources**: edit `sources.csv` and re-run discovery.
+- **Rotate secrets**: update `.env` values (never commit).
+- **Database hygiene**: run `scripts/db_init_postgres.sh` and `scripts/db_init_mongo.js` when schema/index changes occur.
+- **Cache control**: disable cache via `LLOYDS_DIGEST__CACHE__ENABLED=false` for debugging.
+- **Model changes**: update prompt files in `src/lloyds_digest/ai/prompts/` and track changes in `CHANGELOG.md`.
+- **Health checks**: review run metrics and method health section in the digest or `output/dashboard/index.html`.
+
+## Simple Architecture
+```mermaid
+flowchart LR
+  A["sources.csv + config.yaml + .env"] --> B[Discovery (RSS + Listing)]
+  B --> C[Candidates (canonical + dedup)]
+  C --> D[Fetch (HTTP + Cache)]
+  D --> E[Extract (multi-method)]
+  E --> F[AI: relevance/classify/summarise]
+  F --> G[Digest Render (HTML + Email)]
+  G --> H[Publishing (Public + LinkedIn)]
+
+  B --> J[Mongo (discovery snapshots)]
+  D --> J[Mongo (fetch cache)]
+  E --> J[Mongo (raw attempts + winners)]
+  F --> J[Mongo (AI cache)]
+  E --> I[Postgres (attempts + articles)]
+  F --> I[Postgres (LLM usage + digests)]
+  G --> K[Output (HTML, dashboard, LinkedIn)]
+```
+
+## Where Things Live
+- Source registry: `sources.csv`
+- Configuration: `config.yaml` and `.env`
+- Pipeline orchestrator: `src/lloyds_digest/pipeline.py`
+- Storage: `src/lloyds_digest/storage/`
+- Digest renderer: `src/lloyds_digest/reporting/digest_renderer.py`
+- Scripts: `scripts/`
+- Outputs: `output/`
+
+## Troubleshooting
+- **No candidates discovered**: check `sources.csv` URLs and page type (`rss` vs `listing`); verify the feed/listing is reachable.
+- **Empty digest**: confirm extraction succeeded; inspect Mongo `attempts_raw` and Postgres `attempts` for failures.
+- **High 403/429 rates**: update user-agent in the HTTP fetcher and reduce concurrency; some sites block aggressive fetches.
+- **Mongo cache conflicts**: ensure cache key uses canonical URL + fetcher name and avoid `$set` conflicts.
+- **AI calls failing**: verify Ollama is running and model names match `config.yaml` or env overrides.
+- **Digest render errors**: validate prompt files and any HTML templates; check `output/` permissions.
+- **run_daily.sh fails**: confirm `.env` is sourced and conda env `314` is active in the scheduler context.
+
+## Phase History
+See `phases.md` for the original phase-by-phase implementation plan.

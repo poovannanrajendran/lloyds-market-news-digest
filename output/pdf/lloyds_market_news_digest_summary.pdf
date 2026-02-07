@@ -1,0 +1,57 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 2317 >>
+stream
+BT /F2 18 Tf 1 0 0 1 48 744 Tm (Lloyd's Market News Digest — App Summary) Tj ET
+BT /F2 12.5 Tf 1 0 0 1 48 714 Tm (What it is) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 56 698 Tm (Local-first pipeline that discovers, extracts, scores, and renders a Lloyd's market news digest from configured sources.) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 56 685 Tm (Produces HTML outputs \(and optional email delivery\) for London Lloyd's Market coverage.) Tj ET
+BT /F2 12.5 Tf 1 0 0 1 48 664 Tm (Who it's for) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 56 648 Tm (Not found in repo. Repo only states it targets the London Lloyd's Market.) Tj ET
+BT /F2 12.5 Tf 1 0 0 1 48 627 Tm (What it does) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 611 Tm (- Ingests sources from sources.csv \(RSS/Atom feeds and listing pages\).) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 598 Tm (- Discovers candidates, canonicalizes URLs, and de-duplicates by canonical hash.) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 585 Tm (- Fetches pages over HTTP with retries/backoff and optional Mongo cache.) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 572 Tm (- Extracts article text using a multi-method chain \(trafilatura, readability, bs4, crawl4ai stub\).) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 559 Tm (- Runs local-first AI stages for relevance, classification, and summarization with caching.) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 546 Tm (- Renders HTML digests by source type/topic; optional SMTP delivery.) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 533 Tm (- Logs run metrics and method health \(JSONL + stats\).) Tj ET
+BT /F2 12.5 Tf 1 0 0 1 48 512 Tm (How it works) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 56 496 Tm (sources.csv → Discovery \(RSS/listing\) → Candidates → HTTP Fetcher + Cache → Extractors → AI stages → Digest renderer) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 56 483 Tm (Outputs: HTML digest \(internal/public\), optional email; Storage: Postgres \(processed\) + Mongo \(raw/cache\); Observability: JSONL logs + Method Health.) Tj ET
+BT /F2 12.5 Tf 1 0 0 1 48 462 Tm (How to run) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 446 Tm (- conda activate 314 \(Python 3.14\)) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 433 Tm (- Copy .env.example to .env and set DB/SMTP/Ollama values) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 420 Tm (- Ensure config.yaml exists in repo root \(sample provided\)) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 58 407 Tm (- Run: python -m lloyds_digest run --now) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2765
+%%EOF
