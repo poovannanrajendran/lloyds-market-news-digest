@@ -77,21 +77,21 @@ python scripts/render_linkedin_post.py
 ## Simple Architecture
 ```mermaid
 flowchart LR
-  A["sources.csv + config.yaml + .env"] --> B[Discovery (RSS + Listing)]
-  B --> C[Candidates (canonical + dedup)]
-  C --> D[Fetch (HTTP + Cache)]
-  D --> E[Extract (multi-method)]
-  E --> F[AI: relevance/classify/summarise]
-  F --> G[Digest Render (HTML + Email)]
-  G --> H[Publishing (Public + LinkedIn)]
+  A["Inputs: sources csv config env"] --> B["Discovery RSS and Listing"];
+  B --> C["Candidates canonical dedup"];
+  C --> D["Fetch HTTP cache"];
+  D --> E["Extract multi method"];
+  E --> F["AI relevance classify summarise"];
+  F --> G["Digest render HTML email"];
+  G --> H["Publish public and LinkedIn"];
 
-  B --> J[Mongo (discovery snapshots)]
-  D --> J[Mongo (fetch cache)]
-  E --> J[Mongo (raw attempts + winners)]
-  F --> J[Mongo (AI cache)]
-  E --> I[Postgres (attempts + articles)]
-  F --> I[Postgres (LLM usage + digests)]
-  G --> K[Output (HTML, dashboard, LinkedIn)]
+  B --> J["Mongo discovery snapshots"];
+  D --> J["Mongo fetch cache"];
+  E --> J["Mongo raw attempts winners"];
+  F --> J["Mongo AI cache"];
+  E --> I["Postgres attempts articles"];
+  F --> I["Postgres LLM usage digests"];
+  G --> K["Output HTML dashboard LinkedIn"];
 ```
 
 ## Where Things Live
