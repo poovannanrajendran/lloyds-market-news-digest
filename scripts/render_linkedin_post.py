@@ -55,7 +55,7 @@ B) A short “Alt text” line for the banner image (1 sentence)
 
 STYLE RULES
 - Max 1,200 characters for the post unless the digest is unusually important.
-- Start with a strong first line (hook) about today’s London Market signal.
+- Start with a strong first line (hook) about the London Market signal.
 - Highlights must be specific (not generic “market volatility”).
 - If the digest includes regulatory warnings or scam-related items, include at most ONE and only if it’s clearly relevant to insurers/brokers.
 - Keep UK English spelling.
@@ -93,12 +93,13 @@ def main() -> None:
         print("Failed to generate LinkedIn post. Check OPENAI_API_KEY.")
         return
 
-    print(response.strip())
+    formatted = _format_linkedin_response(response, digest_date)
+    print(formatted.strip())
 
     output_dir = Path("output") / "linkedin"
     output_dir.mkdir(parents=True, exist_ok=True)
     out_path = output_dir / f"linkedin_post_{digest_date}.txt"
-    out_path.write_text(response.strip() + "\n", encoding="utf-8")
+    out_path.write_text(formatted.strip() + "\n", encoding="utf-8")
     print(f"\nWrote {out_path}")
     _log_phase_timing("render_linkedin", render_start, datetime.now(timezone.utc))
 
@@ -191,6 +192,48 @@ def _build_public_link(filename: str) -> str:
         "https://poovannanrajendran.github.io/lloyds-market-news-digest/digests/",
     )
     return f"{base_url}{filename}"
+
+
+def _format_linkedin_response(text: str, digest_date: str) -> str:
+    output = text.strip()
+    output = _replace_lead_todays(output, digest_date)
+    output = re.sub(
+        r"^(\d{2}-[A-Za-z]{3}'s\s+)([a-z])",
+        lambda m: f"{m.group(1)}{m.group(2).upper()}",
+        output,
+        count=1,
+    )
+    output = _capitalize_heading_lines(output)
+    output = re.sub(r":\s*([A-Za-z][^\s]*)", _capitalize_after_colon, output)
+    return output
+
+
+def _replace_lead_todays(text: str, digest_date: str) -> str:
+    try:
+        prefix = datetime.strptime(digest_date, "%Y-%m-%d").strftime("%d-%b")
+    except ValueError:
+        prefix = digest_date
+    replacement = f"{prefix}'s"
+    return re.sub(r"^\s*today'?s\b", replacement, text, count=1, flags=re.IGNORECASE)
+
+
+def _capitalize_heading_lines(text: str) -> str:
+    lines = text.splitlines()
+    out_lines = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped and stripped.endswith(":") and not stripped.startswith(("#", "-", "*", "1.", "2.", "3.", "4.", "5.")):
+            out_lines.append(line[: len(line) - len(stripped)] + stripped[:1].upper() + stripped[1:])
+            continue
+        out_lines.append(line)
+    return "\n".join(out_lines)
+
+
+def _capitalize_after_colon(match: re.Match[str]) -> str:
+    token = match.group(1)
+    if token.lower().startswith(("http://", "https://", "www.")):
+        return f": {token}"
+    return f": {token[:1].upper()}{token[1:]}"
 
 
 def _generate_with_openai(prompt: str) -> str:
