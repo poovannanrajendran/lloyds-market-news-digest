@@ -2,85 +2,144 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lloyd&#39;s Market Digest · 2026-02-10</title>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #0b1f3b;
-      --slate: #5b6b7a;
-      --teal: #1f7a8c;
-      --sand: #f6f4f0;
-      --mist: #eef2f5;
-      --line: #d7dee6;
-      --accent: #c9a227;
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: var(--sand);
+      min-height: 100vh;
       color: var(--ink);
-      font-family: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.5;
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
     }
     .page {
-      max-width: 1100px;
+      max-width: 1060px;
       margin: 0 auto;
-      padding: 36px 28px 60px;
+      padding: 30px 16px 52px;
     }
     header {
-      background: linear-gradient(120deg, #0b1f3b 0%, #12345a 45%, #1f7a8c 100%);
-      color: white;
-      padding: 28px 32px;
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
       border-radius: 18px;
-      box-shadow: 0 18px 30px rgba(11, 31, 59, 0.18);
+      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
     }
     header img {
-      width: 96px;
-      height: 96px;
+      width: 72px;
+      height: 72px;
       object-fit: contain;
-      border-radius: 12px;
-      background: transparent;
-      padding: 0;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.22);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
     }
     header .title-block {
       display: flex;
       flex-direction: column;
       gap: 4px;
+      position: relative;
+      z-index: 1;
     }
     header h1 {
       margin: 0 0 6px;
-      font-size: 28px;
-      letter-spacing: 0.2px;
-      font-family: "Playfair Display", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
     }
     header .meta {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(236, 243, 250, 0.95);
       font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
     }
     .grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-      margin-top: 26px;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
     }
     .card {
-      background: white;
+      background: var(--surface);
       border-radius: 16px;
-      padding: 20px 22px;
+      padding: 18px;
       border: 1px solid var(--line);
-      box-shadow: 0 10px 18px rgba(11, 31, 59, 0.06);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
     }
     .card h2 {
       margin-top: 0;
-      font-size: 18px;
-      color: var(--teal);
+      font-size: 1.15rem;
+      color: var(--brand-strong);
       letter-spacing: 0.2px;
-      font-family: "Playfair Display", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-family: "Newsreader", Georgia, serif;
     }
     .summary {
       font-size: 15px;
@@ -93,33 +152,34 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      color: var(--slate);
+      color: var(--ink-soft);
     }
     .themes li {
-      background: var(--mist);
+      background: var(--surface-alt);
       border: 1px solid var(--line);
       padding: 4px 12px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 600;
-      color: var(--teal);
+      color: var(--brand-strong);
     }
     .section-title {
-      margin: 36px 0 12px;
+      margin: 26px 0 12px;
       font-size: 20px;
       color: var(--ink);
-      font-family: "Playfair Display", "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-family: "Newsreader", Georgia, serif;
     }
     .story-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px;
+      gap: 14px;
     }
     .story {
-      background: white;
+      background: var(--surface);
       border-radius: 14px;
-      padding: 18px 18px 16px;
+      padding: 16px;
       border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
     }
     .story h3 {
       margin: 0 0 6px;
@@ -134,29 +194,30 @@
     }
     .story .meta {
       font-size: 12px;
-      color: var(--slate);
+      color: var(--ink-soft);
       margin-bottom: 8px;
     }
     .story .why {
       font-size: 13px;
-      color: var(--teal);
+      color: var(--brand);
       margin-bottom: 8px;
     }
     .story ul {
       padding-left: 18px;
       margin: 0;
-      color: var(--slate);
+      color: var(--ink-soft);
       font-size: 13px;
     }
     footer {
       margin-top: 32px;
       font-size: 12px;
-      color: var(--slate);
+      color: var(--ink-soft);
       text-align: center;
     }
     @media (max-width: 860px) {
       .grid { grid-template-columns: 1fr; }
-      header { padding: 22px; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
     }
     @media print {
       body {
@@ -187,6 +248,11 @@
         <div class="meta">2026-02-10 · Executive Briefing</div>
       </div>
     </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-11.html">Go to the Latest Digest</a>
+    </nav>
 
     <div class="grid">
       <section class="card">
