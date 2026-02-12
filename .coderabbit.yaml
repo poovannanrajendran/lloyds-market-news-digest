@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+early_access: false
+
+reviews:
+  profile: "chill"
+  high_level_summary: true
+  review_status: true
+  poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+  path_filters:
+    - "**"
+    - "!docs/digests/**"
+    - "!output/**"
+    - "!logs/**"
+    - "!*.lock"
+  path_instructions:
+    - path: "src/**/*.py"
+      instructions: "Focus on correctness, error handling, and data quality regressions."
+    - path: "tests/**/*.py"
+      instructions: "Check test determinism, clear assertions, and edge-case coverage."
+  tools:
+    flake8:
+      enabled: true
+    yamllint:
+      enabled: true
+    gitleaks:
+      enabled: true
+
+chat:
+  auto_reply: true
