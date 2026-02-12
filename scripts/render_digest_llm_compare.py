@@ -1034,6 +1034,8 @@ def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
         "Daily digest of public sources. Links included for attribution. Created by Poovannan Rajendran.",
     )
     logo_src = payload.get("logo_src", "London_Lloyds_Market_News_Digest.png")
+    home_href = payload.get("home_href", "../index.html")
+    latest_href = payload.get("latest_href", f"digest_{run_date}.html")
 
     theme_html = "\n".join(f"<li>{_escape(item)}</li>" for item in themes[:6])
     story_html = "\n".join(_render_story(item) for item in items)
@@ -1047,6 +1049,8 @@ def render_html(template: str, payload: dict[str, Any], run_date: str) -> str:
     html = html.replace("{{ stories }}", story_html or "<p>No stories selected.</p>")
     html = html.replace("{{ footer }}", _escape(footer))
     html = html.replace("{{ logo_src }}", _escape(logo_src))
+    html = html.replace("{{ home_href }}", _escape(home_href))
+    html = html.replace("{{ latest_href }}", _escape(latest_href))
     return html
 
 
