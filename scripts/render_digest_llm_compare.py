@@ -296,7 +296,7 @@ def _record_llm_usage(
         return
     try:
         postgres = PostgresRepo(dsn)
-        run_id = _latest_run_id(postgres)
+        run_id = postgres.get_latest_run_id()
         tokens_prompt = max(1, input_size // 4) if input_size else None
         tokens_completion = max(1, output_size // 4) if output_size else None
         postgres.insert_llm_usage(
@@ -353,7 +353,7 @@ def _record_llm_cost(
         return
     try:
         postgres = PostgresRepo(dsn)
-        run_id = _latest_run_id(postgres)
+        run_id = postgres.get_latest_run_id()
         postgres.insert_llm_cost_call(
             run_id=run_id,
             candidate_id=None,
@@ -397,7 +397,7 @@ def _log_phase_timing(phase: str, started_at: datetime, ended_at: datetime) -> N
         return
     try:
         postgres = PostgresRepo(dsn)
-        run_id = _latest_run_id(postgres)
+        run_id = postgres.get_latest_run_id()
         if not run_id:
             return
         duration_ms = int((ended_at - started_at).total_seconds() * 1000)
@@ -411,17 +411,6 @@ def _log_phase_timing(phase: str, started_at: datetime, ended_at: datetime) -> N
         )
     except Exception:
         return
-
-
-def _latest_run_id(postgres: PostgresRepo) -> str | None:
-    sql = "SELECT run_id FROM runs ORDER BY started_at DESC LIMIT 1"
-    with postgres._connect() as conn:
-        with conn.cursor() as cur:
-            cur.execute(sql)
-            row = cur.fetchone()
-            if not row:
-                return None
-            return row[0]
 
 
 def _chunk_items(
