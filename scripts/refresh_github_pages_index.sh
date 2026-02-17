@@ -10,31 +10,10 @@ if [[ ! -d "$DIGESTS_DIR" ]]; then
   exit 1
 fi
 
-python - <<'PY'
-from pathlib import Path
-
-site_dir = Path("docs")
-digests_dir = site_dir / "digests"
-index_path = site_dir / "index.html"
-template_path = site_dir / "index.template.html"
-
-files = sorted(digests_dir.glob("digest_*.html"), reverse=True)
-if not files:
-    raise SystemExit("No digests found in docs/digests/")
-
-latest = files[0].name
-archive = files[:30]
-
-archive_html = "\n".join(
-    f'<li><a href="digests/{f.name}">{f.name}</a></li>' for f in archive
-)
-
-template = template_path.read_text(encoding="utf-8")
-template = template.replace("REPLACE_LATEST", latest)
-template = template.replace("REPLACE_ARCHIVE", archive_html)
-index_path.write_text(template, encoding="utf-8")
-print(f"Updated {index_path}")
-PY
+python scripts/update_github_pages_index.py \
+  --site-dir "$SITE_DIR" \
+  --archive-limit 30 \
+  --allow-index-fallback
 
 git add docs/index.html
 git commit -m "refresh index: $(date +%Y-%m-%d)" || true
