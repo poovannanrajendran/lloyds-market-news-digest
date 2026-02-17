@@ -35,6 +35,16 @@ class PostgresRepo:
                 cur.execute("SELECT 1")
                 return cur.fetchone() == (1,)
 
+    def get_latest_run_id(self) -> str | None:
+        sql = "SELECT run_id FROM runs ORDER BY started_at DESC LIMIT 1"
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                row = cur.fetchone()
+                if not row:
+                    return None
+                return row[0]
+
     def upsert_source(self, source: Source) -> None:
         sql = """
             INSERT INTO sources (source_id, name, kind, url, enabled, tags, updated_at)

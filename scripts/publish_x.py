@@ -47,7 +47,7 @@ def _latest_linkedin_post() -> Path | None:
 
 
 def _digest_date_from_name(path: Path) -> str | None:
-    match = re.search(r"(\\d{4}-\\d{2}-\\d{2})", path.name)
+    match = re.search(r"(\d{4}-\d{2}-\d{2})", path.name)
     return match.group(1) if match else None
 
 
@@ -106,7 +106,15 @@ def _openai_shortener(prompt: str) -> str:
                     raise RuntimeError(f"OpenAI error {resp.status_code}: {resp.text}")
                 data = resp.json()
             text = data["choices"][0]["message"]["content"].strip()
-            _record_llm_usage_and_cost(model, prompt, text, service_tier or None)
+            usage = data.get("usage", {}) if isinstance(data, dict) else {}
+            _record_llm_usage_and_cost(
+                model,
+                prompt,
+                text,
+                service_tier or None,
+                tokens_prompt=usage.get("prompt_tokens"),
+                tokens_completion=usage.get("completion_tokens"),
+            )
             elapsed = time.time() - started
             print(f"OpenAI shortener done in {elapsed:.1f}s", flush=True)
             return text
@@ -124,16 +132,20 @@ def _record_llm_usage_and_cost(
     prompt: str,
     output_text: str,
     service_tier: str | None,
+    tokens_prompt: int | None = None,
+    tokens_completion: int | None = None,
 ) -> None:
-    tokens_prompt = max(1, len(prompt) // 4) if prompt else None
-    tokens_completion = max(1, len(output_text) // 4) if output_text else None
+    if tokens_prompt is None:
+        tokens_prompt = max(1, len(prompt) // 4) if prompt else None
+    if tokens_completion is None:
+        tokens_completion = max(1, len(output_text) // 4) if output_text else None
     try:
         dsn = _build_postgres_dsn_from_env()
     except Exception:
         return
     try:
         postgres = PostgresRepo(dsn)
-        run_id = _latest_run_id(postgres)
+        run_id = postgres.get_latest_run_id()
         now = datetime.now(timezone.utc)
         postgres.insert_llm_usage(
             run_id=run_id,
@@ -199,17 +211,6 @@ def _build_postgres_dsn_from_env() -> str:
     if not all([name, user, password]):
         raise ValueError("Missing Postgres env vars")
     return f"host={host} port={port} dbname={name} user={user} password={password}"
-
-
-def _latest_run_id(postgres: PostgresRepo) -> str | None:
-    sql = "SELECT run_id FROM runs ORDER BY started_at DESC LIMIT 1"
-    with postgres._connect() as conn:
-        with conn.cursor() as cur:
-            cur.execute(sql)
-            row = cur.fetchone()
-            if not row:
-                return None
-            return row[0]
 
 
 def _upload_media(session: OAuth1Session, image_path: Path) -> str:
