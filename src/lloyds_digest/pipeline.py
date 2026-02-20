@@ -99,6 +99,20 @@ def run_pipeline(
 
     source_urls = {canonicalise_url(source.url) for source in sources}
     candidates = _discover_candidates(sources, postgres, mongo, run_id, detail, warnings)
+
+    # Hygiene before limiting: listing discovery often includes nav/footer links (home, careers, etc).
+    # If we apply max_candidates too early, we frequently end up processing only junk URLs.
+    prefiltered: list[Candidate] = []
+    for candidate in candidates:
+        if _path_is_ignored(candidate.url, config.filters.exclude_paths):
+            detail(f"[prefilter] Skip ignored path {candidate.url}")
+            continue
+        if candidate.url in source_urls:
+            detail(f"[prefilter] Skip listing/source URL {candidate.url}")
+            continue
+        prefiltered.append(candidate)
+    candidates = prefiltered
+
     _record_phase_timing(
         postgres,
         run_id,
@@ -108,18 +122,20 @@ def run_pipeline(
         metadata={"sources": len(sources), "candidates": len(candidates)},
     )
     phase_start = _utc_now()
-    if max_candidates is not None and max_candidates > 0:
-        if len(candidates) > max_candidates:
-            warnings.append(
-                f"Limiting candidates to {max_candidates} of {len(candidates)} discovered."
-            )
-            candidates = candidates[:max_candidates]
     candidates = _filter_recent_candidates(
         candidates,
         run_date,
         days=config.filters.max_age_days,
         log=detail,
     )
+    # Prefer the most recent (or most-likely recent) candidates when limiting.
+    candidates.sort(key=_candidate_sort_key, reverse=True)
+    if max_candidates is not None and max_candidates > 0:
+        if len(candidates) > max_candidates:
+            warnings.append(
+                f"Limiting candidates to {max_candidates} of {len(candidates)} discovered."
+            )
+            candidates = candidates[:max_candidates]
     _record_phase_timing(
         postgres,
         run_id,
@@ -130,11 +146,12 @@ def run_pipeline(
     )
     metrics.total_candidates = len(candidates)
 
-    fetcher = HttpFetcher()
+    fetcher = _load_fetcher(warnings)
     cache_enabled = cache_override if cache_override is not None else config.cache.enabled
     cache_backend = None
     if cache_enabled and mongo is not None:
-        cache_backend = FetchCache(mongo)
+        fetcher_name = getattr(fetcher, "fetcher_name", "httpx")
+        cache_backend = FetchCache(mongo, fetcher_name=fetcher_name)
     elif cache_enabled and mongo is None:
         warnings.append("Cache enabled but Mongo is unavailable; continuing without cache.")
 
@@ -159,12 +176,6 @@ def run_pipeline(
     fetch_results = []
     total_candidates = len(candidates)
     for idx, candidate in enumerate(candidates, start=1):
-        if _path_is_ignored(candidate.url, config.filters.exclude_paths):
-            detail(f"[{idx}/{total_candidates}] Skip ignored path {candidate.url}")
-            continue
-        if candidate.url in source_urls:
-            detail(f"[{idx}/{total_candidates}] Skip listing/source URL {candidate.url}")
-            continue
         if skip_seen:
             if postgres is not None and postgres.has_article(candidate.candidate_id):
                 detail(f"[{idx}/{total_candidates}] Skip existing article {candidate.url}")
@@ -381,6 +392,11 @@ def _filter_recent_candidates(
     for candidate in candidates:
         published_at = candidate.published_at
         if published_at is None:
+            inferred = _infer_published_at_from_url(candidate.url)
+            if inferred is not None:
+                candidate.published_at = inferred
+                published_at = inferred
+        if published_at is None:
             filtered.append(candidate)
             continue
         if published_at.tzinfo is None:
@@ -390,6 +406,23 @@ def _filter_recent_candidates(
         else:
             log(f"[gate] skip old article ({published_at.date().isoformat()}): {candidate.url}")
     return filtered
+
+
+def _infer_published_at_from_url(url: str) -> datetime | None:
+    # Many listing sites include YYYY-MM-DD in article URLs. Use that as a best-effort signal for ordering
+    # and recency gating, rather than treating undated listing links as "always recent".
+    import re
+    from urllib.parse import urlsplit
+
+    path = urlsplit(url).path
+    m = re.search(r"(20\d{2})-(\d{2})-(\d{2})", path)
+    if not m:
+        return None
+    try:
+        yyyy, mm, dd = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        return datetime(yyyy, mm, dd, tzinfo=timezone.utc)
+    except Exception:
+        return None
 
 
 def _load_rss_discoverer(warnings: list[str]):
@@ -408,6 +441,42 @@ def _load_listing_discoverer(warnings: list[str]):
         warnings.append(f"Listing discovery disabled: {exc}")
         return None
     return ListingDiscoverer()
+
+
+def _candidate_sort_key(candidate: Candidate) -> tuple[int, datetime, int]:
+    # Sort by: published_at present, published_at, source type priority.
+    # - published_at is populated from RSS where possible and inferred from URL where possible.
+    published = candidate.published_at
+    if published is None:
+        published = datetime.min.replace(tzinfo=timezone.utc)
+        has_published = 0
+    else:
+        if published.tzinfo is None:
+            published = published.replace(tzinfo=timezone.utc)
+        has_published = 1
+
+    source_type = None
+    if isinstance(candidate.metadata, dict):
+        source_type = candidate.metadata.get("source_type")
+    priority_map = {"primary": 3, "secondary": 2, "additional": 1, "regulatory": 0}
+    priority = priority_map.get(str(source_type).strip().lower(), 0)
+    return (has_published, published, priority)
+
+
+def _load_fetcher(warnings: list[str]):
+    # Default to httpx; allow opting in to a browser-based fetcher for JS-heavy sites.
+    mode = (os.environ.get("LLOYDS_DIGEST_FETCHER") or "httpx").strip().lower()
+    if mode in {"http", "httpx"}:
+        return HttpFetcher()
+    if mode == "playwright":
+        try:
+            from lloyds_digest.fetchers.playwright_fetcher import PlaywrightFetcher
+        except Exception as exc:  # pragma: no cover - optional dependency
+            warnings.append(f"Playwright fetcher unavailable; falling back to httpx. ({exc})")
+            return HttpFetcher()
+        return PlaywrightFetcher()
+    warnings.append(f"Unknown LLOYDS_DIGEST_FETCHER={mode!r}; falling back to httpx.")
+    return HttpFetcher()
 
 
 def _article_to_items(
@@ -444,21 +513,6 @@ def _article_to_items(
     if keyword_rules.terms:
         gate_start = time.time()
         gate_text = compact_text(article.title or candidate.title, raw_text)
-        excluded = keyword_rules.is_excluded(gate_text)
-        if excluded:
-            log(f"[gate] excluded term matched: {candidate.url}")
-            _record_rejection(
-                mongo=mongo,
-                candidate=candidate,
-                run_id=run_id,
-                stage="keyword_exclude",
-                reason="excluded terms matched",
-                score=None,
-                matches=excluded,
-                text=raw_text,
-            )
-            timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
-            return []
         min_score = float(
             os.environ.get(
                 "LLOYDS_DIGEST_KEYWORDS_MIN_SCORE",
@@ -466,25 +520,43 @@ def _article_to_items(
             )
         )
         gate_text_lower = gate_text.lower()
+        excluded = keyword_rules.is_excluded(gate_text_lower)
         score_hint, matches = keyword_rules.score(gate_text_lower)
+        if _looks_like_blockpage(gate_text_lower):
+            log(f"[gate] blocked/challenge page: {candidate.url}")
+            _record_rejection(
+                mongo=mongo,
+                candidate=candidate,
+                run_id=run_id,
+                stage="content_blockpage",
+                reason="blocked/challenge content detected",
+                score=score_hint,
+                matches=matches,
+                text=raw_text,
+            )
+            timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
+            return []
         if config.filters.require_core_lloyds:
             core_hits = keyword_rules.matches_in_group(
                 gate_text_lower, "core_lloyds_market_structure"
             )
             if not core_hits:
-                log(f"[gate] missing core Lloyds term: {candidate.url}")
-                _record_rejection(
-                    mongo=mongo,
-                    candidate=candidate,
-                    run_id=run_id,
-                    stage="keyword_core",
-                    reason="missing core Lloyds term",
-                    score=score_hint,
-                    matches=matches,
-                    text=raw_text,
-                )
-                timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
-                return []
+                # Allow exceptionally high-signal items through even if they don't mention Lloyd's explicitly.
+                if score_hint < (min_score * 2):
+                    log(f"[gate] missing core Lloyds term: {candidate.url}")
+                    _record_rejection(
+                        mongo=mongo,
+                        candidate=candidate,
+                        run_id=run_id,
+                        stage="keyword_core",
+                        reason="missing core Lloyds term",
+                        score=score_hint,
+                        matches=matches,
+                        text=raw_text,
+                    )
+                    timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
+                    return []
+                log(f"[gate] missing core Lloyds term but high signal (score {score_hint:.2f}): {candidate.url}")
         if config.filters.require_core_combo:
             combo_groups = [
                 "brokers_distribution",
@@ -495,7 +567,7 @@ def _article_to_items(
             combo_hits = []
             for group in combo_groups:
                 combo_hits.extend(keyword_rules.matches_in_group(gate_text_lower, group))
-            if config.filters.require_core_lloyds and not combo_hits:
+            if not combo_hits:
                 log(f"[gate] missing core+combo terms: {candidate.url}")
                 _record_rejection(
                     mongo=mongo,
@@ -509,6 +581,22 @@ def _article_to_items(
                 )
                 timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
                 return []
+        # Relaxed exclude gate: excluded terms are often present in cookie banners / site footers.
+        # Only hard-reject when exclusions match and the content otherwise looks low-signal.
+        if excluded and score_hint < min_score:
+            log(f"[gate] excluded terms matched (low score): {candidate.url}")
+            _record_rejection(
+                mongo=mongo,
+                candidate=candidate,
+                run_id=run_id,
+                stage="keyword_exclude_soft",
+                reason="excluded terms matched with low keyword score",
+                score=score_hint,
+                matches=excluded,
+                text=raw_text,
+            )
+            timing_totals["relevance_gate_ms"] += int((time.time() - gate_start) * 1000)
+            return []
         if score_hint < min_score:
             log(f"[gate] keyword score {score_hint:.2f} below {min_score:.2f}: {candidate.url}")
             _record_rejection(
@@ -528,9 +616,9 @@ def _article_to_items(
     if _llm_enabled():
         text = _trim_text(raw_text)
         log(f"[llm] relevance {candidate.url}")
-        relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "qwen3:14b")
-        classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "qwen2.5-coder")
-        summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "qwen2.5-coder")
+        relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5-nano")
+        classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5-nano")
+        summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-5-mini")
         relevance_result = _run_llm_stage(
             stage="relevance",
             model=relevance_model,
@@ -633,6 +721,29 @@ def _summarize_text(text: str, max_sentences: int = 3) -> Optional[list[str]]:
     bullets = [sentence.strip() for sentence in sentences if sentence.strip()]
     if not bullets:
         return None
+    # Drop obvious boilerplate/paywall sentences when present (keep the digest scannable).
+    boilerplate_needles = [
+        "please sign in",
+        "sign in",
+        "subscribe",
+        "read this article",
+        "manage cookies",
+        "cookie policy",
+        "privacy statement",
+        "terms of use",
+        "skip to main content",
+        "thomsonreuters.com",
+        "business development executive",
+        "sales manager",
+    ]
+    filtered = [
+        b
+        for b in bullets
+        if ("@" not in b)
+        and not any(n in b.lower() for n in boilerplate_needles)
+    ]
+    if filtered:
+        return filtered[:max_sentences]
     return bullets[:max_sentences]
 
 
@@ -692,7 +803,10 @@ def _run_llm_stage(
                 latency_ms=latency_ms,
                 tokens_prompt=result.get("tokens_prompt"),
                 tokens_completion=result.get("tokens_completion"),
-                metadata={"parsed": result.get("parsed")},
+                metadata={
+                    "parsed": result.get("parsed"),
+                    "tokens_cached_prompt": result.get("tokens_cached_prompt"),
+                },
             )
             _record_llm_cost(
                 postgres=postgres,
@@ -702,7 +816,8 @@ def _run_llm_stage(
                 model=model,
                 tokens_prompt=result.get("tokens_prompt"),
                 tokens_completion=result.get("tokens_completion"),
-                service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+                tokens_cached_input=result.get("tokens_cached_prompt"),
+                service_tier=os.environ.get("OPENAI_SERVICE_TIER", "flex"),
             )
         except Exception as exc:
             warnings.append(f"Failed to record llm_usage for {stage}: {exc}")
@@ -757,6 +872,7 @@ def _record_llm_cost(
     model: str,
     tokens_prompt: int | None,
     tokens_completion: int | None,
+    tokens_cached_input: int | None,
     service_tier: str | None,
 ) -> None:
     from lloyds_digest.ai.costing import compute_cost_usd
@@ -764,12 +880,13 @@ def _record_llm_cost(
     if tokens_prompt is None or tokens_completion is None:
         return
     provider = _infer_provider(model)
-    tier = service_tier or os.environ.get("LLOYDS_DIGEST_COST_TIER") or "standard"
+    tier = service_tier or os.environ.get("LLOYDS_DIGEST_COST_TIER") or "flex"
     cost = compute_cost_usd(
         model=model,
         tokens_prompt=tokens_prompt,
         tokens_completion=tokens_completion,
         service_tier=tier,
+        tokens_cached_input=tokens_cached_input,
     )
     if cost is None:
         return
@@ -819,11 +936,14 @@ def _trim_text(text: str, max_chars: int = 6000) -> str:
 
 
 def _path_is_ignored(url: str, prefixes: list[str]) -> bool:
-    if not prefixes:
-        return False
     from urllib.parse import urlsplit
 
     path = urlsplit(url).path.lower()
+    # Homepages are almost never useful digest items and frequently appear due to listing-page nav/footer links.
+    if path in {"", "/"}:
+        return True
+    if not prefixes:
+        return False
     for prefix in prefixes:
         if path.startswith(prefix.lower()):
             return True
@@ -873,6 +993,21 @@ def _looks_like_pdf(url: str, content: str | bytes) -> bool:
         return snippet.startswith(b"%PDF")
     snippet = content.lstrip()[:1024]
     return snippet.startswith("%PDF")
+
+
+def _looks_like_blockpage(text_lower: str) -> bool:
+    # Common bot/challenge/captcha interstitials that we never want in the digest.
+    needles = [
+        "please enable js",
+        "enable javascript",
+        "captcha",
+        "captcha-delivery",
+        "datadome",
+        "access denied",
+        "verify you are human",
+        "unusual traffic",
+    ]
+    return any(needle in text_lower for needle in needles)
 
 
 def _try_postgres(logger: Callable[[str], None], warnings: list[str]) -> Optional[PostgresRepo]:

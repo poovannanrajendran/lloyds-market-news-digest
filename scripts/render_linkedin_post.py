@@ -238,25 +238,24 @@ def _capitalize_after_colon(match: re.Match[str]) -> str:
 
 def _generate_with_openai(prompt: str) -> str:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-4o"))
+    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5-mini"))
     if not api_key:
         return ""
 
     url = "https://api.openai.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     use_temperature = not model.startswith("gpt-5")
-    service_tier = os.environ.get("OPENAI_LINKEDIN_SERVICE_TIER", "").strip()
+    service_tier = os.environ.get("OPENAI_LINKEDIN_SERVICE_TIER", "flex").strip() or "flex"
     body = {
         "model": model,
         "messages": [
             {"role": "system", "content": "Return only the final output. No markdown."},
             {"role": "user", "content": prompt},
         ],
+        "service_tier": service_tier,
     }
     if use_temperature:
         body["temperature"] = 0.3
-    if service_tier:
-        body["service_tier"] = service_tier
     timeout = float(os.environ.get("OPENAI_LINKEDIN_TIMEOUT", "600"))
     max_attempts = int(os.environ.get("OPENAI_LINKEDIN_RETRIES", "3"))
     for attempt in range(1, max_attempts + 1):
@@ -276,13 +275,17 @@ def _generate_with_openai(prompt: str) -> str:
                 data = resp.json()
             content = data["choices"][0]["message"]["content"]
             output_text = content.strip()
+            usage = data.get("usage", {}) if isinstance(data, dict) else {}
             elapsed = time.time() - started
             print(f"OpenAI request done in {elapsed:.1f}s", flush=True)
             _record_llm_usage_and_cost(
                 model=model,
                 prompt=prompt,
                 output_text=output_text,
-                service_tier=service_tier or None,
+                service_tier=service_tier,
+                tokens_prompt=usage.get("prompt_tokens"),
+                tokens_completion=usage.get("completion_tokens"),
+                tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),
             )
             return output_text
         except Exception as exc:
@@ -299,9 +302,14 @@ def _record_llm_usage_and_cost(
     prompt: str,
     output_text: str,
     service_tier: str | None,
+    tokens_prompt: int | None = None,
+    tokens_completion: int | None = None,
+    tokens_cached_input: int | None = None,
 ) -> None:
-    tokens_prompt = _estimate_tokens(prompt)
-    tokens_completion = _estimate_tokens(output_text)
+    if tokens_prompt is None:
+        tokens_prompt = _estimate_tokens(prompt)
+    if tokens_completion is None:
+        tokens_completion = _estimate_tokens(output_text)
     try:
         dsn = _build_postgres_dsn_from_env()
     except Exception:
@@ -329,6 +337,7 @@ def _record_llm_usage_and_cost(
             tokens_prompt=tokens_prompt,
             tokens_completion=tokens_completion,
             service_tier=service_tier,
+            tokens_cached_input=tokens_cached_input,
         )
         if cost is None:
             return

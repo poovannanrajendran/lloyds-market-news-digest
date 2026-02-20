@@ -20,4 +20,4 @@ def test_render_digest_creates_file(tmp_path: Path) -> None:
     output = render_digest(items, date(2026, 1, 26), tmp_path, DigestConfig())
     assert output.exists()
     content = output.read_text(encoding="utf-8")
-    assert "Lloyd's Market News Digest" in content
+    assert "Lloyd's Market Executive Digest" in content

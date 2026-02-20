@@ -1,0 +1,52 @@
+{
+  "name": "LinkedIn Post - Today's Digest",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "node <<'NODE'\n(async () => {\n  const fs = require('fs');\n  const path = require('path');\n\n  const repoRoot = process.env.DIGEST_REPO_PATH || '/Users/poovannanrajendran/Documents/GitHub/lloyds-market-news-digest';\n  const now = new Date();\n  const localDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;\n  const runDate = process.env.LINKEDIN_RUN_DATE || localDate;\n  const token = (process.env.LINKEDIN_ACCESS_TOKEN || '').trim();\n  const authorUrn = (process.env.LINKEDIN_AUTHOR_URN || '').trim();\n\n  if (!token) throw new Error('Missing LINKEDIN_ACCESS_TOKEN');\n  if (!authorUrn) throw new Error('Missing LINKEDIN_AUTHOR_URN (e.g., urn:li:person:... or urn:li:organization:...)');\n\n  const postPath = path.join(repoRoot, 'output', 'linkedin', `linkedin_post_${runDate}.txt`);\n  const imagePath = path.join(repoRoot, 'output', 'linkedin_images', `linkedin_image_${runDate}.png`);\n\n  if (!fs.existsSync(postPath)) throw new Error(`Post file not found: ${postPath}`);\n  if (!fs.existsSync(imagePath)) throw new Error(`Image file not found: ${imagePath}`);\n\n  const postText = fs.readFileSync(postPath, 'utf8').trim();\n  if (!postText) throw new Error(`Post file is empty: ${postPath}`);\n\n  const registerBody = {\n    registerUploadRequest: {\n      recipes: ['urn:li:digitalmediaRecipe:feedshare-image'],\n      owner: authorUrn,\n      serviceRelationships: [\n        { relationshipType: 'OWNER', identifier: 'urn:li:userGeneratedContent' }\n      ]\n    }\n  };\n\n  const apiHeaders = {\n    Authorization: `Bearer ${token}`,\n    'X-Restli-Protocol-Version': '2.0.0',\n    'Content-Type': 'application/json'\n  };\n\n  const registerResp = await fetch('https://api.linkedin.com/v2/assets?action=registerUpload', {\n    method: 'POST',\n    headers: apiHeaders,\n    body: JSON.stringify(registerBody)\n  });\n\n  const registerText = await registerResp.text();\n  if (!registerResp.ok) {\n    throw new Error(`registerUpload failed (${registerResp.status}): ${registerText}`);\n  }\n\n  let registerJson;\n  try {\n    registerJson = JSON.parse(registerText);\n  } catch (err) {\n    throw new Error(`registerUpload non-JSON response: ${registerText}`);\n  }\n\n  const uploadUrl =\n    registerJson?.value?.uploadMechanism?.['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest']?.uploadUrl;\n  const asset = registerJson?.value?.asset;\n\n  if (!uploadUrl || !asset) {\n    throw new Error(`registerUpload missing uploadUrl/asset: ${JSON.stringify(registerJson)}`);\n  }\n\n  const imageBuffer = fs.readFileSync(imagePath);\n  const uploadResp = await fetch(uploadUrl, {\n    method: 'PUT',\n    headers: {\n      'Content-Type': 'application/octet-stream'\n    },\n    body: imageBuffer\n  });\n\n  const uploadText = await uploadResp.text();\n  if (!uploadResp.ok) {\n    throw new Error(`Image upload failed (${uploadResp.status}): ${uploadText}`);\n  }\n\n  const postBody = {\n    author: authorUrn,\n    lifecycleState: 'PUBLISHED',\n    specificContent: {\n      'com.linkedin.ugc.ShareContent': {\n        shareCommentary: {\n          text: postText\n        },\n        shareMediaCategory: 'IMAGE',\n        media: [\n          {\n            status: 'READY',\n            description: { text: `Lloyd\\'s Market News Digest image for ${runDate}` },\n            media: asset,\n            title: { text: `Lloyd\\'s Market News Digest - ${runDate}` }\n          }\n        ]\n      }\n    },\n    visibility: {\n      'com.linkedin.ugc.MemberNetworkVisibility': process.env.LINKEDIN_VISIBILITY || 'PUBLIC'\n    }\n  };\n\n  const postResp = await fetch('https://api.linkedin.com/v2/ugcPosts', {\n    method: 'POST',\n    headers: apiHeaders,\n    body: JSON.stringify(postBody)\n  });\n\n  const postTextResp = await postResp.text();\n  if (!postResp.ok) {\n    throw new Error(`Create post failed (${postResp.status}): ${postTextResp}`);\n  }\n\n  let postJson;\n  try {\n    postJson = JSON.parse(postTextResp);\n  } catch (err) {\n    postJson = { raw: postTextResp };\n  }\n\n  const output = {\n    status: 'posted',\n    runDate,\n    postPath,\n    imagePath,\n    asset,\n    response: postJson\n  };\n\n  console.log(JSON.stringify(output, null, 2));\n})();\nNODE"
+      },
+      "id": "publish-linkedin",
+      "name": "Publish LinkedIn Post",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        560,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Publish LinkedIn Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/New_York"
+  },
+  "versionId": "f73fd038-4e3f-45c8-bbe2-6b5212d5fb57",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "pinData": {}
+}

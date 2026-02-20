@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from typing import Protocol
 
 from lloyds_digest.models import ArticleRecord, Candidate, ExtractionResult
-from lloyds_digest.scoring.heuristics import evaluate_text
+from lloyds_digest.scoring.heuristics import HeuristicThresholds, evaluate_text
 from lloyds_digest.scoring.method_prefs import MethodPrefs
 from lloyds_digest.storage.mongo_repo import MongoRepo
 from lloyds_digest.storage.postgres_repo import PostgresRepo
@@ -30,6 +30,7 @@ class ExtractionEngine:
         mongo: MongoRepo | None = None,
     ) -> ArticleRecord | None:
         domain = _extract_domain(candidate.source_id)
+        thresholds = _thresholds_for_domain(domain)
         extractors = (
             _order_extractors(self.extractors, postgres, domain)
             if postgres is not None and domain
@@ -39,7 +40,7 @@ class ExtractionEngine:
             started_at = _utc_now()
             result = extractor.extract(html)
             cleaned_text = (result.text or "").replace("\x00", "")
-            decision, score = evaluate_text(cleaned_text)
+            decision, score = evaluate_text(cleaned_text, thresholds=thresholds)
             ended_at = _utc_now()
             duration_ms = int((ended_at - started_at).total_seconds() * 1000)
 
@@ -127,6 +128,16 @@ def _extract_domain(source_id: str) -> str | None:
     if ":" not in source_id:
         return None
     return source_id.split(":", 1)[1]
+
+
+def _thresholds_for_domain(domain: str | None) -> HeuristicThresholds | None:
+    if not domain:
+        return None
+    lowered = domain.lower()
+    # Some paywalled sources expose only a short teaser to non-subscribers; accept shorter extracts.
+    if lowered in {"theinsurer.com"}:
+        return HeuristicThresholds(min_chars=150, min_words=20)
+    return None
 
 
 def _order_extractors(
