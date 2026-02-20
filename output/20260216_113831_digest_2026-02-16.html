@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-02-16</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-02-16 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-16.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">40 highlights selected for 2026-02-16. Sources include: www.artemis.bm, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Reinsurance</li>
+<li>Lloyds</li>
+<li>Commentary</li>
+<li>London Market</li>
+<li>Catastrophe</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.artemis.bm/news/aig-has-strong-pipeline-of-spv-opportunities-driving-premium-and-fees-ceo-zaffino/">AIG has &quot;strong pipeline of SPV opportunities&quot;, driving premium and fees: CEO Zaffino - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 1.00</div><div class="why"><strong>Why it matters:</strong> The article details AIG&#x27;s use of Lloyd&#x27;s market through sidecar-style syndicates and the London Bridge 2 PCC structure, highlighting partnerships and capital efficiency.</div><ul><li>During the AIG fourth-quarter earnings call today CEO Peter Zaffino highlighted the insurer’s launch of two sidecar-style syndicates at Lloyd’s and said the company has a “strong pipeline of SPV opportunities” suggesting future third-party capital partnerships may be expected.</li>
+<li>AIG has increasingly been partnering with third-party capital to support underwriting insurance business in an efficient manner, with the insurer looking to Lloyd’s as a venue and utilising that markets insurance-linked securities (ILS) structure London Bridge 2 PCC to channel capital partners funds to the opportunity.</li>
+<li>Back in December 2024 AIG announced the first of what arrangement of a special purpose vehicle (SPV), when it launched its Syndicate 2478 at Lloyd’s, a structure planned to become a multi-year participant on the insurer’s outwards reinsurance program.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-adds-fiona-luck-and-sean-mcgovern-as-new-deputy-chairs/">Lloyd&#x27;s adds Fiona Luck and Sean McGovern as new Deputy Chairs - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Leadership changes in Lloyd&#x27;s Council and strategic appointments.</div><ul><li>The specialist Lloyd’s insurance and reinsurance marketplace has confirmed the additions of both Fiona Luck and Sean McGovern as Deputy Chairs, joining Victoria Carter who has served in the role since 2021.</li>
+<li>Luck joined the Lloyd’s Council in 2018, and as well as Deputy Chair, has been appointed as Senior Independent Director, subject to regulatory approval, following the departure of Lord Mark Sedwill in November 2025.</li>
+<li>Lloyd’s has confirmed that Luck will be tasked with providing expertise and support, with the search for a permanent Independent Director now underway.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-promotes-emma-loynes-to-ceo-of-apmea/">Lloyd&#x27;s promotes Emma Loynes to CEO of APMEA - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Leadership changes in key regions (APMEA, New Zealand) with details on new appointments and their backgrounds.</div><ul><li>Emma Loynes has been promoted to the role of Chief Executive Officer (CEO) of Asia-Pacific, Middle East and Africa (APMEA) at the specialist Lloyd’s insurance and reinsurance marketplace, succeeding Chris Mackinnon.</li>
+<li>Loynes joined Lloyd’s, the world’s oldest re/insurance market, in 2018 as Senior Manager Market Oversight and Delivery, taking on the role of Head of Market Development Transformation in 2021.</li>
+<li>In 2023, she was appointed CEO Lloyd’s Asia and Country Manager Singapore, and retains her role as Country Manager for Singapore alongside her new position as CEO of APMEA.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/13/858057.htm">MAPFRE Re Gets Regulatory Approval to Open India Branch Office</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Announcement of MAPFRE Re&#x27;s expansion in India highlights strategic market growth and operational developments in a key insurance region, relevant to Lloyd&#x27;s market dynamics.</div><ul><li>MAPFRE Re announced it has obtained regulatory approval from the International Financial Services Centres Authority (IFSCA) of India to open its newest branch office in Gujarat.</li>
+<li>MAPFRE Re said its relationship with the Indian insurance market dates back over a decade, during which time the reinsurer has progressively increased its commitment to the market, building a solid business portfolio and collaborating closely with the main insurance companies in the country.</li>
+<li>The opening of this new branch comes as the Indian insurance market enjoys a growth phase, driven by the country’s economic dynamism, a rise in demand for protection solutions, and an increasingly favorable regulatory environment.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ils-as-a-key-source-of-reinsurance-capital-is-only-going-to-continue-schwebach-gallagher-re/">ILS as a key source of reinsurance capital is only going to continue: Schwebach, Gallagher Re - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses ILS market growth, new cedents, and reinsurance dynamics in Florida, relevant to Lloyd&#x27;s operations and market trends.</div><ul><li>Adam Schwebach of reinsurance broker Gallagher Re is expecting more new cedents to enter the insurance-linked securities (ILS) market in 2026, describing it as a product that can no longer be ignored for catastrophe risk.</li>
+<li>Artemis recently spoke with Schwebach, Head of North America Property at Gallagher Re, about reinsurance supply demand dynamics in Florida, and the impact of ILS investors in the state after the much needed reforms.</li>
+<li>“From an overall perspective, we think that there’s still ample supply of reinsurance within the state,” said Schwebach.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/cat-bonds-now-structural-anchors-investors-look-to-long-term-ils-allocations-hcma/">Cat bonds now &quot;structural anchors&quot;. Investors look to long-term ILS allocations: HCMA - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content discusses the growing integration of catastrophe bonds and ILS into reinsurance programs, institutional investor confidence, and market evolution—key factors directly relevant to Lloyd&#x27;s market dynamics and strategies.</div><ul><li>Catastrophe bonds and insurance-linked securities became increasingly embedded in reinsurance programmes in 2025, a trend set to continue as investors increasingly look to long-term allocations to the asset class, executives from Howden Capital Markets &amp; Advisory (HCMA) have explained.</li>
+<li>Reflecting on a busy year for cat bonds and ILS in 2025, HCMA explained that, “Investor appetite across reinsurance and insurance-linked securities (ILS) evolved markedly in 2025, as capital continued to flow into the sector amid attractive risk-adjusted returns and growing institutional confidence.</li>
+<li>” Over the course of last year’s record levels of issuance, “catastrophe bonds continued their shift from niche to mainstream reinsurance tools,” HCMA stated, with the cat bond reinforced as a core component of reinsurance towers, no longer being viewed as “a specialist alternative.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/axis-earned-54m-of-ils-fees-in-2025-sets-up-monarch-point-re-2026-collateralized-insurer/">AXIS earned $54m of ILS fees in 2025, sets up Monarch Point Re 2026 collateralized insurer - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses AXIS Capital&#x27;s use of insurance-linked securities (ILS), third-party capital partnerships, and reinsurance structures (e.g., Monarch Point Re), which are central to Lloyd&#x27;s market activities and risk management strategies.</div><ul><li>AXIS Capital continues to leverage alternative capital and partner with insurance-linked securities (ILS) investors, with these activities generating attractive fee income in 2025.</li>
+<li>While a new structure established for 2026 shows that its casualty sidecar Monarch Point Re remains a core focus for the company.</li>
+<li>Specialty insurance and reinsurance company AXIS Capital no longer reports fee income earned from what it used to call strategic capital partners as clearly as it once did, but the company continues to leverage the appetite of third-party capital investors within its business.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/global-data-center-expansion-presents-clear-role-for-ils-and-capital-markets-aon/">Global data center expansion presents clear role for ILS and capital markets: Aon - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses ILS and reinsurance opportunities in data centers, relevant to Lloyd&#x27;s market activities.</div><ul><li>With growing capacity demands within AI and other cloud computing services leading towards a surge in data centers, this rapid expansion also presents a clear role for insurance-linked securities (ILS) and the capital markets, according to broker Aon.</li>
+<li>In its recent reinsurance renewals report, Aon outlined that the rapid expansion of data centers represents a growing, capital-intensive segment where structural changes, including lender requirements, create a meaningful, sustainable growth opportunity for re/insurers.</li>
+<li>“The pace and scale of capital investment in data centers, coupled with accelerating third‑party financing and debt structures, is set to dramatically increase demand for insurance: Between 2026 and 2030, cumulative global insurance premiums associated with data centers are estimated to be $134 billion,” the broker said.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/nuveen-to-acquire-schroders-for-9-9bn-creating-2-5tn-asset-group-brand-to-be-retained/">Nuveen to acquire Schroders for ~£9.9bn, creating $2.5tn asset group. Brand to be retained - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The acquisition directly impacts the insurance-linked securities (ILS) sector, a key area for Lloyd&#x27;s market, with Schroders&#x27; ILS team retaining its brand and operations under Nuveen/TIAA.</div><ul><li>This morning it has been announced that Nuveen, a US asset manager subsidiary of TIAA, is set to acquire Schroders for around £9.</li>
+<li>9 billion, creating a significant global group with around US $2.</li>
+<li>5 trillion of assets under management, but notably for our market with the Schroders brand to be retained.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/plymouth-rock-sponsoring-debut-catastrophe-bond-100m-tremont-re-2026-1/">Plymouth Rock sponsoring debut catastrophe bond, $100m Tremont Re 2026-1 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> News about a new regional insurer (Plymouth Rock) entering the catastrophe bond market with a $100M issuance, involving Lloyd&#x27;s-related reinsurance structures (Hannover Re, Bermuda-issued notes), and coverage for US states (Massachusetts/Connecticut) directly impacts Lloyd&#x27;s market dynamics and ILSE (insurance-linked securities) activity.</div><ul><li>Plymouth Rock, a northeast US regional insurer, is the latest first time catastrophe bond sponsor to enter the market, with the firm seeking $100 million in named storm reinsurance from investors through a Tremont Re Ltd.</li>
+<li>(Series 2026-1) issuance, Artemis can report.</li>
+<li>Plymouth Rock is also the latest regionally focused insurer to look to the catastrophe bond market for reinsurance protection, with the number of these geographically narrow underwriters that turn to cat bonds having expanded meaningfully in recent years.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/lloyds-names-two-new-deputy-council-chairs-after-departures/1457762.article">Lloyd’s names two new deputy council chairs after departures</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content details leadership changes in Lloyd’s council, including new deputy chairs and their roles in strategic governance, directly relevant to Lloyd’s market operations.</div><ul><li>‘Their combined experience and deep understanding of the Lloyd’s market will continue to strengthen the council and guide our strategic priorities,’ says chair Lloyd’s of London has appointed Fiona Luck and Sean McGovern as deputy chairs of its council, following the departure of the two prior position holders.</li>
+<li>McGovern, who joined the council in 2023 as a corporate external member, steps into the new role following the departure of Andrew Brooks.</li>
+<li>And Luck, who has served on the council since 2018 as a nominated member, replaces Lord Mark Sedwill, who departed the council in November 2025.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/briefing-where-were-going-well-need-more-space-insurance/1457737.article">Briefing: Where we’re going, we’ll need more space insurance</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content discusses Lloyd&#x27;s role in insuring emerging space-related risks (e.g., space debris, tourism, cyber threats) and highlights the UK insurance market&#x27;s potential to lead in this sector, directly tying to Lloyd&#x27;s market relevance.</div><ul><li>The UK insurance market could propel the British space industry to the fore.</li>
+<li>Will we fire up those boosters, or let others take the prize while we merely insure them?</li>
+<li>AI?</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/rockwood-offering-professional-management-liability-program/">Rockwood offering professional, management liability program - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article explicitly mentions Lloyd&#x27;s of London backing Rockwood&#x27;s new professional and management liability program, which is directly tied to Lloyd&#x27;s market activities.</div><ul><li>Rockwood offering professional, management liability program - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Rockwood offering professional, management liability program by Claire Wilkinson Agents and Brokers , Alternative Risk Transfer/Captives , D&amp;O , Excess and Surplus Lines , Products &amp; Services Lloyd&#x27;s of London Feb 12, 2026 Rockwood Programs, a Claymont, Delaware-based program administrator and wholesale brokerage, announced Thursday it launched a professional and management liability program for U.</li>
+<li>S.</li>
+<li>insurers.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/loynes-promoted-to-ceo-of-apmea-at-lloyds/1457769.article">Loynes promoted to CEO of APMEA at Lloyd’s</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Leadership changes in key regions (APMEA, New Zealand) and strategic role transitions at Lloyd&#x27;s.</div><ul><li>Emma Loynes to lead Asia-Pacific, Middle East and Africa region as Scott Galloway steps down in New Zealand Lloyd’s has promoted Emma Loynes to CEO of Asia-Pacific, Middle East and Africa (APMEA), succeeding Chris Mackinnon.</li>
+<li>Loynes joined the Lloyd’s re/insurance market in 2018 as senior manager market oversight and delivery.</li>
+<li>She became head of market development transformation in 2021 and was appointed CEO Lloyd’s Asia and country manager for Singapore in 2023.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/luck-named-senior-independent-director-as-lloyds-confirms-council-changes/1457712.article">Luck named senior independent director as Lloyd’s confirms council changes</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Leadership changes in key roles at Lloyd’s Council impact strategic direction and governance.</div><ul><li>Sean McGovern becomes deputy chair alongside Fiona Luck and Vicky Carter Lloyd’s has announced a series of updates to the membership of the Council of Lloyd’s.</li>
+<li>Fiona Luck, who joined the council in 2018, has been appointed senior independent director, subject to regulatory approval.</li>
+<li>She will also serve as deputy chair, following the departure of Lord Mark Sedwill on 30 November 2025.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/global-insurtech-funding-jumps-668-in-q4-as-ai-and-mega-rounds-drive-resurgence/1457742.article">Global insurtech funding jumps 66.8% in Q4 as AI and mega rounds drive resurgence</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Focus on insurtech investment trends, AI integration, and funding figures directly relevant to Lloyd&#x27;s market dynamics.</div><ul><li>(Re)insurer investment in insurance technology hits record levels as full-year funding reaches $5.</li>
+<li>08bn Global insurtech funding surged 66.</li>
+<li>8% quarter on quarter to $1.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/long-to-lead-i-re-bermuda-as-growth-drives-senior-appointments/1457740.article">Long to lead I–RE Bermuda as growth drives senior appointments</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Leadership changes, growth strategy, and expansion plans directly relate to Lloyd&#x27;s market dynamics and insurance/reinsurance industry trends.</div><ul><li>Captive specialist says leadership changes reflect record demand and 2026 expansion plans I–RE has appointed Simon Long (pictured, immediate right) as managing director of I–RE in Bermuda as part of the next phase of its growth strategy.</li>
+<li>The specialist captive insurance and reinsurance managing general agent (MGA) also appointed Charles Kittrell (pictured right of Long) into underwriting operations.</li>
+<li>Long steps into the managing director role at the centre of the company’s development as it looks to build on strong recent performance.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/enstar-to-acquire-af-group-from-blue-cross/">Enstar to acquire AF Group from Blue Cross - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The acquisition of an insurance company by a reinsurance group is a significant market transaction with implications for Lloyd&#x27;s market dynamics.</div><ul><li>Enstar, a global insurance and reinsurance group backed by investment vehicles managed by affiliates of Sixth Street, has entered into a definitive stock purchase agreement to acquire 100% of the shares of Accident Fund Holdings, Inc.</li>
+<li>(AF Group) from Blue Cross Blue Shield of Michigan.</li>
+<li>The transaction is expected to be completed in the second half of 2026 upon receipt of regulatory approvals and satisfaction of various other closing conditions.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/tokio-marines-international-business-profits-rise-in-q325/">Tokio Marine&#x27;s international business profits rise in Q3’25 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The content details Tokio Marine Holdings&#x27; Q3 2025 financial performance, including regional profit contributions, underwriting trends, and premium growth, which are directly relevant to Lloyd&#x27;s market participants and insurers.</div><ul><li>Tokio Marine Holdings has announced its financial results for the third quarter of the 2025 fiscal year, reporting that its international business profits reached JPY376.</li>
+<li>7 billion, a 19% increase compared to the same period they year prior.</li>
+<li>This performance was driven by robust underwriting across all entities, as well as decreased capital losses in North America (c.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/markel-insurance-appoints-zurichs-john-bang-as-head-of-korea-and-japan/">Markel Insurance appoints Zurich&#x27;s John Bang as Head of Korea and Japan - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The news highlights Markel&#x27;s strategic expansion in Asia-Pacific (Japan/Korea), a region critical to Lloyd&#x27;s market activity, and details leadership changes in a specialist insurance sector.</div><ul><li>Markel Insurance, the insurance operation within Markel Group Inc.</li>
+<li>, has appointed John Bang as its inaugural Head of Korea and Japan, effective immediately.</li>
+<li>He will be responsible for launching Markel International’s Japan and Korea desks, overseeing business development and deepening relationships with local partners and cedents.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/descartes-strengthens-european-footprint-with-strategic-hires-and-promotions/">Descartes strengthens European footprint with strategic hires and promotions - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Expansion in Central Europe and Germany/Austria, with focus on parametric re/insurance and climate risk solutions relevant to Lloyd&#x27;s market.</div><ul><li>Descartes Underwriting, a specialist in corporate parametric re/insurance solutions for climate and emerging risks, has expanded Commercial Director Juan Maria Marqués Domenech’s responsibilities to cover Central Europe in addition to Iberia.</li>
+<li>In a move to further strengthen the company’s presence across Europe, Descartes also appointed Felix Dalheimer as Business Developer for Germany and Austria.</li>
+<li>Dalheimer brings a wealth of experience to Descartes, having served as an underwriter for German risks at Chubb.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/joe-peiser-named-ceo-of-aons-risk-capital/">Joe Peiser named CEO of Aon&#x27;s Risk Capital - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Leadership change in Aon&#x27;s Risk Capital strategy, a critical area for insurance/reinsurance, impacting client solutions and market dynamics.</div><ul><li>Joe Peiser will lead Aon’s Risk Capital capabilities across both Commercial Risk and Reinsurance Solutions, as the broker continues to enhance and execute its Risk Capital strategy.</li>
+<li>Peiser joined Aon in 2021 as Commercial Risk Leader for North America, assuming the Global CEO of Commercial Risk role in 2023.</li>
+<li>He brings more than three decades of industry experience across broking leadership, risk consulting, client advisory roles, and executive positions across North America, the UK, and Bermuda to his new position.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/arpc-completes-reduced-2bn-terrorism-retrocession-program-for-2026/">ARPC completes reduced $2bn terrorism retrocession program for 2026 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Discusses reinsurance arrangements, risk management strategies, and market conditions relevant to Lloyd&#x27;s operations.</div><ul><li>Australia’s terrorism reinsurance pool, administered by Australian Reinsurance Pool Corporation (ARPC), has purchased a reduced terrorism retrocession limit of $2 billion, with an increased deductible of $500 million, for the 2026 calendar year.</li>
+<li>ARPC explained that this reflects its current assessment of portfolio risk, prevailing reinsurance market conditions, and the protection provided by the $10 billion Commonwealth guarantee under the Terrorism and Cyclone Insurance Act 2003.</li>
+<li>ARPC’s accumulated net assets support the terrorism pool, and the 2026 retro program sits above its retention, designed to protect the pool’s net assets in severe but plausible loss scenarios.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/consilium-launches-blended-pi-do-and-crime-policy-for-real-estate/">Consilium launches blended PI, D&amp;O and crime policy for real estate - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Introduces a specialized insurance product addressing real estate professionals&#x27; risks, aligning with Lloyd&#x27;s market focus on innovative risk solutions.</div><ul><li>Consilium, a specialist re/insurance brokerage, has launched a blended professional indemnity (PI), directors &amp; officers (D&amp;O) and crime policy to address the risks faced by real estate professionals when working collaboratively on property deals and ventures.</li>
+<li>The launch aims to address the market gap left by a single PI and D&amp;O policy not adequately addressing the risks faced by real estate businesses.</li>
+<li>To minimise the gaps, Consilium’s Professional &amp; Executive Risks team, in conjunction with in-house lawyer Duncan Childs, has drafted what it describes as a highly responsive proprietary wording.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2670/">Reinsurance News archive - page 2670</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Content discusses reinsurance industry losses and market discipline, key topics for Lloyd&#x27;s market analysis.</div><ul><li>Reinsurance News Reinsurance News – Thursday 21st July 2016 21st July 2016 Here’s your daily Reinsurance News for Thursday 21st July 2016: $30 billion of insured losses in H1 from nat cats, highest since 2011 Reinsurance broker Aon Benfield has revealed that global catastrophes in the first-half of 2016 caused an insurance industry loss of $30 billion, and a global economic .</li>
+<li>.</li>
+<li>.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/12/857873.htm">Markets/Coverages: Re/Insurer Canopius Launches Natural Resources Team</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Strategic restructuring of underwriting teams in natural resources, impacting product offerings and risk management for Lloyd&#x27;s market participants.</div><ul><li>Canopius, the international specialty and property/casualty re/insurer, has announced the creation of its consolidated Natural Resources team in response to market demand.</li>
+<li>The team encompasses energy, heavy industry and construction to better reflect how brokers in these classes allocate business.</li>
+<li>They write across upstream, midstream and downstream energy, as well as power and renewables, mining, metals and chemicals, ensuring alignment with how risks are placed in the market.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/national/2026/02/13/857967.htm">Trump&#x27;s EPA Rollbacks Will Reverberate for &#x27;Decades&#x27;</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The article discusses significant regulatory changes by the EPA under Trump, including deregulation of climate policies, potential legal challenges, and long-term impacts on public health and the economy. These factors directly relate to environmental and economic risks relevant to insurance and market sectors.</div><ul><li>US President Donald Trump is shrinking the Environmental Protection Agency more quickly and aggressively than ever before, culminating in this week’s move to rescind the crucial “endangerment finding” underpinning key regulations of planet-warming pollution.</li>
+<li>And unlike Trump’s first term, the latest changes may be harder to reverse and result in long-lasting impacts on public health and the economy.</li>
+<li>Over the past year, the EPA has surpassed the staff and program cuts made during a similar period last time.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/under-25s-motor-switching-fall-severely-dents-new-business-flow/1457749.article">Under 25s motor switching fall severely dents new business flow</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The article discusses significant changes in motor insurance market dynamics, including declining policy switching rates among young drivers, pricing trends, and implications for insurers—key topics relevant to Lloyd&#x27;s market analysis.</div><ul><li>Policy switching activity among young drivers has fallen significantly over the past year, reducing new business opportunities for insurers and prompting questions over pricing, retention and coverage in the motor market As motor insurance premiums fall, so too do the number of customers shopping for new policies and ultimately switching their providers.</li>
+<li>And the young driver market – those between 17 and 25 years of age and traditionally the highest flux demographic – has seen a particularly large decrease in switching behaviour, diminishing a usually reliable route for insurers to source new business.</li>
+<li>This is according to the latest Motor Insurance Switching Index data, provided for analysis exclusively to Insurance Times by market research firm Consumer Intelligence.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/high-five-catch-up-on-the-biggest-stories-this-week/1457763.article">High Five: Catch up on the biggest stories this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd’s shelving Blueprint Two and market engagement team changes, directly relevant to Lloyd’s market operations.</div><ul><li>Insurance Times rounds up the top five stories making headlines across the market from 9 to 13 February 2026 This week’s top story broke the M&amp;A mold, turning instead to artificial intelligence (AI), as OpenAI approved the first AI application from an insurance provider on ChatGPT.</li>
+<li>Developed by Spainish digital insurer Tuio, the move means that, for the first time, an insurance provider can distribute its products and offer quotes directly inside an AI platform.</li>
+<li>In London market news, a City AM report suggested that insurance marketplace Lloyd’s has ”quietly shelved” Blueprint Two and ”disbanded” the team responsible for market engagement at the end of 2025.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/aon-appoints-new-chief-executive-of-risk-capital/1457761.article">Aon appoints new chief executive of risk capital</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The article discusses Aon&#x27;s appointment of a new chief executive for risk capital, a critical function in Lloyd&#x27;s market operations, and highlights strategic focus on commercial risk and reinsurance solutions.</div><ul><li>’I’m honoured to step into this risk capital role at such a pivotal time for our clients and our firm,’ says appointee Aon has appointed Joe Peiser as its new chief executive of risk capital.</li>
+<li>In this role, Peiser will lead Aon’s risk capital capabilities across commercial risk and reinsurance solutions.</li>
+<li>He will also work closely with solution line and regional leaders, as well as Aon Business Services.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/acrisure-launches-new-uk-mga/1457746.article">Acrisure launches new UK MGA</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Launch of a new MGA (2Vision) specializing in professional liability, terrorism, and D&amp;O insurance, which are key areas within the Lloyd&#x27;s market.</div><ul><li>’We are building a truly end-to-end platform for our clients, spanning the full value chain,’ says chief executive Acrisure has launched a new specialist underwriting business for the UK market.</li>
+<li>Called 2Vision, the MGA will have expertise in professional liability, standalone terrorism and directors’ and officers’ (D&amp;O) insurance.</li>
+<li>Based in Chelmsford, Essex, the new MGA will combine local market insight with the national scale, systems and support of the Acrisure network.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/enstar-to-acquire-comp-specialty-insurer-af-group/">Enstar to acquire comp, specialty insurer AF Group - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Acquisition of a major workers&#x27; comp and specialty insurer with significant financial metrics and market impact.</div><ul><li>Enstar to acquire comp, specialty insurer AF Group - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Enstar to acquire comp, specialty insurer AF Group by Gavin Souter Mergers and Acquisitions , Workers Comp , Workers Comp Coverage Bermuda Feb 13, 2026 Enstar Group said Friday it has agreed to acquire Accident Fund Holdings, known as AF Group, from Blue Cross Blue Shield of Michigan.</li>
+<li>Lansing, Michigan-based AF Group recorded about $3.</li>
+<li>3 billion in gross written premium in 2025, according to Bermuda-based Enstar.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/iags-first-half-profit-falls-35/">IAG’s first-half profit falls 35% - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> IAG is a major insurance company, and its significant profit decline (35%) and operational challenges (e.g., severe weather impact on acquisition) are relevant to Lloyd&#x27;s market dynamics and broader insurance industry trends.</div><ul><li>IAG’s first-half profit falls 35% - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers IAG’s first-half profit falls 35% Feb 13, 2026 Insurance Australia Group Ltd.</li>
+<li>’s net profit in the six months ended Dec.</li>
+<li>31, 2025 fell 35% to 505 million Australian dollars ($358 million) from AUD778 million in the same period of 2025 after a AUD174 million one-off impact from severe weather affected its RACQ Insurance Ltd.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/divakaram-joins-miller-as-head-of-treaty-asia/1457775.article">Divakaram joins Miller as head of treaty Asia</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Focus on reinsurance growth, regional expansion, and leadership changes in Asia-Pacific treaty market.</div><ul><li>Singapore-based hire to drive regional treaty reinsurance growth for the broker Miller has appointed Sailesh Divakaram as head of treaty Asia as it continues to expand its regional reinsurance platform.</li>
+<li>Divakaram brings more than 30 years of experience across broking, underwriting and risk management.</li>
+<li>He joins from Gallagher Re, where he spent eight years as executive director and was responsible for building out its treaty business in Asia.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/axa-xl-and-usmig-to-distribute-coverage-for-shipping-supply-chain-and-transport/">AXA XL and USMIG to distribute coverage for shipping supply chain and transport - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> News highlights a partnership in Shipper’s Interest insurance, a niche product within marine/logistics risk management, aligning with Lloyd’s market focus on specialty insurance.</div><ul><li>AXA XL, the P&amp;C and specialty risk division of AXA, has partnered with U.</li>
+<li>S.</li>
+<li>Marine Insurance Group (USMIG) to offer Shipper’s Interest insurance, addressing market shifts in the logistics landscape.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/ping-li-eva-appointed-to-expanded-leadership-role-at-howden-re-china/">Ping Li (Eva) appointed to expanded leadership role at Howden Re China - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Leadership change in a key market (China) for Howden Re, a division of Howden (a Lloyd&#x27;s market participant), impacting strategic growth initiatives.</div><ul><li>Howden, an insurance brokerage and risk advisory group, has promoted Ping Li (Eva) to a senior leadership role within its reinsurance division, Howden Re, in Mainland China.</li>
+<li>Ping Li has more than 15 years of experience across the insurance and reinsurance sectors and has been part of Howden’s China team for five years.</li>
+<li>During that time, she has contributed to the development of the local business.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/michael-lewis-succeeds-sarah-robson-as-president-marsh-risk-canada/">Michael Lewis succeeds Sarah Robson as President, Marsh Risk Canada - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Promotion of a senior executive in a key role involving strategic development in risk consulting, reinsurance, and specialty insurance—core areas relevant to Lloyd&#x27;s market operations.</div><ul><li>Michael Lewis has been promoted to President of Marsh Risk Canada, succeeding Sarah Robson, who will continue to serve as Marsh Canada CEO.</li>
+<li>Starting April 1st, Lewis will be responsible for the strategic development and execution of Marsh Risk’s commercial strategy in Canada, which covers specialty insurance broking solutions, risk consulting services, and the firm’s commercial, corporate, and risk management client segments.</li>
+<li>He will also work closely with Marsh’s country leaders to deliver the firm’s capabilities across risk, reinsurance and capital, people and investments and management consulting to clients.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/kettle-and-rli-launch-new-multi-peril-commercial-property-insurance-product/">Kettle and RLI launch new multi-peril commercial property insurance product - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> The partnership involves AI-driven underwriting for hard-to-insure commercial property markets (wildfire/AOP), aligning with Lloyd&#x27;s focus on specialty insurance and innovative risk solutions.</div><ul><li>AI-enabled insurance and reinsurance underwriter Kettle has partnered with RLI, a U.</li>
+<li>S.</li>
+<li>-based specialty insurer, to launch a new multi-peril commercial property insurance product.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/insurtech-funding-up-to-5-08bn-in-2025-as-re-insurers-make-more-investments-gallagher-re/">InsurTech funding up to $5.08bn in 2025 as re/insurers make more investments: Gallagher Re - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mentions reinsurer investments in InsurTech and AI integration, both critical to Lloyd&#x27;s market dynamics.</div><ul><li>At $1.</li>
+<li>68 billion, global InsurTech funding in the fourth quarter of 2025 increased by an impressive 66.</li>
+<li>8% over the prior quarter, the highest level of quarterly funding since Q3 2022, as investments in insurtech for the full year 2025 rose by almost 20% year-on-year to $5.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/aig-secured-further-efficiency-in-aggregate-protection-at-advantageous-renewal-ceo-zaffino/">AIG secured further efficiency in aggregate protection at advantageous renewal: CEO Zaffino - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mentions AIG&#x27;s use of third-party capital in SPVs at Lloyd&#x27;s, indicating relevance to Lloyd&#x27;s market activities.</div><ul><li>At the January 2026 reinsurance renewals, insurance giant AIG added further efficiency to its aggregate protection for the year, in a renewal that saw weighted average rate decreases of more than 15% for the company, CEO Peter Zaffino explained today.</li>
+<li>Speaking just now during the AIG earnings call, Zaffino explained that his company saw the reinsurance renewal environment as favourable at 1/1.</li>
+<li>Importantly he noted that, while pricing was favourable and sometimes also terms, reinsurance capital providers generally held firm on attachment points at January 1st.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-02-16T11:38:31Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>

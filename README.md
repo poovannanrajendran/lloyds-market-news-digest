@@ -1,6 +1,6 @@
 # Lloyd’s Market News Digest
 
-Local-first news discovery + extraction + AI scoring + HTML/email digest for the London Lloyd’s Market.
+News discovery + extraction + AI scoring + HTML/email digest for the London Lloyd’s Market.
 
 ## Why This Exists
 The Lloyd’s market depends on timely, high-signal updates across insurers, brokers, regulators, and the broader financial press. This app automates discovery, extraction, and summarisation so teams can stay current without manually scanning dozens of sources daily.
@@ -8,7 +8,7 @@ The Lloyd’s market depends on timely, high-signal updates across insurers, bro
 ## What It Serves
 - A repeatable daily digest of Lloyd’s market news.
 - A transparent, auditable pipeline with raw and processed data stored for review.
-- A local-first AI workflow with optional cloud models and budget controls.
+- An OpenAI-first AI workflow with model-level cost controls.
 
 ## Core Features
 - Source discovery (RSS + listing pages) with candidate de-duplication.
@@ -21,7 +21,7 @@ The Lloyd’s market depends on timely, high-signal updates across insurers, bro
 
 ## Quick Start
 1. Create a Python environment named `314` and install dependencies.
-2. Copy `.env.example` to `.env` and fill in Postgres, Mongo, SMTP, and Ollama settings.
+2. Copy `.env.example` to `.env` and fill in Postgres, Mongo, SMTP, and OpenAI settings.
 3. Ensure `config.yaml` exists in the repo root (a minimal sample is included).
 4. Run a single digest:
    ```bash
@@ -108,7 +108,7 @@ flowchart LR
 - **Empty digest**: confirm extraction succeeded; inspect Mongo `attempts_raw` and Postgres `attempts` for failures.
 - **High 403/429 rates**: update user-agent in the HTTP fetcher and reduce concurrency; some sites block aggressive fetches.
 - **Mongo cache conflicts**: ensure cache key uses canonical URL + fetcher name and avoid `$set` conflicts.
-- **AI calls failing**: verify Ollama is running and model names match `config.yaml` or env overrides.
+- **AI calls failing**: verify `OPENAI_API_KEY` is set and model names match env overrides.
 - **Digest render errors**: validate prompt files and any HTML templates; check `output/` permissions.
 - **run_daily.sh fails**: confirm `.env` is sourced and conda env `314` is active in the scheduler context.
 

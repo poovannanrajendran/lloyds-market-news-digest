@@ -31,12 +31,18 @@ class RSSDiscoverer:
         for source in sources:
             if source.page_type != "rss":
                 continue
-            if log:
-                log(f"[rss] Fetching feed {source.url}")
-            feed_content = self._fetch_feed(source.url)
-            parsed = feedparser.parse(feed_content)
-            if log:
-                log(f"[rss] Parsed {len(parsed.entries)} entries from {source.domain}")
+            try:
+                if log:
+                    log(f"[rss] Fetching feed {source.url}")
+                feed_content = self._fetch_feed(source.url)
+                parsed = feedparser.parse(feed_content)
+                if log:
+                    log(f"[rss] Parsed {len(parsed.entries)} entries from {source.domain}")
+            except Exception as exc:
+                # Some RSS feeds are intermittently down or rate-limited; keep the run moving.
+                if log:
+                    log(f"[rss] Feed failed {source.url}: {exc}")
+                continue
             snapshot_id = None
             if mongo is not None:
                 snapshot_id = mongo.insert_discovery_snapshot(

@@ -153,6 +153,11 @@ def _run_provider(name: str, payload: dict[str, Any], config, run_date: str, chu
     finished_at = datetime.now(timezone.utc)
     duration = time.time() - start
     output_size = len(json.dumps(result, ensure_ascii=False)) if result else 0
+    usage = {}
+    if isinstance(result, dict):
+        maybe_usage = result.pop("_llm_usage", None)
+        if isinstance(maybe_usage, dict):
+            usage = maybe_usage
     print(
         f"[{name}] finish {finished_at.isoformat()} chunk={chunk_label} duration_s={duration:.1f} output_size={output_size}",
         flush=True,
@@ -175,8 +180,9 @@ def _run_provider(name: str, payload: dict[str, Any], config, run_date: str, chu
         provider=name,
         model=_provider_model(name),
         stage=f"render_digest:{name}",
-        tokens_prompt=_estimate_tokens(input_size),
-        tokens_completion=_estimate_tokens(output_size),
+        tokens_prompt=usage.get("prompt_tokens") or _estimate_tokens(input_size),
+        tokens_completion=usage.get("completion_tokens") or _estimate_tokens(output_size),
+        tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),
     )
     return result
 
@@ -265,7 +271,7 @@ def _provider_model(name: str) -> str:
     if name == "local":
         return os.environ.get("OLLAMA_MODEL", "qwen3:14b")
     if name == "chatgpt":
-        return os.environ.get("OPENAI_MODEL", "gpt-4o")
+        return os.environ.get("OPENAI_MODEL", "gpt-5-mini")
     if name == "deepseek":
         return os.environ.get("OLLAMA_DEEPSEEK_MODEL", "deepseek-v3.2:cloud")
     return "unknown"
@@ -333,16 +339,19 @@ def _record_llm_cost(
     stage: str,
     tokens_prompt: int | None,
     tokens_completion: int | None,
+    tokens_cached_input: int | None = None,
 ) -> None:
     if provider != "chatgpt":
         return
     if tokens_prompt is None or tokens_completion is None:
         return
+    service_tier = os.environ.get("OPENAI_SERVICE_TIER", "flex")
     cost = compute_cost_usd(
         model=model,
         tokens_prompt=tokens_prompt,
         tokens_completion=tokens_completion,
-        service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+        service_tier=service_tier,
+        tokens_cached_input=tokens_cached_input,
     )
     if cost is None:
         return
@@ -360,7 +369,7 @@ def _record_llm_cost(
             stage=stage,
             provider="openai",
             model=model,
-            service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+            service_tier=service_tier,
             tokens_prompt=tokens_prompt,
             tokens_completion=tokens_completion,
             cost_input_usd=input_cost,
@@ -374,7 +383,7 @@ def _record_llm_cost(
             stage=stage,
             provider="openai",
             model=model,
-            service_tier=os.environ.get("OPENAI_SERVICE_TIER"),
+            service_tier=service_tier,
             calls=1,
             tokens_prompt=tokens_prompt,
             tokens_completion=tokens_completion,
@@ -970,7 +979,8 @@ def generate_with_deepseek(payload: dict[str, Any], config, run_date: str) -> di
 
 def generate_with_openai(payload: dict[str, Any], config, run_date: str) -> dict[str, Any]:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_MODEL", "gpt-4o")
+    model = os.environ.get("OPENAI_MODEL", "gpt-5-mini")
+    service_tier = os.environ.get("OPENAI_SERVICE_TIER", "flex").strip() or "flex"
     if not api_key:
         return {}
     prompt = _build_summary_prompt(payload, config, provider="chatgpt") if "summary_text" in payload else _build_prompt(payload, config, provider="chatgpt")
@@ -984,6 +994,7 @@ def generate_with_openai(payload: dict[str, Any], config, run_date: str) -> dict
             {"role": "user", "content": prompt},
         ],
         "temperature": temperature,
+        "service_tier": service_tier,
     }
     timeout = float(os.environ.get("OPENAI_TIMEOUT", "120"))
     for attempt in range(1, 4):
@@ -998,7 +1009,10 @@ def generate_with_openai(payload: dict[str, Any], config, run_date: str) -> dict
                     )
                 data = resp.json()
             content = data["choices"][0]["message"]["content"]
-            return _parse_json(content, provider="chatgpt", run_date=run_date)
+            parsed = _parse_json(content, provider="chatgpt", run_date=run_date)
+            if isinstance(parsed, dict):
+                parsed["_llm_usage"] = data.get("usage", {}) if isinstance(data, dict) else {}
+            return parsed
         except Exception as exc:
             if attempt == 3:
                 print(f"[chatgpt] failed after retries: {exc}", flush=True)

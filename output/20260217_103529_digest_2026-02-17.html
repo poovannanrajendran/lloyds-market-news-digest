@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-02-17</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-02-17 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-17.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">19 highlights selected for 2026-02-17. Sources include: www.artemis.bm, www.bankofengland.co.uk, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>London Market</li>
+<li>Leadership</li>
+<li>Lloyds</li>
+<li>People Moves</li>
+<li>Market News</li>
+<li>Reinsurance</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/legacy-run-off-reinsurance-transactions/">Legacy and run-off reinsurance transactions - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Content details legacy/run-off reinsurance transactions, a core focus of Lloyd&#x27;s market news, with explicit mentions of acquirers, cedents, and deal structures relevant to the sector.</div><ul><li>Legacy and run-off reinsurance transactions Legacy and run-off reinsurance transaction details This table lists publicly announced legacy insurance and reinsurance transactions in chronological order, with the most recent deal at the top.</li>
+<li>It provides the month the transaction was announced, where we have it, and where we do not, it shows the quarter.</li>
+<li>This list summarises key details including legacy acquirer, cedent, deal structure, class of business, and year(s) of account.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/concirrus-launches-ai-native-underwriting-platform/">Concirrus launches AI-native underwriting platform - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The news highlights an AI-native underwriting platform tailored for specialty insurers and MGAs, which are key participants in Lloyd&#x27;s market.</div><ul><li>Concirrus, a specialist insurtech company, has officially launched Concirrus Inspire, an AI-native underwriting platform aimed at helping specialty insurers and managing general agents accelerate their processes while retaining control over underwriting appetite, exposure, and portfolio outcomes.</li>
+<li>Covering the entire underwriting lifecycle, from submission through binding and beyond, Inspire enables underwriters to make confident decisions and supports business growth without requiring proportional increases in staff.</li>
+<li>Designed specifically for the complexities of specialty insurance, Inspire combines line-specific underwriting applications with a line-agnostic policy management foundation.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/storm-kristin-could-be-among-portugals-costliest-insured-loss-events-aon/">Storm Kristin could be among Portugal’s costliest insured loss events: Aon - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content details severe storm impacts in Portugal and Spain, including insured losses exceeding €500 million and potential re/insurance implications, directly relevant to Lloyd&#x27;s market risk assessments and claims management.</div><ul><li>Between late January and early February, a series of Atlantic windstorms hit Southwestern Europe, with Storm Kristin as the most severe and potentially one of the costliest re/insurance loss events ever recorded in Portugal, according to Aon.</li>
+<li>Since 18th January 2026, eight consecutive lows have impacted Southwestern Europe, particularly Portugal and Spain, bringing powerful winds and heavy rainfall.</li>
+<li>These included Storms Harry (Jan 18–20), Kristin (Jan 22 and Jan 28), Ingrid/Leonie (Jan 23), Chandra/Norma (Jan 27), Querida &amp; Romina (Feb 2), Leonardo/Stephie (Feb 4–7), and Marta (Feb 8).</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/canopius-expands-natural-resources-team-with-nicholas-whettem-namrata-soni/">Canopius expands Natural Resources team with Nicholas Whettem &amp; Namrata Soni - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> News about Canopius Group (a Lloyd&#x27;s market re/insurer) expanding its Natural Resources team with new hires in energy, renewables, and construction is directly relevant to Lloyd&#x27;s market operations and underwriting strategies.</div><ul><li>Canopius Group, a global specialty and P&amp;C re/insurer, has announced the additions of Nicholas Whettem and Namrata Soni to its newly created Natural Resources team.</li>
+<li>The re/insurer recently restructured its underwriting capabilities with the formation of a consolidated Natural Resources team, which integrates energy (upstream, midstream, and downstream), heavy industry, power and renewables, and construction.</li>
+<li>Whettem has been appointed Head of Power and Renewables.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/talbot-names-bickmore-head-of-political-risk-goodliffe-head-of-public-agencies/">Talbot names Bickmore Head of Political Risk, Goodliffe Head of Public Agencies - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Promotions within Talbot Underwriting, a Lloyd&#x27;s market entity, to key roles in Political Risk and Public Agencies, directly relevant to Lloyd&#x27;s operations.</div><ul><li>Talbot Underwriting, an international specialty insurance and reinsurance company, part of AIG, has promoted Andrew Bickmore to Head of Political Risk, and George Goodliffe to Head of Public Agencies.</li>
+<li>Bickmore has been part of Talbot for close to 16 years, having joined the company as Senior Class Underwriter – Political &amp; Trade Credit Risks.</li>
+<li>Prior to his tenure at Talbot, the executive served as a Senior Broker for HSBC Insurance, and was also a Broker for Cooper Gey &amp; Co.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/catastrophe-bonds-continued-shift-into-mainstream-reinsurance-at-1-1-howden/">Catastrophe bonds continued shift into mainstream reinsurance at 1.1: Howden - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses catastrophe bonds&#x27; integration into reinsurance frameworks, investor trends, and market dynamics critical to Lloyd&#x27;s operations.</div><ul><li>Through 2025 and into the January 1, 2026 reinsurance renewals, catastrophe bonds firmly established themselves as a core component of clients’ risk management frameworks, according to Howden Capital Markets &amp; Advisory (HCMA).</li>
+<li>HCMA noted that catastrophe bond issuance reached record levels in 2025, with volumes approximately 45% higher compared to 2024, driven by an increased number of transactions.</li>
+<li>Both new and repeat sponsors reinforced catastrophe bonds as an integral element of global risk transfer, rather than a specialist alternative.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/17/858179.htm">Catastrophe-Bond Risk Premia Drop to Rates Last Seen in 2022</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses market trends in catastrophe bonds and reinsurance, which are directly relevant to Lloyd&#x27;s operations.</div><ul><li>Investors in catastrophe bonds are seeing a decline in risk premia to levels not seen since before Hurricane Ian hit Florida in 2022, as a surge in fresh capital drives down potential returns.</li>
+<li>That’s according to an analysis by reinsurer Swiss Re, which published its assessment of the state of the market for insurance-linked securities on Monday.</li>
+<li>“We have seen capital flow into the market that has resulted in spread tightening,” Andy Palmer, who oversees ILS structuring for Europe and Asia at Swiss Re, told Bloomberg News.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/cape-lookout-re-ltd-series-2026-1/">Cape Lookout Re Ltd. (Series 2026-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article discusses a new catastrophe bond issuance by NCIUA through Cape Lookout Re Ltd., detailing financial terms, risk layers, and market structure, which is directly relevant to Lloyd&#x27;s market participants and reinsurance trends.</div><ul><li>Cape Lookout Re Ltd.</li>
+<li>(Series 2026-1) – Full details: The North Carolina Insurance Underwriting Association (NCIUA) has returned to the catastrophe bond market seeking named storm reinsurance protection from what will become its eighth catastrophe bond sponsorship under the Cape Lookout Re Ltd.</li>
+<li>program of deals.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/best-of-artemis-week-ending-february-15th-2026/">Best of Artemis, week ending February 15th 2026 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Content covers catastrophe bonds, ILS, reinsurance capital, and mentions Lloyd&#x27;s directly (e.g., AIG&#x27;s SPV opportunities at Lloyd’s), aligning with Lloyd’s market themes.</div><ul><li>Here are the ten most popular news articles, week ending February 15th 2026, covering catastrophe bonds, ILS, reinsurance capital and related risk transfer topics.</li>
+<li>Ten most read articles on Artemis.</li>
+<li>bm, week ending February 15th 2026: - Discipline, education, transparency, trust all key as ILS continues to grow &amp; evolve: ILS NYC 2026 As the catastrophe bond and insurance-linked securities market looks to build on its recent strong performance and capitalise on opportunities that are being presented, the need for the sector to do so in a sustainable way came into focus at our ILS NYC 2026 conference held in New York recently.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/conduit-holdings-announces-board-changes-shott-appointed-chair/">Conduit Holdings announces Board changes, Shott appointed Chair - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Leadership changes in a reinsurance company are directly relevant to Lloyd&#x27;s market dynamics and corporate governance.</div><ul><li>Conduit Holdings, the ultimate parent company of Conduit Re, a multi-line Bermuda-based reinsurance business, has announced the appointment of Nicholas Shott as Chair of the Board.</li>
+<li>Shott, who joined the Conduit Holdings Board in November 2025, will also succeed Ken Randall as Chair of the Nomination Committee.</li>
+<li>Prior to this appointment, he had been serving on both the Nomination and Remuneration Committees.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/wills-names-michelle-ng-as-head-of-risk-analytics-pacific/">Willis names Michelle Ng as Head of Risk &amp; Analytics, Pacific - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Leadership change in Risk &amp; Analytics with actuarial expertise directly impacts underwriting and risk management, core to Lloyd&#x27;s market operations.</div><ul><li>Willis, a WTW business, has appointed Michelle Ng as Head of Risk &amp; Analytics, Pacific, succeeding Matt Frost, who has retired from the company.</li>
+<li>In her new role, Ng will lead the Pacific Risk &amp; Analytics (R&amp;A) team to deliver data-driven insights, actuarial expertise, and advanced risk modelling capabilities to clients across Australia, New Zealand and the broader Pacific region.</li>
+<li>She has a deep technical background in risk analytics and actuarial consulting, and a proven track record of working closely with C-suites, Boards and senior management.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/miller-appoints-sailesh-divakaram-as-head-of-treaty-asia/">Miller appoints Sailesh Divakaram as Head of Treaty Asia - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Strategic leadership appointment in Asia for reinsurance growth and regional market expansion.</div><ul><li>Miller, the independent specialist insurance and reinsurance broker, has announced the appointment of Sailesh Divakaram as Head of Treaty Asia.</li>
+<li>Based in Miller’s Singapore office, Divakaram will report to Richard Broad, Head of Treaty (Asia Pacific).</li>
+<li>Together, Divakaram and Broad will focus on driving the continued growth of Miller’s regional treaty capability as a core pillar of the broker’s global reinsurance platform.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/nephila-hires-former-openly-everest-exec-landi-as-head-of-strategic-growth/">Nephila hires former Openly / Everest exec Landi as Head of Strategic Growth - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Mentions reinsurance, insurance-linked securities (ILS), and strategic growth in a firm linked to Lloyd&#x27;s market activities.</div><ul><li>Nephila Capital has hired experienced reinsurance and capital management executive Anthony Landi as Head of Strategic Growth for the firm’s Nephila Advisors investor relations and US business development division.</li>
+<li>Landi joined Nephila Advisors this month according to an update on LinkedIn.</li>
+<li>He brings experience from more than a decade spent working in the reinsurance division of global re/insurer Everest, as well as almost four years focused on reinsurance capital at insurtech homeowners specialist Openly.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/axa-xl-adds-thomas-saive-as-head-of-underwriting-motor-apac-europe/">AXA XL adds Thomas Saive as Head of Underwriting Motor, APAC &amp; Europe - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Leadership change in underwriting (motor insurance) and context on evolving risk landscape (e.g., rising repair costs, new mobility solutions) directly impact insurance market strategies.</div><ul><li>AXA XL, the P&amp;C and specialty risk division of AXA, has appointed Thomas Saive as Head of Underwriting Motor, Asia Pacific (APAC) &amp; Europe, effective March 1st, 2026.</li>
+<li>In his new role, Saive will oversee the motor insurance underwriting strategy for the two aforementioned business units, and the French market directly, working closely with the regional and local underwriting teams.</li>
+<li>Most recently, he served as the Head of Reserving in the Risk function of AXA XL.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/mandate-to-dictate-whether-ai-should-be-covered-or-not-via-insurance-on-the-cards-lockton/1457787.article">‘Mandate to dictate whether AI should be covered or not’ via insurance on the cards – Lockton</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s 2019 mandate on silent cyber and discusses potential future regulatory actions affecting AI coverage in the London market.</div><ul><li>Broker believes that there is room in the market for standalone AI coverage, but that the insurance sector is still ‘a bit far away’ from implementing anything concrete Regulatory action mandating whether artificial intelligence (AI) related activities or processes are covered – or not – within certain insurance policies is expected “sooner or later” because this risk has the potential to “touch every single line of insurance”, according to Carlo Ramadoro, head of cyber and technology insurance at broker Lockton.</li>
+<li>Speaking at trade association Airmic’s The Risk Forum conference on 11 February 2026, Ramadoro unpicked the current confusion that risk managers may experience when checking whether cover for AI related activities is included within their existing risk transfer programme.</li>
+<li>He said: “The common perception is that AI is a technology risk and it’s covered by a technology errors and omission (E&amp;O) policy or a cyber policy.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2671/">Reinsurance News archive - page 2671</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mention of Lloyd&#x27;s delaying an index launch due to Brexit</div><ul><li>Reinsurance News Reinsurance News – Monday 8th August 2016 8th August 2016 Here’s your daily Reinsurance News for Monday 8th August 2016: Berkshire Hathaway reports $337 million re/insurance underwriting profit in Q2 Berkshire Hathaway has reported its second-quarter 2016 results, revealing that its insurance and reinsurance operations posted an underwriting profit of $337 million, up from the $38 million loss reported .</li>
+<li>.</li>
+<li>.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/matt-scott/2215.bio">Matt Scott | Contributor | Insurance Times</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Content includes analysis of Lloyd’s marketplaces, solvency ratios, and underwriting performance, which are directly relevant to Lloyd’s market news.</div><ul><li>Matt Scott Matt Scott is the cofounder of Insurance DataLab, a market intelligence platform launched to solve the increasingly difficult challenge of finding credible, comparable and digestible information on the performance of insurance companies.</li>
+<li>He is also an award-winning journalist who started his career as an actuarial associate consultant, at Aon where he studied towards the professional exams of the Institute and Faculty of Actuaries and completed an MSc in actuarial finance at Imperial College Business School.</li>
+<li>As insight editor of Insurance Times, Matt reported widely on the UK general insurance market, focusing particularly on the financial and regulatory landscape.</li></ul></article>
+<article class="story"><h3><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/february/reforms-to-securitisation-requirements-consultation-paper">CP2/26 – Reforms to securitisation requirements</a></h3><div class="meta">Source: www.bankofengland.co.uk · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> The content discusses a consultation by the Prudential Regulation Authority (PRA) on securitisation regulations, which may impact Lloyd&#x27;s market participants. Although focused on data privacy, it is part of a broader regulatory process affecting financial institutions.</div><ul><li>This may include your name, contact details (including, if provided, details of the organisation you work for), and opinions or details offered in the response itself.</li>
+<li>The response will be assessed to inform our work as a regulator and central bank, both in the public interest and in the exercise of our official authority.</li>
+<li>We may use your details to contact you to clarify any aspects of your response.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/tokio-marine-posts-2-5b-non-life-profit/">Tokio Marine posts $2.5B non-life profit - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s promotion in related news section</div><ul><li>Tokio Marine posts $2.</li>
+<li>5B non-life profit - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Tokio Marine posts $2.</li>
+<li>5B non-life profit Feb 16, 2026 Japan-based Tokio Marine Holdings Inc.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-02-17T10:35:29Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>

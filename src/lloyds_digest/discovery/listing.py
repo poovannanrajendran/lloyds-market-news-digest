@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from html.parser import HTMLParser
+import os
+import re
 from typing import Callable, Iterable
 from urllib.parse import urljoin, urlsplit
 
@@ -73,12 +75,19 @@ class ListingDiscoverer:
         for source in sources:
             if source.page_type != "listing":
                 continue
-            if log:
-                log(f"[listing] Fetching listing {source.url}")
-            html = self._fetch_listing(source.url)
-            links = extract_links(html)
-            if log:
-                log(f"[listing] Extracted {len(links)} links from {source.domain}")
+            try:
+                if log:
+                    log(f"[listing] Fetching listing {source.url}")
+                html = self._fetch_listing(source.url)
+                links = extract_links(html)
+                if log:
+                    log(f"[listing] Extracted {len(links)} links from {source.domain}")
+            except Exception as exc:
+                # A single listing source may be paywalled/blocked (401/403) or temporarily down.
+                # Don't fail the entire listing discovery pass; just skip this source.
+                if log:
+                    log(f"[listing] Listing failed {source.url}: {exc}")
+                continue
             snapshot_id = None
             if mongo is not None:
                 snapshot_id = mongo.insert_discovery_snapshot(
@@ -98,6 +107,11 @@ class ListingDiscoverer:
                 if not allow_external and not _same_domain(absolute, source.domain):
                     continue
                 canonical = canonicalise_url(absolute)
+                if source.domain.strip().lower() == "theinsurer.com":
+                    # TheInsurer listing pages include a lot of nav/topic links.
+                    # Filter to article-like URLs to avoid wasting work downstream.
+                    if not _looks_like_theinsurer_article(canonical):
+                        continue
                 candidate_id = candidate_id_from_url(canonical)
                 if candidate_id in dedup:
                     continue
@@ -128,6 +142,12 @@ class ListingDiscoverer:
         return candidates
 
     def _fetch_listing(self, url: str) -> str:
+        mode = (os.environ.get("LLOYDS_DIGEST_DISCOVERY_FETCHER") or "httpx").strip().lower()
+        if mode == "playwright":
+            return self._fetch_listing_playwright(url)
+        return self._fetch_listing_httpx(url)
+
+    def _fetch_listing_httpx(self, url: str) -> str:
         with httpx.Client(
             timeout=self.timeout,
             headers={"User-Agent": "lloyds-digest/0.1"},
@@ -136,6 +156,46 @@ class ListingDiscoverer:
             response = client.get(url)
             response.raise_for_status()
             return response.text
+
+    def _fetch_listing_playwright(self, url: str) -> str:
+        # Optional dependency; only used when explicitly enabled via env.
+        from playwright.sync_api import sync_playwright  # type: ignore
+        headless_env = os.environ.get("LLOYDS_DIGEST_PLAYWRIGHT_HEADLESS")
+        if headless_env is not None:
+            normalized = headless_env.strip().lower()
+            if normalized in {"0", "false", "no", "off"}:
+                headless = False
+            elif normalized in {"1", "true", "yes", "on"}:
+                headless = True
+            else:
+                headless = True
+        else:
+            headless = True
+
+        with sync_playwright() as p:
+            def _run(headless_flag: bool) -> tuple[int | None, str]:
+                browser = p.chromium.launch(headless=headless_flag)
+                try:
+                    page = browser.new_page()
+                    resp = page.goto(
+                        url,
+                        wait_until="domcontentloaded",
+                        timeout=int(self.timeout * 1000),
+                    )
+                    page.wait_for_timeout(750)
+                    return (resp.status if resp is not None else None), page.content()
+                finally:
+                    browser.close()
+
+            status, html = _run(headless)
+            if (
+                headless
+                and status in {401, 403}
+                and os.environ.get("LLOYDS_DIGEST_PLAYWRIGHT_HEADFUL_FALLBACK", "").strip().lower()
+                in {"1", "true", "yes", "on"}
+            ):
+                _, html = _run(False)
+            return html
 
 
 def _same_domain(url: str, domain: str) -> bool:
@@ -149,6 +209,17 @@ def _same_domain(url: str, domain: str) -> bool:
 def _is_http_url(url: str) -> bool:
     scheme = urlsplit(url).scheme
     return scheme in {"http", "https"}
+
+
+_THEINSURER_ARTICLE_RE = re.compile(
+    r"/(news|analysis|commentary|viewpoint|interview)/.+\d{4}-\d{2}-\d{2}/?$",
+    re.IGNORECASE,
+)
+
+
+def _looks_like_theinsurer_article(url: str) -> bool:
+    path = urlsplit(url).path
+    return bool(_THEINSURER_ARTICLE_RE.search(path))
 
 
 def _utc_now() -> datetime:

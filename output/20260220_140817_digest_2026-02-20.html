@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-02-20</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-02-20 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-20.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">26 highlights selected for 2026-02-20. Sources include: www.artemis.bm, www.bankofengland.co.uk, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Risk</li>
+<li>Reinsurance</li>
+<li>London Market</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/swiss-re-corporate-solutions-to-acquire-qbes-global-trade-credit-and-surety-unit/">Swiss Re Corporate Solutions to acquire QBE&#x27;s Global Trade Credit and Surety unit - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Acquisition of a significant trade credit and surety business by a major reinsurance firm, impacting market dynamics and risk management offerings.</div><ul><li>Swiss Re Corporate Solutions, the commercial insurance arm of reinsurance giant Swiss Re, is set to acquire Australian insurer QBE’s Global Trade Credit and Surety business, subject to regulatory approvals, which are expected to take some months.</li>
+<li>The business unit being acquired by Swiss Re operates across Australia, New Zealand, and the UK, with the portfolio expected to generate approximately $200 million in annual revenues.</li>
+<li>QBE’s Global Trade Credit and Surety business is led by an experienced team of industry specialists.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/zurich-renews-aggregate-treaty-cites-overall-favourable-pricing-stable-conditions/">Zurich renews aggregate treaty, cites overall favourable pricing &amp; stable conditions - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Details on Zurich&#x27;s reinsurance renewals, capacity changes, and market conditions are directly relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Insurer Zurich renewed its global aggregate catastrophe treaty at January 1st with an uplift in capacity, and also added cyber coverage to its global top catastrophe excess of loss treaty, and secured a higher retention for its Europe all perils reinsurance tower.</li>
+<li>Alongside its results for 2025, global insurer Zurich has revealed its catastrophe reinsurance protections for 2026, highlighting overall stable renewal conditions and favourable pricing.</li>
+<li>Notably, the insurer has renewed its global aggregate cat treaty, which returned last April after Zurich stopped renewing its aggregate coverage in 2023.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/willis-re-welcomes-rikki-hornett-to-its-leadership-team/">Willis Re welcomes Rikki Hornett to its leadership team - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mentions Willis Re (a major reinsurance firm) and Rikki Hornett&#x27;s extensive Bermuda market experience, which is central to Lloyd&#x27;s market dynamics.</div><ul><li>Willis Re, a re/insurance advisory and broking firm and part of WTW, has announced the appointment of Rikki Hornett to its team, bringing more than 40 years of industry experience, including over 25 years working in the Bermuda market.</li>
+<li>During his time on the island, Hornett played a key role in launching several new re/insurance operations, notably leading the initial Bermuda establishment for Prentis Donegan &amp; Partners, which was later acquired by Price Forbes.</li>
+<li>Prior to joining Willis Re, Hornett spent 20 years at reinsurance broker Guy Carpenter, where he focused on structuring reinsurance and retrocession programmes.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/qbe-sees-strong-sustainable-outcome-at-jan-1-as-retentions-fall-again/">QBE sees &#x27;strong &amp; sustainable&#x27; outcome at Jan 1 as retentions fall again - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article details QBE&#x27;s reinsurance renewal terms, including reduced retentions and attachment points, which are critical to Lloyd&#x27;s market dynamics and risk management strategies.</div><ul><li>Alongside its full-year 2025 results, QBE has also provided an update on its January 1, 2026, reinsurance renewal, where it secured a further reduction in retentions on its main catastrophe reinsurance tower amid favourable market conditions.</li>
+<li>QBE CFO Chris Killourhy said his firm delivered another strong and sustainable reinsurance outcome at the renewal, adding that QBE’s diversification across regions and lines of business makes it a highly sought-after proposition in the market.</li>
+<li>Killourhy added, “Given the support of our strong reinsurer relationships, we were again able to reduce the attachment point of our cat program now to $250 million, that’s a reduction of almost 40% in just two years.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/convex-delivers-strong-underwriting-performance-in-2025-as-gwp-nears-6bn/">Convex delivers strong underwriting performance in 2025 as GWP nears $6bn - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mention of Convex launching Syndicate 1984 at Lloyd’s, a key element of Lloyd’s market news.</div><ul><li>Specialty insurer and reinsurer Convex achieved a 14% year-on-year rise in gross written premiums (GWP) to $5.</li>
+<li>9 billion in 2025, resulting in a three year compound annual growth rate of 25%, with expansion in most business lines despite the impacts of the California wildfires and other major events and catastrophes.</li>
+<li>Paul Brand, the company’s Chief Executive Officer (CEO), describes 2025 as a “landmark year” for Convex, driven by a third consecutive year of annual net profit, the launch of Syndicate 1984 at Lloyd’s, and the extension of its partnership with Onex and a new strategic relationship with global insurer AIG.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/marsh-risk-new-excess-facility-to-support-us-digital-infrastructure-growth/">Marsh Risk new excess facility to support US digital infrastructure growth - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mentions A+ rated Lloyd’s and London insurers supporting Nimbus Casualty, directly linking to Lloyd’s market activities.</div><ul><li>Marsh Risk, a business of broker and risk advisor Marsh, has launched Nimbus Casualty, a dedicated insurance facility designed to provide excess general liability protection for digital infrastructure projects across the US during the construction phase.</li>
+<li>Nimbus Casualty is structured to provide significant financial protection for developers, owners, and operators, offering up to $75 million in capacity, with a minimum attachment point of $25 million.</li>
+<li>It is supported by a panel of A+ rated Lloyd’s and London insurers, ensuring high-quality capital for complex projects.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/allstate-now-targets-up-to-1bn-of-limit-across-sanders-re-iii-sanders-re-iv-cat-bonds/">Allstate now targets up to $1bn of limit across Sanders Re III &amp; Sanders Re IV cat bonds - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content discusses a major catastrophe bond issuance by Allstate, a key player in the reinsurance market, which is directly relevant to Lloyd&#x27;s market activities and capital market trends.</div><ul><li>Allstate is now targeting the most limit from a single visit to the catastrophe bond market in its history, with now up to $1 billion of fully-collateralized multi-peril per-occurrence catastrophe reinsurance sought from the dual issuances of Sanders Re IV Ltd.</li>
+<li>(Series 2026-1A) and Sanders Re III Ltd.</li>
+<li>(Series 2026-1B) cat bond series.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/zurich-beats-operating-profit-forecast-led-by-pc-arm/">Zurich beats operating profit forecast led by P&amp;C arm - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article highlights Zurich Insurance&#x27;s P&amp;C unit outperforming expectations, a key segment for Lloyd&#x27;s market participants, and discusses financial results, strategic targets, and industry trends (e.g., AI investments).</div><ul><li>Zurich beats operating profit forecast led by P&amp;C arm - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Zurich beats operating profit forecast led by P&amp;C arm Financial Results , P/C Insurers Switzerland Zurich Feb 19, 2026 (Reuters) — Zurich Insurance beat market expectations for annual operating earnings on Thursday, fueled by a better-than-expected performance in its property and casualty business, responsible for more than half of its gains.</li>
+<li>Europe’s second-largest insurer by market capitalization reported an operating profit of $8.</li>
+<li>86 billion, above analysts’ median estimate of $8.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/westfield-specialty-reports-1-93b-in-gross-written-premium/">Westfield Specialty reports $1.93B in gross written premium - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mentions Westfield Specialty&#x27;s connection to Lloyd’s of London Syndicate 1200 and discusses financial performance relevant to Lloyd’s market.</div><ul><li>Westfield Specialty reports $1.</li>
+<li>93B in gross written premium - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Westfield Specialty reports $1.</li>
+<li>93B in gross written premium by Matthew Lerner Financial Results , P/C Insurers United Kingdom Feb 19, 2026 Westfield Specialty reported $1.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/sompo-gets-approval-for-3-5b-aspen-purchase/">Sompo gets approval for $3.5B Aspen purchase - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mention of Aspen&#x27;s leading Lloyd&#x27;s syndicate in the acquisition</div><ul><li>Sompo gets approval for $3.</li>
+<li>5B Aspen purchase - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Sompo gets approval for $3.</li>
+<li>5B Aspen purchase Feb 19, 2026 Japan-based Sompo Holdings has received antitrust and insurance regulatory approvals to complete its $3.</li></ul></article>
+<article class="story"><h3><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/february/pra-rule-changes-to-accommodate-hmt-oprr-consultation-paper">CP3/26 – PRA rule changes to accommodate HM Treasury’s Overseas Prudential Requirements Regime</a></h3><div class="meta">Source: www.bankofengland.co.uk · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The content discusses regulatory changes (OPRR) by the PRA, which directly impact prudential requirements for financial institutions, including Lloyd&#x27;s market participants.</div><ul><li>This may include your name, contact details (including, if provided, details of the organisation you work for), and opinions or details offered in the response itself.</li>
+<li>The response will be assessed to inform our work as a regulator and central bank, both in the public interest and in the exercise of our official authority.</li>
+<li>We may use your details to contact you to clarify any aspects of your response.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/arch-insurance-international-names-new-do-and-fi-underwriting-managers/">Arch Insurance International names new D&amp;O and FI Underwriting Managers - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The content discusses leadership changes in underwriting roles within Arch Insurance International&#x27;s Executive Assurance division, which operates within the Lloyd&#x27;s market. The focus on financial lines and broker engagement aligns with Lloyd&#x27;s market activities.</div><ul><li>Arch Insurance International has announced the appointments of Antony Hope as Directors &amp; Officers (D&amp;O) Underwriting Manager and Sangeetha Mani as Financial Institutions (FI) Underwriting Manager.</li>
+<li>As part of the Executive Assurance division, Hope and Mani have been tasked with overseeing the underwriting activities for the open market Directors &amp; Officers (D&amp;O) and Financial Institutions (FI) portfolios, respectively.</li>
+<li>Their primary focus will be on enhancing broker engagement and capitalising on the significant growth achieved by both portfolios in recent years.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/20/858848.htm">India Grants One-Month Extension to 4 Russian Marine Insurers</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Involves Russian insurers providing third-party liability cover for vessels in Indian waters, relevant to Lloyd&#x27;s market insurance operations.</div><ul><li>India temporarily extended permission for four Russian insurers to cover tankers calling at its ports, as the government seeks to sustain crude imports while also managing US pressure to end shipments from Moscow.</li>
+<li>The stopgap move lasts for one month, enabling Soglasie Insurance Company Ltd.</li>
+<li>, Ugoria Group of Insurance Companies, Sberbank Insurance and ASTK Insurance LLC, to provide cover beyond Feb.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/19/858685.htm">Zurich Insurance Profit Beats Estimates as CEO Eyes Beazley</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Mentions Beazley’s Lloyd’s of London presence and delay in launching a Lloyd’s syndicate until the Beazley bid outcome is resolved.</div><ul><li>Group operating profit rose to $8.</li>
+<li>9 billion in the year, the company said, beating the $8.</li>
+<li>8 billion consensus analyst estimate.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/the-biggest-people-moves-this-week/1457828.article">The biggest people moves this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s Market&#x27;s leadership changes (Fiona Luck and Sean McGovern appointed deputy chairs of its council).</div><ul><li>Insurance Times rounds up the most significant appointments, hires and leadership developments from 16 to 20 February 2026 Among moves this week was Kerry Myles being appointed Aviva branch manager for the south east, taking responsibility for the insurer’s newly defined regional structure spanning Kent, Sussex and Surrey, as well as Southampton and Thames Valley.</li>
+<li>Myles reports to Jake Algar, head of trading for London and the south east.</li>
+<li>Myles assumes the role from 16 March 2026, providing permanent leadership following an interim management arrangement.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/court-limits-scope-of-pollution-exclusion-in-herbicide-case/">Court limits scope of pollution exclusion in herbicide case - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The court&#x27;s interpretation of pollution exclusions in insurance policies directly impacts coverage obligations for insurers, a critical issue for Lloyd&#x27;s market participants.</div><ul><li>Court limits scope of pollution exclusion in herbicide case - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Court limits scope of pollution exclusion in herbicide case by Gavin Souter Asbestos &amp; Environmental , P/C Insurers The Travelers Cos.</li>
+<li>Feb 19, 2026 Travelers must defend Syngenta Crop Protection in a group of lawsuits tied to the herbicide paraquat, a Delaware court ruled.</li>
+<li>In Syngenta Crop Protection LLC v.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/pinion-insurance-launched-with-180m-in-funding/">Pinion Insurance Launched with $180M in funding - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> News about a new insurance company (Pinion Insurance) launching with significant funding and expansion plans into key markets (US, UK, Europe) directly impacts Lloyd&#x27;s market dynamics and underwriting capacity.</div><ul><li>Pinion Insurance Launched with $180M in funding - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Pinion Insurance Launched with $180M in funding Feb 19, 2026 Pinion Insurance, a Bermuda-incorporated specialty carrier headquartered in London, has launched with a preferred equity commitment of up to $180 million from Barings and plans to provide insurance capacity and underwriting analytics to MGAs in the US, UK and Europe, The Royal Gazette reports.</li>
+<li>Built on the foundation of Pinion Risk Consulting, the company aims to begin US binding operations in the second quarter of 2026, with UK and EU underwriting to follow in 2027 pending regulatory approvals and an AM Best rating.</li>
+<li>Read more Related News Sompo gets approval for $3.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/suncorp-mulls-additional-reinsurance-amid-soft-market/">Suncorp mulls additional reinsurance amid soft market - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> The article discusses Suncorp&#x27;s consideration of additional reinsurance amid a soft market, which is directly relevant to Lloyd&#x27;s market dynamics and reinsurance trends.</div><ul><li>Suncorp mulls additional reinsurance amid soft market - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Suncorp mulls additional reinsurance amid soft market Feb 19, 2026 As reinsurance pricing continues to soften, Australia-based Suncorp is considering adding additional aggregate reinsurance protection at its July renewal to better shield itself from escalating natural hazard losses, Reinsurance News reports.</li>
+<li>The insurer reported 1.</li>
+<li>32 billion Australian dollars ($920 million) in first-half 2026 natural hazard costs, exceeding its budget by AU$453 million, and executives said improved market conditions may make expanded coverage more attractive.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/howden-tees-up-golf-partnership-through-to-end-of-2028/1457822.article">Howden tees up golf partnership through to end of 2028</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> The content highlights a partnership involving insurance services, risk management, and market expansion in the sports sector, which aligns with Lloyd&#x27;s market interests in insurance innovation and sector-specific risk solutions.</div><ul><li>‘This partnership strengthens our commitment to amateur and grassroots sport even further,’ says director Howden has been named the official insurance partner of England Golf in a three-year agreement running to the end of 2028.</li>
+<li>The partnership brings together the broker and the national governing body to support initiatives aimed at making golf safer, more sustainable and more accessible, while strengthening insurance provision for players and clubs across England.</li>
+<li>The broker also introduced an option for golfers to purchase additional cover, including protection for theft and overseas travel, designed to sit alongside existing policies as an upgrade.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/j-b-boda-co-appoints-rajesh-sinha-as-ceo-md-apac/">J.B. Boda &amp; Co. appoints Rajesh Sinha as CEO &amp; MD – APAC - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Mentions &#x27;Lloyd’s markets&#x27; in the context of the CEO&#x27;s vision for regional collaboration and network expansion.</div><ul><li>J.</li>
+<li>B.</li>
+<li>Boda &amp; Co.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/lockton-appoints-renuka-nar-as-director-head-of-lh-reinsurance-india/">Lockton appoints Renuka Nar as Director, Head of L&amp;H Reinsurance, India - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Leadership change in Life and Health Reinsurance in India, impacting market strategies and client relationships.</div><ul><li>Lockton, an independent insurance broker, has announced the appointment of Renuka Nar as Director – Head of Life and Health Reinsurance, India.</li>
+<li>In her new role, Nar will lead the Life and Health Reinsurance practice in India, focusing on building long-term partnerships, enhancing client value, driving innovation in the market, and supporting the continued expansion of the firm’s capabilities.</li>
+<li>She will report to Sudip Indani, Managing Director, Head of People Solutions India at Lockton.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/travelers-to-enhance-customer-experience-with-new-agentic-ai-claim-assistant/">Travelers to enhance customer experience with new Agentic AI Claim Assistant - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> AI innovation in claims processing, a core insurance industry function, with potential implications for industry trends.</div><ul><li>The Travelers Companies, Inc.</li>
+<li>has announced the launch of its AI Claim Assistant, a new solution developed using OpenAI model capabilities and APIs.</li>
+<li>Described as an industry-leading solution, this fully agentic intelligent voice service uses advanced language and speech recognition technologies to handle customer claim calls.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2676/">Reinsurance News archive - page 2676</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s delaying an index launch due to Brexit prioritization.</div><ul><li>Reinsurance News Reinsurance News – Wednesday 3rd August 2016 3rd August 2016 Here’s your daily Reinsurance News for Wednesday 3rd August 2016: Parametric insurance launched for farmers in China, backed by Swiss Re The first ever parametric disaster insurance programme for farmers in China has been launched.</li>
+<li>Backed by reinsurer Swiss Re the solution covers participants against flood, excessive rain, drought and .</li>
+<li>.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/being-tracked-keeps-drivers-on-track/">Being tracked keeps drivers on track - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> The article discusses usage-based insurance (UBI) programs and their impact on driver behavior, which is relevant to Lloyd&#x27;s market as it pertains to innovative insurance products and risk management strategies.</div><ul><li>Being tracked keeps drivers on track - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Being tracked keeps drivers on track Off Beat Feb 19, 2026 Drivers whose insurance rates are based on measurements of their habits and who got tips on how to do better were less likely to speed, hit the brakes hard and accelerate rapidly, according to testing by a team at the University of Pennsylvania’s med school.</li>
+<li>In the test, speeding fell up to 13% while hard braking and fast acceleration dropped up to 25% for those with usage-based coverage, Penn Medicine said in a news release.</li>
+<li>The team wanted to see whether programs’ safety benefits could be improved by having drivers focus on one improvement area at a time.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/19/858689.htm">UK Floods Raise Specter of &#x27;Mortgage Prisoners&#x27; for Banks</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Discusses flood risk implications for UK banks and insurers, which may indirectly affect Lloyd&#x27;s market through reinsurance and climate-related risk assessments.</div><ul><li>As the prospect of flood damage haunts an ever larger number of UK homes, the country’s banks are under growing pressure to prove they’re not underestimating the risk in their mortgage books.</li>
+<li>Nationwide Building Society — once seen as an outlier after saying in 2024 it had stopped making loans to some homes at risk of flooding — has emerged as a prescient first-mover amid growing banker anxiety, according to Mark Cunningham, managing director at PriceHubble, a property data company.</li>
+<li>The risk is that a bank is “going to end up with mortgage prisoners” if it’s the only institution “lending to stuff which everyone else says is flooding,” Cunningham says.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/chubb-names-new-chief-actuary/">Chubb names new chief actuary - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Leadership change in a key actuarial role at a major insurer (Chubb) may impact underwriting, pricing, or risk management strategies relevant to Lloyd&#x27;s market participants.</div><ul><li>Chubb names new chief actuary - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Chubb names new chief actuary by Matthew Lerner Scott Henck and Cynthia Bentley P/C Insurers Chubb , Chubb Ltd.</li>
+<li>Feb 19, 2026 Chubb said Thursday that Scott Henck has been named senior vice president at Chubb Group and chief actuary, succeeding Paul O’Connell, who is retiring.</li>
+<li>Based in Lebanon, New Jersey, Mr.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-02-20T14:08:17Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>

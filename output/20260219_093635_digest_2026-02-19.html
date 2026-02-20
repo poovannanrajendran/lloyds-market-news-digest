@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-02-19</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-02-19 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-19.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">38 highlights selected for 2026-02-19. Sources include: www.artemis.bm, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Risk</li>
+<li>Reinsurance</li>
+<li>Capital</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/sompo-gets-regulatory-approvals-for-3-5bn-aspen-acquisition/">Sompo gets regulatory approvals for $3.5bn Aspen acquisition - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mentions Aspen Insurance&#x27;s leading Lloyd’s syndicate and its impact on Sompo’s reinsurance capabilities, directly tied to Lloyd’s market operations.</div><ul><li>Sompo Holdings, Inc.</li>
+<li>has reportedly received the necessary antitrust and insurance regulatory approvals required to complete its acquisition of 100% of the issued Class A ordinary shares of Aspen Insurance through a wholly owned subsidiary of Sompo International Holdings Ltd.</li>
+<li>(SIH).</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/nick-lamparelli-appointed-chief-programme-officer-at-algorithmic-insurance-services/">Nick Lamparelli appointed Chief Programme Officer at Algorithmic Insurance Services - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content discusses LIRG, a re/insurance platform, and its strategic appointment of a senior executive focused on underwriting innovation and program expansion, directly relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Algorithmic Insurance Services, Inc.</li>
+<li>, trading as LIRG, a specialist re/insurance platform focused on building, incubating and scaling managing general underwriters (MGUs) and managing general agents (MGAs) has appointed Nick Lamparelli as its new Chief Programme Officer.</li>
+<li>In this capacity, Lamparelli will lead the development and expansion of both LIRG-sponsored and third-party programmes.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/bms-launches-new-accident-health-division-with-five-senior-appointments/">BMS launches new Accident &amp; Health division with five senior appointments - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article details BMS&#x27;s expansion into the Accident &amp; Health (A&amp;H) division with key appointments, strategic growth plans, and international market focus, all directly relevant to Lloyd&#x27;s market activities.</div><ul><li>BMS, the independent insurance and reinsurance broker, has confirmed five appointments to its newly formed Accident &amp; Health (A&amp;H) division, based in London.</li>
+<li>The new team will work alongside BMS’s established A&amp;H relationships, providing solutions across international markets without territorial or client constraints.</li>
+<li>James Early joined BMS as Managing Director on 9 February.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/santam-becomes-first-brics-based-insurer-to-set-up-presence-in-india-gift-city/">Santam becomes first BRICS-based insurer to set up presence in India GIFT City - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article directly mentions Santam&#x27;s approval to operate a syndicate at Lloyd’s and its strategic international expansion, which is central to Lloyd’s market relevance.</div><ul><li>South African short-term insurer Santam has been granted a licence to establish a reinsurance branch office at the Gujarat International Finance Tec-City (GIFT City), India’s first operational greenfield smart city and International Financial Services Centre (IFSC).</li>
+<li>Santam Limited will operate the branch as an International Insurance Office (IIO) regulated by the International Financial Services Centres Authority (IFSCA).</li>
+<li>Santam Re, the group’s independent non-life treaty reinsurer, will provide underwriting capacity across property, engineering, marine and liability lines.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2674/">Reinsurance News archive - page 2674</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content discusses reinsurance companies, catastrophe losses, market analysis, and industry trends directly relevant to Lloyd&#x27;s market activities.</div><ul><li>Reinsurance News Reinsurance News – Friday 29th July 2016 29th July 2016 Here’s your daily Reinsurance News for Friday 29th July 2016: Swiss Re&#x27;s P&amp;C Re segment hit by cat losses, reports Q2 underwriting loss Reinsurance giant Swiss Re has reported its Q2 2016 results, posting a group net income of $637 million.</li>
+<li>The firm&#x27;s P&amp;C Re segment was hit by catastrophe .</li>
+<li>.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/fuse-introduces-radar-ai-driven-market-intelligence-for-insurance-professionals/">Fuse introduces Radar: AI-driven market intelligence for insurance professionals - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article highlights an AI-driven market intelligence platform addressing industry-specific challenges in insurance, directly relevant to Lloyd&#x27;s market operations and innovation trends.</div><ul><li>Fuse International, Inc.</li>
+<li>, a company specialising in data-driven solutions for the insurance sector, has launched Radar, an artificial intelligence-powered market intelligence platform aimed at enhancing decision-making for commercial and speciality insurance professionals.</li>
+<li>Fuse International, Inc.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/18/858476.htm">Global Insurtech Funding Surges on Record Re/Insurance Investments: Gallagher Re</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Focus on insurtech investments, AI integration, and re/insurer strategies directly impacts Lloyd&#x27;s market dynamics.</div><ul><li>Investments in global insurtech rose 19.</li>
+<li>5% during 2025 to US$5.</li>
+<li>08 billion from US$4.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/slide-aims-to-upsize-purple-re-2026-1-cat-bond-28-to-320m/">Slide aims to upsize Purple Re 2026-1 cat bond 28% to $320m - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The content details a reinsurance transaction involving a catastrophe bond, which is directly relevant to Lloyd&#x27;s market activities in insurance-linked securities.</div><ul><li>Slide Insurance Company has increased its target for the new Purple Re Ltd.</li>
+<li>(Series 2026-1) catastrophe bond transaction, with the indicative size raised by roughly 28% to seek $320 million in multi-year collateralized named storm reinsurance, Artemis can report.</li>
+<li>Slide returned to the catastrophe bond market at the beginning of February, with what is set to become the company’s fifth cat bond issuance in the Purple Re series of deals.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/freight-forwarders-hit-by-double-blow-as-client-insolvencies-bite-and-cargo-theft-rises/1457811.article">Freight forwarders hit by double blow as client insolvencies bite and cargo theft rises</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses credit risk, insolvency trends, and geopolitical impacts on cargo insurance—key concerns for Lloyd&#x27;s market underwriting and risk management.</div><ul><li>‘The global economic landscape is unlikely to stabilise any time soon, so freight forwarders must be prepared for their customers to default,’ says managing director A wave of counterparty failures is threatening to overwhelm freight forwarders and their insurers as economic turbulence, trade fragmentation and rising insolvencies converge across global supply chains.</li>
+<li>TT Club, the mutual liability insurer focused on protecting the global supply chain, has urged logistics operators to adopt stronger credit risk management strategies immediately – warning that the sector faces exposure to client default.</li>
+<li>Mike Yarwood, managing director of loss prevention at TT Club, outlined the situation to Insurance Times: “The freight forwarder would purchase freight on behalf of their customer.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ranch-workers-tick-bite-comp-claim-revived/">Ranch worker’s tick-bite comp claim revived - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article discusses a workers&#x27; compensation claim revival related to a tick-borne illness, which directly impacts insurance risk management and legal precedents in the workers&#x27; comp sector.</div><ul><li>Ranch worker’s tick-bite comp claim revived - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Ranch worker’s tick-bite comp claim revived by Gavin Souter Workers Comp , Workers Comp Coverage Feb 18, 2026 An Arkansas appeals court reinstated the workers compensation claim of a ranch hand who developed a tick-borne illness, overturning a state commission’s decision to deny benefits.</li>
+<li>In Jonathan Mohler v.</li>
+<li>Robert A.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/diocese-insurers-agree-to-increase-settlement-with-abuse-victims/">Diocese, insurers agree to increase settlement with abuse victims - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Mentions &#x27;syndicates at Lloyd’s of London&#x27; as part of the settlement agreement.</div><ul><li>Diocese, insurers agree to increase settlement with abuse victims - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Diocese, insurers agree to increase settlement with abuse victims by Gavin Souter General liability Feb 18, 2026 The Roman Catholic Diocese of Camden in New Jersey said it has reached an agreement with insurers that would increase the settlement trust to $180 million.</li>
+<li>The proposed funding, announced Monday and intended to expand compensation for more than 300 claimants, requires approval from the U.</li>
+<li>S.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/synthetik-warns-uk-srcc-risk-now-route-based-accumulation-threat/1457805.article">Synthetik warns UK SRCC risk now ‘route-based accumulation’ threat</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> Discusses risk modeling for civil unrest in the UK, directly impacting Lloyd&#x27;s underwriting and capital management strategies.</div><ul><li>New modelling suggests civil unrest insured losses could exceed £4bn under certain triggers, as carriers urged to rethink postcode-level accumulation approaches Civil unrest in the UK is no longer a background exposure for property and specialty underwriters, but a catalyst-driven accumulation risk that can scale rapidly along defined urban corridors.</li>
+<li>That is the conclusion of a new report, “Civil Unrest in the UK”, from Synthetik Insurance Technologies, a Lloyd’s Lab graduate, which uses its srccQuantum platform to model four trigger-based scenarios for strikes, riots and civil commotion over the next 12 to 24 months.</li>
+<li>The study argues that the UK’s “well-established protest culture and permissive framework for assembly now operate against a backdrop of heightened cadence, multi-city spillover, and faster escalation”.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/bms-builds-out-aandh-division-with-early-hire/1457809.article">BMS builds out A&amp;H division with Early hire</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.95</div><div class="why"><strong>Why it matters:</strong> The article discusses the expansion of an A&amp;H division by a major broker, highlighting strategic growth and new team appointments, which are directly relevant to Lloyd&#x27;s market activities.</div><ul><li>Independent broker appoints five London-based specialists as it launches a dedicated accident and health team to support international growth BMS has created a new accident and health (A&amp;H) division in London, appointing five specialists to build out its capability in the class.</li>
+<li>The independent re/insurance broker said the new team will complement its existing A&amp;H relationships, providing solutions “without territorial or client restriction”.</li>
+<li>Leading the division is James Early, who joins as managing director.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/synthetiks-modelled-scenarios-suggest-uk-srcc-losses-could-exceed-4bn/">Synthetik’s modelled scenarios suggest UK SRCC losses could exceed £4bn - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Report provides critical insights into SRCC risk modeling, underwriting considerations, and accumulation risks for UK insurance markets, directly relevant to Lloyd&#x27;s participants.</div><ul><li>Synthetik Insurance Technologies’ recent report highlighted the potential for losses stemming from strikes, riots and civil commotion (SRCC) to spread across the UK, with some modelled scenarios exceeding £4 billion.</li>
+<li>The report takes the form of four trigger-based vignettes or modelled scenarios.</li>
+<li>These are based on protests surrounding asylum hotels in the UK in 2025 and represent four risks shaping UK SRCC exposure: local flashpoints; policing legitimacy; overseas conflict and domestic mobilisation; and macro-financial stress.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/sompo-to-enhance-global-footprint-with-3-5bn-acquisition-of-aspen/">Sompo to enhance global footprint with $3.5bn acquisition of Aspen - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Major acquisition in the insurance/reinsurance sector with implications for market dynamics and capital management.</div><ul><li>A wholly owned subsidiary of Sompo International Holdings (SIH) has agreed to acquire all outstanding Class A ordinary shares of Aspen Insurance in a $3.</li>
+<li>5 billion deal.</li>
+<li>The transaction has reportedly been unanimously approved by both companies’ Boards of Directors and is anticipated to close in H1 of 2026.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/national/2026/02/18/858595.htm">Business Moves: BayPine to Acquire Broker Relation From Aquiline</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Mergers &amp; acquisitions in the insurance brokerage sector, with strategic implications for market expansion and technology integration.</div><ul><li>Private equity firm Aquiline Capital said it has entered into a definitive agreement to sell independent insurance broker Relation to investment firm BayPine.</li>
+<li>Chicago-based Relation was ranked No.</li>
+<li>24 in Insurance Journal’s Top 100 Independent Property/Casualty Agencies report with about $259 million in property/casualty revenue.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/gallagher-appoints-four-execs-formerly-with-woodruff-sawyer/">Gallagher appoints four execs formerly with Woodruff Sawyer - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> News about executive appointments in the insurance sector, particularly following a merger/acquisition, is directly relevant to Lloyd&#x27;s market dynamics and industry trends.</div><ul><li>Gallagher appoints four execs formerly with Woodruff Sawyer - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Gallagher appoints four execs formerly with Woodruff Sawyer by Matthew Lerner Seth Pfalzer (from Left), Priya Huskins, Lenin Lopez and Walker Newell Agents and Brokers Arthur J.</li>
+<li>Gallagher &amp; Co.</li>
+<li>Feb 18, 2026 Arthur J.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/fitch-expects-rise-in-european-insurance-mas/">Fitch expects rise in European insurance M&amp;As - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Focus on European insurance M&amp;As in reinsurance and specialty segments, directly relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Fitch expects rise in European insurance M&amp;As - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Fitch expects rise in European insurance M&amp;As Feb 18, 2026 European insurers’ mergers and acquisitions activity is likely to accelerate further in 2026, particularly in specialty and reinsurance segments that offer differentiated underwriting and diversification, Fitch Ratings reported.</li>
+<li>The agency said such dealmaking could support revenue and earnings growth as the sector faces softer pricing in non-life segments and slow economic growth.</li>
+<li>Read more Related News Fitch expects rise in European insurance M&amp;As February 18, 2026 Meat processing giant launches insurance program for suppliers February 18, 2026 France to declare state of emergency after Storm Nils February 18, 2026 EU probes Shein over inappropriate products February 18, 2026 Hannover Re names Patel CFO of Bahrain unit February 18, 2026 Claims mount in South Africa as cover shrinks February 18, 2026 Ireland opens probe into X February 18, 2026 OSHA inspector ranks fell sharply before projected 2026 increase, agency says February 18, 2026 Barings-backed insurer launches in Bermuda February 17, 2026 Facebook-f X-twitter Linkedin-in Business Insurance is a singular, authoritative news and information source for executives focused upon risk management, risk transfer and risk financing.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/verisk-caps-off-2025-with-revenue-of-3-07bn/">Verisk caps off 2025 with revenue of $3.07bn - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Verisk&#x27;s financial growth, focus on insurance industry solutions (e.g., catastrophe risk, AI), and climate data partnerships align with Lloyd&#x27;s market interests in risk analytics and innovation.</div><ul><li>Verisk, a strategic data analytics and technology partner to the global insurance industry, has reported total revenue of $3.</li>
+<li>073 billion for 2025, an increase of 6.</li>
+<li>6% compared with 2024.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/active-disinformation-campaign-poses-risk-to-the-industry-dame-susan-langley/1457807.article">‘Active disinformation campaign’ poses ‘risk to the industry’ – Dame Susan Langley</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Discusses disinformation and geopolitical risks impacting London&#x27;s financial services, which are relevant to Lloyd&#x27;s market as an insurance sector entity.</div><ul><li>Disinformation or misinformation is on the rise globally, according to lady mayor, meaning ‘we have to be far less British’ and better promote London as a business centre to mitigate mistruths “An active disinformation campaign” is currently hitting “many geographies”, posing “a risk to the industry” and to London as a financial services centre, according to Dame Susan Langley, Lady Mayor of London.</li>
+<li>Speaking at The Risk Forum, a one-day conference organised by trade body Airmic, Langley – who has worked in the insurance sector for around 25 years – signposted disinformation as an emerging risk that should be high on the agenda of risk professionals.</li>
+<li>According to the Cambridge Dictionary, disinformation refers to false information being spread deliberately to deceive people.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/aviva-to-launch-etraded-contractors-combined-product-in-may-2026/1457814.article">Aviva to launch eTraded contractors’ combined product in May 2026</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> The article details Aviva&#x27;s digital product innovations, including modularization of commercial combined policies and new offerings for contractors, which are significant developments in insurance product design and market strategy.</div><ul><li>Insurer continues to evolve digitally traded offering as commercial combined modularisation work nears completion Insurer Aviva has confirmed that it is adding to its eTraded product suite this year, including the creation of a new contractors’ combined proposition that will go live on its Fast Trade extranet and across software house partners in May 2026.</li>
+<li>According to Rebecca Gambrell, Aviva’s managing director for SME and delegated authorities (DA), the “fully fledged” contractors’ combined offering will include the “basic” cover elements that typically feature in a tradespeople or self-employed policy, but it will also feature “the liability aspects from [a] commercial combined [product] as well”.</li>
+<li>Gambrell told Insurance Times: “We’ve had a lot of good conversations with brokers about the need for that sort of product in the market.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/single-payer-proposal-returns-in-california/">Single-payer proposal returns in California - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Discusses legislative efforts to integrate workers&#x27; compensation into a single-payer system, directly impacting insurance structures and risk management frameworks.</div><ul><li>Single-payer proposal returns in California - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Single-payer proposal returns in California by Work Comp Central The California State Capitol.</li>
+<li>Workers Comp , Workers Comp Cost Control , Workers Comp Coverage Feb 18, 2026 A California lawmaker is gearing up for a third run at creating a single-payer health care system that once again would defer to an advisory board the question of how to handle medical treatment for workplace injuries.</li>
+<li>Assemblymember Ash Kalra, D-San Jose, has introduced AB 1900, which would create the California Guaranteed Health Care for All program to provide comprehensive, universal single-payer health care coverage.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/hannemann-to-lead-munich-re-australasia/">Hannemann to lead Munich Re Australasia - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Leadership change in a major reinsurance company (Munich Re) impacting regional operations and market dynamics.</div><ul><li>Hannemann to lead Munich Re Australasia - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Hannemann to lead Munich Re Australasia Feb 18, 2026 Michaela Hannemann, Germany-based Munich Re’s chief underwriting officer for casualty, has been appointed head of the group’s Australasian non-life business, Insurance News reported.</li>
+<li>She will assume the role on May 1 and replaces Anja Linsmaier, who is returning to the reinsurer’s Munich headquarters for another leadership position.</li>
+<li>Read more Related News Hannemann to lead Munich Re Australasia February 18, 2026 Fitch expects rise in European insurance M&amp;As February 18, 2026 Meat processing giant launches insurance program for suppliers February 18, 2026 France to declare state of emergency after Storm Nils February 18, 2026 EU probes Shein over inappropriate products February 18, 2026 Hannover Re names Patel CFO of Bahrain unit February 18, 2026 Claims mount in South Africa as cover shrinks February 18, 2026 Ireland opens probe into X February 18, 2026 OSHA inspector ranks fell sharply before projected 2026 increase, agency says February 18, 2026 Facebook-f X-twitter Linkedin-in Business Insurance is a singular, authoritative news and information source for executives focused upon risk management, risk transfer and risk financing.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/capital-management-portfolio-quality-prioritised-over-growth-says-conduit-re-ceo/">Capital management, portfolio quality prioritised over growth, says Conduit Re CEO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses Conduit Re&#x27;s financial performance, underwriting strategies, and market conditions relevant to the reinsurance industry, including insights on rate changes and capital management.</div><ul><li>Conduit Re, a Bermuda-based global reinsurance company, has grown its top-line from nought to more than $1.</li>
+<li>2 billion in the five years since its inception, and while very robust, Chief Executive Officer (CEO) Neil Eckert told Reinsurance News that the emphasis is on capital management and portfolio quality rather than growth.</li>
+<li>This morning, Conduit Re announced a strong set of results for 2025, including an 11.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ca-fair-plan-lifts-target-75-to-350m-for-second-golden-bear-re-wildfire-cat-bond/">CA FAIR Plan lifts target 75% to $350m for second Golden Bear Re wildfire cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> The article discusses a significant catastrophe bond issuance by the California FAIR Plan, which is directly related to the insurance-linked securities (ILS) market, a key segment for Lloyd&#x27;s. Details on wildfire risk pricing, capital market participation, and multi-year protection structures are pertinent to Lloyd&#x27;s market participants.</div><ul><li>The California FAIR Plan Association is looking to upsize its second catastrophe bond sponsorship by 75%, with now $350 million of capital markets backed wildfire reinsurance protection sought from the Golden Bear Re Ltd.</li>
+<li>(Series 2026-2) cat bond issuance, Artemis has learned.</li>
+<li>The California FAIR Plan Association returned to the catastrophe bond market for its second sponsorship earlier this month, with an initial target to secure $200 million of multi-year wildfire reinsurance protection from the capital markets.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/hiscox-capital-partners-launches-to-unite-third-party-capital-ils-at-hiscox-re/">Hiscox Capital Partners launches to unite third-party capital &amp; ILS at Hiscox Re - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> The content discusses Hiscox Re&#x27;s restructuring, including capital partnerships and ILS, which are directly tied to Lloyd&#x27;s market activities (e.g., Syndicate 6104 alignment, capital management for Lloyd’s syndicates).</div><ul><li>Hiscox Re has announced the launch of Hiscox Capital Partners, which is set to bring together under a single structure all the capital partnership activity the organisation has managed for nearly two decades, including third-party capital and insurance-linked securities (ILS).</li>
+<li>At the same time, Hiscox Re &amp; ILS, the reinsurance and insurance-linked securities (ILS) unit within Hiscox Group, has now been rebranded as Hiscox Re.</li>
+<li>According to the firm, the rebranding marks a clearer and more streamlined presentation of the firm’s product offering to cedants, brokers, institutional investors and re/insurance partners.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/mnrb-q325-revenue-rises-17-8-driven-by-malaysian-re/">MNRB Q3’25 revenue rises 17.8% driven by Malaysian Re - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Mentions growth in reinsurance and retakaful segments, key areas relevant to Lloyd&#x27;s market.</div><ul><li>MNRB Holdings Berhad (MNRB) announced its financial results for the third quarter ended Dec 31, 2025, reporting a net profit of RM151 million, up from RM115.</li>
+<li>9 million a year earlier, with revenue rising 17.</li>
+<li>8% year-on-year to RM973.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/hymans-robertson-promotes-tom-caron-to-operations-lead-for-its-risk-transfer-team/">Hymans Robertson promotes Tom Caron to Operations Lead for its Risk Transfer team - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> The promotion relates to risk transfer operations and market dynamics, which are critical to Lloyd&#x27;s market activities.</div><ul><li>Hymans Robertson, a pensions and financial services consultancy, has announced the promotion of Tom Caron to Operations Lead of its Risk Transfer team.</li>
+<li>In this role, Caron will have operational responsibility for the team, leading on resourcing, people development, knowledge sharing, and regulatory compliance.</li>
+<li>He will also continue to provide advice to trustees and sponsors on their risk transfer projects.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/axis-capital-puts-group-cuo-draper-in-charge-of-axis-ils-unit/">AXIS Capital puts Group CUO Draper in charge of AXIS ILS unit - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Mentions leadership changes in AXIS Capital&#x27;s ILS division, which is directly relevant to Lloyd&#x27;s market as ILS structures are a key component of reinsurance and capital management.</div><ul><li>AXIS Capital, the global specialty insurance and reinsurance underwriter, has put a new reporting line in place for its insurance-linked securities (ILS) division AXIS ILS, with Group Chief Underwriting Officer Dan Draper adding that to his responsibilities.</li>
+<li>Recently, AXIS Capital announced some senior leadership changes aligned with its planned succession and development process.</li>
+<li>Firstly, Ann Haugh, who took on the CEO of AXIS Re role in June 2022, has become Group Chief Operations Officer (COO), a new position at the company.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/specialty-program-group-acquires-freight-cargo-agency/">Specialty Program Group acquires freight cargo agency - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> The acquisition involves freight cargo insurance, a sector relevant to Lloyd&#x27;s market, and consolidates logistics and marine expertise under a wholesale underwriting unit.</div><ul><li>Specialty Program Group acquires freight cargo agency - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Specialty Program Group acquires freight cargo agency by Claire Wilkinson Agents and Brokers , Mergers and Acquisitions Feb 18, 2026 Specialty Program Group announced Wednesday it has acquired Logistiq Insurance Solutions and combined it with Anova Marine Insurance, a managing general agency it acquired last year.</li>
+<li>Terms of the transaction were not disclosed.</li>
+<li>Logistiq , a freight cargo insurance agency with about 24 employees, is based in Redondo Beach, California.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ae-insurers-plan-to-seek-rate-hikes-survey/">A&amp;E insurers plan to seek rate hikes: Survey - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses A&amp;E insurers planning rate hikes due to rising claim costs, defense costs, and inflation—key factors impacting insurance markets like Lloyd&#x27;s.</div><ul><li>A&amp;E insurers plan to seek rate hikes: Survey - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers A&amp;E insurers plan to seek rate hikes: Survey by Matthew Lerner General liability Feb 18, 2026 Insurers in the architects and engineers professional liability insurance market will look to raise rates this year as claim costs climb, a report says.</li>
+<li>Almost three quarters, or 73%, of the 15 insurer respondents said they would seek rate increases in 2026, with 27% saying they will keep rates flat and none planning decreases, according to the report, from specialty insurance broker Ames &amp; Gough.</li>
+<li>Most, 82%, say they will target increases of up to 5%, while the others said they plan increases of 6% to 10%.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ppl/priya-huskins/">Priya Huskins - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Mentions a leadership change at Arthur J. Gallagher &amp; Co., a major insurance broker, which could impact industry trends and market dynamics.</div><ul><li>Priya Huskins - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Priya Huskins Gallagher February 18, 2026 Arthur J.</li>
+<li>Gallagher &amp; Co.</li>
+<li>named Priya Huskins senior vice president and national director to lead the executive and financial risk practice’s thought leadership.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ppl/seth-pfalzer/">Seth Pfalzer - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Leadership changes in insurance and risk management firms are relevant to Lloyd&#x27;s market news as they reflect industry trends and movements.</div><ul><li>Seth Pfalzer - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Seth Pfalzer Gallagher February 18, 2026 Arthur J.</li>
+<li>Gallagher &amp; Co.</li>
+<li>named Seth Pfalzer senior vice president and national director.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/meat-processing-giant-launches-insurance-program-for-suppliers/">Meat processing giant launches insurance program for suppliers - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Insurance program for suppliers in meat processing industry with specific coverage for disease-related losses.</div><ul><li>Meat processing giant launches insurance program for suppliers - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Meat processing giant launches insurance program for suppliers Feb 18, 2026 German meat processor The Tönnies Group has launched an umbrella insurance program with U.</li>
+<li>S.</li>
+<li>-headquartered Marsh LLC and Germany-based Westphalian-Lippe Agricultural Association to cover liability for its live cattle suppliers in the event of disease-related losses, ESM reported.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/18/858484.htm">Pinion Insurance Launches With Up to $180 Million Commitment From Barings</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> The article discusses a new specialty insurance platform targeting MGAs and reinsurers, which could be relevant to Lloyd&#x27;s market participants due to its focus on technology, regulatory licenses, and international expansion.</div><ul><li>Specialty insurance platform Pinion Insurance announced its launch yesterday.</li>
+<li>The company will offer insurance capacity for managing general agents (MGAs) across the U.</li>
+<li>S.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/new-insurance-marketplace-app-launched-on-chatgpt/1457802.article">New insurance marketplace app launched on ChatGPT</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Discusses AI integration in insurance (ChatGPT, conversational interfaces) and industry trends, which are relevant to Lloyd&#x27;s market&#x27;s focus on technological innovation in insurance.</div><ul><li>’Consumers are increasingly using conversational AI to learn, ask questions, explore and solve meaningful financial challenges,’ says president Experian has launched a new insurance marketplace application on ChatGPT.</li>
+<li>The move will introduce Experian’s auto insurance comparison platform to OpenAI’s audience.</li>
+<li>Within ChatGPT, users can review coverage options, compare estimated rates from more than 37 carriers and ask follow-up questions in real time.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ppl/walker-newell/">Walker Newell - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Mentions leadership change at Arthur J. Gallagher &amp; Co., a major insurance firm, which may interest Lloyd&#x27;s market stakeholders.</div><ul><li>Walker Newell - Business Insurance Skip to content Register for free Search Search Log In Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Risk Management Cyber Risks Pricing Trends Mergers &amp; Acquisitions Technology Sponsored Content WSIA RISKWORLD Workers Comp &amp; Safety Workers Comp Cost Control Pain Management Workplace Safety International EMEA Asia-Pacific Latin America People Events BI Intelligence Top 100 Agents &amp; Brokers Best Places to Work 2025 Lists Directories Insurance Pricing BI Stock Index Magazine Current Issue Past Issues Women to Watch ALL INsurance Resources Risk Perspectives Sponsored Content Webinars White Papers Walker Newell Gallagher February 18, 2026 Arthur J.</li>
+<li>Gallagher &amp; Co.</li>
+<li>named Walker Newell senior vice president and executive director.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/axa-xl-promotes-two-leaders-within-specialty-team-americas/">AXA XL promotes two leaders within Specialty Team Americas - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.50</div><div class="why"><strong>Why it matters:</strong> Leadership changes in AXA XL&#x27;s specialty teams (Ocean Marine, Commercial Bonds) may impact market dynamics and client strategies relevant to Lloyd&#x27;s participants.</div><ul><li>AXA XL, the property, casualty and specialty risk division of AXA, has confirmed the advancement of Mikki Williams and Doug Schmude to senior positions within its Specialty Team Americas.</li>
+<li>The moves are part of the company’s ongoing efforts to reinforce leadership across key specialty businesses in the region.</li>
+<li>Mikki Williams has been named Head of Ocean Marine, overseeing Cargo, Hull &amp; P&amp;I, and Marine Liabilities.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-02-19T09:36:35Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>

@@ -3,7 +3,14 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from lloyds_digest.ai.base import PromptSpec, OllamaClient, build_cache_key, cached_call, estimate_tokens
+from lloyds_digest.ai.base import (
+    OpenAIClient,
+    PromptSpec,
+    build_cache_key,
+    cached_call,
+    estimate_tokens,
+    extract_openai_usage,
+)
 from lloyds_digest.storage.mongo_repo import MongoRepo
 
 PROMPT = PromptSpec(name="summarise", version="v1", filename="summarise_v1.txt")
@@ -19,14 +26,20 @@ def summarise(
     key = build_cache_key(model, PROMPT.version, text)
 
     def _call() -> dict[str, Any]:
-        client = OllamaClient(model=model, host=host)
+        client = OpenAIClient(model=model, base_url=host)
         response = client.generate(prompt)
+        response_text = response.get("response", "")
+        raw = response.get("raw", {}) if isinstance(response.get("raw"), dict) else {}
+        prompt_tokens, completion_tokens, cached_prompt_tokens = extract_openai_usage(raw)
         return {
-            "response": response.get("response", ""),
+            "response": response_text,
             "model": model,
             "prompt_version": PROMPT.version,
-            "tokens_prompt": estimate_tokens(prompt),
-            "tokens_completion": estimate_tokens(response.get("response", "")),
+            "tokens_prompt": prompt_tokens if prompt_tokens is not None else estimate_tokens(prompt),
+            "tokens_completion": completion_tokens
+            if completion_tokens is not None
+            else estimate_tokens(response_text),
+            "tokens_cached_prompt": cached_prompt_tokens,
         }
 
     result = cached_call(mongo, key, _call)

@@ -58,6 +58,9 @@ def run(
     config: Path = typer.Option(
         Path("config.yaml"), "--config", help="Path to config.yaml."
     ),
+    sources: Path = typer.Option(
+        Path("sources.csv"), "--sources", help="Path to sources CSV."
+    ),
 ) -> None:
     """Run the digest pipeline (placeholder)."""
     if now and run_date:
@@ -89,7 +92,7 @@ def run(
     result = run_pipeline(
         run_date=resolved_date,
         config=config_data,
-        sources_path=Path("sources.csv"),
+        sources_path=sources,
         output_dir_override=output_dir,
         cache_override=False if force_refresh else cache,
         max_candidates=max_candidates,

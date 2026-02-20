@@ -14,6 +14,8 @@ fi
 
 cd "$ROOT_DIR"
 
+export PYTHONPATH="$ROOT_DIR/src:${PYTHONPATH:-}"
+
 python -m lloyds_digest run --now --verbose | tee -a "$LOG_FILE"
 python scripts/render_digest_llm_compare.py | tee -a "$LOG_FILE"
 scripts/publish_github_pages.sh | tee -a "$LOG_FILE"

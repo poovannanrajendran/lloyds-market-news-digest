@@ -77,10 +77,10 @@ def _hashtags() -> list[str]:
 
 def _openai_shortener(prompt: str) -> str:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-4o"))
+    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5-mini"))
     if not api_key:
         raise SystemExit("OPENAI_API_KEY is required for shortening")
-    service_tier = os.environ.get("OPENAI_LINKEDIN_SERVICE_TIER", "").strip()
+    service_tier = os.environ.get("OPENAI_LINKEDIN_SERVICE_TIER", "flex").strip() or "flex"
     timeout = float(os.environ.get("OPENAI_LINKEDIN_TIMEOUT", "600"))
     max_attempts = int(os.environ.get("OPENAI_LINKEDIN_RETRIES", "3"))
     url = "https://api.openai.com/v1/chat/completions"
@@ -91,9 +91,8 @@ def _openai_shortener(prompt: str) -> str:
             {"role": "system", "content": "Return only the final tweet text. No quotes, no markdown."},
             {"role": "user", "content": prompt},
         ],
+        "service_tier": service_tier,
     }
-    if service_tier:
-        body["service_tier"] = service_tier
     if not model.startswith("gpt-5"):
         body["temperature"] = 0.2
 
@@ -111,9 +110,10 @@ def _openai_shortener(prompt: str) -> str:
                 model,
                 prompt,
                 text,
-                service_tier or None,
+                service_tier,
                 tokens_prompt=usage.get("prompt_tokens"),
                 tokens_completion=usage.get("completion_tokens"),
+                tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),
             )
             elapsed = time.time() - started
             print(f"OpenAI shortener done in {elapsed:.1f}s", flush=True)
@@ -134,6 +134,7 @@ def _record_llm_usage_and_cost(
     service_tier: str | None,
     tokens_prompt: int | None = None,
     tokens_completion: int | None = None,
+    tokens_cached_input: int | None = None,
 ) -> None:
     if tokens_prompt is None:
         tokens_prompt = max(1, len(prompt) // 4) if prompt else None
@@ -168,6 +169,7 @@ def _record_llm_usage_and_cost(
             tokens_prompt=tokens_prompt,
             tokens_completion=tokens_completion,
             service_tier=service_tier,
+            tokens_cached_input=tokens_cached_input,
         )
         if cost is None:
             return
