@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-02-25</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-02-25 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-25.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">29 highlights selected for 2026-02-25. Sources include: www.artemis.bm, www.bankofengland.co.uk, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Lloyds</li>
+<li>Reinsurance</li>
+<li>Catastrophe</li>
+<li>Commentary</li>
+<li>ILS</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/specialist-complex-risk-mga-approved-as-lloyds-europe-coverholder/1457859.article">Specialist complex risk MGA approved as Lloyd’s Europe coverholder</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Lloyd&#x27;s authorises Aspect as EU coverholder; expansion and network integration.</div><ul><li>Lloyd’s Europe has approved specialist MGA Aspect to operate as a Lloyd’s coverholder across the EEA (announcement 25 Feb 2026), enabling it to enter into insurance contracts on behalf of Lloyd’s syndicates via Lloyd’s Brussels entity.</li>
+<li>Aspect reported 52% YoY growth in 2025, expanded its product range and made multiple senior hires, positioning it for stronger market presence in 2026.</li>
+<li>Focus on high‑hazard, mid‑market business: niche lines include recycling operations, residential buildings with combustible cladding and asylum seeker accommodation; ambition to be the insurer of choice for difficult sectors across Europe.</li>
+<li>Geographic expansion plans prioritise scaling operations in the Netherlands and Ireland (existing presence) and developing footprints in Scandinavia, Spain, Germany, France and Belgium.</li></ul></article>
+<article class="story"><h3><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/february/uk-solvency-ii-own-funds-updates-and-fixes-to-rules-and-expectations">CP4/26 – UK Solvency II Own Funds: Updates and fixes to rules and expectations</a></h3><div class="meta">Source: www.bankofengland.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Regulatory PRA Solvency II/own funds policy changes affecting UK insurers, including Lloyd&#x27;s market participants, with clarifications and sequencing of capital instruments.</div><ul><li>Consultation logistics and data handling: responses (including personal data) will be used by the Bank of England/PRA, may be published or shared as required, and must be submitted by 24 April 2026; respondents should state consent for name/organisation publication and can withdraw consent later.</li>
+<li>Objective: the PRA proposes targeted amendments to the restated UK Solvency II own funds regime to reduce avoidable burden, fix drafting inconsistencies carried over from assimilated EU law, and improve clarity for firms.</li>
+<li>Classification change: the PRA proposes removing the permission requirement to classify equity‑accounted subordinated instruments into own funds tiers — reducing administrative burden for firms and the regulator.</li>
+<li>Rule clarifications and fixes: the CP proposes to correct known inconsistencies in the PRA Rulebook’s own funds provisions (left after PS15/24) to increase accuracy and certainty in capital treatment.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/hiscox-res-profit-rises-as-combined-ratio-strengthens-to-67-4-in-2025/">Hiscox Re&#x27;s profit rises as combined ratio strengthens to 67.4% in 2025 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Details Hiscox&#x27;s 2025 results, including London Market performance, rate changes, and ILS/capital trends impacting the Lloyd&#x27;s market.</div><ul><li>Group performance: Hiscox delivered profit before tax of $732.7m in 2025 with an improved undiscounted combined ratio of 87.8% (from 89.2%), an insurance service result of $613.9m, strong investment result ($442.7m) and positive prior‑year reserve development of $292.7m.</li>
+<li>Hiscox Re results and market dynamics: Hiscox Re PBT rose to $286.7m (+7%); ICWP $1.094bn (+6%) and net ICWP $538.7m (+8%); undiscounted combined ratio strengthened to 67.4%. Rates eased (c.‑5% in 2025 and ‑13% at 1 Jan 2026 renewal) but attachment points and terms remained broadly stable.</li>
+<li>Third‑party capital/ILS: ILS AUM increased to $1.5bn (from $1.4bn) with &gt;$300m of inflows during 2025, deployable capital rose for renewals; third‑party fee income from ILS and quota‑share partners was $109.4m (down from $128.2m).</li>
+<li>Other divisions: London Market PBT was $255.3m with a combined ratio of 85.9%; Hiscox Retail PBT was $352.1m with a combined ratio of 92.6%; group ICWP rose to $4.979bn and net ICWP to $3.865bn.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/hive-underwriters-appoints-chief-technology-officer/1457854.article">Hive Underwriters appoints chief technology officer</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Covers a London market underwriter (Hive) with Lloyd&#x27;s market connections and tech-driven underwriting.</div><ul><li>Hive Underwriters has appointed George Stylli as CTO; he brings ~20 years of London market experience, including four years leading engineering at Inigo and a decade as head of business solutions at Atrium Underwriters.</li>
+<li>The hire is positioned as part of Hive’s investment in top talent, advanced digital infrastructure and knowledge‑led underwriting to drive underwriting performance and make it easier to do business.</li>
+<li>Stylli will focus on data, automation, AI/advanced analytics and market connectivity to modernise underwriting workflows, enable faster and smarter risk selection, and improve exposure management.</li>
+<li>Objective is an agent‑first, scalable platform that integrates with London market systems to support technology‑enabled transformation across specialty lines and responsible growth.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/24/859349.htm">UK Targets Russian Oil Fleet With Biggest Sanctions Hit in Years</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Sanctions on oil/shipping network and rising insurance costs/risk for insurers, relevant to Lloyd&#x27;s market coverage.</div><ul><li>UK measures target 175 companies tied to the 2Rivers “shadow fleet” and PJSC Transneft (which transports &gt;80% of Russia’s oil exports), expanding insurers’ direct and secondary-sanctions exposure in oil shipping and related risks.</li>
+<li>Sanctions have already driven up transaction costs and pushed Western banks, insurers and service providers to largely avoid affected trades — the network is paying higher insurance premiums and using longer/opaque routes, concentrating higher-risk, higher-cost marine and cargo exposures.</li>
+<li>Longer voyages, opaque ownership chains and discounted trades raise likelihoods of mis‑declaration, cargo diversion and complex, contested claims; expect more investigations, recovery actions and longer claims handling times.</li>
+<li>Practical actions for insurers: strengthen sanctions and beneficial‑ownership screening, tighten policy wording/exclusions, reassess appetite/pricing for Russian-related energy risks, increase documentation and legal review, and monitor further EU/UK measures given the material revenue impact (~$450bn) on Russian energy flows.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/briefing-ai-and-commercial-insurance-broking-existential-threat-or-strategic-opportunity/1457849.article">Briefing: AI and commercial insurance broking – existential threat or strategic opportunity?</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers AI&#x27;s impact on insurance broking and distribution, a key topic for Lloyd&#x27;s market news.</div><ul><li>Recent AI-driven consumer apps (eg. Insurify’s ChatGPT tool) triggered market anxiety and stock falls, but for commercial broking the risk of disintermediation is limited — personal lines and small commercial risks are more exposed than middle-market and enterprise accounts.</li>
+<li>Generative AI is a productivity multiplier for brokers: high‑value use cases include analysis of loss/claims history, faster drafting of proposals/renewal packs, meeting prep/real‑time support and enterprise knowledge management.</li>
+<li>Commercial brokers retain structural advantages (trusted relationships, proprietary data, underwriting access and sector expertise) that are strengthened when combined with AI, enabling advisors to focus on complex risk structuring and negotiation.</li>
+<li>AI carries governance and operational risks: brokers remain accountable for advice, so firms must implement human‑in‑the‑loop controls, auditability, training on proprietary data and guard against superficial deployment that commoditises advisory value; early, deliberate adopters will widen the gap vs laggards.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/sompo-names-stanford-uk-chief-after-aspen-buy/">Sompo names Stanford UK chief after Aspen buy - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s Syndicate 4711 and Lloyd&#x27;s market players in leadership changes.</div><ul><li>Sompo International has named Sarah Stanford CEO of its U.K. property/casualty business as it completes its $3.5 billion acquisition of Aspen Insurance.</li>
+<li>Stanford joins from Aspen UK (CEO since 2024) and brings Lloyd’s underwriting experience (formerly active underwriter of Syndicate 4711) and industry recognition (Business Insurance Women to Watch 2022).</li>
+<li>She will remain based in London and report to Alessa Quane, CEO, international markets, consolidating Aspen’s U.K. operations into Sompo’s international P&amp;C platform.</li>
+<li>Stanford succeeds Bob Thaker, who will leave later this year — a leadership move aimed at integrating Aspen’s capabilities and underwriting expertise into Sompo’s global strategy.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/sompo-completes-aspen-acquisition/">Sompo completes Aspen acquisition - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Global P&amp;C capacity expansion and UK footprint from the Sompo–Aspen deal could affect Lloyd&#x27;s market.</div><ul><li>Sompo subsidiary completed purchase of 100% of Aspen Class A ordinary shares (closing of the previously announced ~$3.5bn deal); Aspen will operate under the Sompo Group and begin transition to the Sompo brand; Mark Cloutier shifts into an advisory role.</li>
+<li>Aspen’s Class A ordinary shares have ceased trading on the NYSE; Aspen preference shares remain listed with their rights/terms unchanged for now, though Sompo/Aspen may seek redemption, repurchase or delisting in future.</li>
+<li>Strategic rationale — strengthens Sompo’s global P&amp;C and reinsurance platform (including a larger UK presence), enables capital deployment and investments in people and technology, and is positioned to drive profitable growth through market cycles.</li>
+<li>Credit implications — AM Best flagged potential material benefits to Sompo’s business profile and placed Sompo Japan Insurance and subsidiaries’ FSRs under review with positive implications, reflecting possible rating upside from geographic diversification and scale.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/price-forbes-hires-davies-to-lead-bermuda-property-division/">Price Forbes hires Davies to lead Bermuda property division - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Involves Price Forbes, a Lloyd&#x27;s broker, appointing a new Head of Property in Bermuda; relevant to Lloyd&#x27;s market players.</div><ul><li>Gareth Davies appointed Executive Vice President and Head of Property at Price Forbes, based in Bermuda and effective immediately; he will lead strategic development and growth of the firm’s property division.</li>
+<li>Brings ~30 years’ industry experience, most recently Head of Property at Lockton, with prior senior roles at JLT Specialty and RK Harrison and early-career positions at AIG, Marsh and Johnson &amp; Higgens.</li>
+<li>Reports to Carrie Kelley, CEO of Price Forbes Bermuda; firm highlights his local market knowledge and track record of developing innovative solutions to strengthen Price Forbes’ market position.</li>
+<li>Implications for insurers/brokers: reinforces Price Forbes’ focus on Bermuda property capacity and service capability—expect potential product innovation, stronger broking capabilities for property placements and increased competition for business in the Bermuda market.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/nico-conradie-to-lead-santam-re-as-ceo/">Nico Conradie to lead Santam Re as CEO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Involves a reinsurer&#x27;s leadership appointment and a reinsurance license expansion (GIFT City), of interest to Lloyd&#x27;s market readers.</div><ul><li>Nico Conradie appointed CEO of Santam Re effective 1 March 2026; he succeeds interim CEO (and current CFO) Kush Padia, who will return to his CFO role.</li>
+<li>Conradie brings 30+ years of re/insurance experience, including recent tenure as CEO of Munich Re Africa and senior roles at Munich Re and Hannover Life Re Africa — strengthening technical and leadership capability across life and non‑life reinsurance.</li>
+<li>Santam leadership frames the hire as supportive of its FutureFit 2030 strategy, indicating a focus on scaling Santam Re’s solutions across both emerging and developed markets.</li>
+<li>The appointment coincides with Santam receiving a licence to establish a reinsurance branch in GIFT City, India — reinforcing an international expansion push and potential increased engagement with IFSC/India market opportunities.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/scors-chris-beazley-joins-the-iua-board/">SCOR’s Chris Beazley joins the IUA Board - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Announces appointment to IUA Board, impacting governance of the London insurance market (relevant to Lloyd&#x27;s market news).</div><ul><li>Chris Beazley (CCO, SCOR Business Solutions; CEO, SCOR UK &amp; SCOR Syndicate) was appointed to the IUA Board at its February meeting; the Board (up to 20 senior executives) governs efforts to maintain an optimal trading environment for London insurers.</li>
+<li>Beazley brings ~25 years of senior leadership across underwriting and broking in the UK, Switzerland, Singapore and the US, including prior roles as CEO of MS Amlin AG and a two‑year secondment as CEO of the London Market Group.</li>
+<li>IUA Chief Executive Chris Jones highlighted Beazley’s extensive market knowledge as valuable to the Association’s work supporting London market trading conditions.</li>
+<li>The appointment follows the IUA’s November 2025 announcement that Theo Butt (CEO UK, Convex Insurance) was elected Board Chair, effective 1 January 2026.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/twia-board-adopts-lower-pml-funding-requirement-for-2026-after-legislative-changes/">TWIA Board adopts lower PML funding requirement for 2026 after legislative changes - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> US catastrophe funding and ILS/reinsurance activity (TWIA) informs market capacity and pricing, relevant to Lloyd&#x27;s market coverage.</div><ul><li>Texas legislation (HB 3689, 2025) lowered TWIA’s required probable maximum loss (PML) benchmark from a 1-in-100 to a 1-in-50 event (2% annual exceedance) and requires the association to meet that funding level via reinsurance and alternative financing alongside trust funds/assessments.</li>
+<li>TWIA’s board adopted a $4.3 billion 1-in-50 PML for the 2026 hurricane season, down from the prior 1-in-100 requirement of $6.227 billion.</li>
+<li>Planned funding mix for 2026: approximately $2.28 billion of reinsurance protection plus roughly $2.0 billion of statutory funding sources, combining newly placed coverage with existing multi‑year catastrophe bonds secured on favorable market terms.</li>
+<li>Practical implication for insurers/capital markets: the change operationalizes HB 3689 by shifting TWIA’s capital stack toward more reinsurance/ILS and less extreme PML sizing; see Artemis’s Catastrophe Bond &amp; ILS Deal Directory for details on TWIA’s outstanding multi‑year catastrophe bonds.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/25/859536.htm">Tycoon Richard Li&#x27;s Bolttech Is Said in Talks to Buy MoneyHero</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Insurtech M&amp;A news with major investors; could influence global insurance market dynamics relevant to Lloyd&#x27;s.</div><ul><li>Deal status: Bolttech is conducting due diligence on a possible acquisition of Nasdaq‑listed MoneyHero; discussions are ongoing and not guaranteed to result in a binding deal. Both firms are backed by Richard Li/Pacific Century Group.</li>
+<li>Strategic fit: the combination would pair Bolttech’s digital insurance exchange (700+ distribution partners across 39 markets, handling ~$75bn in quoted premiums annually) with MoneyHero’s consumer-facing comparison and lead‑generation capabilities — potentially strengthening end‑to‑end digital distribution and cross‑sell opportunities.</li>
+<li>Financial/valuation contrast: Bolttech raised $147m in a Series C last year giving it a $2.1bn valuation, while MoneyHero’s market cap is about $60m; MoneyHero has reported improving revenues and adjusted EBITDA metrics after earlier restructurings.</li>
+<li>Industry implications: insurers and brokers may face increased aggregation and channel consolidation, greater competition for digital customer acquisition, and opportunities for scale and data-driven pricing/targeting; any transaction could prompt integration, commercial renegotiations with distribution partners and regulatory/competition scrutiny.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/24/859374.htm">UK Sanctions New Zealand Insurer Maritime Mutual After Reuters Report</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Sanctions on a marine insurer (Maritime Mutual) affect the marine insurance market and Lloyd&#x27;s ecosystem.</div><ul><li>UK has designated Maritime Mutual (Auckland-based MMIA and Gibraltar affiliate) for allegedly insuring vessels in the “shadow fleet” that moved sanctioned Iranian and Russian oil; Reuters found MMIA had at times insured nearly 1 in 6 of shadow-fleet tankers later sanctioned by Western governments.</li>
+<li>Sanctions imposed include an asset freeze and director disqualification; the UK Treasury issued a limited license permitting winding down of existing policies until April 9 — operationally constraining MMIA and exposing counterparties to abrupt service/coverage disruption.</li>
+<li>MMIA disputes the designation, states it cancels cover if a vessel is listed and is considering legal options — expect contested legal/ reputational activity and possible delay or uncertainty in claims and recoveries.</li>
+<li>Action items for insurers: immediately review counterparty exposure to MMIA and sanctioned entities, check policy wording (sanctions clauses, cancellation/retroactive exposure), notify regulators/reinsurers, strengthen vessel/beneficial‑ownership and AIS screening for shadow‑fleet behavior, and prepare governance/claims protocols for heightened regulatory scrutiny and potential contagion risk.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/citrus-re-ltd-series-2026-1/">Citrus Re Ltd. (Series 2026-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Involves catastrophe bond issuance and ILS market activity, relevant to Lloyd&#x27;s market news.</div><ul><li>Heritage Insurance Holdings is returning to the cat‑bond market via Citrus Re Ltd. (Series 2026‑1) to secure multi‑year, fully‑collateralized U.S. named‑storm reinsurance for its Narragansett Bay Insurance Company (NBIC) and Zephyr Insurance units; Citrus Re (a Bermuda SPI) will issue two tranches and use proceeds to collateralize the reinsurance agreements.</li>
+<li>Transaction size and structure: $250m targeted across two tranches — $100m Class A (US northeast states only) and $150m Class B (US northeast plus Hawaii) — indemnity‑triggered, per‑occurrence coverage for a three‑year term (June 1, 2026–May 31, 2029).</li>
+<li>Class A tranche: $100m; attaches at $290m (after stated reinsurance), exhausts at $450m; initial attachment probability ~2.87%, initial expected loss ~2.5%; spread guidance 5.25%–5.75%.</li>
+<li>Class B tranche: $150m; attaches at $290m, exhausts at $440m; higher risk due to less stated reinsurance and Hawaii exposure — initial attachment probability ~3.6%, initial expected loss ~3.32%; spread guidance 6.75%–7.25%. Note that differing stated reinsurance means effective attachment points will differ from the headline figures.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/loreal-dyson-bausch-lomb-become-the-latest-to-sue-for-trump-tariff-refunds/">L’Oreal, Dyson, Bausch + Lomb become the latest to sue for Trump tariff refunds - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Tariff refund litigation affects corporate risk and insurance/trade risk relevant to Lloyd&#x27;s market.</div><ul><li>L’Oreal, Dyson, Bausch + Lomb — joined by FedEx and Sol de Janeiro among others — filed suits in the U.S. Court of International Trade seeking refunds of tariffs paid under President Trump’s emergency trade measures after the U.S. Supreme Court ruled those tariffs unlawful (6-3) for exceeding IEEPA authority.</li>
+<li>More than 1,400 importers (including Costco and Goodyear) have already sued; Penn Wharton estimates up to $175 billion in U.S. tariff collections could be subject to refunds, and trade lawyers expect many more lawsuits to follow.</li>
+<li>The mechanics of recovering refunds must be worked out in lower courts and could take months or years, creating prolonged litigation and recovery uncertainty for corporate plaintiffs and their insurers.</li>
+<li>Insurance implications: potential impacts on insureds’ financial statements and liquidity, increased D&amp;O and litigation exposure, possible claims interactions with customs bonds, trade credit and professional liability policies, and a need for underwriters to reassess trade‑related risk, reserves and policy wording.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/northern-re-eyes-larger-more-complex-opportunities-with-expanded-capital-base/">Northern Re eyes larger, more complex opportunities with expanded capital base - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses collateralised reinsurance, ILS, and capital deployment—topics relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Raised an additional $150M of committed capital, increasing platform capacity to $325M to pursue larger and more complex collateralised reinsurance and ILS opportunities while retaining disciplined underwriting and collateral management.</li>
+<li>Technology-driven, underwriting-focused platform (developed from 2020; launched 2022) began underwriting on Jan 1, 2023 and has written 100+ bespoke contracts across treaty, retrocession and structured solutions, concentrated on high-frequency P&amp;C.</li>
+<li>Proprietary modelling and built-from-scratch tech stack enable ongoing capital re-allocation as risks evolve — positioned to improve investor outcomes in casualty transactions where exposures change materially over time.</li>
+<li>Increasing cedent engagement, including large re/insurance organisations; launched a structured solutions suite and enhanced whole-account quota share (Sep last year) to deliver capital relief, earnings stability and multi-year continuity.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/24/859409.htm">Mexico&#x27;s Cartel Violence Could Hit Economy and Insurance Segment: AM Best</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses Mexico&#x27;s insurance/reinsurance market dynamics and profitability with potential implications for Lloyd&#x27;s market exposure.</div><ul><li>Violence in Puerto Vallarta and wider unrest after the cartel leader’s death disrupted travel and businesses—threatening tourism (≈10% of GDP) and potentially increasing travel, cruise, business-interruption and property claims in coastal resort areas.</li>
+<li>AM Best warns ongoing unrest raises political risk (already high) and could worsen Mexico’s moderate economic/financial risks, creating operational, underwriting and stability challenges for insurers operating there.</li>
+<li>Negative outlook on Mexico’s insurance segment: market growth is expected to slow versus the prior two years, with continued reliance on reinsurance even as global reinsurers show renewed interest amid softening pricing.</li>
+<li>Regulatory/tax headwind: elimination of the ‘fiscal credit’ (VAT paid by insurers to third parties on claims) could erase up to ~40% of expected net profits in 2025, forcing insurers to revise strategies and contributing to decline in financial lines.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/american-integrity-gets-260m-of-reinsurance-from-new-integrity-re-iii-2026-1-cat-bond/">American Integrity gets $260m of reinsurance from new Integrity Re III 2026-1 cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Catastrophe bond issuance and pricing details reflect broader reinsurance market dynamics relevant to Lloyd&#x27;s market.</div><ul><li>American Integrity secured $260M of fully‑collateralized named‑storm reinsurance via Integrity Re III Ltd (Series 2026‑1) for Florida, Georgia, North Carolina and South Carolina on an indemnity, per‑occurrence basis — multi‑year protection for Classes A–C (3 years) and a one‑year term for the Class D layer.</li>
+<li>All four tranches priced below initial guidance: Class A $90M at 7% (base expected loss 1.38%); Class B $70M at 11% (EL 3.39%); Class C $50M at 16.25% (EL 4.56%); Class D $50M at 33% (EL 11.96%).</li>
+<li>The Class D tranche is among the riskiest layers seen in the 144A cat bond market; strong investor demand allowed the sponsor to retain the lower‑layer risk and achieve attractive pricing.</li>
+<li>Result: a successful repeat (ninth) Integrity Re issuance — larger than early targets and better‑than‑anticipated pricing across tranches, illustrating investor appetite for higher‑risk, higher‑yield cat bond opportunities and market capacity to support lower‑layer reinsurance.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/expert-views/complexity-and-value-in-pi-cases-arising-from-construction-sites-gallagher-bassett/1457553.article">Complexity and value in PI cases arising from construction sites – Gallagher Bassett</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses catastrophic injury claims, early evidence collection, quantum calculations, and insurer/claims-management context—topics pertinent to Lloyd&#x27;s market risk and claims trends.</div><ul><li>Construction is a high‑risk, high‑value source of catastrophic claims—multiple contractors, overlapping regulations and high wages/overtime often produce complex liability and large future loss exposures.</li>
+<li>Proactive early claims management is critical: secure witness statements and site photos while the site is active and instruct engineering experts promptly to preserve perishable evidence.</li>
+<li>Be vigilant on quantum: validate the correct multiplicand (guard against artificial inflation from overtime/perks) and rigorously test the multiplier for alleged ongoing disability against the Ogden/DDA 1995 requirement of a ‘‘substantial adverse effect’’ on daily activities.</li>
+<li>Engage specialist expertise and data-driven claims management (e.g., independent catastrophic-injury litigators plus carrier/TPA analytics); coordinate with police/regulators and use defensibility and loss‑trend insights to improve site safety across construction, manufacturing, retail and road environments.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/aub-group-completes-tysers-acquisition/">AUB Group completes Tysers acquisition - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s market access via Tysers and potential impact on Lloyd&#x27;s market distribution.</div><ul><li>AUB has completed its acquisition of specialist wholesale broker Tysers, issuing 9,018,974 new AUB shares to Odyssey Investment Partners (escrowed for 24 months) and drawing AUD 598m of its AUD 675m multi‑currency debt facility; AUB expects leverage to decline over the next 12 months.</li>
+<li>Strategic rationale: Tysers brings leading wholesale capability in the world’s largest insurance market, strengthening AUB’s international placement and Lloyd’s access, accelerating scale in AUB Agencies, capturing more economics across the broking value chain, and delivering operational scale and expected synergies.</li>
+<li>Reported financial terms: an AUD 880m headline purchase price (implied ~9x FY22 pro forma EBITDA) plus up to AUD 176m deferred consideration payable two years post‑completion, contingent on revenue growth targets (upper bound £220m).</li>
+<li>Deal context and next steps: AUB won a competitive process (reported contenders included Ardonagh, Miller and Austbrokers) after Tysers had been divesting businesses (e.g., UK trade credit &amp; surety sold to Xenia); integration and optimisation of Tysers’ contribution are now priorities.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/02/25/859540.htm">Surge of Insurance Capital Into Private Markets Boosts Hiring, Pay Deals</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Discusses insurers’ capital allocations to private markets and hiring trends in private credit, affecting the broader Lloyd&#x27;s market.</div><ul><li>Insurance capital inflows are driving strong hiring and pay in private markets—senior managing directors are seeking $2.5m+ packages and compensation increasingly includes significant carried interest, especially for asset‑backed financing roles.</li>
+<li>Mandates for asset‑backed financing jumped about 60% in 2025 year‑on‑year and private credit firms hold roughly $543bn of dry powder, boosting demand for structuring, product and CFO/CLO expertise.</li>
+<li>Asset‑based finance remains attractive to insurers for long‑dated, predictable cash flows and investment‑grade positioning, but growing entanglement with private credit firms and exposures to sectors vulnerable to AI raise counterparty, concentration and workout risks.</li>
+<li>Banks and private credit managers are also hiring for digital infrastructure (e.g., data centers) and leverage roles; 56% of surveyed private credit professionals expect net team growth over the next 12 months, intensifying competition for experienced talent.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/157-re-represents-a-cornerstone-of-arundo-res-capital-management-mathieu-halm/">157 Re represents a ‘cornerstone’ of Arundo Re’s capital management: Mathieu Halm - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers alternative capital sidecar (157 Re) and capital management impacting the broader reinsurance market, relevant to Lloyd&#x27;s market participants.</div><ul><li>157 Re has become an institutionalised, repeatable alternative-capital vehicle and a cornerstone of Arundo Re’s capital management—originally to grow its nat cat book, it now diversifies external capital, optimises retrocession and provides scalable underwriting capacity with multi‑vintage performance/IRR visibility.</li>
+<li>A 2025 collateral‑reuse mechanism (kept unchanged for the 2026 vintage) has materially improved inter‑vintage collateral efficiency and investor liquidity, supporting predictable issuance and capital planning.</li>
+<li>Structural investor–shareholder alignment and Arundo Re’s requirement to retain the largest portion of risk ensure underwriting discipline across the cycle—the sidecar cannot drive volume without corresponding balance‑sheet exposure, so risk appetite and quantitative/qualitative thresholds remain constant.</li>
+<li>The vehicle attracts both long‑standing and new institutional capital (eg. Boussard &amp; Gavaudan, MCR) and benefits from established placement partners, creating an ecosystem of trust that enables steady, transparent multi‑vintage issuance and long‑term strategic partnerships.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/sagesure-finalises-new-gateway-re-2026-2-cat-bond-to-provide-175m-of-reinsurance/">SageSure finalises new Gateway Re 2026-2 cat bond to provide $175m of reinsurance - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Catastrophe bond issuance and pricing details involving SageSure; reflects ILS activity relevant to the broader reinsurance market that Lloyd&#x27;s covers.</div><ul><li>SageSure closed the Gateway Re Ltd. (Series 2026-2) cat bond, securing the targeted $175m of fully‑collateralized multi‑peril reinsurance for Auros Reciprocal Insurance Exchange and Interboro Insurance Company (Slaine Insurance Holdings) for a three‑year term from July 1, 2026.</li>
+<li>The Bermuda‑domiciled SPI will issue two tranches: $75m Class A (initial base expected loss 1.99%) priced at a 6.25% risk interest spread, and $100m Class B (initial base expected loss 5.29%) priced at a 12.0% spread.</li>
+<li>Coverage is indemnity and per‑occurrence, protecting U.S. named storm, earthquake, severe thunderstorm, winter storm and wildfire exposures initially across FL, LA, MS, NY, SC and TX.</li>
+<li>SageSure prioritized securing attractive pricing over expanding size; the deal follows its $670m Gateway Re Series 2026‑1 issuance and leaves the sponsor with just over $3.1bn of cat bond risk capital outstanding, ranking it third on the Artemis sponsor leaderboard.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/global-property-insurance-rates-fall-in-q4-2025-as-soft-market-takes-hold-marsh-risk/">Global property insurance rates fall in Q4 2025 as soft market takes hold: Marsh Risk - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers global property rate trends and market capacity/pricing affecting Lloyd&#x27;s market.</div><ul><li>Global property insurance rates fell 9% in Q4 2025 (accelerating from -8% in Q3), led by a 14% decline in the Pacific — the seventh consecutive quarter of falls.</li>
+<li>Primary drivers: increased insurer capacity and competition, a favorable loss environment, and lower reinsurance pricing, which together pressured premiums and expanded available limits.</li>
+<li>Regional specifics: US and Canada down ~8% (US moderation partly due to January renewal timing and fewer catastrophe-driven placements); UK -10%; Europe -8%; IMEA -11% with India down 15–25%; Asia -5%; LAC -12% (notably Chile and Brazil).</li>
+<li>Outlook/implications: Marsh expects the soft-market trend to continue into 2026, creating opportunities for clients to secure reduced premiums and broader terms; carriers are likely to pass on more efficient reinsurance pricing in upcoming renewals.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/mike-edgeley/2305.bio">Mike Edgeley | Contributor | Insurance Times</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers UK general insurance market topics and broker dynamics relevant to Lloyd&#x27;s market.</div><ul><li>AI is a strategic opportunity for brokers—powerful productivity use cases can redefine future broking rather than pose an existential threat.</li>
+<li>Attracting talent remains a key challenge for UK general insurance due to a perception problem; the industry must better showcase career routes and capitalise on positive initiatives.</li>
+<li>A soft market creates both pressure and opportunity: brokers who focus on growth, efficiency and adaptability will be supported by insurers, and competitive pricing is an ideal moment to tackle underinsurance.</li>
+<li>Macroeconomic and political uncertainty is squeezing SMEs (many cutting cover); brokers should simplify complexity for clients, proactively advise on protection gaps, and help shape policy discussions to reflect SME needs.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/aubs-international-division-sees-net-profit-rise-29-in-h126/">AUB’s international division sees net profit rise 29% in H1’26 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.64</div><div class="why"><strong>Why it matters:</strong> Involves Tysers, a Lloyd&#x27;s broker, and UK broker consolidation affecting Lloyd&#x27;s market participants.</div><ul><li>International division (including Tysers) delivered underlying PBT of AUD 39.4m in 1H FY26, up 29% YoY, with margin expansion of 510bps to 20.7% and international revenue up 5.3% to AUD 215.5m.</li>
+<li>AUB’s majority stake acquisition in Prestige will rebrand UK retail equity brokerages, transfer Tysers UK Retail teams to Prestige and create a pan‑UK platform designed to accelerate bolt‑on M&amp;A to fill geographic gaps in Northern England and Scotland.</li>
+<li>Group 1H FY26 highlights: underlying NPAT AUD 90.4m (+13.9% YoY), total revenue AUD 759.5m (+6.6%), margin up 190bps to 33.9%, underlying EPS 77.54c (+13.9%) and DPS increased 8% to 27.0c.</li>
+<li>FY26 underlying NPAT guidance upgraded to AUD 220m–AUD 230m (assumes Prestige settlement by 1 May 2026), implying 9.9%–14.9% growth vs FY25 and reflecting expected contributions from Prestige, AUB 360 and Pacific Indemnity.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/tennessee-court-revives-injury-suit-after-comp-immunity-rejected/">Tennessee court revives injury suit after comp immunity rejected - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.62</div><div class="why"><strong>Why it matters:</strong> Discusses workers&#x27; compensation immunity and statutory employer issues affecting retailer liability—relevant to risk, underwriting, and claims contexts for Lloyd&#x27;s market.</div><ul><li>Tennessee Court of Appeals vacated summary judgment for Tractor Supply and revived the premises-liability suit after the Tennessee Supreme Court previously ruled the retailer was not the injured worker’s statutory employer, so workers’ compensation exclusivity did not bar the negligence claim.</li>
+<li>The appellate panel held genuine issues of material fact exist about whether Tractor Supply had constructive notice that a required safety bar was missing and whether the risk was foreseeable, precluding dismissal.</li>
+<li>The court stressed that even allegedly “open and obvious” hazards require a full duty analysis balancing foreseeability and the burden of prevention under Tennessee law; the case is remanded to the trial court for further proceedings.</li>
+<li>Implications for insurers: increased potential GL exposure for retailers previously thought shielded by workers’ comp; review vendor/retailer relationships, indemnity and hold‑harmless provisions, inspection and maintenance controls, underwriting criteria, and defense strategies focused on notice/foreseeability and duty analysis.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/danone-flags-82m-hit-from-baby-formula-recall/">Danone flags $82M hit from baby formula recall - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.62</div><div class="why"><strong>Why it matters:</strong> Discusses insurer exposure to a product recall and potential losses, relevant to risk and pricing in the Lloyd&#x27;s market.</div><ul><li>Danone warns the baby-formula recall could cut next-quarter sales by up to €70 million (about $82 million).</li>
+<li>The recall is tied to possible contamination with the toxin cereulide and has affected other manufacturers, including Nestlé — indicating broader supply-chain/sector exposure.</li>
+<li>Primary insurance exposures include product recall and contamination costs, product liability claims, and business-interruption/contingent BI losses from lost sales and disrupted distribution.</li>
+<li>For insurers and underwriters: anticipate heightened claims activity and potential aggregation across multiple manufacturers; reassess limits, policy wordings, contamination exclusions, pricing and subrogation opportunities as investigations and claim tallies develop.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-02-25T12:55:03Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>

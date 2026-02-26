@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-02-26</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-02-26 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-02-26.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">18 highlights selected for 2026-02-26. Sources include: www.artemis.bm, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk, www.reinsurancene.ws.</div>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Lloyds</li>
+<li>Market News</li>
+<li>Catastrophe</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>ILS</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.artemis.bm/news/allstate-secures-1-2bn-reinsurance-with-new-sanders-re-cat-bonds-its-largest-placement-ever/">Allstate secures $1.2bn reinsurance with new Sanders Re cat bonds, its largest placement ever - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Catastrophe bond issuance and $1.2B reinsurance capacity by Allstate; relevant to re/insurance markets including Lloyd&#x27;s.</div><ul><li>Allstate priced $1.2 billion of multi-peril, multi-year catastrophe bonds via Sanders Re IV (Series 2026‑1A) and Sanders Re III (Series 2026‑1B) — the largest amount of reinsurance limit the insurer has ever secured in a single market visit (upsized from an initial ~$500m target).</li>
+<li>Structure and cover: four tranches (two four‑year, two five‑year) provide per‑occurrence and indemnity triggers, nationwide ex‑Florida coverage for personal lines property and auto across named storm, earthquake, severe weather, wildfire, volcanic eruption and meteorite impact; $550m of four‑year and $650m of five‑year protection.</li>
+<li>Pricing highlights: Sanders Re IV Series 2026‑1A Class A‑1 (4yr) $275m at a 3.5% risk spread and Class A‑2 (5yr) $325m at 3.5%; the Sanders Re III (2026‑1B) tranches carry higher base expected losses (1.8874%) and are the riskier series (detailed sizing/pricing for 1B noted in the deal announcement).</li>
+<li>Strategic implications: the issuance will raise Allstate’s cat‑bond capacity (outstanding to roughly $3.8bn after April maturities), reinforces its top sponsor position, and demonstrates the ILS market’s ability to provide competitively priced, multi‑year (4–5 year) reinsurance capacity for large insurers seeking longer‑duration certainty.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/munich-re-plans-above-consensus-dividend-for-2025-capital-repatriation-now-at-e5-3bn/">Munich Re plans above consensus dividend for 2025, capital repatriation now at €5.3bn - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Munich Re is a leading reinsurer; dividend and buyback news impacts reinsurance capacity/pricing relevant to Lloyd&#x27;s market.</div><ul><li>Board proposes a $24 per‑share dividend for 2025 (above 2024 and consensus of $21.86); final approval by the Supervisory Board once full 2025 figures are available.</li>
+<li>Announced share buy‑back programme up to €2.25bn (29 Apr 2026–AGM 29 Apr 2027); repurchased shares to be retired and programme is subject to approval by the Praesidium and Sustainability Committee.</li>
+<li>Context and track record: 2023 dividend $15 (consensus $12.49) and 2024 dividend $20 (consensus $16.49). Prior buybacks of €1.5bn (2024–25) and €2.0bn (2025–26) bring cumulative capital repatriation to €5.3bn for 2025 — a &gt;51% increase (€1.8bn) since Feb 2024.</li>
+<li>Drivers: results reflect strong reinsurance profitability since the 2022/23 hard market and substantial excess capital at Munich Re, prompting returns to shareholders rather than deployment into new business.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/blue-marble-makes-largest-ever-parametric-payout-to-smallholder-farmers-in-indonesia/">Blue Marble makes &#x27;largest ever&#x27; parametric payout to smallholder farmers in Indonesia - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Shows a major parametric payout and climate-risk transfer relevant to Lloyd&#x27;s market.</div><ul><li>Record parametric payout to smallholders in Indonesia: all 2,719 enrolled farmers received claims totaling over IDR 2.4 billion following Aceh floods.</li>
+<li>A predefined, science-based rainfall threshold automatically triggered the payout—demonstrating index-based triggers functioning as designed for rapid activation.</li>
+<li>Funds were disbursed directly to cooperatives and communities, delivering immediate liquidity that enabled replanting, income stabilization, and continuity of farming operations.</li>
+<li>Operational takeaway for insurers: objective triggers and automated processes reduce ambiguity and payment delays, showcasing the effectiveness of parametric solutions for climate risk protection and the economic resilience of underserved farming populations.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/rokstone-offering-qbe-backed-inland-marine-equipment-program/">Rokstone offering QBE-backed inland marine equipment program - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s of London as a supporting insurer for the Rokstone marine program.</div><ul><li>Rokstone North American Marine launched an inland marine equipment program backed by a $10 million underwriting facility from QBE International Markets, bringing Rokstone Marine’s deployed marine capacity to $60 million supported by insurers including QBE, Allianz and Lloyd’s of London.</li>
+<li>Product targets small-to-midsize contractors, equipment dealers, rental operators and multi-site industrial businesses, addressing growing equipment exposures and a tightening of middle‑market capacity.</li>
+<li>Policy suite includes contractors equipment, commercial output policies, equipment sales and rental, plus ancillary inland marine coverages, with the facility enabling larger equipment schedules while preserving specialty underwriting for smaller risks.</li>
+<li>Distribution and servicing are enabled via Rokstone’s ATOMX digital underwriting platform (quote-and-bind), creating opportunities for brokers to access capacity and faster placement for mid‑market equipment risks.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/hiscox-capital-partners-grows-ils-aum-to-1-5bn-secured-330m-of-inflows-over-last-year/">Hiscox Capital Partners grows ILS AUM to $1.5bn, secured $330m of inflows over last year - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Hiscox is a major Lloyd&#x27;s market participant; article covers ILS, AUM, and January renewals—key Lloyd&#x27;s market topics.</div><ul><li>Hiscox Capital Partners’ ILS AUM rose to $1.5bn at 1 Jan 2026 (from $1.4bn a year earlier) after ~$330m of inflows in 2025, offsetting planned returns and increasing deployable capital for the January renewals.</li>
+<li>Hiscox has consolidated nearly two decades of third‑party capital, ILS and quota‑share activity into the new Hiscox Capital Partners unit to manage ILS funds and capital partnerships.</li>
+<li>Third‑party ILS and quota‑share fee income was $109.4m in 2025 (third consecutive year &gt;$100m), largely fixed fees, and management says the pipeline for further alternative capital remains robust.</li>
+<li>Market/update: January 2026 renewals saw rates down ~13% vs incumbents/alternative capital, but the portfolio is reported as rate‑adequate; Hiscox deployed a new digital workbench to process more submissions and improve risk/return analysis, and plans to maintain net property catastrophe exposures while citing strong historical growth and low combined ratios.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/catastrophe-bond-issuance-already-projected-at-near-5-86bn-in-q1-2026/">Catastrophe bond issuance already projected at near $5.86bn in Q1 2026 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bond issuance trends and market activity—relevant to Lloyd&#x27;s re/insurance market.</div><ul><li>Artemis currently projects roughly $5.86 billion of Q1 2026 cat bond issuance (across 144A and some private deals), making this likely the second‑busiest Q1 on record; settled issuance so far is about $2.38 billion.</li>
+<li>February has driven the surge — nearly $1.7 billion settled in Feb (already the second‑busiest February tracked); if the remaining priced deals settle this month, February could set a new monthly record and Q1 could challenge the 2025 Q1 record of &gt;$7.07 billion.</li>
+<li>The live pipeline shows an additional $3.48 billion of new notes marketing or upsized (including large upsizes like Allstate’s); key demand/drivers include ~ $1.98 billion of Q1 maturities, fresh capital from cat bond funds, larger allocations from multi‑asset and hedge fund managers, and more repeat/new sponsors.</li>
+<li>Net outstanding cat bond supply is set to grow by well over $1 billion by end‑March; data is updated in real time so totals are fluid and likely to rise as more transactions price and settle.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/munich-res-net-result-exceeds-target-in-2025-at-over-e6-1bn/">Munich Re&#x27;s net result exceeds target in 2025 at over €6.1bn - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Munich Re&#x27;s 2025 results include reinsurance performance, renewals, and pricing commentary, relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Strong full-year result: IFRS net result €6.121bn for 2025 (vs €5.69bn in 2024), with reinsurance contributing €5.204bn (above the €5.1bn target); EPS €47.15 and RoE 18.3%.</li>
+<li>P&amp;C reinsurance improved materially: segment net result €3.308bn, combined ratio 73.5% (normalized 80.1%), major-loss spend fell to €1.627bn (LA wildfires ~€800m single-event).</li>
+<li>L&amp;H and specialty performance mixed: L&amp;H total technical result €1.715bn (above €1.7bn target) but net result down to €1.334bn; Global Specialty surged to €562m (combined ratio 85.9%); ERGO net result €917m.</li>
+<li>January 1, 2026 renewals conservative and selective: written volume down 7.8% to €13.7bn, average price down ~2.5% but Munich Re retained portfolio quality by not renewing business that failed return/terms requirements; expects resilient pricing/terms for April renewals.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/uk-ranks-among-europes-biggest-climate-risk-underestimators-fm/1457852.article">UK ranks among Europe’s biggest climate risk underestimators – FM</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Involves insurance risk, climate exposure, and resilience insights relevant to Lloyd&#x27;s market coverage.</div><ul><li>FM Resilience Index 2026 (130 countries, 18 macro/physical drivers) finds the UK has Europe’s largest climate risk awareness gap—FM surveyed 800 risk decision‑makers and 74% underestimated their country’s wind/flood exposure, with the awareness gap notably wide in China, India, Australia, Canada and the UK.</li>
+<li>Although UK infrastructure is relatively well prepared, FM loss data show locations with lower resilience take over 30% longer to recover from property losses, directly threatening long‑term profitability and supply‑chain continuity for insureds.</li>
+<li>Macro pressures reduce practical resilience: the UK’s inflation ranking fell 20 places year‑on‑year, limiting firms’ capacity to invest in climate adaptation and recovery planning and increasing portfolio and underwriting risk for insurers.</li>
+<li>The index uses IMF, World Bank and FM property loss‑prevention datasets across climate exposure, fire, cyber, political risk and inflation—insurers should use this objective insight to reassess exposures, pricing, resilience services and supply‑chain risk management.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/pic-completes-60m-buy-in-to-secure-benefits-for-bodycote-uk-pension-scheme/">PIC completes £60m buy-in to secure benefits for Bodycote UK Pension Scheme - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Pension risk-transfer deal involving a UK insurer (PIC) and a corporate pension scheme; notable market activity in pension insurance.</div><ul><li>PIC completed a £60 million buy-in for the Bodycote UK Pension Scheme, securing benefits for all 680 members (buy-in, not yet a buy-out).</li>
+<li>Transaction was delivered on accelerated timeframes and described as seamless; Trustees cited PIC’s flexibility and high customer service as key selection factors.</li>
+<li>Success attributed to strong pre-market preparation and close collaboration between Trustees, Bodycote plc, advisers (Isio) and PIC, including effective handling of illiquid holdings.</li>
+<li>Next steps: PIC is working with parties to transition scheme members to PIC policyholders; case highlights the role of specialist insurers in de‑risking defined benefit schemes.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2682/">Reinsurance News archive - page 2682</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Reinsurance industry updates pertinent to Lloyd&#x27;s market.</div><ul><li>Rising catastrophe losses are pressuring results and capital: Aspen reported a Q2 combined ratio of 100.7% with $65.1m of cat losses, while Aon Benfield put H1 2016 insured nat-cat losses at ~$30bn (highest since 2011) — implications for reserves, capital and underwriting discipline.</li>
+<li>Market dynamics point toward a harder reinsurance market: Macquarie analysts say Q2 catastrophe losses could establish a pricing floor for the January 2017 renewals, so expect upward pressure on reinsurance rates and stricter terms.</li>
+<li>Reinsurance as contingent capital and strategic tool: JLT Re argues reinsurance is the cheapest and most efficient form of contingent capital, signaling cedents should reassess retention/reinsurance structures to optimize capital efficiency.</li>
+<li>Opportunities and balance-sheet actions: Swiss Re highlights low insurance penetration in China after floods (growth opportunity), and is reportedly exploring a ~$1bn sale of its Admin Re stake — alongside broader industry debate on market discipline as some lines fail to meet cost-of-capital.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ifsca-to-send-spi-sidecar-proposals-to-indian-government-chairman-k-rajaraman/">IFSCA to send SPI sidecar proposals to Indian government: Chairman K. Rajaraman - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> India’s SPI framework and ART tools (e.g., catastrophe bonds) affect global reinsurance markets, including Lloyd&#x27;s.</div><ul><li>IFSCA to submit proposals to the Government shortly to permit re/insurers to establish reinsurance sidecars under a Special Purpose Insurance (SPI) framework, with visible progress expected over the next two months.</li>
+<li>SPI framework intends to standardise parametric solutions and enable Alternative Risk Transfer instruments (e.g., catastrophe bonds, sidecars) to attract global institutional capital and broaden the risk-sharing base beyond traditional reinsurers.</li>
+<li>Following government feedback, IFSCA plans to publish its own regulations and a consultation paper to solicit industry input on the SPI regime.</li>
+<li>Primary objective is to expand domestic risk‑sharing mechanisms to strengthen the stability and sustainability of India’s insurance market against major catastrophe events.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/twia-board-opts-to-only-buy-reinsurance-and-cat-bonds-up-to-1-in-50-year-pml-in-2026/">TWIA Board opts to only buy reinsurance and cat bonds up to 1-in-50 year PML in 2026 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses catastrophe risk transfer, reinsurance and cat bond market dynamics relevant to Lloyd&#x27;s market readership.</div><ul><li>Legislative change halved TWIA’s statutory PML requirement from 1-in-100 to 1-in-50; the Board set the 1-in-50 PML at $4.3051 billion for 2026 and, with $2.00 billion statutory funding plus an expected $25 million from the CRTF, the reinsurance/cat‑bond tower required is $2.2801 billion.</li>
+<li>After hearing tVar tail‑risk analysis from brokers and modelers, the TWIA Board voted to purchase only the statutorily required protection (up to the 1‑in‑50 level) and will not seek additional reinsurance or ILS for higher return‑period events.</li>
+<li>TWIA currently has $1.95 billion of multi‑year catastrophe bonds in force; if those can be reset into the lower layers, net‑new risk transfer need for 2026 could be roughly $330M–$355M (dependant on reset flexibility and any early bond calls). Decisions on cat‑bond resets are expected in March, with potential early call deadlines in April.</li>
+<li>Budgeted spend to reach the 1‑in‑50 level is ~$237M and brokers (Gallagher Re) are confident coverage can be secured at or below that amount; however, TWIA’s choices on resets/early calls may have implications for the cat‑bond market and investor base, and attractive pricing could still prompt purchasing additional cover.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/richard-turnbull-collegiate-marking-40-years-of-quiet-success/1457845.article">Richard Turnbull: Collegiate marking 40 years of quiet success</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers MGA-driven growth in the PI market and rate/cycle dynamics relevant to Lloyd&#x27;s-style market discussions.</div><ul><li>Collegiate evolved from a mutual insurance manager founded in 1986 to a market-based MGA: it closed its mutual vehicles in 1998, remained a specialist (~£10m GWP by 2019) then scaled rapidly to ~£100m GWP by end-2022 after a strategic 2019 underwriting hire, now writing equally across solicitors, construction professionals and financial advisers.</li>
+<li>Growth was driven by targeted talent acquisition and diversification rather than volume chasing—adding experienced solicitors’ and construction PI underwriters in 2019 transformed the firm from a niche provider into a broader PI market player.</li>
+<li>The firm emphasises underwriting discipline and cycle management: with softening rates and market forecasts of rising claim severity and volumes, Collegiate prioritises profitable, sustainable premium over top-line growth to remain solvent through market cycles.</li>
+<li>Current priorities are consolidation and efficiency—improving product, process and technology while keeping a deliberately lean, quality-focused team (~45 people) to manage MGA/delegated authority risks and sustain long-term stability.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/u-k-sanctions-maritime-mutual-over-dark-fleet-coverage/">U.K. sanctions Maritime Mutual over dark fleet coverage - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Involves marine insurer sanctions affecting the insurance market, potentially impacting Lloyd&#x27;s participants.</div><ul><li>U.K. has sanctioned Maritime Mutual Insurance Association (NZ) Ltd and a Gibraltar affiliate over allegations they provided coverage to “dark fleet” tankers carrying Iranian and Russian oil.</li>
+<li>Sanctions include an asset freeze and director disqualification; Maritime Mutual has categorically rejected the allegations.</li>
+<li>Incident heightens regulatory and sanctions-compliance risk for marine insurers, P&amp;I clubs and reinsurers, and may trigger investigations, coverage disputes and reputational damage.</li>
+<li>Immediate actions for insurers/brokers: review exposures to sanctioned trades/owners/vessels, strengthen sanctions screening and due diligence, reassess policy wordings and exclusions, and engage legal/reinsurance partners as needed.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/volvo-recalls-40000-evs-over-battery-fire-risk/">Volvo recalls 40,000 EVs over battery fire risk - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> EV recall signals auto insurer and product liability exposure with sizable replacement costs.</div><ul><li>Volvo is recalling more than 40,000 flagship electric SUVs in over a dozen countries because battery packs may overheat and catch fire — a cross‑border product safety event with potential for substantial claims activity.</li>
+<li>Replacement battery modules alone are estimated at about $195 million (excluding logistics, labor and repair costs), signalling a significant direct property and recall‑cost exposure to manufacturers and their insurers.</li>
+<li>Insurance implications include product liability and recall coverage losses, potential third‑party property damage or bodily injury claims from fires, warranty and dealer repair costs, and possible class actions or regulatory penalties in multiple jurisdictions.</li>
+<li>For underwriters and risk managers this reinforces the need to reassess EV battery risk models, aggregated exposure limits across regions, recall-response reserves, supply‑chain vulnerabilities, and pricing/terms for manufacturers, OEM suppliers and fleet policies.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ransomware-sublimit-doesnt-apply-to-cyber-claim-court/">Ransomware sublimit doesn’t apply to cyber claim: Court - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.71</div><div class="why"><strong>Why it matters:</strong> Clarifies ransomware sublimit application in cyber policies; may influence Lloyd&#x27;s cyber underwriting and pricing.</div><ul><li>A federal court in Dallas held that HSB Specialty Insurance’s $250,000 ransomware sublimit endorsement did not apply to CiCi Enterprises’ ransomware loss because the endorsement’s language was ambiguous and did not clearly state it modified the policy’s cyber extortion coverage.</li>
+<li>CiCi reported more than $1.2 million in losses from a May 2022 ransomware attack; the underlying policy had a $3 million overall limit, but HSB sought to cap related losses at $250,000 via the endorsement.</li>
+<li>Under Texas law, unclear limiting provisions are construed against the insurer, and the court found HSB failed to expressly state the sublimit would apply “across the board,” allowing the claim to proceed.</li>
+<li>Practical implications for insurers, MGAs and brokers: endorsements must explicitly identify which insuring agreements they alter and how sublimits apply; precise drafting and placement of cyber endorsements is critical to avoid coverage disputes.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/southeast/2026/02/25/859498.htm">Florida OIR Slams Committee-Approved Clearinghouse Bill Changes as &#x27;Illusory&#x27;</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Florida&#x27;s proposed commercial clearinghouse and surplus lines shifts could impact Lloyd&#x27;s exposure to U.S. property risk and market dynamics.</div><ul><li>House Commerce Committee approved a bill to create a commercial-policy clearinghouse to move policies out of Citizens and into surplus-lines carriers, advancing quickly and closely matching the Senate version ahead of the March 13 session end.</li>
+<li>The adopted &quot;strike-all&quot; largely ignores Insurance Office of Regulation (OIR) proposals: it grants a program administrator broad authority to select participating insurers and brokers, favors surplus-lines over admitted carriers, and places no firm limits on fees or surcharges.</li>
+<li>Regulators and many brokers warn of conflicts of interest and insufficient oversight—OIR wanted a Florida-based, conflict-free administrator and fee caps (e.g., $100/policy); critics say the bill may effectively favor a large national broker.</li>
+<li>Though the number of affected Citizens commercial/commercial-residential policies is under 6,200, their insured value exceeds $25 billion (nearly $11 billion in Miami‑Dade and Palm Beach), making the potential market and depopulation impacts significant for agents, brokers and Citizens.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/judge-grants-marsh-partial-injunction-against-former-staff-howden/">Judge grants Marsh partial injunction against former staff, Howden - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Industry news about Marsh/Howden; potential indirect impact on Lloyd&#x27;s market dynamics.</div><ul><li>A federal judge in New York (Judge Jennifer L. Rochon) granted Marsh USA a partial preliminary injunction against seven former Florida-based Marsh managers/brokers who joined Howden, finding Marsh likely to succeed on breaches of nonsolicitation and confidentiality agreements and a tortious‑interference claim against Howden.</li>
+<li>The court barred several defendants from soliciting Marsh employees, restricted others from soliciting or servicing Marsh clients covered by their covenants, and ordered the return of Marsh’s confidential information; however, the judge declined to stop brokers from servicing clients who have already moved to Howden due to the burden on those clients.</li>
+<li>Marsh said it lost about 160 employees and 82 clients to Howden; the ruling is preliminary (not binding at trial), motions to dismiss remain pending, and Marsh has additional poaching suits against Howden.</li>
+<li>Practical implication for insurers/brokers: courts will enforce nonsolicit and confidentiality covenants and can compel return of confidential materials, so firms should review restrictive covenants, post‑departure data controls, client-transfer procedures, and litigation exposure when competitors hire teams.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-02-26T08:39:22Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
