@@ -11,189 +11,336 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f3f5f8;
-      --surface: #ffffff;
-      --surface-alt: #eef2f7;
-      --ink: #0d1b2a;
-      --ink-soft: #334a62;
-      --line: #d4dde8;
-      --brand: #0f4c81;
-      --brand-strong: #0a3559;
-      --accent: #be8f33;
-      --accent-soft: #f7ecd5;
-      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
-      --radius-lg: 18px;
-      --radius-md: 12px;
+      --bg: #f1ede5;
+      --ink: #17212e;
+      --ink-soft: #4f5f74;
+      --paper: #faf8f2;
+      --paper-2: #f6f2e7;
+      --line: #c9beb0;
+      --brand: #ae2d24;
+      --brand-soft: #f0d3cf;
+      --navy: #1e3148;
+      --teal: #2d6c6f;
+      --gold: #ca9c45;
+      --shadow: 0 20px 60px rgba(23, 33, 46, 0.13);
+      --radius: 18px;
     }
 
     * { box-sizing: border-box; }
 
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseLine {
+      0%, 100% { opacity: 0.28; transform: translateX(0); }
+      50% { opacity: 0.72; transform: translateX(12px); }
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
+      font-family: "Libre Franklin", "Segoe UI", sans-serif;
       color: var(--ink);
-      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
-      line-height: 1.6;
       background:
-        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
-        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
-        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
-      padding: 28px 16px 48px;
+        radial-gradient(circle at 7% 10%, rgba(45, 108, 111, 0.2), transparent 24%),
+        radial-gradient(circle at 90% 18%, rgba(174, 45, 36, 0.16), transparent 26%),
+        linear-gradient(180deg, #f5f1e8 0%, #efe9dd 100%);
+      line-height: 1.6;
+      padding: 26px 14px 42px;
     }
 
-    .wrap {
-      max-width: 1060px;
+    .frame {
+      max-width: 1120px;
       margin: 0 auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .utility {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      background: #efe7da;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 20px;
+    }
+
+    .utility strong {
+      color: var(--brand);
+      font-weight: 700;
     }
 
     .masthead {
-      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
-      border-radius: var(--radius-lg);
-      padding: 26px 24px;
-      color: #f8fbff;
-      box-shadow: var(--shadow);
       position: relative;
-      overflow: hidden;
+      padding: 24px 20px 18px;
+      border-bottom: 4px double #b4a694;
+      background:
+        linear-gradient(165deg, rgba(255, 255, 255, 0.75), rgba(251, 248, 241, 0.85)),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 28px,
+          rgba(23, 33, 46, 0.03) 28px,
+          rgba(23, 33, 46, 0.03) 29px
+        );
     }
 
     .masthead::after {
       content: "";
       position: absolute;
-      inset: auto -80px -90px auto;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
-      pointer-events: none;
+      right: 24px;
+      bottom: 13px;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brand), transparent);
+      animation: pulseLine 4.2s ease-in-out infinite;
     }
 
-    .brand-row {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .logo-shell {
-      width: 74px;
-      height: 74px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.92);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-      flex: 0 0 auto;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-    }
-
-    .logo-shell img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
+    .masthead-art {
+      margin-top: 12px;
+      width: 100%;
+      max-height: 170px;
+      object-fit: cover;
+      border: 1px solid #d7caba;
+      border-radius: 10px;
       display: block;
+    }
+
+    .brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      border: 1px solid #d9cfbf;
+      background: #fff;
+      border-radius: 10px;
+      padding: 4px;
+      flex: 0 0 auto;
     }
 
     .eyebrow {
       margin: 0;
+      color: var(--ink-soft);
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.13em;
       font-size: 11px;
       font-weight: 700;
-      color: rgba(240, 247, 255, 0.9);
     }
 
     h1 {
-      margin: 4px 0 0;
-      font-family: "Newsreader", Georgia, serif;
-      font-size: clamp(1.55rem, 2.8vw, 2.3rem);
-      line-height: 1.16;
+      margin: 5px 0 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1.65rem, 3.7vw, 2.8rem);
+      line-height: 1.06;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
     }
 
-    .deck {
-      margin: 14px 0 0;
-      max-width: 70ch;
-      color: rgba(236, 243, 250, 0.95);
-      font-size: 15px;
+    .subdeck {
+      margin: 10px 0 0;
+      color: var(--ink-soft);
+      max-width: 75ch;
+      font-size: 14px;
     }
 
-    .grid {
-      margin-top: 18px;
+    .ticker {
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #42556d;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 20px;
+      padding-left: 18px;
+      min-width: 100%;
+      animation: tickerMove 18s linear infinite;
+    }
+
+    @keyframes tickerMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(-40%); }
+    }
+
+    .content {
       display: grid;
+      gap: 14px;
+      padding: 16px 16px 20px;
       grid-template-columns: 1fr;
-      gap: 18px;
     }
 
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
-      padding: 22px;
-    }
-
-    .panel h2 {
-      margin: 0 0 12px;
-      font-size: 1.15rem;
-      line-height: 1.3;
-    }
-
-    .latest-card {
-      background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
+    .hero {
+      background:
+        linear-gradient(145deg, rgba(30, 49, 72, 0.98), rgba(23, 33, 46, 0.95)),
+        radial-gradient(circle at 80% 10%, rgba(202, 156, 69, 0.35), transparent 40%);
+      border-radius: 14px;
+      color: #f8fbff;
       padding: 16px;
+      position: relative;
+      overflow: hidden;
+      animation: rise 450ms ease both;
     }
 
-    .latest-label {
+    .hero-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-label {
       display: inline-flex;
       align-items: center;
-      padding: 4px 9px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      gap: 7px;
       text-transform: uppercase;
-      background: var(--accent-soft);
-      color: #8a651d;
-      border: 1px solid rgba(190, 143, 51, 0.35);
-    }
-
-    .latest-link {
-      display: block;
-      margin-top: 10px;
-      color: var(--brand-strong);
-      font-size: 1.02rem;
+      font-size: 10px;
+      letter-spacing: 0.1em;
       font-weight: 700;
-      text-decoration: none;
-      overflow-wrap: anywhere;
+      color: #e5edf8;
+      border: 1px solid rgba(224, 235, 248, 0.5);
+      border-radius: 999px;
+      padding: 5px 9px;
     }
 
-    .latest-link:hover { text-decoration: underline; }
+    .hero h2 {
+      margin: 11px 0 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.18;
+      font-weight: 700;
+    }
 
-    .cta {
-      margin-top: 14px;
+    .hero-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+      word-break: break-word;
+    }
+
+    .hero-link:hover { border-bottom-color: #fff; }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn {
       display: inline-block;
       text-decoration: none;
       font-weight: 700;
-      font-size: 13px;
-      color: #ffffff;
-      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
-      border: 1px solid rgba(7, 38, 65, 0.45);
-      padding: 9px 13px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
-      transition: transform 120ms ease, box-shadow 120ms ease;
+      padding: 9px 11px;
+      border: 1px solid transparent;
     }
 
-    .cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      border-color: #d85147;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.34);
+    }
+
+    .signal-deck {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .deck-item {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .deck-item.active {
+      display: block;
+      animation: rise 320ms ease both;
+    }
+
+    .deck-item small {
+      display: block;
+      color: #dce9fb;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 10px;
+    }
+
+    .deck-item strong {
+      font-size: 14px;
+      line-height: 1.35;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .layout {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fffdfa;
+      padding: 14px;
+      animation: rise 460ms ease both;
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.22rem;
+      line-height: 1.2;
+      border-bottom: 2px solid #d8cdbd;
+      padding-bottom: 7px;
     }
 
     .archive-list {
@@ -201,105 +348,278 @@
       margin: 0;
       padding: 0;
       display: grid;
-      gap: 10px;
+      gap: 9px;
     }
 
     .archive-list li a {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       text-decoration: none;
       color: var(--ink);
-      background: var(--surface-alt);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 11px 13px;
+      border: 1px solid #d7cbba;
+      border-left: 5px solid #bca17b;
+      border-radius: 9px;
+      padding: 9px 10px;
+      background: #fff;
       font-weight: 600;
-      transition: border-color 120ms ease, background-color 120ms ease;
+      transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease;
+      word-break: break-word;
     }
 
     .archive-list li a:hover {
-      border-color: #9eb5cb;
-      background: #f7fafd;
+      transform: translateX(2px);
+      background: #fff8ef;
+      border-color: #b8a590;
     }
 
     .archive-list li a::after {
       content: "Open";
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-soft);
-      background: #e5edf5;
-      border: 1px solid #d0dce9;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      color: #fff;
+      background: var(--teal);
       border-radius: 999px;
       padding: 3px 8px;
-      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .notes {
+      margin: 0;
+      padding-left: 16px;
+      color: #35485d;
+      display: grid;
+      gap: 7px;
+      font-size: 14px;
+    }
+
+    .signal-rail {
+      display: grid;
+      gap: 9px;
+      margin-top: 8px;
+    }
+
+    .rail-card {
+      display: block;
+      text-decoration: none;
+      color: #1b2a3d;
+      border: 1px solid #d8cfbf;
+      border-radius: 10px;
+      padding: 10px;
+      background: linear-gradient(180deg, #fff, #fcf8ef);
+    }
+
+    .rail-card:hover {
+      border-color: #b59f7f;
+      background: linear-gradient(180deg, #fffaf0, #fdf7e9);
+    }
+
+    .rail-card small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 10px;
+      color: #5b6d82;
+    }
+
+    .rail-card strong {
+      display: block;
+      font-size: 14px;
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .meta {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #596a80;
+    }
+
+    .about-panel {
+      display: grid;
+      gap: 14px;
+      align-items: start;
+      background:
+        linear-gradient(155deg, #fffdf8, #f8f2e7);
+    }
+
+    .about-media {
+      display: grid;
+      gap: 10px;
+    }
+
+    .creator-photo {
+      width: 170px;
+      height: 170px;
+      border-radius: 18px;
+      border: 2px solid #dccab2;
+      object-fit: cover;
+      object-position: center;
+      background: #f3ece0;
+      display: block;
+    }
+
+    .about-pattern {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #dfd0bd;
+      background: #fff;
+    }
+
+    .about-copy p {
+      margin: 0 0 10px;
+      color: #3b4f64;
+      font-size: 14px;
+    }
+
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .profile-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: #1f3f64;
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #2e547f;
+    }
+
+    .profile-link.alt {
+      background: #2d6c6f;
+      border-color: #357f83;
+    }
+
+    .profile-link.blog {
+      background: #9a3a2a;
+      border-color: #af4a39;
+    }
+
+    .profile-link:hover {
+      filter: brightness(1.08);
     }
 
     footer {
-      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      background: #f4eee1;
       text-align: center;
       font-size: 12px;
-      color: var(--ink-soft);
+      color: #53657c;
+      padding: 12px;
     }
 
-    @media (min-width: 780px) {
-      .grid {
-        grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
-      }
-      .panel {
-        padding: 24px;
-      }
+    footer a {
+      color: #2a567b;
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(42, 86, 123, 0.35);
     }
 
-    @media (max-width: 620px) {
-      .brand-row { align-items: flex-start; }
-      .logo-shell {
-        width: 62px;
-        height: 62px;
+    footer a:hover {
+      border-bottom-color: #2a567b;
+    }
+
+    @media (min-width: 900px) {
+      .content {
+        grid-template-columns: 1.2fr 0.8fr;
       }
-      .logo-shell img {
-        width: 50px;
-        height: 50px;
+      .layout {
+        grid-template-columns: 1fr 1fr;
       }
-      .panel,
-      .masthead {
-        padding: 18px;
+      .about-panel {
+        grid-template-columns: 0.85fr 1.15fr;
       }
+      .panel:nth-child(2) { animation-delay: 90ms; }
+      .panel:nth-child(3) { animation-delay: 160ms; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 12px 8px 20px; }
+      .utility { padding: 8px 12px; font-size: 10px; }
+      .masthead { padding: 14px 12px; }
+      .content { padding: 10px; }
+      .hero, .panel { padding: 12px; }
+      .brand img { width: 48px; height: 48px; }
+      .creator-photo { width: 132px; height: 132px; }
+      .masthead-art { max-height: 120px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="frame">
+    <div class="utility">
+      <span><strong>Edition:</strong> Public Archive</span>
+      <span id="runDate">Updated Daily</span>
+    </div>
+
     <header class="masthead">
-      <div class="brand-row">
-        <div class="logo-shell">
-          <img src="assets/logo.png" alt="Lloyd's Market News Digest logo" />
-        </div>
+      <div class="brand">
+        <img src="assets/logo.png" alt="Lloyd's Market News Digest logo" />
         <div>
-          <p class="eyebrow">London Insurance Intelligence</p>
-          <h1>Lloyd's Market Digest · Public Archive</h1>
+          <p class="eyebrow">London Specialty Insurance Wire</p>
+          <h1>Lloyd's Market News Digest</h1>
         </div>
       </div>
-      <p class="deck">A concise daily briefing covering Lloyd's market news, regulation, underwriting trends, and global specialty insurance signals from public sources.</p>
+      <p class="subdeck">A structured briefing inspired by modern newsroom patterns: clear hierarchy, visual contrast, and fast scanning for broker, syndicate, and market leaders.</p>
+      <img class="masthead-art" src="assets/news-digest-banner-cropped.jpg" alt="News Digest banner" />
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Regulation</span>
+          <span>Underwriting</span>
+          <span>Broker Moves</span>
+          <span>Claims</span>
+          <span>Insurtech</span>
+          <span>Capital & Reinsurance</span>
+          <span>Regulation</span>
+          <span>Underwriting</span>
+          <span>Broker Moves</span>
+          <span>Claims</span>
+          <span>Insurtech</span>
+          <span>Capital & Reinsurance</span>
+        </div>
+      </div>
     </header>
 
-    <main class="grid">
-      <section class="panel">
-        <h2>Latest Publication</h2>
-        <div class="latest-card">
-          <span class="latest-label">Most Recent Digest</span>
-          <a class="latest-link" href="digests/digest_2026-02-27.html">digest_2026-02-27.html</a>
-          <a class="cta" href="digests/digest_2026-02-27.html">Read latest digest</a>
+    <main class="content">
+      <section class="hero">
+        <img class="hero-art" src="assets/landing-hero-shapes.svg" alt="" aria-hidden="true" />
+        <div class="hero-content">
+          <span class="hero-label">Lead Edition</span>
+          <h2><a class="hero-link" href="digests/digest_2026-02-27.html">digest_2026-02-27.html</a></h2>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="digests/digest_2026-02-27.html">Read Full Digest</a>
+            <a class="btn btn-ghost" href="#archive">View Archive</a>
+          </div>
+          <div id="signalDeck" class="signal-deck"></div>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Archive</h2>
-        <ul class="archive-list">
-          <li><a href="digests/digest_2026-02-27.html">digest_2026-02-27.html</a></li>
+        <h3>Editorial Notes</h3>
+        <ul class="notes">
+          <li>Updated every day with newly surfaced public-market stories.</li>
+          <li>Priority is signal over noise: relevance filters and topic classification are applied.</li>
+          <li>Direct source links are preserved for verification and deeper review.</li>
+        </ul>
+        <div id="signalRail" class="signal-rail"></div>
+      </section>
+
+      <section class="layout">
+        <section class="panel" id="archive">
+          <h3>Archive Ledger</h3>
+          <ul class="archive-list" id="archiveList">
+            <li><a href="digests/digest_2026-02-27.html">digest_2026-02-27.html</a></li>
           <li><a href="digests/digest_2026-02-26.html">digest_2026-02-26.html</a></li>
           <li><a href="digests/digest_2026-02-25.html">digest_2026-02-25.html</a></li>
           <li><a href="digests/digest_2026-02-24.html">digest_2026-02-24.html</a></li>
@@ -324,11 +644,121 @@
           <li><a href="digests/digest_2026-01-31.html">digest_2026-01-31.html</a></li>
           <li><a href="digests/digest_2026-01-30.html">digest_2026-01-30.html</a></li>
           <li><a href="digests/digest_2026-01-29.html">digest_2026-01-29.html</a></li>
-        </ul>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h3>Coverage Desk</h3>
+          <ul class="notes">
+            <li><strong>Market Structure:</strong> Lloyd's strategy, capital, governance, and platform shifts.</li>
+            <li><strong>Commercial Lines:</strong> Pricing, product development, and portfolio performance signals.</li>
+            <li><strong>Operational Risk:</strong> Fraud alerts, compliance updates, and cyber/claims impacts.</li>
+            <li><strong>Distribution:</strong> Broker M&A, MGA activity, and cross-border placement trends.</li>
+          </ul>
+          <p class="meta">Inspired by leading news design patterns: heritage typography, bold section dividers, visual-first hierarchy, and lightweight motion for scan speed.</p>
+        </section>
+      </section>
+
+      <section class="panel about-panel">
+        <div class="about-media">
+          <img
+            id="creatorPhoto"
+            class="creator-photo"
+            src="assets/poovannan-casual.jpg"
+            alt="Poovannan Rajendran"
+            loading="lazy"
+          />
+          <img class="about-pattern" src="assets/landing-about-pattern.svg" alt="" aria-hidden="true" />
+        </div>
+        <div class="about-copy">
+          <h3>About Poovannan</h3>
+          <p>Poovannan Rajendran builds practical AI and automation systems for insurance workflows, combining signal discovery, summarisation, and fast publishing.</p>
+          <p>This digest is designed for decision speed: one-page scanning, source transparency, and daily updates with a strong focus on Lloyd's and London market dynamics.</p>
+          <div class="profile-links">
+            <a class="profile-link" href="https://www.linkedin.com/in/poovannanrajendran/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="profile-link alt" href="https://github.com/poovannanrajendran/lloyds-market-news-digest" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+            <a class="profile-link blog" href="https://poovannan.blogspot.com/p/about-me.html" target="_blank" rel="noopener noreferrer">Blog About Me</a>
+          </div>
+          <p class="meta">Portrait automatically falls back to a branded avatar if <code>assets/poovannan-casual.jpg</code> is not present.</p>
+        </div>
       </section>
     </main>
 
-    <footer>Created by Poovannan Rajendran.</footer>
+    <footer>
+      Created by Poovannan Rajendran · Lloyd's Market Digest ·
+      <a href="https://www.linkedin.com/in/poovannanrajendran/" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
+      <a href="https://github.com/poovannanrajendran/lloyds-market-news-digest" target="_blank" rel="noopener noreferrer">GitHub</a> ·
+      <a href="https://poovannan.blogspot.com/p/about-me.html" target="_blank" rel="noopener noreferrer">About Me</a>
+    </footer>
   </div>
+
+  <script>
+    (function () {
+      var runDate = document.getElementById("runDate");
+      if (runDate) {
+        var now = new Date();
+        runDate.textContent = "Updated " + now.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      }
+
+      var creatorPhoto = document.getElementById("creatorPhoto");
+      if (creatorPhoto) {
+        creatorPhoto.addEventListener("error", function () {
+          creatorPhoto.src = "assets/poovannan-avatar-fallback.svg";
+          creatorPhoto.alt = "Poovannan Rajendran placeholder portrait";
+        }, { once: true });
+      }
+
+      var archiveLinks = Array.prototype.slice.call(
+        document.querySelectorAll("#archiveList a")
+      );
+      if (!archiveLinks.length) return;
+
+      function titleFromFile(name) {
+        var match = name.match(/digest_(\d{4})-(\d{2})-(\d{2})\.html/);
+        if (!match) return name;
+        var d = new Date(match[1] + "-" + match[2] + "-" + match[3] + "T00:00:00");
+        return d.toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+      }
+
+      var featured = archiveLinks.slice(0, 4).map(function (link, idx) {
+        return { href: link.getAttribute("href"), label: link.textContent.trim(), index: idx + 1 };
+      });
+
+      var deckHost = document.getElementById("signalDeck");
+      if (deckHost) {
+        featured.forEach(function (item, idx) {
+          var block = document.createElement("a");
+          block.className = "deck-item" + (idx === 0 ? " active" : "");
+          block.href = item.href;
+          block.innerHTML = "<small>Top Signal " + item.index + "</small><strong>" + titleFromFile(item.label) + "</strong>";
+          deckHost.appendChild(block);
+        });
+
+        if (featured.length > 1) {
+          var active = 0;
+          setInterval(function () {
+            var blocks = deckHost.querySelectorAll(".deck-item");
+            blocks[active].classList.remove("active");
+            active = (active + 1) % blocks.length;
+            blocks[active].classList.add("active");
+          }, 5000);
+        }
+      }
+
+      var railHost = document.getElementById("signalRail");
+      if (railHost) {
+        featured.forEach(function (item, idx) {
+          var card = document.createElement("a");
+          card.className = "rail-card";
+          card.href = item.href;
+          card.innerHTML =
+            "<small>Desk Pick " + (idx + 1) + "</small>" +
+            "<strong>" + titleFromFile(item.label) + "</strong>" +
+            "<span class='meta'>Daily executive brief</span>";
+          railHost.appendChild(card);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
