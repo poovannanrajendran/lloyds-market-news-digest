@@ -2,7 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import calendar
+import html
 import re
+from collections import OrderedDict
+from datetime import date
 from pathlib import Path
 
 
@@ -31,13 +35,60 @@ def _refresh_digest_nav_links(files: list[Path], latest: str) -> None:
 def _archive_html(files: list[Path]) -> str:
     if not files:
         return ""
-    first = f'<li><a href="digests/{files[0].name}">{files[0].name}</a></li>'
-    if len(files) == 1:
-        return first
-    rest = "\n".join(
-        f'          <li><a href="digests/{f.name}">{f.name}</a></li>' for f in files[1:]
-    )
-    return f"{first}\n{rest}"
+
+    grouped: "OrderedDict[tuple[int, int], list[Path]]" = OrderedDict()
+    for f in files:
+        match = re.match(r"digest_(\d{4})-(\d{2})-(\d{2})\.html$", f.name)
+        if not match:
+            continue
+        year = int(match.group(1))
+        month = int(match.group(2))
+        key = (year, month)
+        grouped.setdefault(key, []).append(f)
+
+    if not grouped:
+        return "\n".join(
+            f'        <li><a href="digests/{html.escape(f.name)}">{html.escape(f.name)}</a></li>'
+            for f in files
+        )
+
+    today_key = (date.today().year, date.today().month)
+    open_key = today_key if today_key in grouped else next(iter(grouped.keys()))
+
+    year_groups: "OrderedDict[int, list[tuple[int, list[Path]]]]" = OrderedDict()
+    for (year, month), month_files in grouped.items():
+        year_groups.setdefault(year, []).append((month, month_files))
+
+    year_chunks: list[str] = []
+    for year, months in year_groups.items():
+        month_chunks: list[str] = []
+        for month, month_files in months:
+            key = (year, month)
+            month_open = " open" if key == open_key else ""
+            current_class = " current" if key == today_key else ""
+            month_name = calendar.month_name[month]
+            links = "\n".join(
+                f'                <li><a href="digests/{html.escape(f.name)}">{html.escape(f.name)}</a></li>'
+                for f in month_files
+            )
+            month_chunks.append(
+                f"""          <details class="month-group{current_class}"{month_open}>
+            <summary>{month_name} {year} <span>{len(month_files)} editions</span></summary>
+            <ul class="archive-list month-list">
+{links}
+            </ul>
+          </details>"""
+            )
+
+        year_open = " open" if year == open_key[0] else ""
+        year_chunks.append(
+            f"""        <details class="year-group"{year_open}>
+          <summary>{year}</summary>
+{"\n".join(month_chunks)}
+        </details>"""
+        )
+
+    return "\n".join(year_chunks)
 
 
 def update_index(site_dir: Path, archive_limit: int, allow_index_fallback: bool) -> Path:

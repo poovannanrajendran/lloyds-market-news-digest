@@ -357,12 +357,88 @@
       padding-bottom: 7px;
     }
 
+    .archive-groups {
+      display: grid;
+      gap: 9px;
+    }
+
+    .year-group,
+    .month-group {
+      border: 1px solid #d9ccbb;
+      border-radius: 10px;
+      background: #fffefb;
+    }
+
+    .year-group > summary,
+    .month-group > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      padding: 8px 10px;
+      color: #203247;
+    }
+
+    .year-group > summary::-webkit-details-marker,
+    .month-group > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .year-group > summary::before,
+    .month-group > summary::before {
+      content: "▸";
+      margin-right: 7px;
+      color: #5a6d83;
+      font-size: 11px;
+    }
+
+    .year-group[open] > summary::before,
+    .month-group[open] > summary::before {
+      content: "▾";
+    }
+
+    .year-group > summary {
+      background: #f6efe3;
+      border-bottom: 1px solid #e2d6c5;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .month-group {
+      margin: 8px;
+      overflow: hidden;
+    }
+
+    .month-group > summary {
+      background: #fdf9f0;
+      border-bottom: 1px solid #e6dbc9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .month-group.current > summary {
+      background: #f3eee5;
+      color: #1b2f43;
+    }
+
+    .month-group > summary span {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #6a7c91;
+      font-weight: 700;
+    }
+
     .archive-list {
       list-style: none;
       margin: 0;
       padding: 0;
       display: grid;
       gap: 9px;
+    }
+
+    .month-list {
+      padding: 10px;
     }
 
     .archive-list li a {
@@ -632,33 +708,46 @@
       <section class="layout">
         <section class="panel" id="archive">
           <h3>Archive Ledger</h3>
-          <ul class="archive-list" id="archiveList">
-            <li><a href="digests/digest_2026-02-27.html">digest_2026-02-27.html</a></li>
-          <li><a href="digests/digest_2026-02-26.html">digest_2026-02-26.html</a></li>
-          <li><a href="digests/digest_2026-02-25.html">digest_2026-02-25.html</a></li>
-          <li><a href="digests/digest_2026-02-24.html">digest_2026-02-24.html</a></li>
-          <li><a href="digests/digest_2026-02-23.html">digest_2026-02-23.html</a></li>
-          <li><a href="digests/digest_2026-02-20.html">digest_2026-02-20.html</a></li>
-          <li><a href="digests/digest_2026-02-19.html">digest_2026-02-19.html</a></li>
-          <li><a href="digests/digest_2026-02-18.html">digest_2026-02-18.html</a></li>
-          <li><a href="digests/digest_2026-02-17.html">digest_2026-02-17.html</a></li>
-          <li><a href="digests/digest_2026-02-16.html">digest_2026-02-16.html</a></li>
-          <li><a href="digests/digest_2026-02-13.html">digest_2026-02-13.html</a></li>
-          <li><a href="digests/digest_2026-02-12.html">digest_2026-02-12.html</a></li>
-          <li><a href="digests/digest_2026-02-11.html">digest_2026-02-11.html</a></li>
-          <li><a href="digests/digest_2026-02-10.html">digest_2026-02-10.html</a></li>
-          <li><a href="digests/digest_2026-02-09.html">digest_2026-02-09.html</a></li>
-          <li><a href="digests/digest_2026-02-07.html">digest_2026-02-07.html</a></li>
-          <li><a href="digests/digest_2026-02-06.html">digest_2026-02-06.html</a></li>
-          <li><a href="digests/digest_2026-02-05.html">digest_2026-02-05.html</a></li>
-          <li><a href="digests/digest_2026-02-04.html">digest_2026-02-04.html</a></li>
-          <li><a href="digests/digest_2026-02-03.html">digest_2026-02-03.html</a></li>
-          <li><a href="digests/digest_2026-02-02.html">digest_2026-02-02.html</a></li>
-          <li><a href="digests/digest_2026-02-01.html">digest_2026-02-01.html</a></li>
-          <li><a href="digests/digest_2026-01-31.html">digest_2026-01-31.html</a></li>
-          <li><a href="digests/digest_2026-01-30.html">digest_2026-01-30.html</a></li>
-          <li><a href="digests/digest_2026-01-29.html">digest_2026-01-29.html</a></li>
-          </ul>
+          <div class="archive-groups" id="archiveList">
+                    <details class="year-group" open>
+          <summary>2026</summary>
+          <details class="month-group current" open>
+            <summary>February 2026 <span>22 editions</span></summary>
+            <ul class="archive-list month-list">
+                <li><a href="digests/digest_2026-02-27.html">digest_2026-02-27.html</a></li>
+                <li><a href="digests/digest_2026-02-26.html">digest_2026-02-26.html</a></li>
+                <li><a href="digests/digest_2026-02-25.html">digest_2026-02-25.html</a></li>
+                <li><a href="digests/digest_2026-02-24.html">digest_2026-02-24.html</a></li>
+                <li><a href="digests/digest_2026-02-23.html">digest_2026-02-23.html</a></li>
+                <li><a href="digests/digest_2026-02-20.html">digest_2026-02-20.html</a></li>
+                <li><a href="digests/digest_2026-02-19.html">digest_2026-02-19.html</a></li>
+                <li><a href="digests/digest_2026-02-18.html">digest_2026-02-18.html</a></li>
+                <li><a href="digests/digest_2026-02-17.html">digest_2026-02-17.html</a></li>
+                <li><a href="digests/digest_2026-02-16.html">digest_2026-02-16.html</a></li>
+                <li><a href="digests/digest_2026-02-13.html">digest_2026-02-13.html</a></li>
+                <li><a href="digests/digest_2026-02-12.html">digest_2026-02-12.html</a></li>
+                <li><a href="digests/digest_2026-02-11.html">digest_2026-02-11.html</a></li>
+                <li><a href="digests/digest_2026-02-10.html">digest_2026-02-10.html</a></li>
+                <li><a href="digests/digest_2026-02-09.html">digest_2026-02-09.html</a></li>
+                <li><a href="digests/digest_2026-02-07.html">digest_2026-02-07.html</a></li>
+                <li><a href="digests/digest_2026-02-06.html">digest_2026-02-06.html</a></li>
+                <li><a href="digests/digest_2026-02-05.html">digest_2026-02-05.html</a></li>
+                <li><a href="digests/digest_2026-02-04.html">digest_2026-02-04.html</a></li>
+                <li><a href="digests/digest_2026-02-03.html">digest_2026-02-03.html</a></li>
+                <li><a href="digests/digest_2026-02-02.html">digest_2026-02-02.html</a></li>
+                <li><a href="digests/digest_2026-02-01.html">digest_2026-02-01.html</a></li>
+            </ul>
+          </details>
+          <details class="month-group">
+            <summary>January 2026 <span>3 editions</span></summary>
+            <ul class="archive-list month-list">
+                <li><a href="digests/digest_2026-01-31.html">digest_2026-01-31.html</a></li>
+                <li><a href="digests/digest_2026-01-30.html">digest_2026-01-30.html</a></li>
+                <li><a href="digests/digest_2026-01-29.html">digest_2026-01-29.html</a></li>
+            </ul>
+          </details>
+        </details>
+          </div>
         </section>
 
         <section class="panel">
@@ -734,13 +823,16 @@
         return d.toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" });
       }
 
-      var featured = archiveLinks.slice(0, 4).map(function (link, idx) {
+      var deckFeatured = archiveLinks.slice(0, 4).map(function (link, idx) {
+        return { href: link.getAttribute("href"), label: link.textContent.trim(), index: idx + 1 };
+      });
+      var railFeatured = archiveLinks.slice(0, 2).map(function (link, idx) {
         return { href: link.getAttribute("href"), label: link.textContent.trim(), index: idx + 1 };
       });
 
       var deckHost = document.getElementById("signalDeck");
       if (deckHost) {
-        featured.forEach(function (item, idx) {
+        deckFeatured.forEach(function (item, idx) {
           var block = document.createElement("a");
           block.className = "deck-item" + (idx === 0 ? " active" : "");
           block.href = item.href;
@@ -748,7 +840,7 @@
           deckHost.appendChild(block);
         });
 
-        if (featured.length > 1) {
+        if (deckFeatured.length > 1) {
           var active = 0;
           setInterval(function () {
             var blocks = deckHost.querySelectorAll(".deck-item");
@@ -761,7 +853,7 @@
 
       var railHost = document.getElementById("signalRail");
       if (railHost) {
-        featured.forEach(function (item, idx) {
+        railFeatured.forEach(function (item, idx) {
           var card = document.createElement("a");
           card.className = "rail-card";
           card.href = item.href;
