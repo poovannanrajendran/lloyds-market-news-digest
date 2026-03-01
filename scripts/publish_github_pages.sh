@@ -65,6 +65,12 @@ if [[ "$DRY_RUN" == "1" ]]; then
   echo "DRY_RUN=1: skipping git commit/push in publish_github_pages.sh"
 else
   git add docs
+  if [[ -n "$RUN_DATE" ]]; then
+    LINKEDIN_POST_REL="output/linkedin/linkedin_post_${RUN_DATE}.txt"
+    LINKEDIN_IMAGE_REL="output/linkedin_images/linkedin_image_${RUN_DATE}.png"
+    [[ -f "$LINKEDIN_POST_REL" ]] && git add "$LINKEDIN_POST_REL"
+    [[ -f "$LINKEDIN_IMAGE_REL" ]] && git add "$LINKEDIN_IMAGE_REL"
+  fi
   git commit -m "publish: $(date +%Y-%m-%d)" || true
   git push
 fi
