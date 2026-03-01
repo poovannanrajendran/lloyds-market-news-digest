@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
 
+from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 from lloyds_digest.utils import load_env_file
@@ -22,6 +23,18 @@ class Box:
     @property
     def xyxy(self) -> tuple[int, int, int, int]:
         return (self.x, self.y, self.x + self.w, self.y + self.h)
+
+
+_GENERIC_CARD_PHRASES = (
+    "none identified",
+    "n/a",
+    "no detail available",
+    "nothing urgent",
+    "no items met",
+    "blank digest",
+    "key themes",
+    "story cards",
+)
 
 
 def _latest_linkedin_post(path: Path) -> Path | None:
@@ -243,6 +256,102 @@ def _compact_copy(parsed: dict, run_date: str) -> dict:
         "why": _shorten(parsed.get("why", "").strip(), 210),
         "link": link_display,
     }
+
+
+def _is_generic_text(text: str) -> bool:
+    low = (text or "").lower()
+    return any(token in low for token in _GENERIC_CARD_PHRASES)
+
+
+def _is_usable_card(card: dict[str, str]) -> bool:
+    title = (card.get("title") or "").strip()
+    detail = (card.get("detail") or "").strip()
+    if not title:
+        return False
+    if _is_generic_text(title):
+        return False
+    if detail and _is_generic_text(detail):
+        return False
+    return True
+
+
+def _find_digest_path(run_date: str) -> Path | None:
+    candidates = [
+        Path("docs/digests") / f"digest_{run_date}.html",
+        Path("output") / f"digest_{run_date}.html",
+    ]
+    for path in candidates:
+        if path.exists():
+            return path
+    return None
+
+
+def _clean_text(text: str) -> str:
+    return re.sub(r"\s+", " ", (text or "")).strip().strip(" -,:;.")
+
+
+def _digest_fallback_content(run_date: str) -> dict[str, str | list[dict[str, str]]]:
+    digest_path = _find_digest_path(run_date)
+    if not digest_path:
+        return {"headline": "", "why": "", "cards": [], "read_link": ""}
+
+    soup = BeautifulSoup(digest_path.read_text(encoding="utf-8"), "html.parser")
+    cards: list[dict[str, str]] = []
+    for story in soup.select("article.story"):
+        title_node = story.select_one("h3 a")
+        title = _clean_text(title_node.get_text(" ", strip=True) if title_node else "")
+        if not title:
+            continue
+        low = title.lower()
+        if "archive" in low or "calendar" in low or "search results" in low or "page " in low:
+            continue
+        why_node = story.select_one(".why")
+        why = _clean_text(why_node.get_text(" ", strip=True).replace("Why it matters:", "") if why_node else "")
+        if not why:
+            bullet = story.select_one("ul li")
+            why = _clean_text(bullet.get_text(" ", strip=True) if bullet else "")
+        cards.append({"title": title, "detail": why})
+        if len(cards) >= 4:
+            break
+
+    summary_node = soup.select_one(".summary")
+    summary = _clean_text(summary_node.get_text(" ", strip=True) if summary_node else "")
+    public_link = f"https://poovannanrajendran.github.io/lloyds-market-news-digest/digests/digest_{run_date}.html"
+    headline = f"London market signal: {_shorten(cards[0]['title'], 85)}." if cards else ""
+    return {"headline": headline, "why": summary, "cards": cards, "read_link": public_link}
+
+
+def _hydrate_parsed_copy(parsed: dict, run_date: str) -> dict:
+    usable_cards = [card for card in parsed.get("highlights", []) if _is_usable_card(card)]
+    needs_cards = len(usable_cards) < 4
+    weak_headline = not (parsed.get("headline") or "").strip() or _is_generic_text(parsed.get("headline", ""))
+    weak_why = not (parsed.get("why") or "").strip() or _is_generic_text(parsed.get("why", ""))
+    weak_link = not (parsed.get("read_link") or "").strip()
+    if not (needs_cards or weak_headline or weak_why or weak_link):
+        return parsed
+
+    digest_data = _digest_fallback_content(run_date)
+    merged = dict(parsed)
+    fallback_cards = digest_data.get("cards") or []
+    seen = {re.sub(r"[^a-z0-9]+", "", (item.get("title") or "").lower()) for item in usable_cards}
+    merged_cards = list(usable_cards)
+    for item in fallback_cards:
+        key = re.sub(r"[^a-z0-9]+", "", (item.get("title") or "").lower())
+        if not key or key in seen:
+            continue
+        merged_cards.append({"title": item.get("title", ""), "source": "", "detail": item.get("detail", "")})
+        seen.add(key)
+        if len(merged_cards) >= 4:
+            break
+    merged["highlights"] = merged_cards[:4]
+
+    if weak_headline and digest_data.get("headline"):
+        merged["headline"] = str(digest_data["headline"])
+    if weak_why and digest_data.get("why"):
+        merged["why"] = str(digest_data["why"])
+    if weak_link and digest_data.get("read_link"):
+        merged["read_link"] = str(digest_data["read_link"])
+    return merged
 
 
 def _find_logo_path() -> Path | None:
@@ -500,7 +609,8 @@ def _render_placeholder_map(template_path: Path, out_path: Path, layout: dict[st
 def render_image(template_path: Path, post_path: Path, out_path: Path) -> Path:
     raw = _parse_post(_read_text(post_path))
     run_date = _date_from_filename(post_path) or date.today().isoformat()
-    copy = _compact_copy(raw, run_date)
+    hydrated = _hydrate_parsed_copy(raw, run_date)
+    copy = _compact_copy(hydrated, run_date)
 
     img = Image.open(template_path).convert("RGBA")
     w, h = img.size

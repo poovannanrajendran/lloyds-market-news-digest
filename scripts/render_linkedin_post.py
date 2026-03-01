@@ -12,9 +12,9 @@ from typing import Any
 import httpx
 from bs4 import BeautifulSoup
 
-from lloyds_digest.utils import load_env_file
-from lloyds_digest.storage.postgres_repo import PostgresRepo
 from lloyds_digest.ai.costing import compute_cost_usd
+from lloyds_digest.storage.postgres_repo import PostgresRepo
+from lloyds_digest.utils import load_env_file
 
 
 PROMPT_TEMPLATE = """You are my LinkedIn editor for the London Lloyd’s Market News Digest.
@@ -28,7 +28,9 @@ TASK
 2) Create a LinkedIn post that:
    - Sounds like a real person (not corporate, not “AI voice”)
    - Is relevant to London Market / specialty insurance professionals
-   - Includes AT LEAST 3 clear highlights (bulleted or numbered)
+   - Includes EXACTLY 4 clear highlights, each in this format:
+     1) <specific topic> - Why it matters: <specific impact in 1 sentence>
+   - Uses only concrete facts from the digest highlights; do not invent items
    - Includes a short “why it matters” framing (1–2 sentences)
    - Includes the public digest link
    - Uses 6–10 hashtags max (LondonMarket/Lloyds/Insurance/Reinsurance/InsurTech/AI etc.)
@@ -57,9 +59,29 @@ STYLE RULES
 - Max 1,200 characters for the post unless the digest is unusually important.
 - Start with a strong first line (hook) about the London Market signal.
 - Highlights must be specific (not generic “market volatility”).
+- Never output placeholders such as "N/A", "none identified", "no detail available", or "nothing urgent"
+  when highlights are provided in the input.
 - If the digest includes regulatory warnings or scam-related items, include at most ONE and only if it’s clearly relevant to insurers/brokers.
 - Keep UK English spelling.
 """
+
+_GENERIC_PHRASES = (
+    "none identified",
+    "n/a",
+    "no detail available",
+    "nothing urgent",
+    "no items met",
+    "blank digest",
+    "no third-party articles",
+    "story cards: n/a",
+)
+
+_NOISE_TITLE_PATTERNS = (
+    "archive",
+    "calendar",
+    "search results",
+    "page ",
+)
 
 
 def main() -> None:
@@ -94,6 +116,9 @@ def main() -> None:
         return
 
     formatted = _format_linkedin_response(response, digest_date)
+    if _should_use_fallback_post(formatted, parsed, public_link):
+        print("LinkedIn output quality check failed; using digest-derived fallback.")
+        formatted = _build_fallback_post(parsed, digest_date, public_link)
     print(formatted.strip())
 
     output_dir = Path("output") / "linkedin"
@@ -156,9 +181,10 @@ def _parse_digest(html: str) -> dict[str, Any]:
             themes.append(text)
 
     highlights = []
+    stories: list[dict[str, Any]] = []
     for story in soup.select("article.story"):
         title_node = story.select_one("h3 a")
-        title = title_node.get_text(strip=True) if title_node else "Untitled"
+        title = _clean_title(title_node.get_text(strip=True) if title_node else "Untitled")
         url = title_node["href"] if title_node and title_node.has_attr("href") else ""
         source = story.select_one(".meta")
         source_text = source.get_text(strip=True).replace("Source:", "").strip() if source else ""
@@ -166,7 +192,9 @@ def _parse_digest(html: str) -> dict[str, Any]:
         why_text = ""
         if why_node:
             why_text = why_node.get_text(" ", strip=True).replace("Why it matters:", "").strip()
+            why_text = _clean_text(why_text)
         bullets = [li.get_text(strip=True) for li in story.select("ul li") if li.get_text(strip=True)]
+        bullets = [_clean_text(item) for item in bullets if item]
 
         highlight_lines = [
             f"- Title: {title}",
@@ -178,12 +206,219 @@ def _parse_digest(html: str) -> dict[str, Any]:
         if bullets:
             highlight_lines.append(f"  Bullets: {', '.join(bullets)}")
         highlights.append("\n".join(highlight_lines))
+        stories.append(
+            {
+                "title": title,
+                "url": url,
+                "source": source_text,
+                "why": why_text,
+                "bullets": bullets,
+            }
+        )
 
     return {
         "executive_summary": summary,
         "themes": themes,
         "highlights": highlights[:25],
+        "stories": stories,
     }
+
+
+def _clean_text(text: str) -> str:
+    cleaned = re.sub(r"\s+", " ", text or "").strip()
+    return cleaned.strip(" -,:;.")
+
+
+def _clean_title(title: str) -> str:
+    cleaned = _clean_text(title)
+    cleaned = re.sub(r"\s*[-|]\s*Business Insurance$", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"\s*[-|]\s*Artemis\.bm$", "", cleaned, flags=re.IGNORECASE)
+    return cleaned
+
+
+def _is_generic_text(text: str) -> bool:
+    low = text.lower()
+    return any(phrase in low for phrase in _GENERIC_PHRASES)
+
+
+def _is_noise_story(story: dict[str, Any]) -> bool:
+    title = (story.get("title") or "").lower()
+    source = (story.get("source") or "").lower()
+    url = (story.get("url") or "").lower()
+    if not title:
+        return True
+    if any(pattern in title for pattern in _NOISE_TITLE_PATTERNS):
+        return True
+    if "newsnow.co.uk" in source or "newsnow.co.uk" in url:
+        return True
+    if "ajax_calendar" in url:
+        return True
+    return False
+
+
+def _score_story(story: dict[str, Any]) -> int:
+    score = 0
+    source = (story.get("source") or "").lower()
+    title = (story.get("title") or "").lower()
+    why = story.get("why") or ""
+    if source in {"fca.org.uk", "ldc.lloyds.com"}:
+        score += 5
+    if any(token in title for token in ("lloyd", "fca", "reinsurance", "cat bond", "regulator")):
+        score += 3
+    if len(why) > 90:
+        score += 2
+    if story.get("bullets"):
+        score += 1
+    return score
+
+
+def _select_relevant_stories(stories: list[dict[str, Any]], limit: int = 8) -> list[dict[str, Any]]:
+    clean: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for story in stories:
+        if _is_noise_story(story):
+            continue
+        title = _clean_title(story.get("title", ""))
+        if not title:
+            continue
+        key = re.sub(r"[^a-z0-9]+", "", title.lower())
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        normalized = dict(story)
+        normalized["title"] = title
+        normalized["why"] = _clean_text(story.get("why", ""))
+        normalized["bullets"] = [item for item in (story.get("bullets") or []) if item]
+        clean.append(normalized)
+    clean.sort(key=_score_story, reverse=True)
+    return clean[:limit]
+
+
+def _extract_post_highlight_lines(text: str) -> list[str]:
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    return [re.sub(r"^(?:\d+\)|[-*])\s*", "", line).strip() for line in lines if re.match(r"^(?:\d+\)|[-*])\s+", line)]
+
+
+def _first_line(text: str) -> str:
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped:
+            return stripped
+    return ""
+
+
+def _contains_public_link(text: str, public_link: str) -> bool:
+    return public_link in text
+
+
+def _should_use_fallback_post(post_text: str, parsed: dict[str, Any], public_link: str) -> bool:
+    selected = _select_relevant_stories(parsed.get("stories", []), limit=8)
+    available_count = len(selected)
+    if available_count == 0:
+        return False
+
+    highlight_lines = _extract_post_highlight_lines(post_text)
+    non_generic_highlights = [line for line in highlight_lines if line and not _is_generic_text(line)]
+    headline = _first_line(post_text)
+    weak_headline = not headline or _is_generic_text(headline)
+
+    required = 4 if available_count >= 4 else 3 if available_count >= 3 else 2
+    if len(non_generic_highlights) < required:
+        return True
+    if weak_headline:
+        return True
+    if not _contains_public_link(post_text, public_link):
+        return True
+    return False
+
+
+def _shorten(text: str, max_chars: int) -> str:
+    cleaned = _clean_text(text)
+    if len(cleaned) <= max_chars:
+        return cleaned
+    trimmed = cleaned[: max_chars - 3].rstrip(" ,.-")
+    return f"{trimmed}..."
+
+
+def _story_detail(story: dict[str, Any]) -> str:
+    why = _clean_text(story.get("why", ""))
+    if why:
+        return _shorten(why, 180)
+    bullets = story.get("bullets") or []
+    if bullets:
+        return _shorten(_clean_text(bullets[0]), 180)
+    return "Implications for underwriting, distribution, and risk governance should be reviewed."
+
+
+def _build_fallback_headline(stories: list[dict[str, Any]], digest_date: str) -> str:
+    try:
+        dt = datetime.strptime(digest_date, "%Y-%m-%d")
+        date_label = dt.strftime("%d %b %Y")
+    except ValueError:
+        date_label = digest_date
+    if not stories:
+        return f"London market signal for {date_label}: operational and regulatory watchpoints for insurance leaders."
+    primary = _shorten(stories[0].get("title", "London market signal"), 90)
+    if len(stories) > 1:
+        secondary = _shorten(stories[1].get("title", ""), 70)
+        return f"London market signal for {date_label}: {primary}; {secondary}."
+    return f"London market signal for {date_label}: {primary}."
+
+
+def _build_fallback_why(parsed: dict[str, Any], stories: list[dict[str, Any]]) -> str:
+    summary = _clean_text(parsed.get("executive_summary", ""))
+    if summary and not _is_generic_text(summary):
+        return _shorten(summary, 230)
+    if stories:
+        return _shorten(_story_detail(stories[0]), 230)
+    return "These developments affect placement confidence, controls, and capacity planning across the London specialty market."
+
+
+def _build_fallback_post(parsed: dict[str, Any], digest_date: str, public_link: str) -> str:
+    stories = _select_relevant_stories(parsed.get("stories", []), limit=8)
+    highlights = stories[:4]
+    while len(highlights) < 4 and parsed.get("themes"):
+        idx = len(highlights)
+        theme = parsed["themes"][idx % len(parsed["themes"])]
+        highlights.append(
+            {
+                "title": _shorten(_clean_text(theme), 72),
+                "why": "Monitor placement and underwriting impact across brokers, syndicates, and market platforms.",
+                "bullets": [],
+                "source": "",
+                "url": "",
+            }
+        )
+    while len(highlights) < 4:
+        highlights.append(
+            {
+                "title": f"Market update {len(highlights) + 1}",
+                "why": "Review portfolio impact and actions with underwriting and distribution teams.",
+                "bullets": [],
+                "source": "",
+                "url": "",
+            }
+        )
+
+    lines = [_build_fallback_headline(highlights, digest_date), "", "Highlights:"]
+    for i, item in enumerate(highlights[:4], start=1):
+        title = _shorten(item.get("title", ""), 84)
+        detail = _story_detail(item)
+        lines.append(f"{i}) {title} - Why it matters: {detail}")
+
+    lines.extend(
+        [
+            "",
+            f"Why it matters: {_build_fallback_why(parsed, highlights)}",
+            "",
+            f"Read the public digest: {public_link}",
+            "",
+            "#LondonMarket #Lloyds #Insurance #Reinsurance #SpecialtyInsurance #InsurTech",
+            "",
+            f"Alt text: {_shorten(_build_fallback_headline(highlights, digest_date), 140)}",
+        ]
+    )
+    return _format_linkedin_response("\n".join(lines), digest_date)
 
 
 def _build_public_link(filename: str) -> str:
