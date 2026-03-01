@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mock B - Broadcast Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f6fa;
+      --ink: #121726;
+      --muted: #4b566b;
+      --brand: #ba1f1f;
+      --brand-dark: #8c0f0f;
+      --panel: #ffffff;
+      --line: #dbe1eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Libre Franklin", sans-serif;
+      background:
+        linear-gradient(180deg, #ecf1fb 0%, #f4f6fa 100%);
+      color: var(--ink);
+      padding: 18px 12px 32px;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px 14px 0 0;
+      padding: 14px 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .brand img { width: 34px; height: 34px; object-fit: contain; }
+    .pill {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--brand);
+      border-radius: 999px;
+      padding: 5px 9px;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .breaking {
+      background: linear-gradient(90deg, var(--brand-dark), var(--brand));
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    .grid {
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 14px 14px;
+      background: var(--panel);
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 2fr 1fr;
+    }
+    .lead {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      background:
+        linear-gradient(120deg, rgba(186,31,31,0.07), rgba(18,23,38,0.02));
+    }
+    .lead h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+      line-height: 1.2;
+    }
+    .lead p { margin: 0 0 12px; color: var(--muted); }
+    .lead a {
+      display: inline-block;
+      color: #fff;
+      background: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 9px 11px;
+    }
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fcfdff;
+    }
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand);
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      max-height: 190px;
+      overflow: auto;
+    }
+    .card li { margin: 6px 0; }
+    .card a { color: #1b4f91; }
+    .lower {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .module {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+    .module h3 { margin: 0 0 6px; font-size: 1rem; }
+    .module p { margin: 0; color: var(--muted); font-size: 14px; }
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .lower { grid-template-columns: 1fr; }
+      .top { grid-template-columns: 1fr; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <img src="../assets/logo.png" alt="Logo" />
+        <span>Lloyd's Market News Digest</span>
+      </div>
+      <span class="pill">Mock B Broadcast Grid</span>
+    </div>
+    <div class="breaking">Live Desk: overnight market movements and underwriting sentiment</div>
+    <div class="grid">
+      <section class="lead">
+        <h1>Lead Bulletin: Digest 2026-02-27</h1>
+        <p>A fast, scan-first layout inspired by broadcast news homepages, with clear stripes, high-contrast blocks, and modular lanes.</p>
+        <a href="../digests/digest_2026-02-27.html">Read Latest</a>
+      </section>
+      <aside class="stack">
+        <article class="card">
+          <h2>Archive Feed</h2>
+          <ul>
+            <li><a href="../digests/digest_2026-02-27.html">digest_2026-02-27.html</a></li>
+            <li><a href="../digests/digest_2026-02-26.html">digest_2026-02-26.html</a></li>
+            <li><a href="../digests/digest_2026-02-25.html">digest_2026-02-25.html</a></li>
+            <li><a href="../digests/digest_2026-02-24.html">digest_2026-02-24.html</a></li>
+            <li><a href="../digests/digest_2026-02-23.html">digest_2026-02-23.html</a></li>
+            <li><a href="../digests/digest_2026-02-20.html">digest_2026-02-20.html</a></li>
+            <li><a href="../digests/digest_2026-02-19.html">digest_2026-02-19.html</a></li>
+            <li><a href="../digests/digest_2026-02-18.html">digest_2026-02-18.html</a></li>
+          </ul>
+        </article>
+      </aside>
+      <div class="lower">
+        <article class="module">
+          <h3>Renewals Radar</h3>
+          <p>Lane for pricing pressure, class appetite, and line size signals.</p>
+        </article>
+        <article class="module">
+          <h3>Claims Wire</h3>
+          <p>A compact stream for catastrophe events and claims trend updates.</p>
+        </article>
+        <article class="module">
+          <h3>People Moves</h3>
+          <p>Talent changes, carrier appointments, and syndicate leadership notes.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
