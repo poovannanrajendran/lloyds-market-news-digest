@@ -125,3 +125,66 @@ set -a; source .env; set +a
 Do not commit live secrets to git.
 
 Keep secrets only in runtime `.env` on the runner. For handover, use a secure secret manager or encrypted vault and store only key names/owners in documentation.
+
+## 8) 24-hour consolidated summary (Lloyds + YouTube V5)
+
+Script:
+
+- `scripts/send_24h_summary.sh`
+
+What it does (rolling last 24 hours):
+
+- Lloyds digest summary:
+  - run counts (total/success/failed) from `runs`
+  - latest run id/status/start/duration
+  - totals: candidates/fetched/extracted/errors
+  - digest item total from `digests`
+  - freshness state from `logs/last_daily_success_epoch.txt`
+  - latest n8n execution id/status via n8n public API
+- YouTube V5 summary (remote Postgres):
+  - total videos
+  - new videos in last 24h
+  - transcript coverage + present/missing + transcript-added-24h
+  - rows missing category or tags
+
+Default YouTube source:
+
+- `postgresql://dbuser:dbuser@192.168.1.20:5432/youtube_liked_videos`
+- table: `youtube_videos`
+
+Optional env vars:
+
+- `YOUTUBE_POSTGRES_URI`
+- `YOUTUBE_SUMMARY_TABLE` (default: `youtube_videos`)
+
+Severity logic:
+
+- `error`: any Lloyds failed run in 24h, stale freshness heartbeat, or n8n error/failed/crashed
+- `warning`: no Lloyds runs in 24h or no new YouTube videos in 24h
+- `info`: otherwise
+
+## 9) Scheduler update (runner, 9:00 AM)
+
+Recommended daily summary cron entry:
+
+```cron
+0 9 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'set -a; source .env; set +a; ./scripts/send_24h_summary.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
+```
+
+Current runner schedule includes this 9:00 AM job in `CRON_TZ=Europe/London`.
+
+## 10) Test commands for consolidated summary
+
+Dry-run (no webhook send):
+
+```bash
+set -a; source .env; set +a
+./scripts/send_24h_summary.sh --dry-run
+```
+
+Live send:
+
+```bash
+set -a; source .env; set +a
+./scripts/send_24h_summary.sh
+```
