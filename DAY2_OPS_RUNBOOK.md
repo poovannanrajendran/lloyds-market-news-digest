@@ -5,6 +5,7 @@
 - Main run: `08:00` daily via `scripts/run_daily.sh`
 - Missed-run heartbeat checks: `15,45 * * * *` via `scripts/check_run_freshness.sh`
 - n8n workflow alert checks: `08:45, 08:55, 09:05, 09:15, 09:25` via `scripts/check_n8n_workflow_alerts.sh`
+- Consolidated 24h summary alert: `09:00` daily via `scripts/send_24h_summary.sh`
 
 ## Alerting overview
 - Transport script: `scripts/notify_webhooks.sh`
@@ -19,6 +20,9 @@
   - Configurable success alert (`N8N_ALERT_NOTIFY_ON_SUCCESS`)
   - Stops polling for the day after success/failure
   - Writes one marker line to cron log when marked done for the day
+- Consolidated 24h summary (`scripts/send_24h_summary.sh`):
+  - additive daily ops summary (does not replace immediate alerts)
+  - includes Lloyds 24h health/totals + latest n8n status + YouTube V5 metrics
 
 ## Daily checks
 - Verify Postgres + Mongo connectivity
@@ -37,6 +41,13 @@ scripts/run_daily.sh
 ```bash
 set -a; source .env; set +a
 ./scripts/check_n8n_workflow_alerts.sh
+```
+
+## Send 24h consolidated summary now (manual)
+```bash
+set -a; source .env; set +a
+./scripts/send_24h_summary.sh --dry-run
+./scripts/send_24h_summary.sh
 ```
 
 ## Verify output

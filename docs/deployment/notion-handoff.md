@@ -14,6 +14,8 @@
 - n8n workflow monitor window:
   - `45,55 8 * * *` and `5,15,25 9 * * *`
   - Script: `./scripts/check_n8n_workflow_alerts.sh`
+- Consolidated summary alert:
+  - `0 9 * * *` -> `./scripts/send_24h_summary.sh`
 
 ## Notification design
 - Delivery script: `scripts/notify_webhooks.sh`
@@ -50,6 +52,15 @@
   - After today’s first terminal success/failure, monitor stops for the day
   - Marker written once: `n8n-alert: marked done for YYYY-MM-DD (status=...)`
 
+### 24h consolidated summary alert
+- Script: `scripts/send_24h_summary.sh`
+- Schedule: `09:00` daily (`Europe/London`)
+- Additive alert (does not replace immediate failure/success alerts)
+- Includes:
+  - Lloyds 24h run health + totals
+  - latest n8n execution status
+  - YouTube V5 metrics (new videos, transcript coverage, missing category/tags)
+
 ## State files
 - Daily heartbeat:
   - `logs/last_daily_success_epoch.txt`
@@ -76,6 +87,13 @@ cd /opt/automation/lloyds-market-news-digest
 ```bash
 cd /opt/automation/lloyds-market-news-digest
 /bin/bash -lc 'set -a; source .env; set +a; ./scripts/check_n8n_workflow_alerts.sh'
+```
+
+### Run consolidated 24h summary once
+```bash
+cd /opt/automation/lloyds-market-news-digest
+/bin/bash -lc 'set -a; source .env; set +a; ./scripts/send_24h_summary.sh --dry-run'
+/bin/bash -lc 'set -a; source .env; set +a; ./scripts/send_24h_summary.sh'
 ```
 
 ## n8n details
