@@ -7,22 +7,24 @@ Schedule: Daily at `08:00` (Europe/London)
 ## 1. Prerequisites
 
 - Ubuntu/Debian host with `sudo` access
-- Docker running (for existing local Postgres container)
+- Existing Docker Postgres container with live data (do not reset)
 - MongoDB Atlas connection string
 - OpenAI API key
-- GitHub repo write access (SSH key or PAT)
+- GitHub repo write access (deploy key or PAT)
 
 ## 2. Connect to the VM
 
 ```bash
+ssh <user>@192.168.1.30
+# or over Tailscale:
 ssh <user>@100.90.70.30
 ```
 
-## 3. Install system packages
+## 3. Install base packages
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y git python3 python3-venv python3-pip postgresql-client cron
+sudo apt-get install -y git curl ca-certificates bzip2 postgresql-client cron
 sudo systemctl enable --now cron
 ```
 
@@ -34,138 +36,157 @@ sudo chown -R "$USER":"$USER" /opt/automation
 cd /opt/automation
 git clone https://github.com/poovannanrajendran/lloyds-market-news-digest.git
 cd lloyds-market-news-digest
+git checkout main
+git pull --ff-only
 ```
 
-## 5. Create Python virtual environment
+## 5. Install Conda and create env `314`
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+curl -fsSL -o /tmp/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash /tmp/miniconda.sh -b -p "$HOME/miniconda3"
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+conda config --set auto_activate_base false
+conda create -y -n 314 python=3.12 pip
+conda activate 314
 python -m pip install --upgrade pip wheel setuptools
 pip install -r requirements.txt
+pip install "psycopg[binary]"
 ```
 
 ## 6. Configure environment file
 
-Copy template and fill values:
+Preferred: copy the validated local `.env` file.
 
 ```bash
-cp .env.example .env
+# run from your workstation
+scp /Users/poovannanrajendran/Documents/GitHub/lloyds-market-news-digest/.env <user>@192.168.1.30:/opt/automation/lloyds-market-news-digest/.env
 ```
 
-Required settings for your topology:
+On the VM:
 
 ```bash
-# MongoDB Atlas
-MONGODB_URI="<atlas-uri>"
-MONGO_DB_NAME="lloyds_digest_raw"
-
-# Local Postgres container (same VM)
-POSTGRES_HOST="127.0.0.1"
-POSTGRES_PORT="5432"
-POSTGRES_DB="lloyds_digest"
-POSTGRES_USER="<postgres-user>"
-POSTGRES_PASSWORD="<postgres-password>"
-
-# OpenAI models and Flex service tier
-OPENAI_API_KEY="<openai-api-key>"
-OPENAI_MODEL="gpt-5-mini"
-LLOYDS_DIGEST_LLM_RELEVANCE_MODEL="gpt-5-nano"
-LLOYDS_DIGEST_LLM_CLASSIFY_MODEL="gpt-5-nano"
-LLOYDS_DIGEST_LLM_SUMMARISE_MODEL="gpt-5-mini"
-OPENAI_SERVICE_TIER="flex"
-OPENAI_LINKEDIN_MODEL="gpt-5-mini"
-OPENAI_LINKEDIN_SERVICE_TIER="flex"
-
-# Optional but recommended
-GITHUB_PAGES_BASE_URL="https://poovannanrajendran.github.io/lloyds-market-news-digest/digests/"
-SMTP_ENABLED="false"
+cd /opt/automation/lloyds-market-news-digest
+chmod 600 .env
 ```
 
-## 7. Verify Postgres container is reachable
+Recommended reliability override:
 
 ```bash
-docker ps
-ss -ltnp | grep 5432
+echo "DIGEST_MIN_ITEMS=1" >> .env
 ```
 
-If port `5432` is not exposed to host, publish it in Docker first.
+## 7. Ensure Postgres is reachable from host (without resetting data)
 
-## 8. Initialize Postgres schema
+If Postgres runs in Docker and `POSTGRES_HOST=localhost`, the container must publish port `5432` to loopback.
+
+Check:
 
 ```bash
+sudo docker ps --format 'table {{.Names}}\t{{.Ports}}'
+sudo ss -ltnp | grep 5432
+```
+
+If no host port is published, update `/opt/runner/deploy/docker-compose.yml` for service `postgres`:
+
+```yaml
+ports:
+  - "127.0.0.1:5432:5432"
+```
+
+Then recreate only Postgres container (data stays in mounted volume):
+
+```bash
+sudo docker compose -f /opt/runner/deploy/docker-compose.yml --env-file /opt/runner/deploy/.env up -d postgres
+```
+
+## 8. Apply Postgres migrations (safe)
+
+These migrations use `CREATE ... IF NOT EXISTS` and do not drop data.
+
+```bash
+cd /opt/automation/lloyds-market-news-digest
 set -a
 source .env
 set +a
 bash scripts/db_init_postgres.sh
 ```
 
-## 9. Initialize MongoDB collections and indexes
-
-Install `mongosh` if needed, then run:
+## 9. Configure Git for automated publish
 
 ```bash
-MONGO_DB_NAME="$MONGO_DB_NAME" mongosh "$MONGODB_URI" --file scripts/db_init_mongo.js
-```
-
-## 10. Configure Git for automated publish
-
-```bash
+cd /opt/automation/lloyds-market-news-digest
 git config user.name "automation-runner-01"
 git config user.email "<your-email>"
+git remote set-url origin git@github.com:poovannanrajendran/lloyds-market-news-digest.git
 ```
 
-Recommended auth for cron:
+Create deploy key and lock GitHub SSH to that key:
 
 ```bash
-git remote set-url origin git@github.com:poovannanrajendran/lloyds-market-news-digest.git
-ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_lloyds -N ""
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_lloyds -N "" -C "automation-runner-01-lloyds"
+cat > ~/.ssh/config <<'EOF'
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_lloyds
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+EOF
+chmod 600 ~/.ssh/config ~/.ssh/id_ed25519_lloyds
+chmod 644 ~/.ssh/id_ed25519_lloyds.pub
 cat ~/.ssh/id_ed25519_lloyds.pub
 ```
 
-Add that public key as a write-enabled deploy key on the repository, then test:
+Add that public key as a **write-enabled deploy key** on the repository, then test:
 
 ```bash
 ssh -T git@github.com
 ```
 
-## 11. Smoke test database connectivity
+## 10. Validate DB connectivity
 
 ```bash
-source .venv/bin/activate
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate 314
+cd /opt/automation/lloyds-market-news-digest
 export PYTHONPATH="$PWD/src"
-python scripts/smoke_test_connections.py
+python - <<'PY'
+from lloyds_digest.storage.postgres_repo import PostgresRepo
+from lloyds_digest.storage.mongo_repo import MongoRepo
+from lloyds_digest.utils import load_env_file
+load_env_file('.env', override=True)
+print("Postgres ping:", PostgresRepo.from_env().ping())
+print("Mongo ping:", MongoRepo.from_env().ping())
+PY
 ```
 
-Expected output includes:
-- `Postgres OK`
-- `Mongo OK`
-
-## 12. Run full daily flow once manually
+## 11. Run a bounded manual pipeline check
 
 ```bash
-source .venv/bin/activate
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate 314
+cd /opt/automation/lloyds-market-news-digest
+set -a; source .env; set +a
 export PYTHONPATH="$PWD/src"
-./scripts/run_daily.sh
+python -m lloyds_digest run --now --max-urls 2 --max-candidates 2 --verbose
 ```
 
-This script runs:
-- pipeline (`python -m lloyds_digest run --now --verbose`)
-- digest render (`scripts/render_digest_llm_compare.py`)
-- GitHub Pages publish (`scripts/publish_github_pages.sh`)
-- LinkedIn post render (`scripts/render_linkedin_post.py`)
-- dashboard render (`scripts/render_run_dashboard.py`)
+## 12. Run post-pipeline render/publish chain (dry run)
 
-## 13. Validate outputs
+```bash
+python scripts/render_digest_llm_compare.py
+python scripts/render_linkedin_post.py
+python scripts/render_linkedin_image_from_template.py
+DRY_RUN=1 ./scripts/publish_github_pages.sh
+python scripts/render_run_dashboard.py
+```
 
-- `output/digest_YYYY-MM-DD.html` exists
-- `docs/digests/digest_YYYY-MM-DD.html` exists
-- `docs/index.html` updated
-- `logs/run_YYYY-MM-DD.log` exists
-
-## 14. Configure cron for 8:00 AM daily
-
-Edit crontab:
+## 13. Configure cron for 08:00 daily
 
 ```bash
 crontab -e
@@ -175,7 +196,7 @@ Add:
 
 ```cron
 CRON_TZ=Europe/London
-0 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'source .venv/bin/activate && export PYTHONPATH=$PWD/src && ./scripts/run_daily.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
+0 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'source "$HOME/miniconda3/etc/profile.d/conda.sh" && conda activate 314 && export PYTHONPATH=$PWD/src && ./scripts/run_daily.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 ```
 
 Verify:
@@ -184,16 +205,20 @@ Verify:
 crontab -l
 ```
 
-## 15. Operational checks
+`scripts/run_daily.sh` now performs `git pull --ff-only` at startup, so the runner stays in sync with upstream `main` before generating and publishing docs.
+
+## 14. Operational checks
 
 - Confirm GitHub Pages reflects new digest after run
 - Check `output/dashboard/index.html` for run metrics and failures
-- Rotate API keys immediately if ever exposed
 - Keep `.env` out of version control
+- Rotate API keys immediately if ever exposed
 
 ## Troubleshooting quick checks
 
 - OpenAI errors: verify `OPENAI_API_KEY`, model names, and `OPENAI_SERVICE_TIER=flex`
-- Postgres errors: verify host/port/user/password and Docker port mapping
+- Postgres auth errors: verify app `.env` matches live Postgres credentials
+- Postgres connection refused: verify `127.0.0.1:5432` is published from container
 - Mongo errors: verify Atlas URI and IP allowlist
-- Git push failures: verify deploy key or token auth for non-interactive cron
+- Git push failures: verify deploy key is added with write access and `ssh -T git@github.com` succeeds
+- Git pull failures in cron: verify deploy key auth is working for `origin` and branch is fast-forwardable
