@@ -37,6 +37,10 @@ scripts/run_daily.sh
 ```
 Typical use is via `launchd` (macOS) or `cron` (Linux) using the templates in `scripts/` and guidance in `DAY2_OPS_RUNBOOK.md`.
 
+Alerting setup (Slack/Discord + n8n workflow monitor):
+
+- See [`docs/deployment/alert-notifications.md`](docs/deployment/alert-notifications.md)
+
 ## Usage Steps
 ### One-off run
 ```bash

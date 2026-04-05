@@ -213,6 +213,7 @@ crontab -l
 - Check `output/dashboard/index.html` for run metrics and failures
 - Keep `.env` out of version control
 - Rotate API keys immediately if ever exposed
+- Configure alerts using `docs/deployment/alert-notifications.md`
 
 ## Troubleshooting quick checks
 
@@ -222,3 +223,4 @@ crontab -l
 - Mongo errors: verify Atlas URI and IP allowlist
 - Git push failures: verify deploy key is added with write access and `ssh -T git@github.com` succeeds
 - Git pull failures in cron: verify deploy key auth is working for `origin` and branch is fast-forwardable
+- n8n alert checks not firing: verify `N8N_PUBLIC_API_KEY`, workflow ID, and cron entries for `check_n8n_workflow_alerts.sh`
