@@ -6,6 +6,7 @@ LOG_DIR="$ROOT_DIR/logs"
 LOG_FILE="$LOG_DIR/run_$(date +%Y-%m-%d).log"
 NOTIFY_SCRIPT="$ROOT_DIR/scripts/notify_webhooks.sh"
 CURRENT_STEP="bootstrap"
+CURRENT_BRANCH="main"
 
 mkdir -p "$LOG_DIR"
 
@@ -15,6 +16,51 @@ notify() {
   if [[ -x "$NOTIFY_SCRIPT" ]]; then
     "$NOTIFY_SCRIPT" "$message" "$level" || true
   fi
+}
+
+git_push_with_retries() {
+  local phase_label="$1"
+  local max_attempts="${2:-3}"
+  local attempt=1
+
+  while (( attempt <= max_attempts )); do
+    if git push origin "$CURRENT_BRANCH"; then
+      return 0
+    fi
+
+    notify "Git push attempt ${attempt}/${max_attempts} failed during ${phase_label}; trying rebase+retry." "warning"
+    if git fetch origin "$CURRENT_BRANCH" && git rebase "origin/$CURRENT_BRANCH"; then
+      :
+    else
+      git rebase --abort >/dev/null 2>&1 || true
+      notify "Git rebase failed during ${phase_label} push recovery (attempt ${attempt}/${max_attempts})." "warning"
+    fi
+    attempt=$((attempt + 1))
+  done
+
+  notify "Git push still failed after ${max_attempts} attempts during ${phase_label}; continuing run." "warning"
+  return 1
+}
+
+git_sync_with_remote() {
+  local phase_label="$1"
+  local max_attempts="${2:-3}"
+  local attempt=1
+
+  while (( attempt <= max_attempts )); do
+    if git pull --ff-only origin "$CURRENT_BRANCH"; then
+      return 0
+    fi
+    notify "Git ff-only pull failed during ${phase_label} (attempt ${attempt}/${max_attempts}); trying rebase pull." "warning"
+    if git pull --rebase --autostash origin "$CURRENT_BRANCH"; then
+      return 0
+    fi
+    git rebase --abort >/dev/null 2>&1 || true
+    attempt=$((attempt + 1))
+  done
+
+  notify "Git sync failed after ${max_attempts} attempts during ${phase_label}; continuing run." "warning"
+  return 1
 }
 
 git_commit_and_push_if_dirty() {
@@ -35,9 +81,7 @@ git_commit_and_push_if_dirty() {
       notify "Git commit failed during ${phase_label} snapshot; continuing run." "warning"
       return 0
     fi
-    if ! git push origin "$CURRENT_BRANCH"; then
-      notify "Git push failed during ${phase_label} snapshot; continuing run." "warning"
-    fi
+    git_push_with_retries "${phase_label} snapshot" 4 || true
   fi
 }
 
@@ -135,9 +179,7 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   CURRENT_STEP="git_pre_commit_push"
   git_commit_and_push_if_dirty "pre-run"
   CURRENT_STEP="git_pull"
-  if ! git pull --ff-only origin "$CURRENT_BRANCH"; then
-    notify "Git pull failed (non-fast-forward or local divergence); continuing run." "warning"
-  fi
+  git_sync_with_remote "pre-run sync" 4 || true
 fi
 
 CURRENT_STEP="pipeline_run"
