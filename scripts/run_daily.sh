@@ -24,11 +24,17 @@ git_commit_and_push_if_dirty() {
   fi
 
   # Include all tracked/untracked changes.
-  git add -A
+  if ! git add -A; then
+    notify "Git add failed during ${phase_label} snapshot; continuing run." "warning"
+    return 0
+  fi
 
-  if ! git diff --cached --quiet; then
+  if ! git diff --cached --quiet 2>/dev/null; then
     local commit_msg="automation: ${phase_label} snapshot $(date -Iseconds)"
-    git commit -m "$commit_msg"
+    if ! git commit -m "$commit_msg"; then
+      notify "Git commit failed during ${phase_label} snapshot; continuing run." "warning"
+      return 0
+    fi
     if ! git push origin "$CURRENT_BRANCH"; then
       notify "Git push failed during ${phase_label} snapshot; continuing run." "warning"
     fi
@@ -125,7 +131,7 @@ export PYTHONPATH="$ROOT_DIR/src:${PYTHONPATH:-}"
 # Keep runner aligned with upstream to avoid non-fast-forward push failures.
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   CURRENT_STEP="git_pull"
-  CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+  CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)"
   CURRENT_STEP="git_pre_commit_push"
   git_commit_and_push_if_dirty "pre-run"
   CURRENT_STEP="git_pull"
