@@ -29,7 +29,9 @@ git_commit_and_push_if_dirty() {
   if ! git diff --cached --quiet; then
     local commit_msg="automation: ${phase_label} snapshot $(date -Iseconds)"
     git commit -m "$commit_msg"
-    git push origin "$CURRENT_BRANCH"
+    if ! git push origin "$CURRENT_BRANCH"; then
+      notify "Git push failed during ${phase_label} snapshot; continuing run." "warning"
+    fi
   fi
 }
 
@@ -127,7 +129,9 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   CURRENT_STEP="git_pre_commit_push"
   git_commit_and_push_if_dirty "pre-run"
   CURRENT_STEP="git_pull"
-  git pull --ff-only origin "$CURRENT_BRANCH"
+  if ! git pull --ff-only origin "$CURRENT_BRANCH"; then
+    notify "Git pull failed (non-fast-forward or local divergence); continuing run." "warning"
+  fi
 fi
 
 CURRENT_STEP="pipeline_run"
