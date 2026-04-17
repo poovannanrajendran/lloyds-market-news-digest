@@ -28,18 +28,47 @@ git_push_with_retries() {
       return 0
     fi
 
-    notify "Git push attempt ${attempt}/${max_attempts} failed during ${phase_label}; trying rebase+retry." "warning"
-    if git fetch origin "$CURRENT_BRANCH" && git rebase "origin/$CURRENT_BRANCH"; then
-      :
-    else
-      git rebase --abort >/dev/null 2>&1 || true
-      notify "Git rebase failed during ${phase_label} push recovery (attempt ${attempt}/${max_attempts})." "warning"
-    fi
+    notify "Git push attempt ${attempt}/${max_attempts} failed during ${phase_label}; retrying without rebase." "warning"
+    git fetch origin "$CURRENT_BRANCH" >/dev/null 2>&1 || true
     attempt=$((attempt + 1))
   done
 
   notify "Git push still failed after ${max_attempts} attempts during ${phase_label}; continuing run." "warning"
   return 1
+}
+
+git_abort_stale_rebase() {
+  if [[ -d .git/rebase-merge || -d .git/rebase-apply ]]; then
+    git rebase --abort >/dev/null 2>&1 || true
+    notify "Detected stale git rebase state; aborted before run." "warning"
+  fi
+}
+
+git_force_align_to_origin() {
+  local phase_label="$1"
+  if ! git fetch origin "$CURRENT_BRANCH"; then
+    notify "Git fetch failed during ${phase_label}; continuing run." "warning"
+    return 1
+  fi
+  if ! git reset --hard "origin/$CURRENT_BRANCH"; then
+    notify "Git hard align failed during ${phase_label}; continuing run." "warning"
+    return 1
+  fi
+  return 0
+}
+
+git_align_to_origin_preserve_worktree() {
+  local phase_label="$1"
+  if ! git fetch origin "$CURRENT_BRANCH"; then
+    notify "Git fetch failed during ${phase_label}; continuing run." "warning"
+    return 1
+  fi
+  # Move HEAD/index to origin while preserving working tree changes for post-run snapshot.
+  if ! git reset --mixed "origin/$CURRENT_BRANCH"; then
+    notify "Git mixed reset failed during ${phase_label}; continuing run." "warning"
+    return 1
+  fi
+  return 0
 }
 
 git_sync_with_remote() {
@@ -174,12 +203,13 @@ export PYTHONPATH="$ROOT_DIR/src:${PYTHONPATH:-}"
 
 # Keep runner aligned with upstream to avoid non-fast-forward push failures.
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  CURRENT_STEP="git_pull"
+  CURRENT_STEP="git_rebase_cleanup"
+  git_abort_stale_rebase
   CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)"
+  CURRENT_STEP="git_pre_run_align"
+  git_force_align_to_origin "pre-run align" || true
   CURRENT_STEP="git_pre_commit_push"
   git_commit_and_push_if_dirty "pre-run"
-  CURRENT_STEP="git_pull"
-  git_sync_with_remote "pre-run sync" 4 || true
 fi
 
 CURRENT_STEP="pipeline_run"
@@ -197,6 +227,9 @@ python scripts/render_run_dashboard.py | tee -a "$LOG_FILE"
 
 # Heartbeat for missed-run watchdog.
 date +%s > "$LOG_DIR/last_daily_success_epoch.txt"
+
+CURRENT_STEP="git_post_publish_align"
+git_align_to_origin_preserve_worktree "post-publish align" || true
 
 CURRENT_STEP="git_post_commit_push"
 git_commit_and_push_if_dirty "post-run"
