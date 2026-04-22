@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-04-22</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-04-22 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-04-22.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">28 highlights selected for 2026-04-22. Sources include: www.artemis.bm, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Reinsurance</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Risk</li>
+<li>Lloyds</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-delivers-strong-results-despite-softer-pricing-fitch/">Lloyd’s delivers strong results despite softer pricing: Fitch - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.92</div><div class="why"><strong>Why it matters:</strong> Fitch&#x27;s Lloyd&#x27;s market rating and outlook covering underwriting, capital, and pricing cycle.</div><ul><li>Fitch views Lloyd’s as well placed to weather a softer pricing cycle through 2026 due to disciplined underwriting, reserving and investment management; Lloyd’s produced a £5.2bn underwriting profit and a combined ratio of 87.6% in 2025.</li>
+<li>Capital and solvency remain very strong: market-wide Solvency II coverage ~200% (end‑2025) and central solvency coverage ~496%, with capitalisation and leverage consistent with Fitch’s rating.</li>
+<li>Pricing is weakening: risk‑adjusted pricing fell 3.7% in 2025 and is expected to soften further in 2026, but Fitch believes current pricing should still support solid underwriting results in the near term.</li>
+<li>Geopolitical exposure is concentrated in specialist lines (marine/aviation war, political violence, trade credit, energy) related to the Iran conflict; Fitch expects mainly an earnings impact and limited standard property/cyber claims unless the conflict widens or prolongs.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/04/21/866737.htm">MS Amlin Launches Lloyd&#x27;s Sub-Syndicate, Supporting Brokers With New Capacity</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.92</div><div class="why"><strong>Why it matters:</strong> Introduces a new Lloyd&#x27;s sub-syndicate (s1673) under Syndicate 2001, affecting Lloyd&#x27;s market capacity and broker access.</div><ul><li>MS Amlin has launched sub-syndicate s1673 to support its new Portfolio Solutions team and capture underwriting opportunities from the MS&amp;AD global network, fast-follow relationships and Lloyd’s innovation/transition codes.</li>
+<li>s1673 gives brokers greater flexibility and capacity by allowing MS Amlin to write additional lines and increase its share on existing Syndicate 2001 business, deployable across classes at underwriters’ discretion.</li>
+<li>The sub-syndicate is capital-linked to Syndicate 2001 (all risks consolidate under 2001 for Lloyd’s reporting) but enables separate tracking of underwriting and financial performance for partnership-led and innovative distribution channels.</li>
+<li>s1673 provides a segmented platform to test new ideas and products, supporting MS Amlin’s pursuit of sustainable, profitable growth and expanded specialty distribution globally.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-shifts-to-more-competitive-capital-driven-market-says-howden-re/">Lloyd’s shifts to more competitive, capital-driven market, says Howden Re - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Direct Lloyd&#x27;s market analysis from Howden Re covering capacity, pricing, underwriting discipline and capital deployment.</div><ul><li>Capacity and capital inflows continue to expand Lloyd’s footprint (gross written premium +4.2% y/y in 2025) with stamp capacity rising and investor confidence supporting growth.</li>
+<li>Profitability has remained resilient despite softer pricing — growth is increasingly driven by volume, portfolio mix and new entrants, with property and reinsurance lines, favourable loss experience and prudent reserving underpinning results.</li>
+<li>The market is shifting from rate-driven to execution-driven performance: underwriting discipline, selective risk selection, capital allocation and consistency of execution are becoming primary performance levers.</li>
+<li>Heightened competition and structural evolution (cost and efficiency initiatives) are tightening margins; operational efficiency, capital efficiency and disciplined capital management will determine future market leaders.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/ms-amlin-launches-new-lloyds-sub-syndicate/1458335.article">MS Amlin launches new Lloyd’s sub-syndicate</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Describes Lloyd&#x27;s market activity: MS Amlin&#x27;s s1673 sub-syndicate, broker capacity, and syndicate 2001.</div><ul><li>MS Amlin has launched sub-syndicate s1673 to create a segmented vehicle for testing new ideas/products and to track underwriting and financial performance separately as part of a sustainable growth strategy.</li>
+<li>s1673 lets MS Amlin selectively deploy additional capacity alongside Syndicate 2001, increasing flexibility and capacity for brokers and enabling more lines to be written on strong-performing risks.</li>
+<li>The sub-syndicate underpins the portfolio solutions team—leveraging MS&amp;AD’s global network, fast-follow relationships and Lloyd’s innovation/transition codes—to access new international and specialty underwriting opportunities.</li>
+<li>Intended outcomes for brokers and clients include clearer performance measurement, more decisive support on strong lines, broadened distribution options and the ability to scale successful products efficiently.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/ms-amlin-launches-sub-syndicate-1673-to-drive-portfolio-solutions-growth/1458333.article">MS Amlin launches sub-syndicate 1673 to drive portfolio solutions growth</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> MS Amlin launches Lloyd&#x27;s sub-syndicate 1673 to add capacity/flexibility and test new products, consolidating with Syndicate 2001.</div><ul><li>MS Amlin has launched Lloyd’s sub‑syndicate 1673 to expand its Portfolio Solutions capability and give brokers increased access to capacity and more flexible trading options.</li>
+<li>All risks written through s1673 will consolidate into Syndicate 2001 with the same capital backing, allowing MS Amlin to deploy additional capacity alongside its core syndicate across multiple classes and selected risks.</li>
+<li>The structure permits separate tracking of underwriting and financial performance for partnership‑led and innovative distribution channels, improving transparency and measurement of new initiatives.</li>
+<li>s1673 will act as a platform to test new products and underwriting approaches while leveraging the MS&amp;AD group and Lloyd’s networks to pursue international and specialty growth, enabling targeted support for high‑quality risks and brokers.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/blenheim-underwriting-adds-munich-res-ian-ritchie-as-contingency-underwriter/">Blenheim Underwriting adds Munich Re’s Ian Ritchie as Contingency Underwriter - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s coverholder/Syndicate 5886 contingency underwriting appointment and activity; directly related to Lloyd&#x27;s market.</div><ul><li>Ian Ritchie appointed Contingency Underwriter at Blenheim Underwriting (effective June 2026); he joins the Syndicate 5886 non-appearance contingency team led by Justin Burns and will work alongside existing Contingency Underwriter Jane Todd.</li>
+<li>Primary remit is to diversify the non-appearance book into areas including event cancellation, prize indemnity, contractual bonus, over redemption, film and delegated authority schemes.</li>
+<li>Appointment supports Blenheim’s long-term growth strategy to broaden and enhance the MGA’s contingency offering for brokers and clients, emphasizing independent, market-leading underwriting expertise rather than just adding capacity.</li>
+<li>Ritchie brings 20+ years of contingency market experience across claims and underwriting, most recently at Munich Re’s Lloyd’s syndicate.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/mary-driscoll-joins-asr-as-southern-africa-regional-lead/">Mary Driscoll joins ASR as Southern Africa Regional Lead - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s syndicate presence and Lloyd&#x27;s OMC security in South Africa.</div><ul><li>Mary Driscoll appointed Southern Africa Regional Lead for Africa Specialty Risks (ASR), based in Johannesburg to drive and integrate ASR’s direct Lloyd’s syndicate presence in South Africa.</li>
+<li>Mandate includes strengthening Lloyd’s syndicate distribution, working with Corinne Beadsmoore on broker and cedent engagement, and providing Lloyd’s AA‑rated security to local brokers (Lloyd’s OMCs).</li>
+<li>Will support ASR underwriters in sourcing opportunities across all lines of business and partner with Chief Underwriting Officer Eric Malterre and Chief Distribution Officer Amit Khilosia to accelerate regional growth in Southern Africa.</li>
+<li>Brings broad market experience: began underwriting at Munich Re South Africa, held senior broking roles, spent 10 years as portfolio executive underwriter for Africa at Emerald Risk Transfer, and most recently served as Director of Reinsurance Operations at Sanlam Allianz Re Mauritius.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/boleron-says-it-is-first-insurance-broker-approved-by-openai-to-distribute-through-chatgpt/">Boleron says it is first insurance broker approved by OpenAI to distribute through ChatGPT - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Regulatory-approved AI-driven insurance distribution via ChatGPT (Boleron) signaling shifts in Lloyd&#x27;s market.</div><ul><li>Boleron received OpenAI approval to distribute insurance directly through ChatGPT — positioning itself as the first regulated broker globally authorised for AI-agent distribution and one of four OpenAI-approved insurers with multi‑jurisdictional regulatory coverage; the firm frames the broker licence as critical infrastructure for AI-native distribution.</li>
+<li>The company has launched travel insurance with full quote‑and‑compare functionality in ChatGPT and plans to make 35 products from 10 insurer partners available via AI platforms by end‑2026, covering motor (TPL and comprehensive), property, health and life lines.</li>
+<li>Boleron will leverage the EU Freedom of Services passport to scale across multiple countries (targeting Germany, Poland, Greece and Romania in 2027) under a single regulatory architecture—an approach the firm says is amplified by AI distribution channels.</li>
+<li>The ChatGPT integration uses the open Model Context Protocol (MCP), enabling multi‑platform positioning (Anthropic/Claude support already; Google Gemini expected soon); Boleron joins Tuio, Insurify and BizCover among OpenAI‑approved firms — earlier approvals led to an approximate 9% dip in broker equities that analysts largely deemed an overreaction.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/at-least-115bn-to-125bn-of-cat-losses-needed-to-shift-property-pricing-trajectory-gallagher-re/">At least $115bn to $125bn of cat losses needed to shift property pricing trajectory: Gallagher Re - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Discusses reinsurance pricing trends, capital levels, and catastrophe loss outlook affecting the Lloyd&#x27;s market environment, even though not Lloyd&#x27;s-specific.</div><ul><li>Gallagher Re reports Q1 2026 insured natural catastrophe losses of at least USD 20bn—26% below the decadal average and 47% below the recent 5‑year average—marking the fourth consecutive quarter with aggregated insured losses under USD 40bn.</li>
+<li>Property catastrophe pricing remains soft (reported down 15–25% at Jan 1 and Apr 1 renewals), supported by record levels of traditional and alternative reinsurance capital and high investor appetite.</li>
+<li>Gallagher Re estimates it would take an anomalously large loss event (or series) of roughly USD 115–125bn in insured losses—well above expected average annual catastrophe losses—to meaningfully reverse the current pricing trajectory.</li>
+<li>Caveat: insured exposures have grown at least as fast as sector capital, so a sustained run of above‑average losses (or a capital‑eroding major event) could still force a re‑hardening of reinsurance renewals.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/lloyds-to-bring-dive-in-festival-to-an-end/1458332.article">Lloyd’s to bring Dive In festival to an end</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Discusses Lloyd’s Dive In Festival 2026 and the shift to a new market-wide programme via consultation.</div><ul><li>Lloyd’s will retire the Dive In festival after 2026 and replace it with a new market‑led diversity &amp; inclusion programme developed following a structured market consultation.</li>
+<li>A formal consultation (May–July 2026) will invite sponsors, brokers, managing agents, market bodies and early‑career talent to help shape the replacement programme.</li>
+<li>Dive In — launched in 2015 and engaging tens of thousands across 50+ countries — will hold its final festival in September this year; the current theme, &quot;The human gAIn: Powering Culture &amp; Connection,&quot; highlights human judgement, empathy and leadership amid technological change.</li>
+<li>Lloyd’s leaders stress the need for an ongoing, commercially focused approach to talent, skills and culture (to tackle skills shortages and tech disruption) and call for continued market collaboration to keep the industry inclusive and accessible.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/lower-q1-cat-losses-bolster-reinsurance-capacity/">Lower Q1 cat losses bolster reinsurance capacity - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Covers Q1 2026 catastrophe losses and reinsurance capacity, affecting pricing and capital for Lloyd&#x27;s market participants.</div><ul><li>Global Q1 2026 catastrophe impact: economic losses ≈ $58B (12% below 10‑yr avg) and insured losses ≈ $20B (26% below avg); no single insured event exceeded $10B although there were 17 separate $1B+ economic loss events.</li>
+<li>European windstorms drove ≈ $22B of economic damage — the costliest start to a year for that exposure since 1999 — but a large portion was uninsured, muting the insured loss impact.</li>
+<li>U.S. winter and severe convective storms were significant insured-loss drivers, including a late‑January storm that caused about $4B of insured damage.</li>
+<li>Market implications: this marks the fourth consecutive Q1 with insured catastrophe losses below $40B, leaving reinsurers with strong capital heading into the peak hurricane seasons; Gallagher Re estimates it would take $115B–$125B of insured losses to materially alter current property reinsurance pricing trends.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/gallagher-res-bowen-scs-data-centres-and-enso-focuses-after-manageable-q1-leaves-cat-budgets-intact/1458334.article">Gallagher Re’s Bowen: SCS, data centres and ENSO focuses after ‘manageable’ Q1 leaves cat budgets intact</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Covers reinsurance market dynamics, pricing, and loss drivers relevant to Lloyd&#x27;s market.</div><ul><li>Q1 2026: global insured losses ~$20bn (≈26% below decadal average) and economic losses ~$58bn, leaving a protection gap of ~$39bn — a manageable start that has strengthened capital positions heading into peak season.</li>
+<li>Reinsurance pricing likely to remain soft absent a major shock; Gallagher Re estimates it would take $115–125bn (single event or series) — or ≈&gt;$200bn for the year — to drive meaningful hardening (historic comparators: 2005, 2017).</li>
+<li>Industry view of ‘peak’ perils is shifting: European windstorm hasn’t produced a &gt;$10bn insured loss since ~2007, so underwriting focus is moving toward flood and severe convective storms (SCS).</li>
+<li>SCS loss growth is driven predominantly by non‑weather structural factors (80–90%): rising construction/material costs, social inflation, litigation and expansion of housing in high‑risk areas; emerging concentration risks from large data centres (notably in VA, TX, IL) raise first‑ and second‑order exposure. Monitor ENSO/El Niño for potential geographic redistribution of seasonal risk (fewer Atlantic storms but more Pacific activity).</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/gallagher-re-sets-115bn-125bn-loss-threshold-for-meaningful-pricing-shift/">Gallagher Re sets $115bn–$125bn loss threshold for meaningful pricing shift - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Analyzes catastrophe loss drivers and pricing implications for the re/insurance market (Lloyd&#x27;s focus).</div><ul><li>Gallagher Re finds a single event or series causing $115–$125 billion in insured losses above expected annual catastrophe losses would be needed to meaningfully change property re/insurance pricing; Q1 2026 saw relatively low catastrophe activity, leaving industry catastrophe budgets well supported.</li>
+<li>Q1 2026 estimated total economic natural peril losses were at least $58 billion (≈12% below the 10‑year Q1 average) with insured losses covered by private/public entities at least $20 billion (≈26% below the decadal average).</li>
+<li>Severe convective storms (tornado, hail, straight‑line winds) have driven rising US loss costs since 2008: aggregate nominal SCS losses exceeded $20bn nine times, $30bn five times, and topped $50bn in each of 2023–2025.</li>
+<li>Gallagher Re attributes 80–90% of the nominal growth in US SCS losses this century to non‑hazard drivers—replacement/repair costs, social inflation, more vulnerable exposure, construction/labour and energy price volatility—plus higher LAE from AOB, litigation and fraud; implication: underwriting, pricing and portfolio strategy must broaden to include macroeconomic, socioeconomic and new exposure risks (e.g., exterior‑mounted tech, data centres) and focus on resilience.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/everglades-re-ii-ltd-series-2026-1/">Everglades Re II Ltd. (Series 2026-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Contains catastrophe bond issuance details and ILS market activity relevant to Lloyd&#x27;s market coverage.</div><ul><li>Florida Citizens (via Bermuda SPI Everglades Re II Ltd) is issuing Series 2026-1 cat bonds to secure $450M+ of fully collateralized, multi‑year (three‑year) indemnity annual‑aggregate reinsurance for Florida named‑storm/hurricane risk; issuance expected in May.</li>
+<li>Three tranches: Class A $125M (attach $4.574B–$5.305B) — initial attachment probability 1.46%, base expected loss 1.35%, spread guidance 6.0%–6.5%; Class B $150M (attach $3.724B–$4.574B) — attach prob 2.0%, base EL 1.74%, spread 7.0%–7.5%; Class C $175M (attach $2.874B–$3.724B) — attach prob 2.87%, base EL 2.41%, spread 8.75%–9.25%.</li>
+<li>Structure and placement: three tranches collateralize three annual aggregate risk periods over a three‑year term on an indemnity trigger; the new notes will sit alongside remaining 2025‑1 tranches and traditional reinsurance in the program.</li>
+<li>Market context/implications: this is Citizens’ 17th cat‑bond sponsorship (15th under the Everglades Re issuer), offering multi‑year capacity for Florida hurricane risk; indicated spreads vs base expected losses reflect investor risk premia and will be a barometer of demand for Florida catastrophe capacity.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/us-scs-loss-surge-largely-driven-by-non-hazard-factors-not-just-climate-gallagher-res-bowen/">US SCS loss surge largely driven by non-hazard factors, not just climate: Gallagher Re&#x27;s Bowen - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers drivers behind US SCS loss costs and implications for insurers/reinsurers, relevant to Lloyd&#x27;s market.</div><ul><li>Gallagher Re analysis attributes roughly 80–90% of the rise in US severe convective storm (SCS) insured loss costs since 2008 to macroeconomic and socioeconomic factors, with only ~10–20% linked to weather/climate variability.</li>
+<li>Primary non-hazard drivers identified: 2008 oil price shock (raising asphalt shingle costs), COVID-era supply-chain/inflation and labour cost pressures, persistently higher producer price indices, social inflation and increased litigation (notably assignment-of-benefits behaviour), growth in high-value exterior technologies (solar, batteries) and population increases in high-risk SCS states.</li>
+<li>Practical implications for insurers and reinsurers: loss-cost and exposure models must move beyond overlaying hazard footprints to explicitly incorporate replacement-cost inflation, rising loss-adjustment expenses, emerging technologies on properties, and socio-legal trends; pricing, capital and reinsurance strategies should reflect these non-physical cost drivers.</li>
+<li>European context: Gallagher Re observes windstorm has not produced a nominal $10bn+ insured loss since Kyrill (2007), so market attention is shifting toward SCS and flood, though reinsurance for wind risk remains prudent.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/cowbell-introduces-prime-one-cyber-insurance-product-in-the-united-states/">Cowbell introduces Prime One cyber insurance product in the United States - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Involves a Lloyd&#x27;s market participant (Chaucer) underwriting the US cyber product; relevant to Lloyd&#x27;s market news.</div><ul><li>Cowbell Prime One launched in the US as a non‑admitted cyber product targeting mid‑market corporates with revenues $250M–$1B, offering limits up to $10M and a policy structure revised for heavily digitised operations.</li>
+<li>Policy scope is broad and forward‑looking: core cyber coverages (cybercrime, BI, system failure, data restoration, third‑party liability) plus specialist extensions (biometric breaches, improper data collection, cyber‑related physical damage) and explicit AI incident cover for unauthorised access/use.</li>
+<li>Distinctive quantum and encryption wording: affirmative cover for potential encryption vulnerabilities and compromise of encrypted data as quantum capabilities evolve, reflecting proactive risk transfer for emerging cryptographic threats.</li>
+<li>Underwritten on a non‑admitted basis by Chaucer Insurance Company (AM Best A, S&amp;P A); includes a one‑year subscription to Cowbell Resiliency Services (vendor risk assessment and security awareness training) and potential $25,000 retention reduction via a Prime One MDR Endorsement for MDR subscribers.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/04/22/866825.htm">UK Says Iran, China Drive Regular Significant Cyberattacks</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses UK cyber risk landscape, national-significant cyberattacks, and implications for insurers and Lloyd&#x27;s market.</div><ul><li>Nation-state actors now drive the majority of &quot;nationally significant&quot; UK cyberattacks (China, Iran, Russia), with roughly four consequential incidents per week and 204 nationally significant incidents in the latest year—more than double the prior year.</li>
+<li>Large organizations and critical services are being hit (NHS, Royal Mail, major manufacturers and retailers), increasing systemic and supply‑chain loss potential that is highly relevant for underwriting and aggregation exposure.</li>
+<li>Adversaries are becoming more sophisticated and persistent—China’s cyber capabilities, Iranian repression-linked activity, and Russian application of wartime tactics—raising attribution complexity and the risk of sustained hybrid campaigns.</li>
+<li>Artificial intelligence is amplifying threats (models like Mythos can speed vulnerability discovery); insurers should reassess nation‑state/war exclusions, aggregation and concentration risk, scenario modeling, pricing, and incentives for client resilience and public–private collaboration on AI‑driven defenses.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/gulf-oil-spill-traced-to-pemex-pipeline-leak/">Gulf oil spill traced to Pemex pipeline leak - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Oil spill has potential insurance/reinsurance implications for the energy sector, relevant to Lloyd&#x27;s market news.</div><ul><li>Leak traced to a Pemex-owned pipeline in the Gulf of Mexico; spill soiled beaches and killed wildlife, establishing clear attribution to a state oil company asset.</li>
+<li>Volume and impact remain uncertain — environmental groups estimate up to ~800 tons of hydrocarbons released — indicating potentially large cleanup and long-tail environmental liability costs.</li>
+<li>Likely lines of loss include marine/oil pollution, environmental impairment, property damage and business interruption for coastal businesses, plus P&amp;I and cleanup claims; Pemex’s state ownership may complicate subrogation and sovereign-immunity/legal issues.</li>
+<li>Recommended insurer actions: monitor official investigations and volume estimates, rapidly quantify exposures and set reserves, coordinate with maritime/pooled insurers and regulators, and review policy wordings, limits and exclusions for long‑tail liability and reputational risk.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2735/">Reinsurance News archive - page 2735</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers global reinsurance market factors that influence Lloyd&#x27;s pricing and risk.</div><ul><li>Q2 2016 catastrophe losses may be sufficient to establish an upward pricing floor for January 2017 renewals, according to Macquarie analysts.</li>
+<li>Aon Benfield reports ~$30bn of insured natural catastrophe losses in H1 2016 (highest since 2011), putting upward pressure on reinsurance pricing and capital requirements.</li>
+<li>Swiss Re highlights low insurance penetration in China after recent floods, signaling both growth opportunity and accumulation/underwriting concerns for reinsurers.</li>
+<li>Swiss Re is reportedly in talks to sell roughly $1bn of its Admin Re unit, indicating potential strategic capital reallocation and investor interest from pension funds.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/florida-citizens-targets-450m-everglades-re-ii-2026-1-catastrophe-bond-sponsorship/">Florida Citizens targets $450m Everglades Re II 2026-1 catastrophe bond sponsorship - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Catastrophe bonds and reinsurance/ILS market activity relevant to Lloyd&#x27;s.</div><ul><li>Florida Citizens is sponsoring Everglades Re II Ltd. (Series 2026-1) aiming to raise $450m+ of indemnity-trigger, annual-aggregate named-storm reinsurance via three tranches (three-year term starting in May) to cover Florida.</li>
+<li>Tranche structure and indicative economics: Class A $125m (attach $4.574bn–exhaust $5.305bn; init. attachment prob 1.46%; base EL 1.35%; spread guidance 6.0–6.5%), Class B $150m (attach $3.724bn–4.574bn; prob 2.00%; EL 1.74%; spreads 7.0–7.5%), Class C $175m (attach $2.874bn–3.724bn; prob 2.87%; EL 2.41%; spreads 8.75–9.25%).</li>
+<li>Program context: this would be Florida Citizens’ 17th cat‑bond series (15th Everglades), after an early redemption notice for the $1.1bn 2024 issue leaves only the $1.525bn 2025-1 series active alongside the new deal.</li>
+<li>Exposure and capacity planning: Citizens’ exposure has declined ~67% due to depopulation; it projects ~ $3bn of private-market protection needed for 2026. If the new series stays at $450m, Citizens may purchase ~ $680m of traditional reinsurance for a combined private-market tower of ~ $2.8bn (vs earlier ~$2.98bn).</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/expert-views/how-technology-is-revolutionising-risk-management-for-global-cargo-claims-gallagher-bassett/1458168.article">How technology is revolutionising risk management for global cargo claims – Gallagher Bassett</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Promotes insurtech and claims-management trends in marine/transport insurance, aligning with Lloyd&#x27;s market coverage.</div><ul><li>Adopt automation and data-driven tools (e.g., W K Webster’s ClaimsConsole) to deliver consistent, efficient, cloud-based analytics and seamless client-system integration across global marine cargo claims.</li>
+<li>Acknowledge increasing complexity from supply‑chain disruption, regional legislative variation and trade sanctions—technical capability must complement specialist knowledge to manage these risks effectively.</li>
+<li>Use AI, decision‑support tools, blockchain document exchange and automated workflows to cost‑effectively process higher volumes of small‑value losses and accelerate outcomes.</li>
+<li>Mitigate new technology risks (cyber, fraud, business disruption) by partnering with providers that build native technical solutions and hold robust information‑security certifications.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/manufacturers-curtail-production-due-to-aluminum-shortage/">Manufacturers curtail production due to aluminum shortage - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Aluminum shortage causing production cuts with insurance and risk-management implications relevant to Lloyd&#x27;s market.</div><ul><li>Incident: Attacks that damaged aluminum refineries in Abu Dhabi and Bahrain and severed key shipping routes have forced Japanese manufacturers to curtail production and temporarily close plants; auto and parts makers are highly exposed, sourcing roughly 70% of their aluminum imports from the Middle East.</li>
+<li>Primary insurance exposures: property damage at refineries, marine/cargo losses from disrupted shipping, and significant business interruption (including contingent/ supply‑chain BI) for aluminum‑dependent manufacturers and their customers.</li>
+<li>Underwriting and policy considerations: review war/political violence and terrorism exclusions, contingent business interruption wording, limits for supply‑chain concentration risks, and war/hull endorsements for marine and freight coverage; expect pressure on rates and reinsurance capacity in affected lines.</li>
+<li>Recommended insurer/broker actions: proactively identify and stress‑test exposed clients (especially automotive), engage on mitigation/alternative sourcing, consider bespoke political‑risk or parametric solutions, and monitor geopolitical and regulatory responses (eg. national maritime insurance pools).</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/capital-declares-state-of-emergency-amid-heavy-flooding/">Capital declares state of emergency amid heavy flooding - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Natural disaster event with potential insurance/BI impact relevant to Lloyd&#x27;s market</div><ul><li>Wellington declared a state of emergency after torrential rain and flash flooding — vehicles submerged, trees uprooted and houses affected by landslides, creating immediate exposure for property and motor lines.</li>
+<li>The floods came less than a week after Cyclone Vaianu hit the North Island, raising the likelihood of compounding/cumulative losses that could stress policy limits, aggregations and reinsurance reinstatements.</li>
+<li>Primary claim types to anticipate: residential and commercial property damage, auto losses, landslide-related claims, infrastructure damage and business interruption; expect high demand for adjusters and delayed access for inspections.</li>
+<li>Insurer actions: validate catastrophe response plans, review flood and landslide coverages and exclusions, reassess modelled event probabilities and reserving for potential surge of claims, and coordinate with local authorities on recovery and mitigation efforts.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/poland-launches-1-8b-transport-reinsurance-program/">Poland launches $1.8B transport reinsurance program - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers a national transport reinsurance program affecting risk transfer and reinsurance capacity, aligned with Lloyd&#x27;s market coverage.</div><ul><li>Kuke SA has launched a €1.5 billion (~$1.8 billion) transport reinsurance programme to cover Polish haulers and freight forwarders operating in Ukraine for perils typically excluded from commercial cover—war, terrorism, sabotage and confiscation.</li>
+<li>The facility is available to all domestic insurers until June 30, 2027, widening access to cover for exposures in a high‑risk jurisdiction.</li>
+<li>The agency will assume 80% of insurers’ risk in exchange for 80% of the insurance premium (an 80/80 quota‑share style arrangement), effectively a government‑backed risk transfer and premium retention.</li>
+<li>Market implications: the programme increases underwriting capacity for Ukraine business and supports continuity of cover, but concentrates sovereign/external exposure, may influence pricing and claims volatility, and shifts capital/credit considerations for participating insurers.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/cfc-to-begin-pilot-of-agentic-ai-quoting-tool/1458337.article">CFC to begin pilot of agentic AI quoting tool</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> London-based MGA pilot of AI underwriting tool; impacts UK/London market dynamics and underwriting practices.</div><ul><li>CFC (London MGA) is piloting Lane Assist, an agentic AI tool that extracts submission data from emails and generates quote recommendations within seconds for its cyber underwriting team.</li>
+<li>The pilot targets low‑complexity, high‑volume submissions; AI quotes will adhere to existing underwriting rules and be reviewed by human underwriters (human-in-the-loop).</li>
+<li>Anticipated benefits include accelerated enquiry-to-quote turnaround for brokers, automated data extraction and quote construction, and increased throughput on mass appetite risks.</li>
+<li>Broader rollout depends on pilot outcomes — CFC plans iterative testing, performance monitoring and refinement, stressing responsible augmentation of underwriters rather than replacement.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/cowbell-unveils-cover-for-ai-quantum-computing-risks/">Cowbell unveils cover for AI, quantum computing risks - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions Chaucer (Lloyd&#x27;s insurer) and Lloyd&#x27;s market-linked cyber risk coverage developments (AI/quantum risks).</div><ul><li>Cowbell launched Prime One — a U.S. non‑admitted, affirmative cyber policy targeting AI and quantum computing risks with up to $10 million limits; coverage is backed by specialty insurer Chaucer and aimed at organizations with advanced digital risk profiles and $250M–$1B in annual revenue.</li>
+<li>Affirmative AI coverage addresses incidents from unauthorized use of or access to AI systems in business operations; quantum computing protections target emerging encryption vulnerabilities and potential compromise of encrypted data.</li>
+<li>Policy includes core cyber cover (cybercrime, business interruption, system failure, data restoration, third‑party liability) plus specialty protections such as biometric data exposure, wrongful collection and cyber‑enabled tangible property loss.</li>
+<li>Cowbell frames the product as a response to cyber risk evolving beyond traditional vectors (per COO Trent Cooksley), indicating market demand for specialized coverage for midsize, digitally advanced firms.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/governor-signs-bill-giving-employers-more-control-over-cannabis-policies/">Governor signs bill giving employers more control over cannabis policies - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Oklahoma bill impacts employer drug-testing policy and safety-sensitive roles, affecting workers&#x27; comp risk and underwriting.</div><ul><li>Oklahoma’s H.B. 3127 (signed April 2026, effective Nov. 1) lets employers terminate workers based solely on a positive test for cannabis components/metabolites if the action follows a written drug-and-alcohol testing policy.</li>
+<li>The law mandates zero-tolerance for all ‘safety-sensitive’ positions regardless of an employer’s adopted policy and explicitly defines safety-sensitive roles (nonexhaustive list includes handling hazardous materials; operating vehicles, equipment, machinery or power tools; firefighting; carrying firearms; dispensing pharmaceuticals; and providing direct patient care).</li>
+<li>Insurance impacts: potential increases in terminations and related disputes may shift exposures for workers’ compensation, employment-practices liability (EPLI) and disability claims; underwriters and risk managers should expect changes in loss patterns and possible litigation from medical-cannabis cardholders alleging wrongful termination or failure-to-accommodate.</li>
+<li>Recommended actions for insurers and brokers: advise clients to adopt clear written testing policies, review and recategorize safety-sensitive job lists for underwriting and loss-control, update EPLI and WC underwriting guidelines and policy wording, and monitor claims/regulatory developments to adjust pricing and risk management guidance.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/uber-loses-another-us-driver-sex-assault-trial/">Uber loses another US driver sex assault trial - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers insurer liability risk in ride-hailing lawsuits, affecting auto/general liability market.</div><ul><li>A federal jury in North Carolina awarded $5,000 to a woman who alleged she was sexually assaulted by an Uber driver; the case served as one of several bellwethers in roughly 3,300 consolidated federal suits against Uber.</li>
+<li>Coming on the heels of an $8.5 million Arizona bellwether earlier this year, the verdict reinforces that juries may find Uber liable for driver conduct and could materially influence the valuation and settlement dynamics across the mass litigation.</li>
+<li>Uber argued it is a software company, not a common carrier, and that drivers are independent contractors; the company says it will appeal, contending jurors were incorrectly instructed on liability. Plaintiffs counter that Uber cannot escape responsibility for drivers’ misconduct.</li>
+<li>Insurer implications: potential increased auto/general liability exposure and reserve pressure, heightened focus on policy wording around vicarious liability and contractor status, and the need for underwriters/reinsurers to reassess aggregate loss scenarios given thousands of related claims (including 500+ additional cases in California).</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-04-22T07:09:43Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
