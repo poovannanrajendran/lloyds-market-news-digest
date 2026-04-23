@@ -196,7 +196,7 @@ def run_pipeline(
         # PDFs aren't supported yet; skip now and revisit with a PDF extractor (pypdf/pdfplumber)
         # when we decide how to handle binary documents in the digest.
         if _looks_like_pdf(result.url, result.content):
-            metrics.errors += 1
+            metrics.notes["pdf_skipped"] = int(metrics.notes.get("pdf_skipped", 0)) + 1
             warnings.append(f"Skipped PDF content: {candidate.url}")
             detail(f"[{idx}/{total_candidates}] Skipped PDF {candidate.url}")
             continue
