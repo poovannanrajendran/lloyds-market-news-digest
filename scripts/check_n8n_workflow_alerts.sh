@@ -13,11 +13,13 @@ DONE_FILE="$ROOT_DIR/logs/n8n_alert_done_date.txt"
 # - N8N_API_BASE_URL (default: http://127.0.0.1:5678/api/v1)
 # - N8N_ALERT_NOTIFY_ON_SUCCESS (default: 0)
 # - N8N_ALERT_WORKFLOW_NAME (display only)
+# - N8N_ALERT_CUTOFF_LOCAL (default: 10:30, Europe/London HH:MM)
 
 N8N_API_BASE_URL="${N8N_API_BASE_URL:-http://127.0.0.1:5678/api/v1}"
 WORKFLOW_ID="${N8N_ALERT_WORKFLOW_ID:-}"
 WORKFLOW_NAME="${N8N_ALERT_WORKFLOW_NAME:-}"
 NOTIFY_SUCCESS="${N8N_ALERT_NOTIFY_ON_SUCCESS:-0}"
+ALERT_CUTOFF_LOCAL="${N8N_ALERT_CUTOFF_LOCAL:-10:30}"
 
 if [[ ! -x "$NOTIFY_SCRIPT" ]]; then
   exit 0
@@ -105,6 +107,10 @@ readarray -t parsed < <(python3 - "$RAW" <<'PY'
 import json
 import sys
 from datetime import datetime
+try:
+    from zoneinfo import ZoneInfo
+except Exception:
+    ZoneInfo = None
 
 obj = json.loads(sys.argv[1])
 
@@ -142,6 +148,13 @@ print("" if started_at is None else str(started_at))
 print("" if stopped_at is None else str(stopped_at))
 print(duration_ms)
 print(str(nodes_executed))
+started_local_date = ""
+if start_dt:
+    if ZoneInfo is not None:
+        started_local_date = start_dt.astimezone(ZoneInfo("Europe/London")).date().isoformat()
+    else:
+        started_local_date = start_dt.date().isoformat()
+print(started_local_date)
 PY
 )
 
@@ -155,6 +168,18 @@ started_at="${parsed[6]:-}"
 stopped_at="${parsed[7]:-}"
 duration_ms="${parsed[8]:-}"
 nodes_executed="${parsed[9]:-0}"
+started_local_date="${parsed[10]:-}"
+
+if [[ "$started_local_date" != "$today" ]]; then
+  # Keep polling until we see today's execution, do not finalize day on stale executions.
+  exit 0
+fi
+
+london_now_hhmm="$(TZ=Europe/London date +%H:%M)"
+can_finalize_today=0
+if [[ "$london_now_hhmm" > "$ALERT_CUTOFF_LOCAL" || "$london_now_hhmm" == "$ALERT_CUTOFF_LOCAL" ]]; then
+  can_finalize_today=1
+fi
 
 wf_display="$WORKFLOW_NAME"
 if [[ -z "$wf_display" ]]; then
@@ -175,8 +200,12 @@ if [[ "$status" == "error" || "$status" == "failed" || "$status" == "crashed" ]]
   mark_done_today "$status"
 elif [[ "$status" == "success" && "$NOTIFY_SUCCESS" == "1" ]]; then
   "$NOTIFY_SCRIPT" "$message" "success" || true
-  mark_done_today "$status"
+  if [[ "$can_finalize_today" == "1" ]]; then
+    mark_done_today "$status"
+  fi
 elif [[ "$status" == "success" && "$NOTIFY_SUCCESS" != "1" ]]; then
-  # Even when success alerts are disabled, stop polling for the day once run succeeded.
-  mark_done_today "$status"
+  # Even when success alerts are disabled, keep polling until cutoff in case a later run fails.
+  if [[ "$can_finalize_today" == "1" ]]; then
+    mark_done_today "$status"
+  fi
 fi

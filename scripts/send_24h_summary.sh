@@ -44,27 +44,58 @@ now_local="$(TZ=Europe/London date '+%Y-%m-%d %H:%M:%S %Z')"
 window_start_local="$(TZ=Europe/London date -d '24 hours ago' '+%Y-%m-%d %H:%M:%S %Z')"
 
 lloyds_metrics="$(psql_local "
+WITH recent_runs AS (
+  SELECT run_id, started_at, ended_at, metrics
+  FROM runs
+  WHERE started_at >= (NOW() - INTERVAL '24 hours')
+),
+run_status AS (
+  SELECT
+    r.run_id,
+    CASE
+      WHEN r.ended_at IS NULL THEN 'failed'
+      WHEN EXISTS (
+        SELECT 1
+        FROM run_phase_timings p
+        WHERE p.run_id = r.run_id
+          AND p.phase = 'publish_pages'
+          AND p.ended_at IS NOT NULL
+      ) THEN 'success'
+      ELSE 'failed'
+    END AS status
+  FROM recent_runs r
+)
 SELECT
   COUNT(*)::int,
-  COALESCE(SUM(CASE WHEN COALESCE((metrics->>'errors')::int,0)=0 THEN 1 ELSE 0 END),0)::int,
-  COALESCE(SUM(CASE WHEN COALESCE((metrics->>'errors')::int,0)>0 THEN 1 ELSE 0 END),0)::int,
-  COALESCE(SUM(COALESCE((metrics->>'candidates')::int,0)),0)::int,
-  COALESCE(SUM(COALESCE((metrics->>'fetched')::int,0)),0)::int,
-  COALESCE(SUM(COALESCE((metrics->>'extracted')::int,0)),0)::int,
-  COALESCE(SUM(COALESCE((metrics->>'errors')::int,0)),0)::int
-FROM runs
-WHERE started_at >= (NOW() - INTERVAL '24 hours');
+  COALESCE(SUM(CASE WHEN s.status = 'success' THEN 1 ELSE 0 END),0)::int,
+  COALESCE(SUM(CASE WHEN s.status = 'failed' THEN 1 ELSE 0 END),0)::int,
+  COALESCE(SUM(COALESCE((r.metrics->>'candidates')::int,0)),0)::int,
+  COALESCE(SUM(COALESCE((r.metrics->>'fetched')::int,0)),0)::int,
+  COALESCE(SUM(COALESCE((r.metrics->>'extracted')::int,0)),0)::int,
+  COALESCE(SUM(COALESCE((r.metrics->>'errors')::int,0)),0)::int
+FROM recent_runs r
+JOIN run_status s ON s.run_id = r.run_id;
 ")"
 IFS=$'\t' read -r l_runs l_success l_failed l_candidates l_fetched l_extracted l_errors <<<"${lloyds_metrics:-0\t0\t0\t0\t0\t0\t0}"
 
 lloyds_latest="$(psql_local "
 SELECT
-  COALESCE(run_id::text,'na'),
-  CASE WHEN COALESCE((metrics->>'errors')::int,0)>0 THEN 'failed' ELSE 'success' END,
-  TO_CHAR(started_at AT TIME ZONE 'Europe/London', 'YYYY-MM-DD HH24:MI:SS'),
-  COALESCE(EXTRACT(EPOCH FROM (COALESCE(ended_at, NOW()) - started_at))::int,0)::int
-FROM runs
-ORDER BY started_at DESC
+  COALESCE(r.run_id::text,'na'),
+  CASE
+    WHEN r.ended_at IS NULL THEN 'failed'
+    WHEN EXISTS (
+      SELECT 1
+      FROM run_phase_timings p
+      WHERE p.run_id = r.run_id
+        AND p.phase = 'publish_pages'
+        AND p.ended_at IS NOT NULL
+    ) THEN 'success'
+    ELSE 'failed'
+  END AS run_status,
+  TO_CHAR(r.started_at AT TIME ZONE 'Europe/London', 'YYYY-MM-DD HH24:MI:SS'),
+  COALESCE(EXTRACT(EPOCH FROM (COALESCE(r.ended_at, NOW()) - r.started_at))::int,0)::int
+FROM runs r
+ORDER BY r.started_at DESC
 LIMIT 1;
 ")"
 IFS=$'\t' read -r l_latest_id l_latest_status l_latest_started l_latest_dur <<<"${lloyds_latest:-na\tunknown\tna\t0}"
