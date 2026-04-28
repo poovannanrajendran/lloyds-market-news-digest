@@ -66,6 +66,14 @@ class OpenAIClient:
         return key
 
     def generate(self, prompt: str) -> dict[str, Any]:
+        primary_tier = self.service_tier or os.environ.get("OPENAI_SERVICE_TIER", "flex")
+        result = self._generate_with_tier(prompt, primary_tier)
+        if result is not None:
+            return result
+        fallback_tier = os.environ.get("OPENAI_FALLBACK_SERVICE_TIER", "standard")
+        return self._generate_with_tier(prompt, fallback_tier)
+
+    def _generate_with_tier(self, prompt: str, service_tier: str | None) -> dict[str, Any] | None:
         payload: dict[str, Any] = {
             "model": self.model,
             "messages": [
@@ -77,7 +85,7 @@ class OpenAIClient:
         if not self.model.startswith("gpt-5"):
             payload["temperature"] = 0.2
 
-        tier = (self.service_tier or os.environ.get("OPENAI_SERVICE_TIER", "flex")).strip()
+        tier = (service_tier or os.environ.get("OPENAI_SERVICE_TIER", "flex")).strip()
         payload["service_tier"] = tier or "flex"
 
         max_completion_tokens = os.environ.get("OPENAI_MAX_COMPLETION_TOKENS", "").strip()
@@ -91,20 +99,104 @@ class OpenAIClient:
         }
         with httpx.Client(timeout=timeout) as client:
             response = client.post(self._endpoint(), json=payload, headers=headers)
-            response.raise_for_status()
+            if response.status_code >= 400:
+                if self._should_fallback(response, payload["service_tier"]):
+                    return None  # caller will retry using the fallback tier
+                response.raise_for_status()
             data = response.json()
         return {
             "response": _extract_openai_text(data),
             "raw": data,
+            "service_tier": payload["service_tier"],
         }
+
+    def _should_fallback(self, response: httpx.Response, service_tier: str) -> bool:
+        if response.status_code != 429:
+            return False
+        body_text = response.text.lower()
+        if "resource_unavailable" not in body_text and "insufficient resources" not in body_text:
+            return False
+        if service_tier.lower() != "flex":
+            return False
+        fallback_tier = os.environ.get("OPENAI_FALLBACK_SERVICE_TIER", "standard").strip() or "standard"
+        return fallback_tier.lower() != "flex"
 
 
 def build_cache_key(model: str, prompt_version: str, content: str) -> str:
     payload = json.dumps(
-        {"model": model, "prompt_version": prompt_version, "content": content},
+        {
+            "model": model,
+            "prompt_version": prompt_version,
+            "content": normalize_cache_content(content),
+        },
         sort_keys=True,
     )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def normalize_cache_content(content: str) -> str:
+    if not content:
+        return ""
+    return " ".join(content.split()).strip()
+
+
+def post_openai_chat_completion(
+    prompt: str,
+    *,
+    model: str,
+    api_key: str,
+    service_tier: str,
+    fallback_tier: str,
+    timeout: float,
+    system_prompt: str,
+    temperature: float | None = None,
+    max_attempts: int = 1,
+) -> dict[str, Any]:
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    body: dict[str, Any] = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt},
+        ],
+        "service_tier": service_tier,
+    }
+    if temperature is not None:
+        body["temperature"] = temperature
+    for attempt in range(1, max_attempts + 1):
+        with httpx.Client(timeout=timeout) as client:
+            response = client.post(url, headers=headers, json=body)
+            actual_tier = body["service_tier"]
+            if (
+                response.status_code == 429
+                and actual_tier.lower() == "flex"
+                and fallback_tier.lower() != "flex"
+                and _is_flex_capacity_429(response)
+            ):
+                print(f"OpenAI flex exhausted; retrying on tier={fallback_tier}", flush=True)
+                body["service_tier"] = fallback_tier
+                actual_tier = fallback_tier
+                response = client.post(url, headers=headers, json=body)
+            if response.status_code >= 400:
+                if attempt == max_attempts:
+                    raise httpx.HTTPStatusError(
+                        f"OpenAI error {response.status_code}: {response.text}",
+                        request=response.request,
+                        response=response,
+                    )
+                continue
+            data = response.json()
+            return {
+                "data": data,
+                "service_tier": actual_tier,
+            }
+    raise RuntimeError("OpenAI request failed after retries.")
+
+
+def _is_flex_capacity_429(response: httpx.Response) -> bool:
+    body_text = response.text.lower()
+    return "resource_unavailable" in body_text or "insufficient resources" in body_text
 
 
 def cached_call(

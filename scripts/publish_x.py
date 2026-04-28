@@ -12,6 +12,7 @@ from pathlib import Path
 import httpx
 from requests_oauthlib import OAuth1Session
 
+from lloyds_digest.ai.base import post_openai_chat_completion
 from lloyds_digest.ai.costing import compute_cost_usd
 from lloyds_digest.storage.postgres_repo import PostgresRepo
 from lloyds_digest.utils import load_env_file
@@ -77,40 +78,35 @@ def _hashtags() -> list[str]:
 
 def _openai_shortener(prompt: str) -> str:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5-mini"))
+    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5.4-mini"))
     if not api_key:
         raise SystemExit("OPENAI_API_KEY is required for shortening")
     service_tier = os.environ.get("OPENAI_LINKEDIN_SERVICE_TIER", "flex").strip() or "flex"
     timeout = float(os.environ.get("OPENAI_LINKEDIN_TIMEOUT", "600"))
     max_attempts = int(os.environ.get("OPENAI_LINKEDIN_RETRIES", "3"))
-    url = "https://api.openai.com/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    body = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "Return only the final tweet text. No quotes, no markdown."},
-            {"role": "user", "content": prompt},
-        ],
-        "service_tier": service_tier,
-    }
-    if not model.startswith("gpt-5"):
-        body["temperature"] = 0.2
-
+    fallback_tier = os.environ.get("OPENAI_FALLBACK_SERVICE_TIER", "standard").strip() or "standard"
     for attempt in range(1, max_attempts + 1):
         try:
-            with httpx.Client(timeout=timeout) as client:
-                started = time.time()
-                resp = client.post(url, headers=headers, json=body)
-                if resp.status_code >= 400:
-                    raise RuntimeError(f"OpenAI error {resp.status_code}: {resp.text}")
-                data = resp.json()
+            started = time.time()
+            result = post_openai_chat_completion(
+                prompt,
+                model=model,
+                api_key=api_key,
+                service_tier=service_tier,
+                fallback_tier=fallback_tier,
+                timeout=timeout,
+                system_prompt="Return only the final tweet text. No quotes, no markdown.",
+                temperature=0.2 if not model.startswith("gpt-5") else None,
+            )
+            data = result["data"]
+            used_tier = result["service_tier"]
             text = data["choices"][0]["message"]["content"].strip()
             usage = data.get("usage", {}) if isinstance(data, dict) else {}
             _record_llm_usage_and_cost(
                 model,
                 prompt,
                 text,
-                service_tier,
+                used_tier,
                 tokens_prompt=usage.get("prompt_tokens"),
                 tokens_completion=usage.get("completion_tokens"),
                 tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),

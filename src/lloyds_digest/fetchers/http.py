@@ -36,18 +36,21 @@ class FetchCache:
         return self.mongo.get_fetch_cache(key)
 
     def set(self, url: str, payload: dict[str, Any], final_url: str) -> None:
-        key = build_cache_key(self.fetcher_name, final_url)
         record = dict(payload)
         record.update(
             {
-                "key": key,
                 "fetcher": self.fetcher_name,
                 "url": url,
                 "final_url": final_url,
                 "updated_at": _utc_now(),
             }
         )
-        self.mongo.upsert_fetch_cache(key, record)
+        # Store under both the discovered URL and the final URL so redirecting
+        # sources do not miss the cache on the next run.
+        for key_url in {url, final_url}:
+            key = build_cache_key(self.fetcher_name, key_url)
+            record["key"] = key
+            self.mongo.upsert_fetch_cache(key, record)
 
 
 @dataclass

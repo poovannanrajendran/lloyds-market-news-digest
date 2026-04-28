@@ -92,6 +92,8 @@ CRON_TZ=Europe/London
 
 This gives 10-minute polling between 08:45 and 09:30, then stops for the day after terminal run state is seen.
 
+The n8n checker uses a `09:25` local cutoff by default so the last poll in that window can also finalize the day’s `n8n_alert_done_date.txt`.
+
 ## 5) Test commands
 
 Channel test:
@@ -188,3 +190,18 @@ Live send:
 set -a; source .env; set +a
 ./scripts/send_24h_summary.sh
 ```
+
+## 11) Quick status check
+
+Use this when you want one view of the latest digest run, heartbeat, and n8n alert state:
+
+```bash
+./scripts/status_report.sh
+```
+
+It prints:
+
+- latest daily run status from Postgres
+- heartbeat age from `logs/last_daily_success_epoch.txt`
+- latest n8n execution id from `logs/n8n_last_seen_execution_id.txt`
+- the most recent log tail from `logs/run_YYYY-MM-DD.log`

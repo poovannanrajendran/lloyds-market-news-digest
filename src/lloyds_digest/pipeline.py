@@ -616,9 +616,9 @@ def _article_to_items(
     if _llm_enabled():
         text = _trim_text(raw_text)
         log(f"[llm] relevance {candidate.url}")
-        relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5-nano")
-        classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5-nano")
-        summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-5-mini")
+        relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5.4-nano")
+        classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5.4-nano")
+        summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-5.4-mini")
         relevance_result = _run_llm_stage(
             stage="relevance",
             model=relevance_model,
@@ -791,6 +791,7 @@ def _run_llm_stage(
 
     if postgres is not None:
         try:
+            used_service_tier = result.get("service_tier") or os.environ.get("OPENAI_SERVICE_TIER", "flex")
             postgres.insert_llm_usage(
                 run_id=run_id,
                 candidate_id=candidate_id,
@@ -817,7 +818,7 @@ def _run_llm_stage(
                 tokens_prompt=result.get("tokens_prompt"),
                 tokens_completion=result.get("tokens_completion"),
                 tokens_cached_input=result.get("tokens_cached_prompt"),
-                service_tier=os.environ.get("OPENAI_SERVICE_TIER", "flex"),
+                service_tier=used_service_tier,
             )
         except Exception as exc:
             warnings.append(f"Failed to record llm_usage for {stage}: {exc}")

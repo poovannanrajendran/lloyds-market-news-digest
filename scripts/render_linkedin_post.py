@@ -12,6 +12,7 @@ from typing import Any
 import httpx
 from bs4 import BeautifulSoup
 
+from lloyds_digest.ai.base import post_openai_chat_completion
 from lloyds_digest.ai.costing import compute_cost_usd
 from lloyds_digest.storage.postgres_repo import PostgresRepo
 from lloyds_digest.utils import load_env_file
@@ -473,41 +474,34 @@ def _capitalize_after_colon(match: re.Match[str]) -> str:
 
 def _generate_with_openai(prompt: str) -> str:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5-mini"))
+    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5.4-mini"))
     if not api_key:
         return ""
-
-    url = "https://api.openai.com/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     use_temperature = not model.startswith("gpt-5")
     service_tier = os.environ.get("OPENAI_LINKEDIN_SERVICE_TIER", "flex").strip() or "flex"
-    body = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "Return only the final output. No markdown."},
-            {"role": "user", "content": prompt},
-        ],
-        "service_tier": service_tier,
-    }
-    if use_temperature:
-        body["temperature"] = 0.3
     timeout = float(os.environ.get("OPENAI_LINKEDIN_TIMEOUT", "600"))
     max_attempts = int(os.environ.get("OPENAI_LINKEDIN_RETRIES", "3"))
+    fallback_tier = os.environ.get("OPENAI_FALLBACK_SERVICE_TIER", "standard").strip() or "standard"
     for attempt in range(1, max_attempts + 1):
         try:
             print(
                 f"OpenAI request start (attempt {attempt}/{max_attempts}) "
-                f"model={model} timeout_s={int(timeout)}",
+                f"model={model} tier={service_tier} timeout_s={int(timeout)}",
                 flush=True,
             )
             started = time.time()
-            with httpx.Client(timeout=timeout) as client:
-                resp = client.post(url, headers=headers, json=body)
-                if resp.status_code >= 500:
-                    raise RuntimeError(f"OpenAI error {resp.status_code}: {resp.text}")
-                if resp.status_code >= 400:
-                    raise RuntimeError(f"OpenAI error {resp.status_code}: {resp.text}")
-                data = resp.json()
+            result = post_openai_chat_completion(
+                prompt,
+                model=model,
+                api_key=api_key,
+                service_tier=service_tier,
+                fallback_tier=fallback_tier,
+                timeout=timeout,
+                system_prompt="Return only the final output. No markdown.",
+                temperature=0.3 if use_temperature else None,
+            )
+            data = result["data"]
+            used_tier = result["service_tier"]
             content = data["choices"][0]["message"]["content"]
             output_text = content.strip()
             usage = data.get("usage", {}) if isinstance(data, dict) else {}
@@ -517,7 +511,7 @@ def _generate_with_openai(prompt: str) -> str:
                 model=model,
                 prompt=prompt,
                 output_text=output_text,
-                service_tier=service_tier,
+                service_tier=used_tier,
                 tokens_prompt=usage.get("prompt_tokens"),
                 tokens_completion=usage.get("completion_tokens"),
                 tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),

@@ -17,6 +17,8 @@ from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 
 import httpx
 
+from lloyds_digest.ai.base import post_openai_chat_completion
+
 from lloyds_digest.ai.base import OllamaClient
 from lloyds_digest.ai.costing import compute_cost_usd
 from lloyds_digest.config import load_config
@@ -271,7 +273,7 @@ def _provider_model(name: str) -> str:
     if name == "local":
         return os.environ.get("OLLAMA_MODEL", "qwen3:14b")
     if name == "chatgpt":
-        return os.environ.get("OPENAI_MODEL", "gpt-5-mini")
+        return os.environ.get("OPENAI_MODEL", "gpt-5.4-mini")
     if name == "deepseek":
         return os.environ.get("OLLAMA_DEEPSEEK_MODEL", "deepseek-v3.2:cloud")
     return "unknown"
@@ -979,39 +981,33 @@ def generate_with_deepseek(payload: dict[str, Any], config, run_date: str) -> di
 
 def generate_with_openai(payload: dict[str, Any], config, run_date: str) -> dict[str, Any]:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_MODEL", "gpt-5-mini")
+    model = os.environ.get("OPENAI_MODEL", "gpt-5.4-mini")
     service_tier = os.environ.get("OPENAI_SERVICE_TIER", "flex").strip() or "flex"
     if not api_key:
         return {}
     prompt = _build_summary_prompt(payload, config, provider="chatgpt") if "summary_text" in payload else _build_prompt(payload, config, provider="chatgpt")
-    url = "https://api.openai.com/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     temperature = 1 if model.startswith("gpt-5") else 0.2
-    body = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "Return JSON only, no markdown."},
-            {"role": "user", "content": prompt},
-        ],
-        "temperature": temperature,
-        "service_tier": service_tier,
-    }
     timeout = float(os.environ.get("OPENAI_TIMEOUT", "120"))
+    fallback_tier = os.environ.get("OPENAI_FALLBACK_SERVICE_TIER", "standard").strip() or "standard"
     for attempt in range(1, 4):
         try:
-            with httpx.Client(timeout=timeout) as client:
-                resp = client.post(url, headers=headers, json=body)
-                if resp.status_code >= 400:
-                    raise httpx.HTTPStatusError(
-                        f"OpenAI error {resp.status_code}: {resp.text}",
-                        request=resp.request,
-                        response=resp,
-                    )
-                data = resp.json()
+            result = post_openai_chat_completion(
+                prompt,
+                model=model,
+                api_key=api_key,
+                service_tier=service_tier,
+                fallback_tier=fallback_tier,
+                timeout=timeout,
+                system_prompt="Return JSON only, no markdown.",
+                temperature=temperature,
+            )
+            data = result["data"]
+            used_tier = result["service_tier"]
             content = data["choices"][0]["message"]["content"]
             parsed = _parse_json(content, provider="chatgpt", run_date=run_date)
             if isinstance(parsed, dict):
                 parsed["_llm_usage"] = data.get("usage", {}) if isinstance(data, dict) else {}
+                parsed["_service_tier"] = used_tier
             return parsed
         except Exception as exc:
             if attempt == 3:
