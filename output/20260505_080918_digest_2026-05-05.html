@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-05-05</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-05-05 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-05-05.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">12 highlights selected for 2026-05-05. Sources include: www.artemis.bm, www.businessinsurance.com, www.insurancejournal.com, www.reinsurancene.ws.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Risk</li>
+<li>Catastrophe</li>
+<li>ILS</li>
+<li>Lloyds</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/05/04/868399.htm">Hedge Fund Fermat Invests in First-of-a-Kind Catastrophe Bonds</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> News about catastrophe bonds (ILS) and market participants, relevant to Lloyd&#x27;s market coverage.</div><ul><li>Fermat Capital acted as a lead investor in the Asian Development Bank’s inaugural sovereign catastrophe bonds for Kyrgyzstan and Tajikistan — two separate $80m notes with three‑year tenors; Fermat confirmed participation but did not disclose its ticket size.</li>
+<li>Payouts are parametric: triggers include earthquake magnitudes and a novel precipitation index (accumulated rainfall adjusted for snowfall, slope and population exposure) that pays regardless of insured losses, enabling faster, predefined disbursements.</li>
+<li>Risk split per issuance is $70m for earthquake cover and $10m for extreme precipitation; ADB emphasizes a governance framework intended to ensure transparent and accountable use of proceeds if triggers are met.</li>
+<li>Market context relevant to insurers: cat bonds have grown in prominence as climate risk increases (Swiss Re cat‑bond index up &gt;60% over five years), underpinning investor demand; ADB plans to explore similar issuances for other disaster‑vulnerable countries.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/magazines/mag-features/2026/05/04/868026.htm">Reinsurance Rates Continued Softening During April Renewals, Despite Iran War</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Covers global reinsurance market dynamics and April renewal activity relevant to Lloyd&#x27;s market news.</div><ul><li>April 1 renewals saw continued softening of reinsurance rates and cedent‑friendly outcomes despite geopolitical uncertainty — renewals completed orderly with no structural disruption and global demand rose ~10% as buyers secured broader protection.</li>
+<li>Key drivers of the soft market: much lower nat‑cat losses (Asia‑Pacific 2025 nat‑cat claims ~54% below 21st‑century average), robust reinsurer balance sheets and record capital (global reinsurer capital ~$785bn end‑2025; equity ~$649bn; third‑party capital ~$136bn), abundant capacity and aggressive ILS competition — producing double‑digit reductions (up to ~20% in parts of APAC) and more flexible terms; casualty pricing remained broadly stable.</li>
+<li>Regional/renewal specifics: April 1 is the main renewal for Japan, Korea and India (and some U.S. treaty business); cedents used favorable conditions to increase limits/coverage and may return to market for additional buys; property and specialty lines saw the largest rate relief.</li>
+<li>Geo‑political caveats: the Iran/Middle East conflict did not materially change April pricing, but loss potential is substantial — brokers cite regional war‑on‑land exposures of ~$70–80bn, large‑vessel marine exposures ~$14bn, and on‑ground aviation hulls ~$35bn — and a sustained energy/supply shock could lift inflation and rates, which historically would pressure reinsurance capital and pricing.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/best-of-artemis-week-ending-may-3rd-2026/">Best of Artemis, week ending May 3rd 2026 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bonds, ILS and reinsurance topics relevant to the Lloyd&#x27;s market.</div><ul><li>Issuers diversifying use of cat bonds: Jamaica targets a $150m World Bank‑backed parametric storm bond to replace Melissa coverage, Cayman is considering its own cat bond, and the WFP advances a novel $100m food‑security cat bond.</li>
+<li>Regulatory and market structure push: Calls to enable onshore US catastrophe bonds and UK plans to legislate greater ILS flexibility aim to broaden issuers, transaction types and investor access.</li>
+<li>Capacity, pricing and underwriting pressure: Allstate raised its occurrence tower to $11.5bn and added $1bn aggregate cover, while industry leaders warn that excess capital, intermediation costs and sidecar‑backed MGAs may be softening property and casualty pricing.</li>
+<li>Growing investor interest and tech adoption: Gallagher Re reports increased ILS appetite and planned allocations for 2026, and firms like Northern Re are investing in platforms (Palantir) to scale capital intelligence and risk analytics.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/u-k-raises-terror-threat-level-to-severe/">U.K. raises terror threat level to ‘severe’ - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Terror risk level affects insurance underwriting and risk assessment in Lloyd&#x27;s market.</div><ul><li>U.K. National Threat Level raised to “severe” (May 4, 2026) by the London-based Joint Terrorism Analysis Centre — an attack is described as “highly likely.”</li>
+<li>Authorities cite a deteriorating domestic threat driven by both Islamist and extreme right‑wing groups, increasing the likelihood of incidents across the country.</li>
+<li>For insurers, heightened exposure is expected across property, business interruption, event cancellation, public liability and casualty lines — potential for increased frequency and severity of terror-related claims.</li>
+<li>Practical actions for carriers and brokers: review terrorism endorsements/exclusions and aggregate limits, reassess pricing and underwriting assumptions, check reinsurance/program capacity, tighten client continuity and security requirements, and consider alternative solutions (including parametric products) to address coverage gaps.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/mapfre-re-finalises-200m-recoletos-re-2026-1-cat-bond-at-low-end-pricing/">Mapfre Re finalises $200m Recoletos Re 2026-1 cat bond, at low-end pricing - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Catastrophe bond issuance and pricing details in the reinsurance market, relevant to Lloyd&#x27;s market news.</div><ul><li>Mapfre Re secured $200m of US named-storm protection via Recoletos Re DAC Series 2026-1 catastrophe bond (single Class A tranche) to collateralize a retrocession agreement, structured on an indemnity trigger and per‑occurrence basis.</li>
+<li>The notes were priced at the low end of guidance (spread 4.25%), reflecting strong investor demand; key model metrics: initial attachment probability 2.57% and base expected loss 1.836%.</li>
+<li>This is Mapfre Re’s largest cat bond to date; proceeds will fund the targeted US named‑storm retrocession once the deal settles.</li>
+<li>The transaction follows earlier Recoletos Re issuances: Series 2024‑1 ($125m US named storm) and Series 2025‑1 (€125m European windstorm), demonstrating an ongoing ILS strategy for retrocession capacity.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/adbs-inaugural-catastrophe-bonds-to-pave-way-for-future-issuances-vp-roberta-casali/">ADB&#x27;s inaugural catastrophe bonds to &quot;pave way for future issuances&quot; - VP Roberta Casali - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Details of sovereign catastrophe bonds (cat bonds) and disaster risk financing, a topic of interest to Lloyd&#x27;s market coverage.</div><ul><li>ADB issued its inaugural Disaster Relief Bonds (DRBs): two parametric catastrophe bonds totalling $160m ($80m each for the Kyrgyz Republic and Tajikistan) to provide rapid, committed financing for earthquake and extreme-precipitation events as part of its Risk‑Layered Disaster Relief Finance Program.</li>
+<li>Structure and economics: capital‑at‑risk notes placed under ADB’s Global MTN Program (no SPV), parametric triggers with independent verification, maturity 30 May 2029, coupon = compounded SOFR + 4 bps funding margin + 600 bps risk margin, priced at par.</li>
+<li>Investor take-up and execution: wide primary distribution led by Aon (bookrunner) and Munich Re (structuring agent); placements mainly in Europe and the Americas with investor mix ~36–37% specialised ILS funds, ~32–33% insurance/reinsurance companies and ~31% other fund managers; notes to be listed on SGX.</li>
+<li>Market and programme implications: transfers sovereign disaster risk to private capital, provides quick liquidity routed through national social‑protection systems, supported by donors and MAS ILS grant scheme, and intended to pave the way for future ADB cat‑bond issuances and deeper investor engagement in the region.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/casinos-ramp-up-tech-coverage-for-emerging-risks/">Casinos ramp up tech, coverage for emerging risks - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers London market insurance coverage and risk management for casino/tech risks.</div><ul><li>Casinos are deploying advanced security tech (facial recognition, analytics, metal detectors) and enhanced coordination/training with law enforcement to mitigate rising active‑shooter and violent‑incident risk — underwriters should evaluate these controls and incident response protocols.</li>
+<li>Cyber risk remains a persistent threat after major attacks (e.g., MGM, Caesars); operators are investing in system monitoring, penetration testing and employee training — include cyber posture, testing cadence and residual exposures in pricing and terms.</li>
+<li>Specialty malicious‑act/active‑shooter coverages are expanding (London market limits cited up to $400M property / $250M liability) and can be triggered by threats as well as acts; insurers and brokers must scrutinize trigger language, retentions and aggregate limits.</li>
+<li>Real‑world losses (e.g., vehicle crashing from casino parking activating malicious‑act policy) highlight the importance of gap analysis between primary property programs and standalone specialty policies and planning for catastrophic scenarios.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/corporate-buyers-increasingly-filling-gaps-with-parametric-cover/">Corporate buyers increasingly filling gaps with parametric cover - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses parametric insurance adoption and coverage trends relevant to Lloyd&#x27;s market risk transfer.</div><ul><li>Parametric insurance is gaining adoption among corporate buyers (hospitality, energy, utilities, industrial and public sector) to fill gaps in traditional property programs and expand catastrophe risk financing.</li>
+<li>Buyers typically use parametrics to fund deductibles, finance emergency response and cover hard‑to‑insure or nonphysical business interruption exposures; policies pay on event intensity (wind speed, quake shaking, hail size) rather than measured loss.</li>
+<li>Common structures range from ~$10–30 million (sweet spot ~$25–30M) up to $100 million for U.S. hurricane and earthquake covers; minimum premiums start around $50,000 for perils like flood/tornado/hail/quake and about $100,000 for hurricane.</li>
+<li>Parametric products offer faster, more transparent settlements — Swiss Re reported 16 U.S. event payouts since 2020 with an average payment time of ~12 days and ~80% credited within 15 days — driving greater corporate demand since major 2017 hurricanes.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/executives-warn-ai-risks-are-outpacing-regulation/">Executives warn AI risks are outpacing regulation - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses AI risk management and regulation in the insurance sector, relevant to Lloyd&#x27;s market coverage.</div><ul><li>Generative AI (e.g., ChatGPT, Claude, Pi) is being adopted at “hyper” speed, creating novel liability, operational and lateral risks that currently outpace risk management and regulation.</li>
+<li>U.S. regulatory oversight is fragmented—states like Texas, Illinois and New York are advancing rules while federal action remains cautious; Aon rates current oversight about 2.5/5, increasing legal and compliance uncertainty for insurers.</li>
+<li>Risk managers should urgently strengthen governance, compliance and enterprise risk management: implement use‑case driven processes and stress‑test AI applications against worst‑case scenarios, especially in health care, insurance operations and autonomous vehicles.</li>
+<li>Insurers need to reassess underwriting, product design, pricing and liability frameworks to account for AI exposures, while also leveraging AI as decision‑support to enhance human decision‑making and operational efficiency.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/claims-complexity-talent-gaps-reshape-risk-landscape/">Claims complexity, talent gaps reshape risk landscape - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers industry-wide claims trends, AI pressures, and talent shortages impacting insurers—topics directly affecting the Lloyd&#x27;s market&#x27;s risk landscape.</div><ul><li>Claims are becoming more complex and longer‑tailed due to social inflation, emerging risks and unpredictable liability outcomes (including more nuclear verdicts), increasing severity and reserving uncertainty.</li>
+<li>New technologies—most notably autonomous vehicles—and other emerging exposures are blurring traditional lines of coverage and creating classification uncertainty, while internal pressure to deploy AI adds operational strain.</li>
+<li>A looming &quot;silver tsunami&quot; of retirements and persistent talent gaps threaten institutional knowledge and make the claims system more fragile as policies and procedures shift quickly.</li>
+<li>Recommended responses for insurers: build agile, integrated claims operations; align internal and external partners; connect data, analytics and decision‑making; prioritize speed, collaboration and knowledge retention to improve claim outcomes.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/gallagher-re-appoints-jun-liu-as-head-of-china-agriculture/">Gallagher Re appoints Jun Liu as Head of China Agriculture - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Leadership appointment in China&#x27;s agriculture reinsurance market; affects market dynamics potentially relevant to Lloyd&#x27;s market.</div><ul><li>Gallagher Re has appointed Jun Liu as Head of China Agriculture while he continues as Deputy Head of the Beijing team, joining the firm in 2025 from Datong Insurance.</li>
+<li>Jun brings 18+ years in reinsurance, including roles as Deputy Head (Beijing, Reinsurance) at Datong, Director at Aon-COFCO (3 years) and a 12-year tenure at Guy Carpenter rising to Senior VP.</li>
+<li>The appointment signals a strategic push to deepen Gallagher Re’s agricultural capability and market presence in China, leveraging Liu’s sector expertise and leadership.</li>
+<li>For insurers and brokers: expect strengthened advisory and placement capacity on China agricultural risks, potential development of new ag-focused solutions, and enhanced local market support from the Beijing team.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/scor-returns-with-75m-initial-target-for-atlas-capital-2026-1-multi-peril-cat-bond/">SCOR returns with $75m initial target for Atlas Capital 2026-1 multi-peril cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> SCOR&#x27;s new catastrophe bond (Atlas Capital DAC 2026-1) and ILS market dynamics; relevant to reinsurance capacity and Lloyd&#x27;s market context.</div><ul><li>SCOR is sponsoring Atlas Capital DAC Series 2026‑1, initially targeting $75m of fully collateralized multi‑year retrocession (fourth use of the Ireland DAC; twentieth Atlas‑named SCOR transaction) with potential to upsize.</li>
+<li>Coverage: roughly three‑year annual‑aggregate, weighted industry‑loss trigger retrocession to maturity in early June 2029 for named storms (US &amp; Caribbean incl. DC/PR/USVI), US &amp; Canada earthquakes, and European windstorms. PCS will report named storm and earthquake indices; PERILS will report European windstorm losses.</li>
+<li>Structure and attachment: single $75m tranche with different index attachment points by peril/region, event deductibles apply; initial attachment probability ~3.44% and base expected loss ~3.13%.</li>
+<li>Pricing and market context: price guidance 6.0–6.5% (vs 7.25% on Atlas Capital 2025‑1), reflecting softer cat bond/retro market; compares with a $75m Atlas Capital 2023‑1 maturing in June that provided similar coverage (but excluded the Caribbean).</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-05-05T07:09:18Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
