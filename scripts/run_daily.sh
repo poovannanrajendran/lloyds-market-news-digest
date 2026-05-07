@@ -231,6 +231,11 @@ date +%s > "$LOG_DIR/last_daily_success_epoch.txt"
 CURRENT_STEP="git_post_publish_align"
 git_align_to_origin_preserve_worktree "post-publish align" || true
 
+# Keep the published site files from origin/main in the working tree so the
+# final snapshot does not accidentally record them as deletions while still
+# preserving generated outputs under output/.
+git checkout -- docs >/dev/null 2>&1 || true
+
 CURRENT_STEP="git_post_commit_push"
 git_commit_and_push_if_dirty "post-run"
 
