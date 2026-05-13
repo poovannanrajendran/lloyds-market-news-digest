@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-05-13</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-05-13 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-05-13.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">23 highlights selected for 2026-05-13. Sources include: www.artemis.bm, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Lloyds</li>
+<li>Catastrophe</li>
+<li>ILS</li>
+<li>Market News</li>
+<li>Reinsurance</li>
+<li>Capital</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.artemis.bm/news/nationwide-mutual-now-targets-up-to-325m-of-reinsurance-from-aquila-re-i-2026-1-cat-bond/">Nationwide Mutual now targets up to $325m of reinsurance from Aquila Re I 2026-1 cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Details on a major catastrophe bond issuance (Aquila Re I Series 2026-1) and price guidance updates; relevant to the ILS/reinsurance market Lloyd&#x27;s covers.</div><ul><li>Nationwide has upsized its Aquila Re I Ltd. (Series 2026-1) cat bond target to seek up to $325 million of multi‑peril, multi‑year indemnity/per‑occurrence reinsurance (return to the cat bond market; third Aquila Re I issuance and Nationwide’s 11th cat bond overall).</li>
+<li>Structure and coverage: two tranches of notes to collateralize reinsurance to Nationwide for a four‑year term (June 2026–May 2030), covering US named storm, earthquake, severe thunderstorm, winter storm, wildfire, meteorite impact and volcanic eruption.</li>
+<li>Class A‑1: now targeted $100M–$190M (was $100M); attaches at $750M after stated reinsurance, exhausts at $1.15B; initial attachment probability 0.64%, base expected loss 0.52%; price guidance tightened from 4.00%–4.75% to 3.75%–4.00%.</li>
+<li>Class B‑1: now targeted $100M–$135M (was $100M); attaches at $1.00B with no stated reinsurance and exhausts at $1.95B; initial attachment probability 2.44%, base expected loss 1.24%; price guidance tightened from 4.75%–5.50% to 4.50%–4.75%.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/hive-launches-aviation-reinsurance-division/">HIVE launches Aviation Reinsurance division - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mentions HIVE as a Lloyd&#x27;s Coverholder and launching aviation reinsurance, tying to Lloyd&#x27;s market activity.</div><ul><li>HIVE Underwriters will launch an Aviation Reinsurance division with underwriting slated to begin in October 2026.</li>
+<li>The addition enhances HIVE’s multi-class specialty MGA and Lloyd’s Coverholder platform, complementing its existing Aviation, Space, Marine and Political Violence &amp; Terrorism teams.</li>
+<li>Experienced senior underwriters Scott Bradbury and Joshua Down are set to lead the new class, joining HIVE once their current contractual obligations conclude.</li>
+<li>Strategic emphasis on attracting deep technical underwriting talent, supported by strong data, aligned capacity and a collaborative, relationship‑driven approach to underpin growth and market capability.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/swiss-re-beats-on-net-income-prioritises-underwriting-discipline-and-reduces-nat-cat-volumes/">Swiss Re beats on net income, prioritises underwriting discipline and reduces nat cat volumes - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Swiss Re&#x27;s Q1 results and renewal strategy affect reinsurance pricing/capacity in the Lloyd&#x27;s market.</div><ul><li>Strong Q1 performance: group net income $1.5bn (+19% y/y), roughly 27% above analyst consensus; insurance service result rose to $1.7bn while group insurance revenues edged down to $10.0bn. P&amp;C delivered $754m net income with a combined ratio of 79.5%.</li>
+<li>Disciplined underwriting and active cycle management: Swiss Re has selectively reduced property catastrophe and nat‑cat reinsurance writings at renewals to protect returns, favouring profitability over volume; management also increased reserves for potential inflationary impacts from the Middle East conflict.</li>
+<li>Renewals and pricing: April renewals showed an 8% volume decrease; nominal price change was -2.5% while updated loss assumptions (+3.6%) produced a net price decrease of -6.1%; P&amp;C Re new business CSM fell to $1.0bn (from $1.4bn prior year).</li>
+<li>Portfolio mix and risk retention shifts: YTD gross premiums down ~2%; nat‑cat gross volumes down 11% (net down 4% due to reduced external retrocession, indicating higher retention); regional YTD drivers: US -8%, APAC -5%, EMEA +5%. Strategy contrasts with some peers (e.g., SCOR), which are growing into property‑cat.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/middle-east-assets-trapped-by-war-risks/">Middle East assets trapped by war risks - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Discusses war-risk impact on Middle East maritime assets and insurance implications, relevant to Lloyd&#x27;s market.</div><ul><li>Current situation: Ongoing Iran war has left vessels and other assets physically undamaged but effectively trapped in ports across the Gulf—unable to exit, access fuel or obtain permissions to transit key sea lanes (Riyadh Re CUO Belhassen Tonat).</li>
+<li>Coverage implications: Elevated risk of economic losses without physical damage creates potential disputes under war-risk, marine and business‑interruption/contingent BI coverages and increases demand for freight, demurrage and salvage cover; reinsurers may face accumulation pressure.</li>
+<li>Underwriting and pricing: Expect higher war/political‑violence premiums, tighter exclusions and stricter trading warranties or route restrictions; insurers should reprice and limit exposure concentrations in the region.</li>
+<li>Recommended actions: Immediately review policy wordings (war exclusions, denial‑of‑access/port closure clauses, BI triggers), reassess client exposures and accumulations, engage clients on mitigation (rerouting, repositioning, fuel logistics), and coordinate with reinsurers and brokers on capacity and contingency plans.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/tariffs-outweigh-conflict-concerns-in-latest-willis-political-risk-survey/1458526.article">Tariffs outweigh conflict concerns in latest Willis political risk survey</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.79</div><div class="why"><strong>Why it matters:</strong> Analyzes political risk, tariffs, and insurable losses/trade credit insurance relevant to Lloyd&#x27;s market risk exposure.</div><ul><li>Rising tariffs and related economic-policy risks are the top political risk concern (61%) and have produced negative financial impacts for the same share of firms—outranking international armed conflict despite Middle East tensions.</li>
+<li>Insurable geopolitical losses remain elevated (second-highest in nine years); for the third consecutive year related losses exceeded $250m, and demand for political risk and trade credit insurance is increasing.</li>
+<li>Economic coercion (sanctions, tariffs, export embargoes) is the leading “gray‑zone” threat (61%), while attacks on infrastructure (undersea cables, pipelines, power) are the top overall worry (65%)—implying broader coverage needs spanning trade, cyber and physical infrastructure exposures.</li>
+<li>Significant operational drivers: 39% of firms cite higher risk from home‑government policies and 84% are preparing for potential East/West economic decoupling—insurers should update underwriting criteria, scenario modelling, pricing, product design and capital/reserve planning to reflect these systemic, policy‑driven risks.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/american-coastal-lifting-top-of-reinsurance-tower-to-1-6bn-adds-more-aggregate-cover-ceo/">American Coastal lifting top of reinsurance tower to $1.6bn, adds more aggregate cover: CEO - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.76</div><div class="why"><strong>Why it matters:</strong> Covers mid-year US insurer reinsurance renewal, cat bond issuance, and risk transfer trends—topic of interest to Lloyd&#x27;s market.</div><ul><li>June 1, 2026 core catastrophe program effectively complete: tower increased to &gt;$1.6bn (expected to exceed Verisk 250‑year return period including demand surge and 10% LAE); AmCoastal also placed a $200m cat bond (Armor Re II 2026‑1) with an effective first‑event attachment around $1.43bn.</li>
+<li>Secured risk‑adjusted reinsurance cost decreases enabling a larger tower while preserving competitiveness and profitability; final retention figures and exact costs to be reported later, with active analysis of reducing second/third‑event retentions to maintain underwriting profitability in a three‑loss scenario.</li>
+<li>Lower layers moved to an all‑perils basis (away from hurricane‑only), which enhances non‑hurricane catastrophe protection and should allow non‑renewal of the January 1 all‑other‑perils program next year.</li>
+<li>Added aggregate and frequency protection plus new cascading layers that increase vertical first‑event limit and provide more aggregate limit for subsequent events; maintained a 15% quota share cession but the quota spend is effectively shrinking with lower earned premiums.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/munich-re-cfo-confident-on-handling-potential-claims-inflation-from-iran-war/">Munich Re CFO confident on handling potential claims inflation from Iran war - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers Munich Re&#x27;s IBNR reserves and inflation risk, informing reinsurance market dynamics relevant to Lloyd&#x27;s.</div><ul><li>Munich Re has set aside €90m of IBNR for the Iran conflict (little to no specific notifications) — split €60m in Global Special Insurance and €30m in property &amp; casualty reinsurance.</li>
+<li>The €90m is described as a cautious, narrowly‑defined estimate of potential direct insured/cedent claims (e.g., marine war market, political violence/terrorism) and does not include a blanket allowance for inflation.</li>
+<li>Three lines of defence: (1) most business can be repriced within one year and pricing teams are actively reviewing rates; (2) asset‑liability management with inflation‑responsive assets (expect an inflation‑linked bond catch‑up in Q2); (3) reserves — annual reserve review and a reserve‑risk heat map with buffers for adverse economic deviations including inflation.</li>
+<li>Management says current reserve buffers and processes (honed during the 2022 Ukraine/inflation shock) are sufficient to absorb potential inflationary/second‑order impacts, so no opportunistic or special reserve booking was made in Q1.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/price-softening-to-persist-into-2027-without-significant-industry-cat-loss-jp-morgan/">Price softening to persist into 2027 without significant industry cat loss: JP Morgan - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Reinsurance pricing trends and capital dynamics affecting Lloyd&#x27;s market.</div><ul><li>Reinsurance pricing expected to soften through 2027, with 2026 renewals showing accelerating rate declines driven by strong Q1 2026 results and a significant capital overhang.</li>
+<li>Industry capital estimated at ~$760bn (FY25, Aon), up ~32% since FY22; JP Morgan calculates a surplus of roughly $125bn by comparing capital-to-global non‑life premiums (capital-to-premium ratio rose from ~14.5% in 2022 to ~17.5% in FY25).</li>
+<li>Current loss-absorption capacity is large: JP Morgan estimates an incremental industry loss of ~ $120bn (i.e., total catastrophe losses &gt; $200bn) would be needed to wipe out underwriting profits at the largest European reinsurers, making hardening from a single active catastrophe year unlikely.</li>
+<li>Renewals already showing sharp declines—property catastrophe down ~12% in January and mid‑teens by April; Florida June renewals could see ~20%+ reductions after tort reform—implying continued soft market dynamics and likely further price pressure into 2027 if 2026 remains a ‘normal’ loss year.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/05/12/869433.htm">Polluters to Win Protection Against Legal Action in New Zealand</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers climate-change litigation and regulatory changes affecting insurers and market risk in NZ.</div><ul><li>Government bill would bar private tort claims for greenhouse‑gas emissions, applying to current and future cases (including Mike Smith’s suit against Fonterra, Genesis, Z Energy and New Zealand Steel).</li>
+<li>Legal effect: potential reduction in tort-based liability exposure and litigation risk for emitters—and by extension for their liability insurers—if the amendment passes.</li>
+<li>Countervailing risks: physical climate losses and insurance claims from extreme weather remain unchanged; the move raises political/regulatory and reputational/ESG risk for insurers covering major emitters and may shift liability resolution toward statutory/regulatory mechanisms.</li>
+<li>Recommended insurer actions: monitor legislative progress and any judicial challenges; review policy wordings, exclusions and coverage for GHG‑related claims; reassess pricing, reserving, capital and reinsurance strategies to reflect lower tort litigation risk but persistent physical and regulatory climate risks.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/alt-capital-sustainability-hinges-on-modeling-transparency-careful-product-sequencing-gcs-rousseau/">Alt capital sustainability hinges on modeling, transparency, careful product sequencing: GC’s Rousseau - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers alternative capital and ILS&#x27;s impact on reinsurance capacity, pricing, and market structure relevant to Lloyd&#x27;s.</div><ul><li>Scale and market data: alternative capital now represents ~20% of an estimated US$660bn global reinsurance capital pool (up from 13% in 2013); public catastrophe bond issuance hit record levels in 2025 (~US$25–25.6bn), outstanding 144A cat bonds are ~US$58bn, and combined alternative reinsurance capital (including sidecars and collateralized reinsurance) exceeded ~US$123bn.</li>
+<li>Key frictions to monitor: Guy Carpenter identifies five structural issues—limitations in modeling, risks of trapped collateral/liquidity, a softening pricing cycle from increased capacity, cultural disparities between capital markets and traditional reinsurers, and growing complexity/opacity in ultimate risk allocation.</li>
+<li>Required priorities for sustainability: insurers and capital providers should push for better modeling, greater transparency about ultimate loss-bearing, and careful sequencing of product development so alternative capital is deployed to strengthen resilience rather than amplify systemic fragility.</li>
+<li>Market implications and opportunities: a supply-driven inflow of institutional investors (pension funds, sovereign wealth funds, large alternative managers) is pushing reinsurers into originator/structurer roles and a more capital-markets-oriented model; digital infrastructure/data‑center risk is a significant new opportunity but will require improved modellability, diversification and standardized primary insurance products before ILS/sidecars can scale into the space.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/korean-re-seeks-second-solomon-re-cat-bond-adds-parametric-israel-quake-as-covered-peril/">Korean Re seeks second Solomon Re cat bond, adds parametric Israel quake as covered peril - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Describes a new Solomon Re catastrophe bond deal with Korean Re, including Israel earthquake peril; relevant to Lloyd&#x27;s market ILS/retrocession coverage.</div><ul><li>Korean Re is sponsoring Solomon Re Ltd. Series 2026-1 to secure $75M+ of catastrophe retrocession via two tranches (Class A $50M; Class B $25M) over a three‑year term, with proceeds collateralizing a retrocession agreement between Solomon Re and Hannover Re that is then passed to Korean Re by reinsurance.</li>
+<li>Class A ($50M) covers US named storm and US earthquake on an industry‑loss, per‑occurrence trigger (attachment $120M / exhaustion $220M) and adds a parametric, per‑occurrence Israel earthquake peril; initial attachment probability 3.21%, base expected loss 1.91%, price guidance ~4.25%–4.75%.</li>
+<li>Class B ($25M) covers US named storm and US earthquake only on an industry‑loss, per‑occurrence trigger with lower attachment (attach $70M / exhaust $120M); initial attachment probability 6.06%, base expected loss 4.03%, price guidance ~7.75%–8.25%.</li>
+<li>The deal’s notable features are the inclusion of the rarely‑seen Israel earthquake parametric peril and a multi‑trigger structure (industry loss + parametric), reflecting Korean Re’s growing sophistication and increasing use of cat bonds as a core component of its retrocessional program.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/a-diversified-portfolio-is-key-to-navigating-a-softening-cycle-hamilton-res-daws/">A diversified portfolio is key to navigating a softening cycle: Hamilton Re&#x27;s Daws - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers reinsurance market conditions and renewal dynamics relevant to Lloyd&#x27;s participants.</div><ul><li>Hamilton Re remains optimistic about growth—its diversified specialty, casualty and property portfolio provides flexibility and resilience as market conditions transition into mid‑2026 renewals.</li>
+<li>Specialty market: softening is expected to continue into mid‑year 2026 but varies by sub‑class; Marine &amp; Energy are under more pressure while War/Terror/Political Violence classes show less softening and localized price corrections.</li>
+<li>Casualty shows resilience with a positive outlook; primary concerns are social and economic inflation, and any increases in ceding commissions are limited to cases with supporting loss experience.</li>
+<li>Property: market softening is expected due to overcapacity following strong Q1 results, but underlying books, coverage terms and attachment points remain strong—rate reductions are coming off a solid base.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/am-best-survey-finds-rapid-ai-uptake-in-insurance-sector-despite-structural-barriers/">AM Best survey finds rapid AI uptake in insurance sector despite structural barriers - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Industry-wide AI adoption insights affecting insurers and MGAs, including potential impact on Lloyd&#x27;s market participants.</div><ul><li>Nearly 60% of insurers and MGAs expect AI to materially reshape business models within 1–3 years; 41% report active AI use and ~20% are at advanced implementation stages, with most having formal AI policies.</li>
+<li>Primary obstacles to adoption are data readiness and quality, cybersecurity and privacy concerns, and difficulty integrating AI with legacy systems that store fragmented, non‑standardised data.</li>
+<li>Around two‑thirds plan to increase AI investment over the next 12–24 months, prioritising higher employee productivity, lower operational costs, and underwriting improvements (risk selection and pricing).</li>
+<li>Among organisations deploying AI, 63% report modest productivity/satisfaction gains and 11% notable gains; 31% expect no staffing change while 37% expect redeployment to higher‑value roles; measurable ROI is expected to take years.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/biba-2026-jensten-group-growing-and-extending-propositions-at-rapid-pace-after-restructure/1458515.article">Biba 2026: Jensten Group ‘growing and extending propositions at rapid pace’ after restructure</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses UK broker market restructuring and mentions London markets, relevant to Lloyd&#x27;s market news.</div><ul><li>Jensten has restructured into two trading divisions — Broking (regional broking, specialist lines, London markets and The Jensten Network) and Product &amp; Distribution (schemes, affinity businesses and MGA Jensten Underwriting) — to accelerate proposition development and market reach.</li>
+<li>Bain Capital, which completed its strategic investment in 2025, will partner with Jensten’s management under a new operating model to drive expansion, innovation and M&amp;A activity.</li>
+<li>Senior leadership hires to lead the new structure: Gareth Birch (former Gallagher MD for SME &amp; personal lines) becomes CEO of Broking from 1 May 2026; Jaime Swindle (Geo Underwriting) is appointed CEO of Product &amp; Distribution (start date TBC), reflecting a focus on attracting top industry talent.</li>
+<li>Practical implications for insurance professionals: strengthened scheme/MGA and distribution capability, increased appetite for deals and partnerships, and potential new capacity or intermediary opportunities across regional, specialist and London market channels.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/munich-re-q1-profit-jumps-on-lower-catastrophe-losses/">Munich Re Q1 profit jumps on lower catastrophe losses - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses reinsurance market conditions, pricing, and renewals affecting Lloyd&#x27;s market.</div><ul><li>Q1 net income €1.7bn (+57% YoY), driven by lower major-loss claims and strong underwriting in property/casualty reinsurance and global specialty insurance.</li>
+<li>Marked improvement in combined ratios: P/C reinsurance 66.8% (from 83.9%) and global specialty 83.7% (from 95.5%); major losses in P/C reinsurance fell to €130m from €1.01bn, and natural catastrophe losses to €55m from €757m.</li>
+<li>Geopolitical and renewal impacts: claims from the Iran war totaled ~€90m (≈€60m in global specialty, €30m in reinsurance). April renewals saw P/C reinsurance volumes decline 18.5% as Munich Re cut underpriced or unattractive business; prices down 3.1% but overall pricing levels remain favorable.</li>
+<li>Company guidance and strategy: CFO says Munich Re is on track for a full-year net income target of €6.3bn, reflecting continued underwriting discipline and selective portfolio pruning.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/as-legacy-market-gets-closer-to-live-ils-exit-opportunity-expected-to-persist-irla-congress/">As legacy market gets closer to live, ILS exit opportunity expected to persist: IRLA Congress - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Discusses legacy/run-off market evolution and ILS implications for Lloyd&#x27;s market dynamics.</div><ul><li>Legacy/run-off market is moving closer to the live market with stronger counterparty relationships and a heavier deal pipeline, enabling more regular trading between legacy specialists and live-market participants.</li>
+<li>Market focus has shifted toward capital-light models and capital optimisation — legacy solutions are now used for balance-sheet simplification, earnings-volatility protection and broader strategic initiatives by cedents.</li>
+<li>Alternative capital and ILS activity (especially for casualty risks) is ramping up: forward-exit options, rolling capital solutions, sidecars and structured deals are being used to provide investor exit certainty and liquidity.</li>
+<li>Business-model and product innovation — including operationally lighter approaches and closer investor partnerships — is expanding the legacy sector’s role as a solutions provider and unlocking significant growth opportunities.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/us-issues-indictments-in-baltimore-bridge-collapse/">US issues indictments in Baltimore bridge collapse - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.66</div><div class="why"><strong>Why it matters:</strong> Covers marine liability and risk implications from a high-profile shipping incident, relevant to Lloyd&#x27;s market risk.</div><ul><li>U.S. grand jury indicted two Synergy shipping companies (Singapore and Chennai) and the Dali’s technical superintendent on charges including conspiracy, willful failure to notify the U.S. Coast Guard, obstruction, false statements, causing six deaths, and violations of the Clean Water Act, Oil Pollution Act and Refuse Act; the superintendent is believed to be in India.</li>
+<li>NTSB found a single loose electrical wire caused a breaker trip and two blackouts in four minutes; the indictment alleges the crew relied on a non‑automatic flushing pump for fuel to generators (rather than proper supply pumps), preventing prompt power restoration and causing the vessel to strike the Francis Scott Key Bridge.</li>
+<li>Estimated impact is at least $5 billion in damage plus significant environmental pollution and oil discharge into the Patapsco River, creating major exposure across P&amp;I, hull &amp; machinery, pollution liability, excess layers, and wrongful‑death/WORKERS’ compensation claims.</li>
+<li>Primary insurance considerations: potential coverage disputes over criminal/misconduct exclusions and intentional acts, subrogation opportunities against shipowners/operators, jurisdiction and extradition challenges for recovery, urgent need to preserve evidence and coordinate with investigators, and immediate notification to relevant carriers (P&amp;I, H&amp;M, pollution, GL and excess).</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/antares-names-sri-ram-pappu-as-deputy-ceo/">Antares names Sri Ram Pappu as Deputy CEO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions Antares Managing Agency Limited and Antares Underwriting Asia, a Lloyd&#x27;s market participant; leadership promotion.</div><ul><li>Sri Ram Pappu promoted to Deputy CEO at Antares (a QIC Global subsidiary) to support Li Shan Yeo, CEO of Antares Underwriting Asia Pte Limited, in driving the firm’s growth.</li>
+<li>Brings 20+ years of underwriting experience across energy (upstream, midstream, downstream, renewables), marine (cargo and hull), property and engineering—key specialties for risk assessment and portfolio management.</li>
+<li>Long Antares tenure (joined Antares Re in 2012 as Senior Underwriter – Energy; most recently Senior Energy and Marine Underwriter at Antares Managing Agency Limited) with prior roles at Marsh McLennan India and TATA AIG General Insurance.</li>
+<li>Antares cites his leadership, dedication and strategic vision as drivers of growth, innovation and underwriting excellence—signalling continued focus on strengthening energy and marine capabilities.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2754/">Reinsurance News archive - page 2754</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Lloyd&#x27;s market news item found in the feed.</div><ul><li>Elevated catastrophe activity in H1/Q2 2016 (Aon Benfield: $30bn insured losses) pressured results and profitability — Swiss Re’s P&amp;C unit posted an underwriting loss and Aspen’s combined ratio rose to 100.7%.</li>
+<li>Market/pricing implications: Macquarie suggests Q2 cat losses could establish a pricing floor at January 2017 renewals, while JLT Re highlights reinsurance remains the cheapest form of contingent capital that cedents should optimise.</li>
+<li>Growth and product opportunity in China: Swiss Re-backed parametric disaster cover for farmers was launched and Swiss Re warned of low insurance penetration after recent floods, pointing to demand for innovative agricultural and parametric solutions.</li>
+<li>Industry and strategic moves amid uncertainty: Lloyd’s delayed a new diversified-risk index as Brexit concerns rise; Swiss Re was reported to be exploring a $1bn Admin Re stake sale; Aon showed mixed Q2 results (net revenue down 1%, organic revenue +3%), indicating ongoing strategic repositioning.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/27-years-of-artemis-nearly-220bn-of-cat-bonds-and-ils-tracked-in-our-deal-directory/">27 years of Artemis, nearly $220bn of cat bonds and ILS tracked in our Deal Directory - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bonds and ILS market trends (Artemis Deal Directory) relevant for Lloyd&#x27;s reinsurance/capital markets context.</div><ul><li>Celebrating its 27th anniversary, Artemis’ Deal Directory has tracked ~1,284 catastrophe bond/ILS transactions and nearly $220 billion of issuance (about $214.5bn settled plus ~ $4bn in the current pipeline and other non-settled deals).</li>
+<li>Artemis is a dominant market data and media hub for ILS: 23,000+ articles, ~78,000 monthly visitors, ~17,000 newsletter subscribers, and the Deal Directory was used by over 100,000 individuals in the past year.</li>
+<li>The Deal Directory is the industry’s most widely used ILS data source, covering 144A and private cat bonds and tracking related structures (reinsurance sidecars, ILS funds, longevity swaps, parametric transfers, mortgage ILS), supporting transaction analysis and market trend work.</li>
+<li>Artemis remains focused on unbiased information, industry convening (regular high‑quality conferences — next ILS market conference in London on Sept 1), and promoting capital efficiency via securitisation and intelligent structuring as ILS increasingly provides efficient capacity and attractive investment diversification.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/uk-businesses-fear-cyber-risk-surge-amid-a-complex-web-of-interconnected-risks-marsh/1458522.article">UK businesses fear cyber risk surge amid a ‘complex web’ of interconnected risks – Marsh</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Shows cyber risk top UK concern with implications for cyber insurance and Lloyd&#x27;s market dynamics.</div><ul><li>Cyber is now the top business concern in the UK (46% of respondents), driven by AI adoption, high‑profile attacks and third‑party supplier vulnerabilities—insurers should expect rising demand, greater claims complexity and pricing/ capacity pressure.</li>
+<li>Risks are increasingly interconnected: cyber incidents can cascade into financial, regulatory, supply‑chain and reputational losses—highlighting the need for aggregation modelling, systemic exposure management and coordinated policy wording across coverages.</li>
+<li>Organisations are shifting from siloed programmes to scenario‑based planning and integrated frameworks combining technical controls, people and process—opportunities for insurers/brokers to expand advisory services, scenario testing and risk‑management validation.</li>
+<li>Key resilience priorities for clients: harden and regularly test cyber fundamentals, treat supplier risk as enterprise risk, and elevate cyber to the board with measurable metrics—implications for underwriting, policy terms, risk‑transfer design and client engagement on preparedness.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/japan-moves-to-cap-corporate-executives-liability/">Japan moves to cap corporate executives’ liability - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Regulatory change in Japan on executives’ liability impacts D&amp;O risk and corporate risk, relevant to Lloyd’s market.</div><ul><li>Japanese government plans to amend corporate law to cap executives’ liability for occupational damages — aimed at reducing personal exposure and giving management more leeway for major M&amp;A and capital investments.</li>
+<li>Immediate implication for D&amp;O insurers: statutory caps may change claim frequency/severity dynamics and introduce moral‑hazard considerations that could affect pricing, limits and loss expectations.</li>
+<li>Underwriting impacts: expect reviews of policy wordings, retentions and exclusions (eg, carve‑outs for fraud/gross negligence), recalibration of models and potential new endorsements to reflect statutory limits.</li>
+<li>Action for insurers and brokers: closely monitor legislative text and judicial interpretation, update appetite and pricing frameworks, and advise clients on strengthened governance and compliance to mitigate increased risk‑taking.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/tag/people-moves/page/734/">People moves news - Page 734 of 734 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Includes Lloyd&#x27;s-related personnel movement (Vandendael&#x27;s departure from Lloyd&#x27;s).</div><ul><li>Several senior leadership moves across re/insurance: Everest Insurance appointed Vincent Vandendael as CEO of International Operations (based in London), reinforcing its international management bench following his departure from Lloyd’s.</li>
+<li>Swiss Re’s UK &amp; Ireland CEO Frank O’Neill is stepping down (effective 4 Sept 2018), prompting a search for a successor and potential short-term leadership and strategic continuity implications in that region.</li>
+<li>AXIS Capital made strategic hires: Linda Ventresca was named a newly created Chief Strategy Officer to drive group strategy, and Marcus Pollak (from Partner Re) was appointed head of a new Product Center in Zurich — signaling emphasis on product development, underwriting process and portfolio management.</li>
+<li>Regional and specialty succession continues: Junge &amp; Co (Ed Broking’s German maritime subsidiary) appointed Olaf Fölsch as CEO, and Lebanese Credit Insurer (LCI) named Dominque Charpentier as Chairman, reflecting governance renewal in niche markets.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-05-13T07:09:17Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
