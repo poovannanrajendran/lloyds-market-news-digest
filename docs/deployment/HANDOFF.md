@@ -75,8 +75,10 @@ Consolidated alert:
 Run daily pipeline now:
 ```bash
 cd /opt/automation/lloyds-market-news-digest
-/bin/bash -lc 'source "$HOME/miniconda3/etc/profile.d/conda.sh" && conda activate 314 && export PYTHONPATH=$PWD/src && ./scripts/run_daily.sh'
+/bin/bash -lc 'export PATH="$HOME/miniconda3/bin:$PATH"; export PYTHONPATH=$PWD/src; ./scripts/run_daily.sh'
 ```
+
+`run_daily.sh` handles Conda activation/fallback, required Python import validation, low-disk refusal, stale `.git/index.lock` cleanup, and Git alignment internally.
 
 Test notification transport:
 ```bash

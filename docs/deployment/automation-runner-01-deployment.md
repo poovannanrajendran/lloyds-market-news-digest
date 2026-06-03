@@ -196,7 +196,7 @@ Add:
 
 ```cron
 CRON_TZ=Europe/London
-0 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'source "$HOME/miniconda3/etc/profile.d/conda.sh" && conda activate 314 && export PYTHONPATH=$PWD/src && ./scripts/run_daily.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
+0 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'export PATH="$HOME/miniconda3/bin:$PATH"; export PYTHONPATH=$PWD/src; ./scripts/run_daily.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 ```
 
 Verify:
@@ -205,7 +205,7 @@ Verify:
 crontab -l
 ```
 
-`scripts/run_daily.sh` now performs `git pull --ff-only` at startup, so the runner stays in sync with upstream `main` before generating and publishing docs.
+`scripts/run_daily.sh` now performs runtime preflight/self-healing and upstream alignment before generating and publishing docs. Cron only needs to put base Conda on `PATH`; the script handles Conda activation, Python fallback, import validation, low-disk refusal, stale `.git/index.lock` cleanup, and Git alignment.
 
 ## 14. Operational checks
 
@@ -223,4 +223,6 @@ crontab -l
 - Mongo errors: verify Atlas URI and IP allowlist
 - Git push failures: verify deploy key is added with write access and `ssh -T git@github.com` succeeds
 - Git pull failures in cron: verify deploy key auth is working for `origin` and branch is fast-forwardable
+- Conda plugin failures in cron: use the recommended cron above; `run_daily.sh` sets `CONDA_NO_PLUGINS=true` and falls back to the `314` env Python path.
+- Stale `.git/index.lock`: `run_daily.sh` removes old locks automatically only when no Git process is active; check disk space if this recurs.
 - n8n alert checks not firing: verify `N8N_PUBLIC_API_KEY`, workflow ID, and cron entries for `check_n8n_workflow_alerts.sh`

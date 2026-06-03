@@ -85,12 +85,14 @@ Summary sections:
 
 ```cron
 CRON_TZ=Europe/London
-0 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'source "$HOME/miniconda3/etc/profile.d/conda.sh" && conda activate 314 && export PYTHONPATH=$PWD/src && ./scripts/run_daily.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
+0 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'export PATH="$HOME/miniconda3/bin:$PATH"; export PYTHONPATH=$PWD/src; ./scripts/run_daily.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 15,45 * * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'set -a; source .env; set +a; ./scripts/check_run_freshness.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 45,55 8 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'set -a; source .env; set +a; ./scripts/check_n8n_workflow_alerts.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 5,15,25 9 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'set -a; source .env; set +a; ./scripts/check_n8n_workflow_alerts.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 0 9 * * * cd /opt/automation/lloyds-market-news-digest && /bin/bash -lc 'set -a; source .env; set +a; ./scripts/send_24h_summary.sh' >> /opt/automation/lloyds-market-news-digest/logs/cron.log 2>&1
 ```
+
+The daily runner performs its own Conda activation/fallback and self-healing preflight; do not source `conda.sh` directly in cron.
 
 ## 6) Required / Optional Env Keys
 

@@ -74,7 +74,7 @@
 ### Run full daily pipeline now
 ```bash
 cd /opt/automation/lloyds-market-news-digest
-/bin/bash -lc 'source "$HOME/miniconda3/etc/profile.d/conda.sh" && conda activate 314 && export PYTHONPATH=$PWD/src && ./scripts/run_daily.sh'
+/bin/bash -lc 'export PATH="$HOME/miniconda3/bin:$PATH"; export PYTHONPATH=$PWD/src; ./scripts/run_daily.sh'
 ```
 
 ### Test webhook transport

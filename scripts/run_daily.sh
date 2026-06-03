@@ -10,12 +10,113 @@ CURRENT_BRANCH="main"
 
 mkdir -p "$LOG_DIR"
 
+iso_now() {
+  date -Is 2>/dev/null || date "+%Y-%m-%dT%H:%M:%S%z"
+}
+
 notify() {
   local message="$1"
   local level="${2:-info}"
   if [[ -x "$NOTIFY_SCRIPT" ]]; then
     "$NOTIFY_SCRIPT" "$message" "$level" || true
   fi
+}
+
+file_mtime_epoch() {
+  local path="$1"
+  stat -c %Y "$path" 2>/dev/null || stat -f %m "$path" 2>/dev/null
+}
+
+preflight_disk_space() {
+  local path="${1:-$ROOT_DIR}"
+  local min_free_mb="${RUN_DAILY_MIN_FREE_MB:-2048}"
+  local free_mb
+
+  free_mb="$(df -Pm "$path" | awk 'NR == 2 {print $4}')"
+  if [[ -z "$free_mb" ]]; then
+    notify "Unable to determine free disk space for ${path}; continuing run." "warning"
+    return 0
+  fi
+
+  if (( free_mb < min_free_mb )); then
+    notify "Daily run blocked: only ${free_mb}MB free at ${path}; minimum is ${min_free_mb}MB." "error"
+    return 1
+  fi
+}
+
+git_cleanup_stale_locks() {
+  local lock_path=".git/index.lock"
+  local max_age_seconds="${RUN_DAILY_GIT_LOCK_MAX_AGE_SECONDS:-900}"
+  local now_epoch lock_epoch lock_age
+
+  [[ -f "$lock_path" ]] || return 0
+
+  if pgrep -u "$(id -u)" -x git >/dev/null 2>&1; then
+    notify "Found ${lock_path}, but a git process is active; leaving lock in place." "warning"
+    return 0
+  fi
+
+  now_epoch="$(date +%s)"
+  lock_epoch="$(file_mtime_epoch "$lock_path" || true)"
+  if [[ -z "$lock_epoch" ]]; then
+    notify "Found ${lock_path}, but could not read lock age; leaving lock in place." "warning"
+    return 0
+  fi
+
+  lock_age=$((now_epoch - lock_epoch))
+  if (( lock_age >= max_age_seconds )); then
+    rm -f "$lock_path"
+    notify "Removed stale ${lock_path} (${lock_age}s old) before run." "warning"
+  else
+    notify "Found fresh ${lock_path} (${lock_age}s old); leaving lock in place." "warning"
+  fi
+}
+
+activate_python_environment() {
+  local env_name="${CONDA_ENV_NAME:-314}"
+  local conda_base=""
+
+  export CONDA_NO_PLUGINS="${CONDA_NO_PLUGINS:-true}"
+
+  if command -v conda >/dev/null 2>&1; then
+    if conda_base="$(CONDA_NO_PLUGINS=true conda info --base 2>/dev/null)" && [[ -n "$conda_base" && -f "$conda_base/etc/profile.d/conda.sh" ]]; then
+      # shellcheck disable=SC1090
+      source "$conda_base/etc/profile.d/conda.sh"
+      if conda activate "$env_name"; then
+        return 0
+      fi
+      notify "Conda activation failed for env '${env_name}'; falling back to Python path." "warning"
+    else
+      notify "Conda profile unavailable; falling back to Python path." "warning"
+    fi
+  fi
+
+  if [[ -x "$HOME/miniconda3/envs/$env_name/bin/python" ]]; then
+    export PATH="$HOME/miniconda3/envs/$env_name/bin:$PATH"
+  elif [[ -x "$HOME/miniconda3/bin/python" ]]; then
+    export PATH="$HOME/miniconda3/bin:$PATH"
+  else
+    notify "No Conda Python found under $HOME/miniconda3; using current PATH." "warning"
+  fi
+}
+
+validate_python_runtime() {
+  if ! command -v python >/dev/null 2>&1; then
+    notify "Daily run blocked: python is not available on PATH." "error"
+    return 1
+  fi
+
+  python - <<'PY'
+import lloyds_digest
+import requests
+import bs4
+import feedparser
+import trafilatura
+import readability
+import psycopg
+import pymongo
+from PIL import Image
+PY
 }
 
 git_push_with_retries() {
@@ -105,7 +206,7 @@ git_commit_and_push_if_dirty() {
   fi
 
   if ! git diff --cached --quiet 2>/dev/null; then
-    local commit_msg="automation: ${phase_label} snapshot $(date -Iseconds)"
+    local commit_msg="automation: ${phase_label} snapshot $(iso_now)"
     if ! git commit -m "$commit_msg"; then
       notify "Git commit failed during ${phase_label} snapshot; continuing run." "warning"
       return 0
@@ -186,23 +287,28 @@ PY
 
 on_error() {
   local exit_code="$?"
-  notify "Run failed at step='$CURRENT_STEP' (exit=$exit_code) on $(date -Is). See $LOG_FILE" "error"
+  notify "Run failed at step='$CURRENT_STEP' (exit=$exit_code) on $(iso_now). See $LOG_FILE" "error"
 }
 
 trap on_error ERR
 
-if command -v conda >/dev/null 2>&1; then
-  CURRENT_STEP="conda_activate"
-  source "$(conda info --base)/etc/profile.d/conda.sh"
-  conda activate 314
-fi
+CURRENT_STEP="disk_preflight"
+preflight_disk_space "$ROOT_DIR"
+
+CURRENT_STEP="python_environment"
+activate_python_environment
 
 cd "$ROOT_DIR"
 
 export PYTHONPATH="$ROOT_DIR/src:${PYTHONPATH:-}"
 
+CURRENT_STEP="python_preflight"
+validate_python_runtime
+
 # Keep runner aligned with upstream to avoid non-fast-forward push failures.
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  CURRENT_STEP="git_lock_cleanup"
+  git_cleanup_stale_locks
   CURRENT_STEP="git_rebase_cleanup"
   git_abort_stale_rebase
   CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)"
@@ -241,5 +347,5 @@ git_commit_and_push_if_dirty "post-run"
 
 if [[ "${ALERT_NOTIFY_ON_SUCCESS:-1}" == "1" ]]; then
   AUDIT_SUMMARY="$(build_audit_summary)"
-  notify "Run completed successfully on $(date -Is). ${AUDIT_SUMMARY}. Log: $LOG_FILE" "success"
+  notify "Run completed successfully on $(iso_now). ${AUDIT_SUMMARY}. Log: $LOG_FILE" "success"
 fi

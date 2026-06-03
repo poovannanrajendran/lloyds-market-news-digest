@@ -33,8 +33,8 @@
 
 ## Run now (manual)
 ```bash
-conda activate 314
-scripts/run_daily.sh
+cd /opt/automation/lloyds-market-news-digest
+/bin/bash -lc 'export PATH="$HOME/miniconda3/bin:$PATH"; export PYTHONPATH=$PWD/src; ./scripts/run_daily.sh'
 ```
 
 ## Run n8n alert check now (manual)
@@ -83,6 +83,13 @@ set -a; source .env; set +a
   ./scripts/notify_webhooks.sh "ops test message" info
   ```
 - Check `logs/cron.log` for script execution errors
+
+### Runner preflight/self-healing
+- `scripts/run_daily.sh` owns Python activation; cron should not source `conda.sh` directly.
+- The runner sets `CONDA_NO_PLUGINS=true` so broken Conda plugins, including `anaconda-anon-usage`, do not block `conda info --base`.
+- If Conda activation fails, the runner falls back to `$HOME/miniconda3/envs/314/bin/python` and validates required imports before starting the pipeline.
+- The runner blocks early when free disk space is below `RUN_DAILY_MIN_FREE_MB` (default `2048`) to avoid partial writes.
+- A stale `.git/index.lock` older than `RUN_DAILY_GIT_LOCK_MAX_AGE_SECONDS` (default `900`) is removed only when no Git process is active for the runner user.
 
 ## Backfills / reruns
 - Re-run pipeline for a specific date (future CLI/orchestrator)
