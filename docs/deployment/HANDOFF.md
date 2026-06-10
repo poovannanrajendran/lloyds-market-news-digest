@@ -18,7 +18,7 @@ This handoff captures the current production-like setup for daily digest automat
 - Missed-run heartbeat check:
   - `15,45 * * * *` -> `./scripts/check_run_freshness.sh`
 - n8n workflow monitor window:
-  - `45,55 8 * * *` and `5,15,25 9 * * *` -> `./scripts/check_n8n_workflow_alerts.sh`
+  - `45,55 8 * * *`, `5,15,25 9 * * *`, and `5,15 10 * * *` -> `./scripts/check_n8n_workflow_alerts.sh`
 - 24h consolidated summary:
   - `0 9 * * *` -> `./scripts/send_24h_summary.sh`
 - System maintenance (runner-level):
@@ -35,6 +35,7 @@ Immediate alerts:
 - `run_daily.sh`: immediate failure (`trap ERR`), configurable success (`ALERT_NOTIFY_ON_SUCCESS`)
 - `check_run_freshness.sh`: stale/missing daily heartbeat detection
 - `check_n8n_workflow_alerts.sh`: n8n execution status monitor for a single workflow, optional success alerts, and stop-after-terminal-status for the day
+  - waits until after the 10:00 fallback schedule before treating a failed run as final
 
 Consolidated alert:
 - `send_24h_summary.sh` (daily 09:00)

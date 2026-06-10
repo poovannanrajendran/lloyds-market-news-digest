@@ -13,13 +13,13 @@ DONE_FILE="$ROOT_DIR/logs/n8n_alert_done_date.txt"
 # - N8N_API_BASE_URL (default: http://127.0.0.1:5678/api/v1)
 # - N8N_ALERT_NOTIFY_ON_SUCCESS (default: 0)
 # - N8N_ALERT_WORKFLOW_NAME (display only)
-# - N8N_ALERT_CUTOFF_LOCAL (legacy compatibility only; success now finalizes immediately)
+# - N8N_ALERT_FINAL_CUTOFF_LOCAL (default: 10:05; do not finalize errors before fallback schedule)
 
 N8N_API_BASE_URL="${N8N_API_BASE_URL:-http://127.0.0.1:5678/api/v1}"
 WORKFLOW_ID="${N8N_ALERT_WORKFLOW_ID:-}"
 WORKFLOW_NAME="${N8N_ALERT_WORKFLOW_NAME:-}"
 NOTIFY_SUCCESS="${N8N_ALERT_NOTIFY_ON_SUCCESS:-0}"
-ALERT_CUTOFF_LOCAL="${N8N_ALERT_CUTOFF_LOCAL:-09:25}"
+ALERT_FINAL_CUTOFF_LOCAL="${N8N_ALERT_FINAL_CUTOFF_LOCAL:-10:05}"
 
 if [[ ! -x "$NOTIFY_SCRIPT" ]]; then
   exit 0
@@ -190,6 +190,11 @@ if [[ -n "$retry_of" ]]; then
 fi
 
 if [[ "$status" == "error" || "$status" == "failed" || "$status" == "crashed" ]]; then
+  current_local_time="$(date +%H:%M)"
+  if [[ "$current_local_time" < "$ALERT_FINAL_CUTOFF_LOCAL" ]]; then
+    echo "n8n-alert: observed status=$status for execution_id=$eid before fallback cutoff=$ALERT_FINAL_CUTOFF_LOCAL; waiting for retry"
+    exit 0
+  fi
   "$NOTIFY_SCRIPT" "$message" "error" || true
   mark_done_today "$status"
 elif [[ "$status" == "success" && "$NOTIFY_SUCCESS" == "1" ]]; then
