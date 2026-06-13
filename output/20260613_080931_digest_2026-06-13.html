@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-06-13</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-06-13 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-06-13.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">24 highlights selected for 2026-06-13. Sources include: www.artemis.bm, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk, www.reinsurancene.ws.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Reinsurance</li>
+<li>Capital</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Lloyds</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/ms-amlin-adds-kirsten-mitchell-wallace-as-cro-and-phil-young-as-cio/">MS Amlin adds Kirsten Mitchell-Wallace as CRO and Phil Young as CIO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> News about a Lloyd&#x27;s market participant (MS Amlin) appointing CRO and CIO; mentions Lloyd’s of London.</div><ul><li>MS Amlin has appointed Kirsten Mitchell‑Wallace as Chief Risk Officer and Phil Young as Chief Information Officer (both subject to regulatory approval); both will join the executive leadership team and report to CEO Christiern Dart.</li>
+<li>Mitchell‑Wallace succeeds Vishal Desai (who moves to MSIG as International CRO) and brings board‑level and market risk experience from OAK Global, Lloyd’s and SCOR, with strengths in risk appetite, capital &amp; exposure management and regulatory engagement.</li>
+<li>Young (CIO from Q3 2026) brings extensive technology, data and transformation experience from senior roles at Virgin Group, AWS and Transport for London and will lead platform, data and digital change programmes to support MS Amlin’s tech ambitions.</li>
+<li>Leadership changes are positioned to strengthen risk governance and accelerate technology, data and innovation initiatives as part of MS Amlin’s next phase of growth and development.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/new-zealands-nhc-secures-record-nz12-3bn-reinsurance-programme/">New Zealand&#x27;s NHC secures record NZ$12.3bn reinsurance programme - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Covers a large NZ natural-hazards reinsurance programme and catastrophe bonds, reflecting global reinsurance market activity relevant to Lloyd&#x27;s.</div><ul><li>Record 2026 reinsurance programme of NZ$12.3 billion — a 20% (NZ$2.1bn) increase from the NZ$10.3bn 2025 programme — secured on a more cost-effective basis.</li>
+<li>Strengthens financial capacity to pay homeowner claims, support recovery after major natural hazards and helps protect the Crown’s balance sheet.</li>
+<li>Programme includes a NZ$225m multi‑year catastrophe bond (Totara Re Pte. Ltd. Series 2023‑1) placed in 2023 and in force until May 2027; further bond details available in Artemis’ Deal Directory.</li>
+<li>Increase reflects strong international reinsurer confidence in New Zealand’s scheme driven by high‑quality hazard science/modeling, resilience investment and transparent engagement — signalling continued access to global reinsurance capital.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/mexico-doubles-parametric-catastrophe-insurance-to-575m-at-2026-renewal/">Mexico doubles parametric catastrophe insurance to ~$575m at 2026 renewal - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mexico doubles parametric catastrophe insurance to US$575m for 2026-27 and references ILS/catastrophe bonds, relevant to Lloyd&#x27;s market news.</div><ul><li>Mexico doubled its parametric catastrophe insurance to MXN 10 billion (≈US$575m) for the June 5, 2026–May 5, 2027 policy year, bringing total government catastrophe protection to MXN 10.4 billion for the period.</li>
+<li>The renewal comprises a MXN 400 million Loss Management Fund plus the MXN 10 billion parametric cover (earthquakes, volcanic eruptions, hurricanes and medium–high severity floods), structured for rapid, pre-defined payouts and placed on a reinsurance basis via Agroasemex.</li>
+<li>Mexico remains active in capital markets: two IBRD‑backed catastrophe bond tranches (totaling US$595m) remain in force until April 2028; combined with the new parametric insurance this gives approximately US$1.17bn of sovereign parametric protection in force.</li>
+<li>The transaction underscores Mexico’s long-standing, diversified sovereign risk‑financing strategy (parametric insurance + catastrophe bonds + reinsurance) to protect federal assets and ensure timely fiscal response after natural disasters.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/shipping-firms-face-permanent-iran-war-risk/">Shipping firms face permanent Iran war risk - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Permanent Iran-war risk affecting shipping insurers and underwriting; relevant to Lloyd&#x27;s market.</div><ul><li>The Iran war is now treated as a permanent operating condition for shipping, creating a sustained elevated risk environment for shipowners, cargo owners and insurers.</li>
+<li>Insurers are underwriting voyages on a case-by-case basis, imposing stricter approval processes and enhanced war-risk conditions/endorsements.</li>
+<li>Shipowners are more selective about vessel deployment and routing; charterers and cargo owners are seeking more flexible contracts and routing clauses to manage exposure.</li>
+<li>Insurance implications include upward pressure on war-risk premiums, tighter coverage terms and declarations, and a need for underwriters and brokers to reassess pricing, portfolio limits and contingency planning.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/descartes-and-nextpower-launch-parametric-insurance-solution-for-extreme-wind-conditions/">Descartes and Nextpower launch parametric insurance solution for extreme wind conditions - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Launch of a new parametric re/insurance solution for solar wind risk, involving market players and brokers.</div><ul><li>New integrated parametric SLW (straight-line wind) solution for solar power plants launched by Descartes Underwriting and Nextpower to protect operators from damaging, underinsured convective wind events.</li>
+<li>Parametric triggers use site-level wind measurements from Nextpower meteorological stations—anchoring payouts to on-site data to materially reduce basis risk versus remote indices.</li>
+<li>Limits up to USD 80 million per policy globally (up to USD 100 million in the US); can be bundled with Descartes’ satellite-based tornado and radar-based hail products for comprehensive severe convective storm coverage.</li>
+<li>Available via commercial re/insurance brokers to eligible Nextpower customers worldwide; parametric structure enables rapid liquidity to support reconstruction, PPA obligations, debt servicing and tax-equity stability, complementing Nextpower’s physical wind resilience.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/euler-ils-partners-appoints-martin-bisping-as-chairman-of-the-board/">Euler ILS Partners appoints Martin Bisping as Chairman of the Board - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> New chairman appointment at a leading ILS manager; signals developments in the ILS market and risk capital flows relevant to Lloyd&#x27;s market participants.</div><ul><li>Martin Bisping appointed Chairman of Euler ILS Partners’ Board, succeeding Donato Cianciaruso.</li>
+<li>Bisping brings decades at Swiss Re across reinsurance and ILS: natural catastrophe underwriting, head of Atmospheric Perils, Head of Non‑Life Risk Transformation (retrocession, risk syndication, sidecars, catastrophe bonds), CEO/Co‑CEO/CIO of SRILIM and later Chief Risk Officer.</li>
+<li>He offers deep expertise in ILS, capital markets, risk transfer and institutional‑grade investment governance, plus established relationships with institutional allocators and investors.</li>
+<li>The appointment signals strengthened governance and experience at board level to support Euler ILS Partners’ platform development, investor engagement and growth in ILS strategies.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/the-biggest-people-moves-this-week/1458808.article">The biggest people moves this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s market-related leadership moves (e.g., Arch Insurance UK/AMAL) within a broader market round-up.</div><ul><li>Clear Group appoints Nathan Bavidge as CFO succeeding Tim Money; Bavidge joins from Three Rock Group (parent of Chill Insurance, Quote Devil and Ivernia MGA), providing external CFO experience at a growth-focused insurance group.</li>
+<li>Konsileo names Dawn Derbyshire head of commercial strategy to lead strategic execution, proposition development, growth and distribution, working closely with client directors and key partners.</li>
+<li>Sedgwick announces departure of Peter Farrelly after 11 years (roles included head of speciality, MD UK commercial claims services and COO), creating a senior leadership vacancy in UK commercial claims operations.</li>
+<li>Policy Expert creates a chief growth officer role and hires former Allianz executive Graham Wright to drive the insurer’s growth strategy while maintaining underwriting discipline, leveraging his home and broker leadership experience.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/aon-names-steve-dando-as-chief-broking-officer-for-its-global-broking-center/">Aon names Steve Dando as Chief Broking Officer for its Global Broking Center - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd’s-backed capacity and London market broking, linking to Lloyd’s market activities.</div><ul><li>Steve Dando appointed Chief Broking Officer, Global Broking Center at Aon (effective 1 July) to set broking strategy for the London-based wholesale &amp; specialty business, strengthen market relationships and integrate analytics, capital and global expertise to deliver innovative risk-transfer solutions.</li>
+<li>Dando’s background: former CEO of Aon’s Strategy &amp; Technology Group and Inpoint (UK &amp; EMEA), where he led ~350 colleagues across advisory, analytics and portfolio strategy; previously Global Head of Broking at The Ardonagh Group — brings strong London market credibility.</li>
+<li>GBC’s strategic role: connects Aon’s global capabilities with the London market to structure complex placements and develop proprietary facilities, including Aon Client Treaty (pre‑secured Lloyd’s‑backed capacity) and the Data Center Lifecycle Insurance Program.</li>
+<li>Implication for insurers/brokers: expect intensified use of data-driven insight, advanced placement solutions and advocacy to provide greater certainty on increasingly complex, interconnected risks and to enhance client outcomes.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/florida-insurance-market-better-positioned-for-26-hurricane-season-but-yet-to-be-fully-tested-fitch/">Florida insurance market better positioned for ‘26 hurricane season, but yet to be fully tested: Fitch - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses Florida property insurance market, reinsurance demand/capacity and midyear renewals—impacting Lloyd&#x27;s market exposures.</div><ul><li>2026 Atlantic season is forecast modestly below historical averages, but Florida remains a focal point because insured losses depend on where and how storms make landfall rather than seasonal counts.</li>
+<li>US P&amp;C insurers and reinsurers enter 2026 with stronger capital buffers and improved market structure, positioning the industry to absorb a large insured loss from an individual catastrophe; however, multiple large events in rapid succession could erode capital and pressure ratings.</li>
+<li>Reinsurance demand is rising into the midyear renewals—driven by exposure growth, higher property values, FHCF attachment‑point shifts and new private carriers—with Florida cedents expected to seek an additional $5–7 billion of reinsurance focused below the standard FHCF layer.</li>
+<li>Florida’s market has materially improved via legislation, greater private‑market capacity and depopulation: Citizens’ policies in force fell from ~1.4M (2023) to ~295k (Apr 2026), though the resilience of reforms is untested by a severe season and smaller Florida‑only writers remain relatively vulnerable.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/94-of-us-business-owners-fear-insurance-gaps-driving-shift-to-integrated-risk-strategies-gallagher/">94% of US business owners fear insurance gaps, driving shift to integrated risk strategies: Gallagher - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers risk-management trends, AI/cyber risk, weather exposure and insurance gaps—topics of direct interest to Lloyd&#x27;s market; cites Gallagher survey data.</div><ul><li>Business owners are shifting from reactive to embedded risk management—94% fear their insurance may fall short—creating demand for integrated risk advisory and coverage solutions that inform operations, investments and growth.</li>
+<li>AI is both a growth driver and material exposure: 89% express concern, 47% plan increased AI investment, and 95% call for stronger regulation; 38% already use AI for analytical risk assessment and 36% to mitigate insurance/management risks.</li>
+<li>Cyber risk has moved to core operational vulnerability: 68% worry about cyber attacks and 44% want to acquire or expand cyber insurance, indicating growing market demand for cyber products and risk remediation services.</li>
+<li>Supply chain volatility is now standard operating risk—63% are concerned about disruptions in 2026 and 61% have contingency suppliers—suggesting underwriting should reflect operational redundancy and continuity measures.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/06/12/873525.htm">UK Venture Plans Europe&#x27;s Largest Plant for Capturing CO2 From Air</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> UK direct air capture project with financing and carbon-credit implications; insurance/market risk relevance for Lloyd&#x27;s.</div><ul><li>Project snapshot: UnionDAC (Progressive Energy, Airhive, Mission Zero) plans a Teesside direct-air-capture (DAC) plant aiming to start sequestration in 2030 and reach ~60,000 tCO2/year by 2032 (would surpass Climeworks’ 36,000 tpa Mammoth); target fundraising ~£100m and expected ~50,000 carbon-removal credits/year, with CO2 routed into the Northern Endurance Partnership for subsea storage.</li>
+<li>Technical and operational risk drivers: deployment of two different DAC technologies (fluidized‑bed and electrochemical) plus CO2 pipeline transport and offshore injection create exposures around technology performance, commissioning risk, pipeline integrity, subsurface leakage/permanence, monitoring/verification and long‑tail environmental liability.</li>
+<li>Market, counterparty and policy exposures: revenue dependent on sale/price of carbon‑removal credits and offtake counterparty creditworthiness; project economics and expansion are highly sensitive to UK policy, permitting for storage, and the large scale‑up needed to meet UK targets (21.3 Mt engineered removals by 2040, rising to 35.8 Mt by 2050, with DAC ~8 Mt by 2050).</li>
+<li>Insurance implications and opportunities: demand for construction/installation, technology‑failure, operator’s liability, pipeline and CCS storage liability, long‑term monitoring/indemnity and carbon‑credit performance covers; underwriting will require detailed tech due diligence, long‑duration coverage design, caps on latent environmental risks, and contract alignment with CCS network operators and offtakers.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/national/2026/06/12/873539.htm">Claimants of 23andMe Data Breach to Get $46.75M in Settlement Deal</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s underwriters issuing cyber insurance to 23andMe, tying the story to Lloyd&#x27;s market activity.</div><ul><li>Administrator agreed to a $46.75M resolution (including $32.5M to resolve consolidated class actions); settlement reduced ~$3.25M from a prior maximum to avoid protracted, costly litigation in bankruptcy proceedings.</li>
+<li>Approximately $14.3M has been distributed to the settlement administrator, with about $13M funded by cyber insurance; named carriers include Allied World Specialty, Tokio Marine HCC’s Houston Casualty, Berkshire Hathaway’s Landmark American, and various Lloyd’s underwriters.</li>
+<li>Claims handling: plan administrator has resolved over 255,860 claims but thousands remain unresolved; payouts are tiered ($50–$10,000 for extraordinary claims) rather than a flat payment—key for aggregate limit, exhaustion and reinstatement exposure analysis.</li>
+<li>Context and exposures: April–Sept 2023 breach affected roughly half of 14.1M customers (5.5M DNA Relatives profiles, 1.4M Family Tree); company filed bankruptcy in Mar 2025, rebranded Chrome Holding Co., sold assets and now faces a California enforcement suit—implications for regulatory risk, subrogation potential and future cyber underwriting considerations.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/discipline-and-drawdown-limits-define-ils-managers-over-full-market-cycles-francois-divet/">Discipline and drawdown limits define ILS managers over full market cycles: Francois Divet - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers ILS market dynamics and cat bonds relevant to risk transfer and capacity in the Lloyd&#x27;s market.</div><ul><li>Assess ILS managers over full market cycles—strong managers maintain discipline, limit drawdowns in severe loss years and avoid “reaching for yield” late in the cycle.</li>
+<li>Catastrophe bonds complement traditional reinsurance: they remove counterparty credit risk (fully funded SPV collateral), typically offer multi‑year protection (often 3 years) and can strengthen an insurer’s negotiating position with reinsurers.</li>
+<li>Diversification is essential—across perils, regions (and subregions), layers and trigger types—to reduce drawdowns, but it cannot eliminate systemic tail risk if extreme events hit multiple peak‑peril exposures simultaneously.</li>
+<li>Portfolio construction: BNP Paribas AM targets a fund‑level expected loss of ~2–2.5%, enforces hard peril/geography limits, manages exposures carefully and typically holds bonds to maturity unless underlying risk changes materially.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/njm-insurance-secures-upsized-250m-lower-ferry-re-2026-1-cat-bond/">NJM Insurance secures upsized $250m Lower Ferry Re 2026-1 cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Updates on cat bond issuance and reinsurance capacity in the US; relevant to Lloyd&#x27;s reinsurance/ILS activity.</div><ul><li>NJM secured an upsized $250M northeast US named‑storm reinsurance via Lower Ferry Re Ltd. (Series 2026‑1) — fully collateralized, indemnity, per‑occurrence cover with a roughly three‑year term; this is NJM’s largest cat‑bond sponsorship to date.</li>
+<li>All three tranches priced below initial guidance at the low end of tightened ranges: Class A $70M at 2.75% (base EL 1.18%); Class B $55M at 3.00% (base EL 1.49%); Class C $125M at 4.00% (base EL 2.00%).</li>
+<li>The transaction was upsized from an initial ~$150M target to $250M following strong investor demand, enabling NJM to more than replace the protection from its expiring Lower Ferry Re 2023‑1 ($190M) cat bond.</li>
+<li>Outcome signals robust ILS investor appetite and improved pricing conditions—NJM achieved maximum targeted limit at tighter spreads than originally marketed.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/novo-nordisk-flags-patient-data-breach-from-some-clinical-trials-in-cyberattack/">Novo Nordisk flags patient data breach from some clinical trials in cyberattack - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers a cybersecurity data breach at a major pharma company, with implications for cyber risk underwriting and coverage in Lloyd&#x27;s market.</div><ul><li>Incident: Novo Nordisk reported a cyberattack that resulted in unauthorized copying of a limited set of internal data from some clinical trials, potentially including patient ID, year of birth, sex and health/immunogenicity data; the company states no direct identifiers (e.g., names) were part of the incident and that the data alone cannot identify participants.</li>
+<li>Immediate response: Novo Nordisk has engaged external cybersecurity experts, notified relevant authorities, and temporarily taken certain internal IT systems offline while core business operations remain running; it is advising trial participants to report any unusual occurrences.</li>
+<li>Risk/claims implications: While the company says there is no immediate patient safety risk, insurers should expect exposure to breach response and remediation costs, regulatory notification and enforcement risk, privacy/PI and possible class-action or clinical-trial-specific liability, plus reputational and operational impacts.</li>
+<li>Insurance considerations: Review potential coverage triggers across cyber, privacy/PI, and D&amp;O lines; require expedited forensic validation of the scope and identifiability of data, jurisdictional regulatory exposure assessment, tracking of notification/mitigation steps, and evaluation of aggregation risk given Novo Nordisk’s high-profile products and clinical programs.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/willis-re-expands-leadership-team-with-two-senior-appointments-in-london-and-bermuda/">Willis Re expands leadership team with two senior appointments in London and Bermuda - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Mentions leadership changes at Willis Re, a major reinsurance firm, impacting Lloyd&#x27;s market dynamics and reinsurers.</div><ul><li>Willis Re has appointed Jonathan Ogilvie as Global Head of Non‑Marine Specialties (based in London) and Chris Dart as Head of Treaty Reinsurance, Bermuda (based in Bermuda), effective immediately to lead teams, oversee portfolio performance and expand the reinsurance platform.</li>
+<li>Both hires bring deep market experience—Ogilvie with 20+ years across London and Bermuda (notably Head of Property Retrocession at Guy Carpenter) and Dart with 23 years specializing in property treaty and retrocession (most recently MD &amp; Head of Property Treaty Bermuda at Guy Carpenter).</li>
+<li>Willis Re intends the appointments to strengthen market engagement and service delivery, broaden sector capabilities and support growth of bespoke treaty and specialty solutions for global clients.</li>
+<li>Firm messaging emphasizes combining specialist sector expertise with advanced data, technology and analytics to deliver technically rigorous, market‑insightful and collaborative reinsurance advisory and broking solutions.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/specialty-mga-appoints-smithson-as-head-of-global-financial-lines-cyber/">Specialty MGA appoints Smithson as Head of Global Financial Lines &amp; Cyber - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> London-based MGA leadership appointment in financial lines and cyber, with expansion in the London market.</div><ul><li>Specialty MGA (MNK Group) appoints Marcus Smithson as Head of Financial Lines &amp; Cyber in London to lead underwriting and accelerate its global financial lines and cyber portfolio.</li>
+<li>Mandate includes building a diversified, technically underwritten book across D&amp;O, Financial Institutions PI, Bankers Blanket Bond, crime and cyber liability, using the MGA’s flexible model and international distribution.</li>
+<li>Smithson brings 30+ years’ experience including senior roles at Marsh, nearly a decade establishing Generali’s Latin American financial lines &amp; cyber in São Paulo, and prior underwriting/portfolio roles at QBE London.</li>
+<li>Appointment supports MNK’s strategy to scale international specialty capabilities, expand into growth regions (notably Latin America), and drive disciplined risk selection and clearer coverage for traditional and technology-driven exposures.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/augment-risk-outlines-parametric-opportunity-as-2026-world-cup-kicks-off/">Augment Risk outlines parametric opportunity as 2026 World Cup kicks off - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Covers parametric weather risk and reinsurance concepts relevant to Lloyd&#x27;s market.</div><ul><li>Augment Risk flags broad weather exposure across 2026 World Cup venues—extreme heat, severe storms, tropical cyclones (notably Miami, Houston, Monterrey) and flooding (Mexico City, Miami, Houston, East Coast)—creating welfare, transport, power and venue-damage risks and acute aggregation for primary carriers writing event cancellation, business interruption, hospitality and broadcast contingency cover.</li>
+<li>Insurers are increasingly turning to parametric/index solutions to deliver rapid liquidity when predefined meteorological triggers occur, reducing loss-adjustment overhead, speeding payouts, accessing alternative capacity and providing scalable protection for exposures that are hard or uneconomic to insure on an indemnity basis.</li>
+<li>Structuring and basis risk are the core challenges: a single reference gauge may not represent venue exposure, so properly engineered covers (multi‑station triggers, gridded satellite data, layered peril structures and hybrid parametric + modest indemnity backstops) and bespoke broking are needed to manage residual basis and counterparty concerns.</li>
+<li>Market implication: the World Cup will serve as a high‑profile demonstration of why index‑based capital merits a larger share of catastrophe/contingency premium, and brokers capable of linking bespoke parametric structures to capital markets will be strategically important in the next cycle.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/06/12/873532.htm">People Moves: Willis Re Taps Ogilvie and Dart From Carpenter for Key Roles in London, Bermuda; Aon Promotes Dando as Chief Broking Officer for Global Broking Center</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Includes Lloyd&#x27;s-backed capacity reference and London market broker appointments impacting Lloyd&#x27;s ecosystem.</div><ul><li>Willis Re has hired Jonathan Ogilvie as Global Head of Non‑Marine Specialties (London) and Chris Dart as Head of Treaty Reinsurance, Bermuda—both joining from Guy Carpenter to lead teams, manage portfolio performance and expand Willis Re’s reinsurance platform and market engagement.</li>
+<li>Ogilvie and Dart bring deep technical experience in property, specialty, treaty and retrocession markets (20+ and 23 years respectively), strengthening Willis Re’s capabilities in London and Bermuda for global clients.</li>
+<li>Aon has appointed Steve Dando as Chief Broking Officer for its Global Broking Center (effective July 1), where he will set broking strategy, strengthen market connectivity and drive integration of analytics, capital and global expertise.</li>
+<li>Aon’s GBC remains central to linking global capabilities with the London market, structuring complex placements and developing proprietary solutions such as Aon Client Treaty and the Data Center Lifecycle Insurance Program.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/high-five-catch-up-on-the-biggest-stories-this-week/1458807.article">High Five: Catch up on the biggest stories this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Mentions Beazley, a Lloyd&#x27;s market insurer, among top market stories; other items pertain to the broader Lloyd&#x27;s market ecosystem.</div><ul><li>Beazley’s former chief risk officer departed amid non‑financial misconduct allegations (joined 2012, CRO from 2021, left early 2025) — a governance and conduct‑risk development for underwriters to monitor.</li>
+<li>Amwins Group and Dragoneer offered to buy Australian broker Steadfast for A$7.7bn (≈£4bn) — a major broking consolidation with potential distribution, commission and market‑power implications.</li>
+<li>Policy Expert appointed ex‑Allianz executive Graham Wright as chief growth officer to lead trading and insurance functions, signalling a push for expansion while emphasising underwriting discipline.</li>
+<li>Clear Group named Nathan Bavidge as CFO following Tim Money’s decision to step down — notable senior finance leadership change for brokers/insurers tracking capital and reporting priorities.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/hurricane-forecast-softens-to-below-normal-colorado-state/">Hurricane forecast softens to below normal: Colorado State - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Catastrophe risk and hurricane forecast relevant to Lloyd&#x27;s market coverage.</div><ul><li>Colorado State University lowered its 2026 Atlantic hurricane forecast to 11 named storms, five hurricanes and two major hurricanes (down from 13/6/2 in April).</li>
+<li>The downgrade reflects increased confidence in a moderate–strong El Niño during the peak season, which is expected to produce well‑above‑normal vertical wind shear across the tropical Atlantic and Caribbean, suppressing storm development.</li>
+<li>CSU now places the probability of a major hurricane making U.S. landfall at 24% versus a 1880–2020 average of 43% — signaling reduced landfall risk but not elimination of catastrophic exposure.</li>
+<li>For insurers/reinsurers: expect potential near‑term downward pressure on modeled frequency and losses, but maintain caution — a single landfalling storm can be materially damaging. Actions include reviewing catastrophe models and assumptions, reinsurance programs and pricing, coastal exposure management, and ongoing preparedness and business‑continuity planning.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/georgia-court-says-comp-bar-applies-in-teen-workers-fatal-heavy-equipment-accident/">Comp bar applies in teen worker’s fatal heavy equipment accident - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Legal ruling on workers&#x27; comp exclusivity affects employer liability risk and coverage; impacts underwriting and risk transfer in the Lloyd&#x27;s market.</div><ul><li>Georgia Court of Appeals affirmed dismissal of parents’ tort claims after a 16‑year‑old Terra Excavating employee was killed when a compactor rolled off an elevated pad, holding the Georgia Workers’ Compensation Act provides the exclusive remedy.</li>
+<li>Court found the supervisor was a co‑employee (same employer) and the injury arose in the course of employment, so ordinary suits against co‑employees are barred under the Act.</li>
+<li>The plaintiffs’ argument that an “affirmative act” by the supervisor would allow tort claims failed: record showed the supervisor instructed the teen to stay toward the center of the pad, was not in the immediate area, and did not affirmatively direct operation of the compactor.</li>
+<li>Practical implications for insurers: reinforces comp exclusivity in similar facts but highlights need to document supervision, training, contractor/subcontractor relationships and any supervisory directives—since evidence of intentional or affirmatively wrongful acts can be dispositive for exception analysis and coverage exposure.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/glen-riddell-succeeds-james-beedle-as-sra-chair/">Glen Riddell succeeds James Beedle as SRA Chair - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Includes Lloyd’s Asia leadership mention; ties to Lloyd’s market activity in Asia.</div><ul><li>Glen Riddell has been named Chair of the Singapore Reinsurers’ Association, succeeding James Beedle who is retiring after a 36‑year career and notable leadership of SRA education and talent initiatives (Convenor 2017–2024; Deputy Chair 2024–2026).</li>
+<li>The new executive team comprises senior industry figures: Riddell (CEO, Berkley Re Asia Pacific), Emma Loynes (Deputy Chair; CEO Lloyd’s Asia &amp; Country Manager Singapore), Michael Hauer (Honorary Secretary; MD &amp; Head of Non‑Life Southeast Asia, Munich Re) and Mukul Kishore (Honorary Treasurer; CEO SCOR Reinsurance Asia Pacific).</li>
+<li>Appointments reinforce SRA’s strong links to global reinsurers, Lloyd’s and regional markets, signaling continuity in strategic focus on professional development and regional reinsurance capabilities.</li>
+<li>For insurance professionals, expect continued emphasis on education/professional development, strengthened market collaboration and potential initiatives impacting reinsurance capacity, placement practices and standards in Singapore and the wider Asia Pacific region.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/active-typhoon-season-raises-flood-risk-across-asia/">Active typhoon season raises flood risk across Asia - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers typhoon-driven flood risk in Asia, a key catastrophe risk relevant to Lloyd&#x27;s market underwriting.</div><ul><li>UCL Tropical Storm Risk forecasts NW Pacific tropical activity ~25% above the 30‑year average, indicating the most active typhoon season in over a decade.</li>
+<li>Elevated flood and typhoon exposure is concentrated in coastal Japan, eastern China and South Korea, with wider implications across Asia.</li>
+<li>Insurer impacts likely include increased frequency/severity of property, marine and business‑interruption claims — review cat models, reserves and reinsurance program adequacy.</li>
+<li>Recommended actions: tighten underwriting and pricing at renewals, stress‑test portfolios, accelerate pre‑event loss mitigation client engagement, and update exposures in catastrophe modeling.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-06-13T07:09:31Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
