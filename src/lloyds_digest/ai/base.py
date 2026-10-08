@@ -82,11 +82,12 @@ class OpenAIClient:
             ],
         }
         # Keep responses stable by default for non-reasoning models.
-        if not self.model.startswith("gpt-5"):
-            payload["temperature"] = 0.2
+        apply_openai_generation_settings(payload, self.model, temperature=0.2)
+        if self.model.startswith("gpt-6-luna"):
+            payload["response_format"] = {"type": "json_object"}
 
         tier = (service_tier or os.environ.get("OPENAI_SERVICE_TIER", "flex")).strip()
-        payload["service_tier"] = tier or "flex"
+        payload["service_tier"] = normalise_openai_tier(tier or "flex")
 
         max_completion_tokens = os.environ.get("OPENAI_MAX_COMPLETION_TOKENS", "").strip()
         if max_completion_tokens:
@@ -104,10 +105,11 @@ class OpenAIClient:
                     return None  # caller will retry using the fallback tier
                 response.raise_for_status()
             data = response.json()
+            validate_openai_response(data, json_only=self.model.startswith("gpt-6-luna"))
         return {
             "response": _extract_openai_text(data),
             "raw": data,
-            "service_tier": payload["service_tier"],
+            "service_tier": data.get("service_tier") or payload["service_tier"],
         }
 
     def _should_fallback(self, response: httpx.Response, service_tier: str) -> bool:
@@ -122,12 +124,46 @@ class OpenAIClient:
         return fallback_tier.lower() != "flex"
 
 
+def validate_openai_response(data: dict[str, Any], json_only: bool = False) -> None:
+    text = _extract_openai_text(data)
+    choices = data.get("choices") or []
+    if not text.strip() or (choices and choices[0].get("finish_reason") in {"length", "content_filter"}):
+        raise ValueError("OpenAI returned empty or incomplete output")
+    if json_only and not isinstance(json.loads(text), dict):
+        raise ValueError("OpenAI did not return a JSON object")
+
+
+def normalise_openai_tier(tier: str) -> str:
+    # OpenAI calls ordinary processing 'default', not 'standard'.
+    return "default" if tier.strip().lower() == "standard" else tier.strip().lower()
+
+
+def apply_openai_generation_settings(
+    payload: dict[str, Any], model: str, temperature: float | None = None
+) -> None:
+    if temperature is not None and not model.startswith(("gpt-5", "gpt-6")):
+        payload["temperature"] = temperature
+    if model.startswith("gpt-6-luna"):
+        # Short editorial tasks should not inherit medium reasoning's extra tokens.
+        payload["reasoning_effort"] = os.environ.get("OPENAI_REASONING_EFFORT", "none")
+        payload["max_completion_tokens"] = int(
+            os.environ.get("OPENAI_MAX_COMPLETION_TOKENS", "8192") or "8192"
+        )
+
+
+def _generation_cache_settings(model: str) -> dict[str, Any]:
+    settings: dict[str, Any] = {}
+    apply_openai_generation_settings(settings, model)
+    return settings
+
+
 def build_cache_key(model: str, prompt_version: str, content: str) -> str:
     payload = json.dumps(
         {
             "model": model,
             "prompt_version": prompt_version,
             "content": normalize_cache_content(content),
+            **({"generation_settings": _generation_cache_settings(model)} if model.startswith("gpt-6") else {}),
         },
         sort_keys=True,
     )
@@ -160,10 +196,12 @@ def post_openai_chat_completion(
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt},
         ],
-        "service_tier": service_tier,
+        "service_tier": normalise_openai_tier(service_tier),
     }
-    if temperature is not None:
-        body["temperature"] = temperature
+    apply_openai_generation_settings(body, model, temperature)
+    json_only = model.startswith("gpt-6-luna") and "JSON" in system_prompt.upper()
+    if json_only:
+        body["response_format"] = {"type": "json_object"}
     for attempt in range(1, max_attempts + 1):
         with httpx.Client(timeout=timeout) as client:
             response = client.post(url, headers=headers, json=body)
@@ -175,8 +213,8 @@ def post_openai_chat_completion(
                 and _is_flex_capacity_429(response)
             ):
                 print(f"OpenAI flex exhausted; retrying on tier={fallback_tier}", flush=True)
-                body["service_tier"] = fallback_tier
-                actual_tier = fallback_tier
+                body["service_tier"] = normalise_openai_tier(fallback_tier)
+                actual_tier = body["service_tier"]
                 response = client.post(url, headers=headers, json=body)
             if response.status_code >= 400:
                 if attempt == max_attempts:
@@ -187,9 +225,10 @@ def post_openai_chat_completion(
                     )
                 continue
             data = response.json()
+            validate_openai_response(data, json_only=json_only)
             return {
                 "data": data,
-                "service_tier": actual_tier,
+                "service_tier": data.get("service_tier") or actual_tier,
             }
     raise RuntimeError("OpenAI request failed after retries.")
 

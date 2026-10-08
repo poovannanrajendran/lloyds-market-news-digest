@@ -65,7 +65,41 @@ def test_post_openai_chat_completion_falls_back_to_standard(monkeypatch: pytest.
         system_prompt="Return JSON only, no markdown.",
     )
 
-    assert result["service_tier"] == "standard"
+    assert result["service_tier"] == "default"
     assert len(dummy.calls) == 2
     assert dummy.calls[0]["json"]["service_tier"] == "flex"
-    assert dummy.calls[1]["json"]["service_tier"] == "standard"
+    assert dummy.calls[1]["json"]["service_tier"] == "default"
+
+@pytest.mark.parametrize('client_path', ['shared', 'pipeline'])
+def test_luna_payload_and_fallback(monkeypatch, client_path):
+    dummy = _DummyClient
+    dummy.calls = []
+    monkeypatch.setattr(ai_base.httpx, 'Client', dummy)
+    monkeypatch.setenv('OPENAI_API_KEY', 'key')
+    monkeypatch.setenv('OPENAI_REASONING_EFFORT', 'none')
+    monkeypatch.setenv('OPENAI_MAX_COMPLETION_TOKENS', '8192')
+    if client_path == 'shared':
+        result = ai_base.post_openai_chat_completion('hello', model='gpt-6-luna', api_key='key', service_tier='flex', fallback_tier='standard', timeout=1, system_prompt='JSON', temperature=.2)
+    else:
+        result = ai_base.OpenAIClient(model='gpt-6-luna', service_tier='flex').generate('hello')
+    assert result['service_tier'] == 'default'
+    for call in dummy.calls:
+        payload = call['json']
+        assert 'temperature' not in payload
+        assert payload['reasoning_effort'] == 'none'
+        assert payload['max_completion_tokens'] == 8192
+    assert dummy.calls[-1]['json']['service_tier'] == 'default'
+
+
+def test_reported_service_tier_takes_precedence(monkeypatch):
+    class ActualTierClient(_DummyClient):
+        def post(self, url, headers, json):
+            return _DummyResponse(200, '', {'choices': [{'message': {'content': '{}'}}], 'service_tier': 'default'})
+    monkeypatch.setattr(ai_base.httpx, 'Client', ActualTierClient)
+    result = ai_base.post_openai_chat_completion('hello', model='gpt-6-luna', api_key='key', service_tier='flex', fallback_tier='default', timeout=1, system_prompt='JSON')
+    assert result['service_tier'] == 'default'
+
+@pytest.mark.parametrize('content,reason', [('', 'stop'), ('{}', 'length'), ('[]', 'stop')])
+def test_invalid_luna_output_is_rejected(content, reason):
+    with pytest.raises(ValueError):
+        ai_base.validate_openai_response({'choices': [{'finish_reason': reason, 'message': {'content': content}}]}, json_only=True)

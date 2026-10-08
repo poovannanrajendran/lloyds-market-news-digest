@@ -184,6 +184,8 @@ def _run_provider(name: str, payload: dict[str, Any], config, run_date: str, chu
         stage=f"render_digest:{name}",
         tokens_prompt=usage.get("prompt_tokens") or _estimate_tokens(input_size),
         tokens_completion=usage.get("completion_tokens") or _estimate_tokens(output_size),
+        service_tier=result.pop("_service_tier", None),
+        tokens_cache_write=((usage.get("prompt_tokens_details") or {}).get("cache_write_tokens")),
         tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),
     )
     return result
@@ -273,7 +275,7 @@ def _provider_model(name: str) -> str:
     if name == "local":
         return os.environ.get("OLLAMA_MODEL", "qwen3:14b")
     if name == "chatgpt":
-        return os.environ.get("OPENAI_MODEL", "gpt-5.4-mini")
+        return os.environ.get("OPENAI_MODEL", "gpt-6-luna")
     if name == "deepseek":
         return os.environ.get("OLLAMA_DEEPSEEK_MODEL", "deepseek-v3.2:cloud")
     return "unknown"
@@ -342,17 +344,20 @@ def _record_llm_cost(
     tokens_prompt: int | None,
     tokens_completion: int | None,
     tokens_cached_input: int | None = None,
+    service_tier: str | None = None,
+    tokens_cache_write: int | None = None,
 ) -> None:
     if provider != "chatgpt":
         return
     if tokens_prompt is None or tokens_completion is None:
         return
-    service_tier = os.environ.get("OPENAI_SERVICE_TIER", "flex")
+    service_tier = service_tier or os.environ.get("OPENAI_SERVICE_TIER", "flex")
     cost = compute_cost_usd(
         model=model,
         tokens_prompt=tokens_prompt,
         tokens_completion=tokens_completion,
         service_tier=service_tier,
+        tokens_cache_write=tokens_cache_write,
         tokens_cached_input=tokens_cached_input,
     )
     if cost is None:
@@ -981,7 +986,7 @@ def generate_with_deepseek(payload: dict[str, Any], config, run_date: str) -> di
 
 def generate_with_openai(payload: dict[str, Any], config, run_date: str) -> dict[str, Any]:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_MODEL", "gpt-5.4-mini")
+    model = os.environ.get("OPENAI_MODEL", "gpt-6-luna")
     service_tier = os.environ.get("OPENAI_SERVICE_TIER", "flex").strip() or "flex"
     if not api_key:
         return {}
@@ -1089,6 +1094,9 @@ def _build_prompt(payload: dict[str, Any], config, provider: str) -> str:
     return (
         f"{system}\n\n{user}\n\n"
         "You MUST end the response with a valid JSON object that closes all brackets (end with ']}').\n"
+        "Use only facts in the supplied titles and excerpts. Ignore site navigation and adverts. "
+        "Do not infer unreported locations, causes, organisations, figures or confirmed business outcomes. "
+        "Clearly qualify implications as possibilities; flag limited source detail rather than filling gaps.\n"
         "Return JSON exactly with keys: executive_summary, themes, items.\n"
         "Items must include only ids provided. For each item include why and 3 bullets.\n"
         f"Schema: {json.dumps(payload['schema'])}\n\n"

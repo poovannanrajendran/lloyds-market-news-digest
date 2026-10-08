@@ -17,3 +17,10 @@ def test_ai_cache_key_ignores_whitespace_noise() -> None:
 
 def test_normalize_cache_content_collapses_whitespace() -> None:
     assert normalize_cache_content("  a\tb\nc  ") == "a b c"
+
+
+def test_luna_cache_key_changes_with_reasoning(monkeypatch):
+    monkeypatch.setenv('OPENAI_REASONING_EFFORT', 'none')
+    first = build_cache_key('gpt-6-luna', 'v1', 'content')
+    monkeypatch.setenv('OPENAI_REASONING_EFFORT', 'low')
+    assert build_cache_key('gpt-6-luna', 'v1', 'content') != first

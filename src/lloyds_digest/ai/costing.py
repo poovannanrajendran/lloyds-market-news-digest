@@ -9,6 +9,7 @@ class ModelRate:
     input_per_million: float
     cached_input_per_million: float | None
     output_per_million: float
+    cache_write_per_million: float | None = None
 
 
 CUSTOM_RATES: dict[str, ModelRate] = {
@@ -17,6 +18,7 @@ CUSTOM_RATES: dict[str, ModelRate] = {
 }
 
 FLEX_RATES: dict[str, ModelRate] = {
+    "gpt-6-luna": ModelRate(0.05, 0.005, 0.25, 0.0625),
     "gpt-5.2": ModelRate(0.875, 0.0875, 7.00),
     "gpt-5.1": ModelRate(0.625, 0.0625, 5.00),
     "gpt-5": ModelRate(0.625, 0.0625, 5.00),
@@ -31,14 +33,15 @@ FLEX_RATES: dict[str, ModelRate] = {
 }
 
 STANDARD_RATES: dict[str, ModelRate] = {
+    "gpt-6-luna": ModelRate(0.10, 0.01, 0.50, 0.125),
     "gpt-5.2": ModelRate(1.75, None, 14.00),
     "gpt-5.1": ModelRate(1.25, None, 10.00),
     "gpt-5": ModelRate(1.25, None, 10.00),
-    "gpt-5-mini": ModelRate(0.25, None, 2.00),
+    "gpt-5-mini": ModelRate(0.25, 0.025, 2.00),
     "gpt-5.4": ModelRate(2.50, 0.25, 15.00),
     "gpt-5.4-mini": ModelRate(0.75, 0.075, 4.50),
     "gpt-5.4-nano": ModelRate(0.20, 0.02, 1.25),
-    "gpt-5-nano": ModelRate(0.05, None, 0.40),
+    "gpt-5-nano": ModelRate(0.05, 0.005, 0.40),
     "gpt-4o": ModelRate(2.50, None, 10.00),
 }
 
@@ -61,6 +64,7 @@ def compute_cost_usd(
     tokens_completion: int | None,
     service_tier: str | None = None,
     tokens_cached_input: int | None = None,
+    tokens_cache_write: int | None = None,
 ) -> tuple[float, float, float] | None:
     if tokens_prompt is None or tokens_completion is None:
         return None
@@ -69,12 +73,17 @@ def compute_cost_usd(
         return None
     cached_tokens = max(0, int(tokens_cached_input or 0))
     cached_tokens = min(cached_tokens, max(0, int(tokens_prompt)))
-    billable_prompt_tokens = max(0, int(tokens_prompt) - cached_tokens)
+    write_tokens = min(max(0, int(tokens_cache_write or 0)), max(0, int(tokens_prompt) - cached_tokens))
+    billable_prompt_tokens = max(0, int(tokens_prompt) - cached_tokens - write_tokens)
     cached_input_rate = rate.cached_input_per_million
     if cached_input_rate is None:
         cached_input_rate = rate.input_per_million
     input_cost = (billable_prompt_tokens / 1_000_000.0) * rate.input_per_million
     input_cost += (cached_tokens / 1_000_000.0) * cached_input_rate
+    # Cached reads, writes and ordinary input are disjoint token categories.
+    input_cost += (write_tokens / 1_000_000.0) * (
+        rate.cache_write_per_million or rate.input_per_million
+    )
     output_cost = (tokens_completion / 1_000_000.0) * rate.output_per_million
     total = input_cost + output_cost
     return (input_cost, output_cost, total)

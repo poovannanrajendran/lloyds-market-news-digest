@@ -24,3 +24,8 @@ def test_flex_cached_input_pricing_applies_cached_rate() -> None:
     )
     assert cost == (0.0125, 0.0, 0.0125)
 
+
+def test_luna_cached_writes_are_not_double_counted() -> None:
+    import pytest
+    assert compute_cost_usd('gpt-6-luna', 1_000_000, 1_000_000, 'flex', 200_000, 300_000) == pytest.approx((.04475, .25, .29475))
+    assert compute_cost_usd('gpt-6-luna', 1_000_000, 1_000_000, 'default') == pytest.approx((.1, .5, .6))

@@ -13,7 +13,7 @@ from lloyds_digest.ai.base import (
 )
 from lloyds_digest.storage.mongo_repo import MongoRepo
 
-PROMPT = PromptSpec(name="summarise", version="v1", filename="summarise_v1.txt")
+PROMPT = PromptSpec(name="summarise", version="v2", filename="summarise_v2.txt")
 
 
 def summarise(
@@ -40,6 +40,8 @@ def summarise(
             if completion_tokens is not None
             else estimate_tokens(response_text),
             "tokens_cached_prompt": cached_prompt_tokens,
+            "tokens_cache_write": (raw.get("usage", {}).get("prompt_tokens_details") or {}).get("cache_write_tokens", 0),
+            "service_tier": response.get("service_tier"),
         }
 
     result = cached_call(mongo, key, _call)
@@ -52,6 +54,9 @@ def summarise(
         "parsed": parsed,
         "tokens_prompt": payload.get("tokens_prompt"),
         "tokens_completion": payload.get("tokens_completion"),
+        "tokens_cached_prompt": payload.get("tokens_cached_prompt"),
+        "tokens_cache_write": payload.get("tokens_cache_write"),
+        "service_tier": payload.get("service_tier"),
     }
 
 

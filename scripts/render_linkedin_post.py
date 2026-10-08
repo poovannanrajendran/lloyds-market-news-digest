@@ -57,6 +57,8 @@ A) A single LinkedIn post (plain text), ready to paste into LinkedIn
 B) A short “Alt text” line for the banner image (1 sentence)
 
 STYLE RULES
+- Use only supplied facts. Do not add unreported names, figures, causes or outcomes.
+- Present market implications as possibilities, not confirmed developments.
 - Max 1,200 characters for the post unless the digest is unusually important.
 - Start with a strong first line (hook) about the London Market signal.
 - Highlights must be specific (not generic “market volatility”).
@@ -474,7 +476,7 @@ def _capitalize_after_colon(match: re.Match[str]) -> str:
 
 def _generate_with_openai(prompt: str) -> str:
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-5.4-mini"))
+    model = os.environ.get("OPENAI_LINKEDIN_MODEL", os.environ.get("OPENAI_MODEL", "gpt-6-luna"))
     if not api_key:
         return ""
     use_temperature = not model.startswith("gpt-5")
@@ -514,6 +516,7 @@ def _generate_with_openai(prompt: str) -> str:
                 service_tier=used_tier,
                 tokens_prompt=usage.get("prompt_tokens"),
                 tokens_completion=usage.get("completion_tokens"),
+                tokens_cache_write=((usage.get("prompt_tokens_details") or {}).get("cache_write_tokens")),
                 tokens_cached_input=((usage.get("prompt_tokens_details") or {}).get("cached_tokens")),
             )
             return output_text
@@ -534,6 +537,7 @@ def _record_llm_usage_and_cost(
     tokens_prompt: int | None = None,
     tokens_completion: int | None = None,
     tokens_cached_input: int | None = None,
+    tokens_cache_write: int | None = None,
 ) -> None:
     if tokens_prompt is None:
         tokens_prompt = _estimate_tokens(prompt)
@@ -566,6 +570,7 @@ def _record_llm_usage_and_cost(
             tokens_prompt=tokens_prompt,
             tokens_completion=tokens_completion,
             service_tier=service_tier,
+            tokens_cache_write=tokens_cache_write,
             tokens_cached_input=tokens_cached_input,
         )
         if cost is None:

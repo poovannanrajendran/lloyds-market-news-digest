@@ -40,6 +40,8 @@ def relevance(
             if completion_tokens is not None
             else estimate_tokens(response_text),
             "tokens_cached_prompt": cached_prompt_tokens,
+            "tokens_cache_write": (raw.get("usage", {}).get("prompt_tokens_details") or {}).get("cache_write_tokens", 0),
+            "service_tier": response.get("service_tier"),
         }
 
     result = cached_call(mongo, key, _call)
@@ -52,6 +54,9 @@ def relevance(
         "parsed": parsed,
         "tokens_prompt": payload.get("tokens_prompt"),
         "tokens_completion": payload.get("tokens_completion"),
+        "tokens_cached_prompt": payload.get("tokens_cached_prompt"),
+        "tokens_cache_write": payload.get("tokens_cache_write"),
+        "service_tier": payload.get("service_tier"),
     }
 
 

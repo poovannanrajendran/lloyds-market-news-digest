@@ -616,9 +616,9 @@ def _article_to_items(
     if _llm_enabled():
         text = _trim_text(raw_text)
         log(f"[llm] relevance {candidate.url}")
-        relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5.4-nano")
-        classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5.4-nano")
-        summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-5.4-mini")
+        relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5-nano")
+        classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5-nano")
+        summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-6-luna")
         relevance_result = _run_llm_stage(
             stage="relevance",
             model=relevance_model,
@@ -809,17 +809,19 @@ def _run_llm_stage(
                     "tokens_cached_prompt": result.get("tokens_cached_prompt"),
                 },
             )
-            _record_llm_cost(
-                postgres=postgres,
-                run_id=run_id,
-                candidate_id=candidate_id,
-                stage=stage,
-                model=model,
-                tokens_prompt=result.get("tokens_prompt"),
-                tokens_completion=result.get("tokens_completion"),
-                tokens_cached_input=result.get("tokens_cached_prompt"),
-                service_tier=used_service_tier,
-            )
+            if not result.get("cached"):
+                _record_llm_cost(
+                    postgres=postgres,
+                    run_id=run_id,
+                    candidate_id=candidate_id,
+                    stage=stage,
+                    model=model,
+                    tokens_prompt=result.get("tokens_prompt"),
+                    tokens_completion=result.get("tokens_completion"),
+                    tokens_cache_write=result.get("tokens_cache_write"),
+                    tokens_cached_input=result.get("tokens_cached_prompt"),
+                    service_tier=used_service_tier,
+                )
         except Exception as exc:
             warnings.append(f"Failed to record llm_usage for {stage}: {exc}")
 
@@ -875,6 +877,7 @@ def _record_llm_cost(
     tokens_completion: int | None,
     tokens_cached_input: int | None,
     service_tier: str | None,
+    tokens_cache_write: int | None = None,
 ) -> None:
     from lloyds_digest.ai.costing import compute_cost_usd
 
@@ -887,6 +890,7 @@ def _record_llm_cost(
         tokens_prompt=tokens_prompt,
         tokens_completion=tokens_completion,
         service_tier=tier,
+        tokens_cache_write=tokens_cache_write,
         tokens_cached_input=tokens_cached_input,
     )
     if cost is None:
