@@ -290,7 +290,19 @@ on_error() {
   notify "Run failed at step='$CURRENT_STEP' (exit=$exit_code) on $(iso_now). See $LOG_FILE" "error"
 }
 
+check_openai_balance() {
+  # Independent warning: accounting/API failures must not stop the digest.
+  bash "$ROOT_DIR/scripts/check_openai_balance.sh" >> "$LOG_DIR/openai_balance.log" 2>&1 || true
+}
+
+on_exit() {
+  local exit_code="$?"
+  check_openai_balance
+  return "$exit_code"
+}
+
 trap on_error ERR
+trap on_exit EXIT
 
 CURRENT_STEP="disk_preflight"
 preflight_disk_space "$ROOT_DIR"
@@ -304,6 +316,8 @@ export PYTHONPATH="$ROOT_DIR/src:${PYTHONPATH:-}"
 
 CURRENT_STEP="python_preflight"
 validate_python_runtime
+
+check_openai_balance
 
 # Keep runner aligned with upstream to avoid non-fast-forward push failures.
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then

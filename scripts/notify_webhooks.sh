@@ -12,18 +12,19 @@ HOST_NAME="${HOSTNAME:-$(hostname 2>/dev/null || echo unknown-host)}"
 PROJECT_NAME="${ALERT_PROJECT_NAME:-lloyds-market-news-digest}"
 
 if [[ -z "${ALERT_WEBHOOK_SLACK:-}" && -z "${ALERT_WEBHOOK_DISCORD:-}" ]]; then
+  [[ "${ALERT_REQUIRE_DELIVERY:-0}" != "1" ]] || exit 1
   exit 0
 fi
 
 TEXT="[$LEVEL] [$PROJECT_NAME] [$HOST_NAME] $MESSAGE"
-PAYLOAD="$(python - "$TEXT" <<'PY'
+PAYLOAD="$(python3 - "$TEXT" <<'PY'
 import json
 import sys
 text = sys.argv[1]
 print(json.dumps({"text": text}))
 PY
 )"
-DISCORD_PAYLOAD="$(python - "$TEXT" <<'PY'
+DISCORD_PAYLOAD="$(python3 - "$TEXT" <<'PY'
 import json
 import sys
 text = sys.argv[1]
@@ -31,15 +32,20 @@ print(json.dumps({"content": text}))
 PY
 )"
 
+delivery_failed=0
 if [[ -n "${ALERT_WEBHOOK_SLACK:-}" ]]; then
-  curl -fsS -X POST "$ALERT_WEBHOOK_SLACK" \
+  curl -fsS --connect-timeout 5 --max-time 15 -X POST "$ALERT_WEBHOOK_SLACK" \
     -H "Content-Type: application/json" \
-    -d "$PAYLOAD" >/dev/null || true
+    -d "$PAYLOAD" >/dev/null || delivery_failed=1
 fi
 
 if [[ -n "${ALERT_WEBHOOK_DISCORD:-}" ]]; then
-  curl -fsS -X POST "$ALERT_WEBHOOK_DISCORD" \
+  curl -fsS --connect-timeout 5 --max-time 15 -X POST "$ALERT_WEBHOOK_DISCORD" \
     -H "Content-Type: application/json" \
-    -d "$DISCORD_PAYLOAD" >/dev/null || true
+    -d "$DISCORD_PAYLOAD" >/dev/null || delivery_failed=1
+fi
+
+if [[ "${ALERT_REQUIRE_DELIVERY:-0}" == "1" ]]; then
+  exit "$delivery_failed"
 fi
 
