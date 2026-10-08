@@ -1,6 +1,17 @@
 # Handoff - Lloyd's Market News Digest
 
-Last updated: 2026-04-17
+## Current AI and credit controls — v1.1.0
+
+As of 8 October 2026, GPT-6 Luna handles summaries, digest composition and LinkedIn text; GPT-5 Nano handles relevance/classification. Flex uses ordinary-tier fallback when capacity is unavailable. Luna uses no reasoning and an 8,192-token completion cap. The banner is template-rendered.
+
+An independent organisation Costs API check runs before the pipeline and on exit. It sends Slack/Discord warnings when estimated remaining credit is **$1 or less**, or accounting is unavailable. Reconcile the balance/cost baseline after top-ups; billing data can lag. This is an estimate rather than a live credit-balance endpoint.
+
+- [Detailed optimisation release](../releases/v1.1.0.md)
+- [Model configuration and rollback](gpt6-luna-rollout.md)
+- [Credit monitoring and safe dry-run](openai-balance-alerts.md)
+
+
+Last updated: 2026-10-08
 
 ## Scope
 This handoff captures the current production-like setup for daily digest automation, n8n LinkedIn monitoring, and alerting.

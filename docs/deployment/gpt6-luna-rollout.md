@@ -2,6 +2,8 @@
 
 8 October 2026. GPT-6 Luna replaces GPT-5 Mini for article summaries, digest composition and LinkedIn text. GPT-5 Nano remains the relevance/classification model. LinkedIn images still use the existing template renderer.
 
+Released as **v1.1.0**. Implementation commit: `bcca649161d8f2227065256f8e43991140db0ad1`. See the [detailed release notes](../releases/v1.1.0.md) and [documentation index](../README.md). The code was committed, pushed and promoted; local and server private settings were updated with backups.
+
 ## Configuration
 
 Set these in the private local and server `.env` files:
@@ -35,7 +37,7 @@ At identical September historical token volumes, retaining Nano and replacing Mi
 
 ## Deployment and rollback
 
-Commit and push this release, fast-forward the server checkout, update only the selected private environment settings, and verify tests/model settings/balance dry-run on the server. Keep `.env` out of Git. A mode-600 copy of the preceding environment is saved outside the checkout under `~/.local/state/lloyds-env-backups/` before promotion.
+For subsequent deployments, fast-forward the server checkout, update only the selected private environment settings, and verify tests/model settings/balance dry-run on the server. Keep `.env` out of Git. A mode-600 copy of the preceding environment is saved outside the checkout under `~/.local/state/lloyds-env-backups/` before promotion.
 
 For a model rollback, restore the three writing-model settings to `gpt-5-mini` and remove `OPENAI_MAX_COMPLETION_TOKENS` if the previous configuration had no cap. Nano settings stay unchanged. Keep the request/fallback fixes, source-grounding instructions, cost corrections and balance alerts. The next run reads the restored environment. Never rerun the publishing daily script just to validate a rollback.
 

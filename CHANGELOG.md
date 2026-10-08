@@ -1,6 +1,18 @@
 # Changelog
 
-## Unreleased
+## v1.1.0 — 2026-10-08
+
+- GPT-6 Luna replaces Mini for summaries, digest composition and LinkedIn text; GPT-5 Nano remains for relevance/classification.
+- Shared request settings, no reasoning for Luna, completion cap, JSON object mode, and empty/truncated-output rejection.
+- Source-grounded summary prompt v2 and digest/LinkedIn instructions.
+- API-supported ordinary-tier fallback, returned-tier costing, cache-write accounting and no new spend for application cache hits.
+- Independent organisation Costs API monitor alerts at estimated credit ≤ $1 through existing Slack/Discord channels.
+- 63 tests passed, one disabled live test skipped; small live comparisons completed without publishing.
+- Historical fixed-token simulation suggests 67.3% lower cost; a speed improvement is not established.
+- Refreshed project, deployment and operator documentation.
+- [Detailed release notes](docs/releases/v1.1.0.md).
+
+## Earlier development notes (historical)
 - Render-only digest generator with chunked prompts and progressive HTML output.
 - Added DeepSeek (Ollama) provider alongside local and ChatGPT for digest rendering.
 - Executive summary re-write with stricter length controls.

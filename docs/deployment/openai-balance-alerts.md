@@ -50,3 +50,7 @@ alert as sent. Other alert callers retain best-effort delivery semantics.
 
 References: [Costs API](https://developers.openai.com/api/reference/resources/admin/subresources/organization/subresources/usage/methods/costs),
 [Administration API](https://developers.openai.com/api/reference/administration/overview).
+
+## Model migration and release
+
+The v1.1.0 writing-model migration does not alter the inclusive $1 threshold or the organisation Costs API calculation. Per-stage Luna pricing is diagnostic and does not drive the balance estimate. Trial and fallback charges may appear after billing delay. See [release evidence and limitations](../releases/v1.1.0.md) and [model rollback](gpt6-luna-rollout.md).

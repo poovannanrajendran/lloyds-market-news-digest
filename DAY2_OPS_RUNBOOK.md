@@ -1,5 +1,13 @@
 # Day‑2 Ops Runbook — Lloyd’s Market News Digest
 
+## v1.1.0 model and credit checks
+
+Current writing uses GPT-6 Luna; relevance/classification retain GPT-5 Nano. Check the three writing-model overrides, `OPENAI_REASONING_EFFORT=none`, completion cap and actual returned tier when investigating AI costs. No speed improvement is established by the small trials.
+
+From the activated project environment, run `bash scripts/check_openai_balance.sh --dry-run`. The checker sources `.env`, uses organisation Costs API data and warns through normal Slack/Discord channels at estimated credit ≤ $1. It runs before processing and on exit. Reconcile its baseline after a top-up and remember billing delay.
+
+See [release details](docs/releases/v1.1.0.md), [model rollback](docs/deployment/gpt6-luna-rollout.md), [credit-monitor configuration](docs/deployment/openai-balance-alerts.md) and the [documentation index](docs/README.md).
+
 ## Current scheduler (automation-runner-01)
 - Timezone: `Europe/London`
 - Main run: `08:00` daily via `scripts/run_daily.sh`
@@ -71,7 +79,7 @@ set -a; source .env; set +a
 - Check Mongo `attempts_raw` for full content
 
 ### AI failures
-- Check `OLLAMA_HOST` + model names
+- Check `OPENAI_API_KEY`, the active OpenAI model overrides and Flex/default-tier response logs
 - Check Mongo `ai_cache` and Postgres `llm_usage`
 - Check OpenAI quota/status if `429 insufficient_quota` appears
 

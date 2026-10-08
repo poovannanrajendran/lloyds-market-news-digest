@@ -1,5 +1,7 @@
 # homeserver-optimations-and-v5-youtube
 
+Historical session record from April 2026. For current Lloyd’s digest models, cost monitoring and operations, use the [documentation index](../README.md) and [v1.1.0 release notes](../releases/v1.1.0.md). The historical YouTube and infrastructure observations below are not re-verified by this documentation update.
+
 Date: 2026-04-05
 
 ## Session Summary

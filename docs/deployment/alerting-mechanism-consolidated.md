@@ -1,5 +1,14 @@
 # Consolidated Alert Mechanism (Lloyds + n8n + YouTube V5)
 
+## October 2026 credit-monitor update
+
+The daily runner now calls `scripts/check_openai_balance.sh` before processing and on exit, including failed runs. Organisation-wide Costs API spending is subtracted from a reconciled prepaid-balance baseline. At **$1 or less**, the checker uses the same Slack/Discord transport. Accounting failures warn separately; failed delivery can retry; successful warnings are deduplicated per London day. Checks do not stop the pipeline.
+
+Use `bash scripts/check_openai_balance.sh --dry-run` from the project environment to inspect the estimate without sending an alert. An admin Costs API key is required; private keys and baselines belong only in `.env`. Reconcile after top-ups and allow for billing delay.
+
+See [monitor configuration](openai-balance-alerts.md), [current model rollout](gpt6-luna-rollout.md), and [the detailed v1.1.0 release](../releases/v1.1.0.md).
+
+
 This document is the single reference for the alert architecture used by `lloyds-market-news-digest` on `automation-runner-01`.
 
 ## 1) Objectives

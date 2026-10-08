@@ -2,6 +2,8 @@
 
 Local-first news discovery + extraction + AI scoring + HTML/email digest for London Lloyd’s Market.
 
+Current production follows [v1.1.0](docs/releases/v1.1.0.md) and the [documentation index](docs/README.md). This notebook records historical phases; current daily text generation is OpenAI-only.
+
 ## Phase 01 — Quickstart
 - Conda env: `314` (Python 3.14)
 - Copy `.env.example` -> `.env` and set DB + SMTP + Ollama values
@@ -63,24 +65,12 @@ python scripts/render_run_dashboard.py
 ```
 Open `output/dashboard/index.html` in your browser.
 
-### LLM digest comparison (24h, render-only)
-Generate HTML outputs (ChatGPT + DeepSeek via Ollama) using the last 24 hours of already-extracted articles:
+### OpenAI digest rendering (24h, render-only)
+Use already-extracted articles with the configured OpenAI writing model:
 ```bash
 python scripts/render_digest_llm_compare.py
 ```
-Outputs land in `output/` as:
-`digest_YYYY-MM-DD_chatgpt.html`, `digest_YYYY-MM-DD_<deepseek-model>.html`
-
-Prompt text for each provider is configured in `config.yaml` under `llm_prompts`.
-```
-
-#### Provider options
-```bash
-python scripts/render_digest_llm_compare.py --provider local
-python scripts/render_digest_llm_compare.py --provider chatgpt
-python scripts/render_digest_llm_compare.py --provider deepseek
-```
-Default `all` runs ChatGPT + DeepSeek (local is opt-in).
+The filename retains its historical comparison name, but the active renderer calls OpenAI only and writes `output/digest_YYYY-MM-DD.html`. Current configuration is GPT-6 Luna; unsupported historical `--provider` flags have been removed. Prompts are configured under `llm_prompts.chatgpt`.
 
 #### Chunking + retries (render-only)
 ```bash
@@ -95,11 +85,8 @@ export DIGEST_MAX_PER_DOMAIN=5
 export EXEC_SUMMARY_MAX_CHARS=500
 ```
 
-#### DeepSeek via Ollama
-Set the DeepSeek model separately if desired:
-```bash
-export OLLAMA_DEEPSEEK_MODEL=deepseek-v3.2:cloud
-```
+#### Retained provider settings
+Ollama/DeepSeek settings may remain for historical adapters but are not called by the daily renderer.
 
 #### Highlight ordering + hygiene
 The render-only digest applies content hygiene and ordering before HTML output:

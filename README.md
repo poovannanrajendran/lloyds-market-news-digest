@@ -10,6 +10,12 @@ The Lloyd’s market depends on timely, high-signal updates across insurers, bro
 - A transparent, auditable pipeline with raw and processed data stored for review.
 - An OpenAI-first AI workflow with model-level cost controls.
 
+## Current release and models
+
+[v1.1.0 optimisation notes](docs/releases/v1.1.0.md) explain the cost simulations, live checks, reliability changes and limits. Current writing uses GPT-6 Luna; relevance and classification retain GPT-5 Nano. The daily runner warns through Slack/Discord when estimated OpenAI credit is $1 or less.
+
+See the [documentation index](docs/README.md), [model rollout and rollback](docs/deployment/gpt6-luna-rollout.md), and [credit-monitor setup](docs/deployment/openai-balance-alerts.md).
+
 ## Core Features
 - Source discovery (RSS + listing pages) with candidate de-duplication.
 - Robust HTTP fetching with retry and cache.
@@ -59,7 +65,7 @@ python -m lloyds_digest run --now --max-sources 20
 python -m lloyds_digest run --now --force-refresh
 ```
 
-### Render digest comparison (LLM providers)
+### Render the OpenAI digest (render-only)
 ```bash
 python scripts/render_digest_llm_compare.py
 ```
@@ -75,7 +81,7 @@ python scripts/render_linkedin_post.py
 - **Rotate secrets**: update `.env` values (never commit).
 - **Database hygiene**: run `scripts/db_init_postgres.sh` and `scripts/db_init_mongo.js` when schema/index changes occur.
 - **Cache control**: disable cache via `LLOYDS_DIGEST__CACHE__ENABLED=false` for debugging.
-- **Model changes**: update prompt files in `src/lloyds_digest/ai/prompts/` and track changes in `CHANGELOG.md`.
+- **Model changes**: update the three writing overrides in `.env` and follow the rollout guide. Update prompt files in `src/lloyds_digest/ai/prompts/` and track changes in `CHANGELOG.md`.
 - **Health checks**: review run metrics and method health section in the digest or `output/dashboard/index.html`.
 
 ## Simple Architecture

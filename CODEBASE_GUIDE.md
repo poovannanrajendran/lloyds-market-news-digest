@@ -8,11 +8,11 @@
    - De-duplication is done by canonical URL hash (candidate_id).
 3) **Fetch** candidate URLs over HTTP with retries/backoff and optional cache.
 4) **Extract** content with a multi-method chain (trafilatura → readability → bs4 heuristic → crawl4ai stub). Each attempt is audited.
-5) **AI processing** (local-first Ollama): relevance / classify / summarise with Mongo cache and Postgres usage tracking.
+5) **AI processing** (OpenAI): GPT-5 Nano relevance/classification and GPT-6 Luna summaries, with Mongo cache and Postgres usage/cost tracking.
 6) **Digest** renders HTML by source_type then topic; optional SMTP delivery.
 7) **Observability**: JSONL logging + run metrics + Method Health section in digest.
 
-> Note: There is no single orchestrator yet. The verification runs used scripted steps to drive discovery → fetch → extract. The CLI is a skeleton in Phase 01.
+The CLI invokes `pipeline.run_pipeline`; `scripts/run_daily.sh` orchestrates processing, OpenAI-only digest rendering, LinkedIn text/template assets, publishing and dashboard generation. It checks estimated OpenAI credit before processing and on exit. See [v1.1.0](docs/releases/v1.1.0.md) for current behaviour and validation.
 
 ## Module responsibilities
 
@@ -53,9 +53,13 @@
 
 ### AI
 - `src/lloyds_digest/ai/base.py`
-  - Ollama client + prompt loader + cache key + cached call wrapper.
+  - OpenAI client/shared Chat Completions request path, retained Ollama adapter, prompt loading, generation-aware Luna cache keys and cached call wrapper. Empty/truncated Luna JSON output is rejected.
 - `src/lloyds_digest/ai/relevance.py`, `classify.py`, `summarise.py`
   - AI stages with prompt files in `src/lloyds_digest/ai/prompts/`.
+
+- `src/lloyds_digest/ai/costing.py`
+  - Prices actual processing tiers, cached reads and cache writes; application cache hits do not create new spend.
+- Summary prompt v2 grounds bullets in supplied source facts; strict application schemas are not implemented.
 
 ### Reporting / Observability
 - `src/lloyds_digest/reporting/digest_renderer.py`
@@ -80,7 +84,7 @@
 ## Config-driven behavior
 - `config.yaml` provides defaults for cache/output dirs and topics.
 - Env overrides use `LLOYDS_DIGEST__` prefix (double-underscore for nesting).
-- DB and infra configuration is in `.env` (Postgres + Mongo + SMTP + Ollama).
+- DB and infra configuration is in `.env` (Postgres + Mongo + SMTP + OpenAI; unused provider settings may remain).
 
 ## Storage split (raw vs processed)
 - **Mongo (raw/unstructured)**
@@ -93,7 +97,7 @@
 - **Postgres (processed/relational)**
   - `sources`, `candidates`, `attempts`, `articles`
   - `domain_method_stats`, `domain_method_prefs`
-  - `llm_usage`, `digests`
+  - `llm_usage`, `llm_cost_calls`, `llm_cost_stage_daily`, `digests`
 
 ## Method learning (prefs + stats)
 - Each extraction attempt updates **domain_method_stats** with attempts, successes, duration history.
@@ -134,3 +138,11 @@
   - HTTP 301/403 → ensure redirects allowed, user-agent set
   - Postgres JSONB errors → ensure dicts are JSON serialized
   - Mongo cache conflicts → ensure `key` is not in `$set`
+
+## Current operations references
+
+- [Documentation index](docs/README.md)
+- [Model configuration and rollback](docs/deployment/gpt6-luna-rollout.md)
+- [Independent Costs API reserve monitor](docs/deployment/openai-balance-alerts.md)
+
+The Costs API is authoritative for the estimated balance; stage ledgers are diagnostic estimates and historical rows are not rewritten by this release.
