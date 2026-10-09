@@ -10,6 +10,8 @@ The daily runner starts a separate worker alongside Nano. As each relevance prom
 
 The audit adds GPT-6 Luna API usage and cost. It does not add any capture of non-relevance stages. Captured prompts contain article text and are kept on the runner under ignored `logs/`; they are not published to the digest site or committed to Git.
 
+Audit setup failures skip the worker and allow the normal run to continue. The runner uses GNU `timeout` to stop the worker after one hour, with a ten-second forced-termination grace period, including time spent waiting on outstanding API requests. Outside the fixed dates, no shadow prompt is constructed or captured. Both models use the same OpenAI account, so concurrent shadow calls consume shared API quota; content and filtering decisions remain controlled by Nano.
+
 ## Report and interpretation
 
 On the runner, reports are written to:

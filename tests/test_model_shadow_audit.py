@@ -2,8 +2,12 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
+import subprocess
 from datetime import date
 from pathlib import Path
+
+import pytest
 
 from lloyds_digest.reporting import model_shadow_audit as audit
 
@@ -25,6 +29,55 @@ def test_shadow_window_is_exactly_three_dates() -> None:
     assert not audit.audit_enabled(date(2026, 10, 9))
     assert all(audit.audit_enabled(date(2026, 10, day)) for day in (10, 11, 12))
     assert not audit.audit_enabled(date(2026, 10, 13))
+
+
+@pytest.mark.parametrize(
+    ("run_day", "failure"),
+    [(9, None), (13, None), (10, "python"), (10, "mkdir"), (10, "log"), (10, None)],
+)
+def test_daily_shadow_setup_does_not_abort_production(tmp_path, run_day, failure) -> None:
+    source = (Path(__file__).parents[1] / "scripts" / "run_daily.sh").read_text()
+    start = source.index('RUN_DATE="$(date +%F)"')
+    block = source[start : source.index('CURRENT_STEP="pipeline_run"', start)]
+    stubs = {
+        "python": "python() { return 1; }",
+        "mkdir": "mkdir() { return 1; }",
+        "log": "mkdir() { return 0; }",
+    }
+    script = "\n".join(
+        [
+            "set -euo pipefail",
+            'MODEL_SHADOW_WORKER_PID=""',
+            'MODEL_SHADOW_DONE_FILE=""',
+            'date() { printf "%s\\n" "$SHADOW_TEST_DATE"; }',
+            'python() { printf "mock-run\\n"; }',
+            'timeout() { printf "bounded worker: %s\\n" "$*"; }',
+            'notify() { printf "warning: %s\\n" "$1"; }',
+            stubs.get(failure, ""),
+            block,
+            'if [[ -n "$MODEL_SHADOW_WORKER_PID" ]]; then',
+            '  wait "$MODEL_SHADOW_WORKER_PID"',
+            '  printf "worker-started\\n"',
+            "fi",
+            'printf "production-continues\\n"',
+        ]
+    )
+    result = subprocess.run(
+        ["bash", "-c", script],
+        env={**os.environ, "LOG_DIR": str(tmp_path), "SHADOW_TEST_DATE": f"2026-10-{run_day:02}"},
+        capture_output=True,
+        text=True,
+        timeout=5,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "production-continues" in result.stdout
+    assert ("worker-started" in result.stdout) == (run_day == 10 and failure is None)
+    assert ("warning:" in result.stdout) == (failure is not None)
+    logs = list(tmp_path.rglob("worker_*.log"))
+    if run_day == 10 and failure is None:
+        assert "--signal=TERM --kill-after=10s 3600s" in logs[0].read_text()
+    else:
+        assert not logs
 
 
 def test_capture_records_exact_prompt_and_nano_io_only_inside_window(tmp_path, monkeypatch) -> None:

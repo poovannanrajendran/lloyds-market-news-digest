@@ -626,17 +626,18 @@ def _article_to_items(
         relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5-nano")
         classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5-nano")
         summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-6-luna")
-        relevance_prompt = f"{relevance_mod.PROMPT.prompt_text}\n\nCONTENT:\n{text}"
-        if not shadow_audit.submit_luna(
-            candidate.candidate_id,
-            article.title or candidate.title or article.url,
-            article.url,
-            relevance_prompt,
-        ):
-            log(
-                f"[shadow] failed to enqueue Luna comparison for {candidate.url}; "
-                "production flow continues"
-            )
+        if shadow_audit.enabled:
+            relevance_prompt = f"{relevance_mod.PROMPT.prompt_text}\n\nCONTENT:\n{text}"
+            if not shadow_audit.submit_luna(
+                candidate.candidate_id,
+                article.title or candidate.title or article.url,
+                article.url,
+                relevance_prompt,
+            ):
+                log(
+                    f"[shadow] failed to enqueue Luna comparison for {candidate.url}; "
+                    "production flow continues"
+                )
         relevance_result = _run_llm_stage(
             stage="relevance",
             model=relevance_model,
@@ -648,7 +649,7 @@ def _article_to_items(
             warnings=warnings,
         )
         parsed_relevance = (relevance_result or {}).get("parsed") or {}
-        if not capture_nano_relevance(
+        if shadow_audit.enabled and not capture_nano_relevance(
             run_date=run_date,
             run_id=run_id,
             candidate_id=candidate.candidate_id,

@@ -347,17 +347,24 @@ RUN_DATE="$(date +%F)"
 MODEL_SHADOW_RUN_ID=""
 MODEL_SHADOW_RUN_ARGS=()
 if [[ "$RUN_DATE" == "2026-10-10" || "$RUN_DATE" == "2026-10-11" || "$RUN_DATE" == "2026-10-12" ]]; then
-  MODEL_SHADOW_RUN_ID="$(python -c 'from uuid import uuid4; print(uuid4().hex)')"
-  MODEL_SHADOW_DONE_FILE="$LOG_DIR/model_shadow/$RUN_DATE/done_$MODEL_SHADOW_RUN_ID"
-  mkdir -p "$(dirname "$MODEL_SHADOW_DONE_FILE")"
-  rm -f "$MODEL_SHADOW_DONE_FILE"
-  python scripts/model_shadow_worker.py \
-    --run-date "$RUN_DATE" \
-    --run-id "$MODEL_SHADOW_RUN_ID" \
-    --done-file "$MODEL_SHADOW_DONE_FILE" \
-    > "$LOG_DIR/model_shadow/worker_${RUN_DATE}_${MODEL_SHADOW_RUN_ID}.log" 2>&1 &
-  MODEL_SHADOW_WORKER_PID="$!"
-  MODEL_SHADOW_RUN_ARGS=(--run-id "$MODEL_SHADOW_RUN_ID")
+  # Optional audit setup must not trigger the production ERR trap.
+  if MODEL_SHADOW_RUN_ID="$(python -c 'from uuid import uuid4; print(uuid4().hex)')" &&
+    MODEL_SHADOW_DONE_FILE="$LOG_DIR/model_shadow/$RUN_DATE/done_$MODEL_SHADOW_RUN_ID" &&
+    mkdir -p "$(dirname "$MODEL_SHADOW_DONE_FILE")" &&
+    command -v timeout >/dev/null 2>&1 &&
+    : > "$LOG_DIR/model_shadow/worker_${RUN_DATE}_${MODEL_SHADOW_RUN_ID}.log"; then
+    timeout --signal=TERM --kill-after=10s 3600s python scripts/model_shadow_worker.py \
+      --run-date "$RUN_DATE" \
+      --run-id "$MODEL_SHADOW_RUN_ID" \
+      --done-file "$MODEL_SHADOW_DONE_FILE" \
+      >> "$LOG_DIR/model_shadow/worker_${RUN_DATE}_${MODEL_SHADOW_RUN_ID}.log" 2>&1 &
+    MODEL_SHADOW_WORKER_PID="$!"
+    MODEL_SHADOW_RUN_ARGS=(--run-id "$MODEL_SHADOW_RUN_ID")
+  else
+    MODEL_SHADOW_RUN_ID=""
+    MODEL_SHADOW_DONE_FILE=""
+    notify "Nano/Luna shadow audit setup failed for ${RUN_DATE}; continuing the normal digest run." "warning"
+  fi
 fi
 
 CURRENT_STEP="pipeline_run"
