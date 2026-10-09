@@ -21,6 +21,7 @@ Current as of 8 October 2026, release **v1.1.0**. The daily path uses GPT-5 Nano
 | [Production handoff](deployment/HANDOFF.md) | Deployment, schedules and operational ownership |
 | [Model rollout](deployment/gpt6-luna-rollout.md) | Private model settings, validation and focused rollback |
 | [OpenAI credit monitor](deployment/openai-balance-alerts.md) | Costs API baseline, inclusive threshold and reconciliation |
+| [Temporary Nano/Luna shadow audit](operations/model-shadow-audit.md) | Isolated three-run relevance comparison (10–12 October 2026) |
 | [Alert notifications](deployment/alert-notifications.md) | Slack/Discord transport and alert commands |
 | [Consolidated alert architecture](deployment/alerting-mechanism-consolidated.md) | Shared pipeline/n8n/YouTube alerts |
 | [24-hour summary handoff](deployment/handoff-alerting-24h-summary.md) | Earlier summary implementation plus current credit-check addendum |

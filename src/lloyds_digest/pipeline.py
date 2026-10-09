@@ -23,6 +23,7 @@ from lloyds_digest.keywords import KeywordRules, compact_text, load_keywords
 from lloyds_digest.models import Candidate, RunMetrics
 from lloyds_digest.reporting.digest_renderer import DigestConfig, DigestItem, render_digest
 from lloyds_digest.reporting.metrics import compute_run_summary, summarize_failures
+from lloyds_digest.reporting.model_shadow_audit import ShadowAuditSession, capture_nano_relevance
 from lloyds_digest.storage.mongo_repo import MongoConfigError, MongoRepo
 from lloyds_digest.storage.postgres_repo import PostgresConfigError, PostgresRepo
 
@@ -56,12 +57,14 @@ def run_pipeline(
     skip_seen: bool = True,
     log: Optional[Callable[[str], None]] = None,
     log_detail: Optional[Callable[[str], None]] = None,
+    run_id_override: Optional[str] = None,
 ) -> PipelineResult:
     logger = log or (lambda message: None)
     detail = log_detail or (lambda message: None)
     warnings: list[str] = []
 
-    run_id = uuid4().hex
+    run_id = run_id_override or uuid4().hex
+    shadow_audit = ShadowAuditSession(run_date, run_id)
     started_at = _utc_now()
 
     postgres = _try_postgres(logger, warnings)
@@ -224,6 +227,8 @@ def run_pipeline(
                 keyword_min_score=config.filters.keyword_min_score,
                 config=config,
                 timing_totals=timing_totals,
+                run_date=run_date,
+                shadow_audit=shadow_audit,
             )
         )
 
@@ -492,6 +497,8 @@ def _article_to_items(
     keyword_min_score: float,
     config: AppConfig,
     timing_totals: dict[str, int],
+    run_date: date,
+    shadow_audit: ShadowAuditSession,
 ) -> list[DigestItem]:
     topics = candidate.metadata.get("topics") if candidate.metadata else None
     topic = ", ".join(topics) if isinstance(topics, list) and topics else "General"
@@ -619,6 +626,17 @@ def _article_to_items(
         relevance_model = _llm_model("LLOYDS_DIGEST_LLM_RELEVANCE_MODEL", "gpt-5-nano")
         classify_model = _llm_model("LLOYDS_DIGEST_LLM_CLASSIFY_MODEL", "gpt-5-nano")
         summarise_model = _llm_model("LLOYDS_DIGEST_LLM_SUMMARISE_MODEL", "gpt-6-luna")
+        relevance_prompt = f"{relevance_mod.PROMPT.prompt_text}\n\nCONTENT:\n{text}"
+        if not shadow_audit.submit_luna(
+            candidate.candidate_id,
+            article.title or candidate.title or article.url,
+            article.url,
+            relevance_prompt,
+        ):
+            log(
+                f"[shadow] failed to enqueue Luna comparison for {candidate.url}; "
+                "production flow continues"
+            )
         relevance_result = _run_llm_stage(
             stage="relevance",
             model=relevance_model,
@@ -629,9 +647,26 @@ def _article_to_items(
             candidate_id=candidate.candidate_id,
             warnings=warnings,
         )
+        parsed_relevance = (relevance_result or {}).get("parsed") or {}
+        if not capture_nano_relevance(
+            run_date=run_date,
+            run_id=run_id,
+            candidate_id=candidate.candidate_id,
+            title=article.title or candidate.title or article.url,
+            url=article.url,
+            model=relevance_model,
+            prompt_version=relevance_mod.PROMPT.version,
+            prompt=relevance_prompt,
+            nano_result=relevance_result,
+            production_relevant=parsed_relevance.get("relevant") is not False,
+        ):
+            log(
+                f"[shadow] failed to capture Nano comparison input for {candidate.url}; "
+                "production flow continues"
+            )
         if relevance_result:
             timing_totals["llm_relevance_ms"] += int(relevance_result.get("latency_ms") or 0)
-            parsed = relevance_result.get("parsed") or {}
+            parsed = parsed_relevance
             why_it_matters = parsed.get("reason")
             confidence = parsed.get("confidence")
             relevant_flag = parsed.get("relevant")

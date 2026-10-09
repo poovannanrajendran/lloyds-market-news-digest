@@ -26,6 +26,9 @@ def run(
     run_date: Optional[str] = typer.Option(
         None, "--run-date", help="Run for a specific date (YYYY-MM-DD)."
     ),
+    run_id: Optional[str] = typer.Option(
+        None, "--run-id", help="Use a caller-supplied run ID for coordinated shadow jobs."
+    ),
     cache: Optional[bool] = typer.Option(
         None,
         "--cache/--no-cache",
@@ -100,8 +103,10 @@ def run(
         skip_seen=not force_refresh,
         log=log,
         log_detail=log_detail,
+        run_id_override=run_id,
     )
 
+    typer.echo(f"Run ID: {result.run_id}")
     if result.output_path is not None:
         typer.echo(f"Digest written: {result.output_path}")
     typer.echo(

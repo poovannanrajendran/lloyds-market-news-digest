@@ -7,6 +7,8 @@ LOG_FILE="$LOG_DIR/run_$(date +%Y-%m-%d).log"
 NOTIFY_SCRIPT="$ROOT_DIR/scripts/notify_webhooks.sh"
 CURRENT_STEP="bootstrap"
 CURRENT_BRANCH="main"
+MODEL_SHADOW_WORKER_PID=""
+MODEL_SHADOW_DONE_FILE=""
 
 mkdir -p "$LOG_DIR"
 
@@ -297,6 +299,15 @@ check_openai_balance() {
 
 on_exit() {
   local exit_code="$?"
+  if [[ -n "$MODEL_SHADOW_WORKER_PID" ]]; then
+    if (( exit_code == 0 )); then
+      touch "$MODEL_SHADOW_DONE_FILE" 2>/dev/null || true
+    else
+      kill "$MODEL_SHADOW_WORKER_PID" 2>/dev/null || true
+    fi
+    wait "$MODEL_SHADOW_WORKER_PID" 2>/dev/null || true
+    MODEL_SHADOW_WORKER_PID=""
+  fi
   check_openai_balance
   return "$exit_code"
 }
@@ -332,8 +343,25 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   git_commit_and_push_if_dirty "pre-run"
 fi
 
+RUN_DATE="$(date +%F)"
+MODEL_SHADOW_RUN_ID=""
+MODEL_SHADOW_RUN_ARGS=()
+if [[ "$RUN_DATE" == "2026-10-10" || "$RUN_DATE" == "2026-10-11" || "$RUN_DATE" == "2026-10-12" ]]; then
+  MODEL_SHADOW_RUN_ID="$(python -c 'from uuid import uuid4; print(uuid4().hex)')"
+  MODEL_SHADOW_DONE_FILE="$LOG_DIR/model_shadow/$RUN_DATE/done_$MODEL_SHADOW_RUN_ID"
+  mkdir -p "$(dirname "$MODEL_SHADOW_DONE_FILE")"
+  rm -f "$MODEL_SHADOW_DONE_FILE"
+  python scripts/model_shadow_worker.py \
+    --run-date "$RUN_DATE" \
+    --run-id "$MODEL_SHADOW_RUN_ID" \
+    --done-file "$MODEL_SHADOW_DONE_FILE" \
+    > "$LOG_DIR/model_shadow/worker_${RUN_DATE}_${MODEL_SHADOW_RUN_ID}.log" 2>&1 &
+  MODEL_SHADOW_WORKER_PID="$!"
+  MODEL_SHADOW_RUN_ARGS=(--run-id "$MODEL_SHADOW_RUN_ID")
+fi
+
 CURRENT_STEP="pipeline_run"
-python -m lloyds_digest run --now --verbose | tee -a "$LOG_FILE"
+python -m lloyds_digest run --now --verbose "${MODEL_SHADOW_RUN_ARGS[@]}" | tee -a "$LOG_FILE"
 CURRENT_STEP="render_digest"
 python scripts/render_digest_llm_compare.py | tee -a "$LOG_FILE"
 CURRENT_STEP="render_linkedin_post"
@@ -342,11 +370,27 @@ CURRENT_STEP="render_linkedin_image"
 python scripts/render_linkedin_image_from_template.py | tee -a "$LOG_FILE"
 CURRENT_STEP="publish_pages"
 scripts/publish_github_pages.sh | tee -a "$LOG_FILE"
+
+# Record publication success before waiting for the independent shadow worker.
+date +%s > "$LOG_DIR/last_daily_success_epoch.txt"
+
+# Close the prompt queue after publication, then write the comparison report.
+CURRENT_STEP="model_shadow_audit"
+if [[ -n "$MODEL_SHADOW_WORKER_PID" ]]; then
+  touch "$MODEL_SHADOW_DONE_FILE" 2>/dev/null || true
+  if wait "$MODEL_SHADOW_WORKER_PID"; then
+    MODEL_SHADOW_WORKER_PID=""
+    if ! python scripts/run_model_shadow_audit.py --run-date "$RUN_DATE" --run-id "$MODEL_SHADOW_RUN_ID" 2>&1 | tee -a "$LOG_FILE"; then
+      notify "Nano/Luna shadow report could not be generated after successful publication for ${RUN_DATE}; digest remains published. See $LOG_FILE" "warning"
+    fi
+  else
+    MODEL_SHADOW_WORKER_PID=""
+    notify "Nano/Luna shadow worker failed after successful publication for ${RUN_DATE}; digest remains published. See $LOG_DIR/model_shadow" "warning"
+  fi
+fi
+
 CURRENT_STEP="render_dashboard"
 python scripts/render_run_dashboard.py | tee -a "$LOG_FILE"
-
-# Heartbeat for missed-run watchdog.
-date +%s > "$LOG_DIR/last_daily_success_epoch.txt"
 
 CURRENT_STEP="git_post_publish_align"
 git_align_to_origin_preserve_worktree "post-publish align" || true

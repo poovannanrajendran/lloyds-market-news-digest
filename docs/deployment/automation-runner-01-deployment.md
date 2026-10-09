@@ -6,6 +6,8 @@ As of 8 October 2026, GPT-6 Luna handles summaries, digest composition and Linke
 
 An independent organisation Costs API check runs before the pipeline and on exit. It sends Slack/Discord warnings when estimated remaining credit is **$1 or less**, or accounting is unavailable. Reconcile the balance/cost baseline after top-ups; billing data can lag. This is an estimate rather than a live credit-balance endpoint.
 
+For the three scheduled runs on 10–12 October 2026 only, a post-publication GPT-6 Luna relevance shadow audit compares against the GPT-5 Nano decisions. Nano remains authoritative for publication. See [temporary audit details](../operations/model-shadow-audit.md).
+
 - [Detailed optimisation release](../releases/v1.1.0.md)
 - [Model configuration and rollback](gpt6-luna-rollout.md)
 - [Credit monitoring and safe dry-run](openai-balance-alerts.md)
