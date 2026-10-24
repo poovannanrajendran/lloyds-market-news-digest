@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-10-24</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-10-24 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-10-24.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">16 highlights selected for 2026-10-24. Sources include: www.artemis.bm, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk, www.reinsurancene.ws.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Risk</li>
+<li>Catastrophe</li>
+<li>ILS</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/wfp-secures-11-6m-cyclone-parametric-insurance-through-ccrif/">WFP secures $11.6m cyclone parametric insurance through CCRIF - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> WFP joins CCRIF to buy parametric disaster insurance for Haiti and the Dominican Republic, signaling growth of parametric risk transfer in the Caribbean.</div><ul><li>WFP has become CCRIF SPC’s first UN agency and multilateral policyholder, purchasing two tropical cyclone policies with a combined coverage limit of USD 11.6 million for operations in Haiti and the Dominican Republic.</li>
+<li>The policies are intended to provide potential funding for humanitarian relief after qualifying tropical storms or hurricanes, subject to the contracts’ trigger conditions. WFP could use proceeds for food, cash assistance and other urgent support.</li>
+<li>The arrangement gives WFP a separate route to potential disaster financing in the Dominican Republic, which is not a CCRIF member. In Haiti, it adds to existing sovereign insurance arrangements.</li>
+<li>CCRIF says its membership now stands at 40. Its total coverage for the 2026/27 policy year is USD 1.8 billion, up from USD 1.44 billion the previous year; payouts depend on policy criteria being met.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/willis-survey-finds-cyber-security-rising-up-boardroom-agendas-as-data-loss-concerns-persist/">Willis survey finds cyber security rising up boardroom agendas as data loss concerns persist - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Covers cyber risk governance and cyber insurance trends (adoption, budgeting, incident response) that are material to Lloyd&#x27;s market insights.</div><ul><li>Willis’s 2026 Directors’ &amp; Officers’ Liability Insurance Survey found that 70% of organisations formally include cyber risk in board-level enterprise risk frameworks, and 65% brief boards on cyber security and the wider threat environment at least quarterly.</li>
+<li>Overall, 60% of respondents said their organisation quantifies potential financial losses from a cyber incident: 19% do so annually and 41% on an ongoing basis. However, 55% reported a good understanding of their organisation’s cyber risks, while 46% considered their board sufficiently informed about the effectiveness of cyber security spending.</li>
+<li>The survey found 48% of respondents held cyber insurance and a further 19% intended to buy cover within two years. Among policyholders, 71% had standalone cover; 48% included premiums in their cyber security budget.</li>
+<li>Phishing and social engineering were the most frequently cited threats (48%), followed by ransomware (38%); third-party software vulnerabilities and misuse of artificial intelligence each received 31% of responses.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2907/">Reinsurance News archive - page 2907</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s of London update (Index on hold) within the reinsurance news digest.</div><ul><li>This is a news archive page listing headlines and brief previews from 20 July to 2 August 2016; the excerpts lack detail.</li>
+<li>The headlines cover Lloyd’s delaying an insurance-risk index, quarterly results from Aon, Swiss Re and Aspen, catastrophe losses and reinsurance pricing, and China’s flood protection gap.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/world-food-programme-buys-parametric-tropical-cyclone-insurance-from-ccrif/">World Food Programme buys parametric tropical cyclone insurance from CCRIF - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Demonstrates expansion of parametric risk transfer and ILS in humanitarian context, relevant to Lloyd&#x27;s.</div><ul><li>CCRIF SPC says the World Food Programme (WFP) is its first UN agency and multilateral organisation member to purchase parametric insurance.</li>
+<li>WFP has bought two tropical cyclone policies covering the Dominican Republic and Haiti, with a combined limit of US$11.6 million.</li>
+<li>The coverage is intended to provide WFP with rapidly activated funding to support affected communities following a qualifying tropical cyclone event.</li>
+<li>WFP’s membership brings CCRIF’s membership to 40.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/mexico-gets-its-first-world-bank-cat-ddo-to-complement-cat-bonds-and-parametric-insurance/">Mexico gets its first World Bank Cat DDO, to complement cat bonds and parametric insurance - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Mexico&#x27;s Cat DDO alongside existing catastrophe bonds and parametric insurance details; relevant to Lloyd&#x27;s market coverage on ILS and disaster risk financing.</div><ul><li>The World Bank Group has approved a US$500 million Catastrophe Deferred Drawdown Option (Cat DDO) for Mexico, the country’s first, to support responses to natural disasters, climate impacts and public health emergencies.</li>
+<li>The three-year credit line, which may be extended, can be accessed almost immediately when an emergency occurs, without the Government needing to urgently reallocate its budget.</li>
+<li>The Cat DDO adds a layer of financial protection alongside Mexico’s existing catastrophe bonds and parametric insurance, including its 2024 IBRD catastrophe bond arrangements.</li>
+<li>The World Bank says the operation will support disaster risk management, climate resilience and policies aimed at preventing and reducing damage before disasters occur.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/magazines/mag-features/2026/10/19/889120.htm">Sedgwick: Property Claims Face Delays, Are Growing More Complex</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses property claims trends and insurer market dynamics (labor, costs, AI adoption) affecting Lloyd&#x27;s market context.</div><ul><li>Sedgwick’s annual Loss Adjusting Insights report says property claims face delays and rising complexity, with labour shortages, equipment lead times and more complex losses putting pressure on timelines. Some specialist equipment lead times have more than doubled in five years; the report also expects a quarter of claim adjusters to retire by the end of 2027.</li>
+<li>A survey cited in the report found 73% of respondents saw loss of industry knowledge as the greatest impact of the retirement wave, while 53% cited recruiting a new generation of talent. Upskilling junior workers and loss of company leadership were also concerns.</li>
+<li>Verisk data showed US claim assignments fell to 1.24 million in Q2 2026, down 12.2% year on year and 13.1% below the five-year average. Catastrophe claims made up 43% of assignments, compared with 34% five years earlier; the report attributed the higher share to a sharper fall in non-catastrophe assignments.</li>
+<li>ATI Restoration CEO Brant Wilson said higher deductibles and some commercial property owners’ in-house repairs had reduced jobs for restoration providers, while larger losses can take longer to manage when multiple parties review work and approve decisions. He said early identification and coordination of decision-makers can help keep projects moving.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/usaa-lowers-pricing-again-for-still-350m-residential-re-2026-2-cat-bond/">USAA lowers pricing again for still $350m Residential Re 2026-2 cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bonds and reinsurance market activity (USAA), relevant to Lloyd&#x27;s market news.</div><ul><li>USAA’s Residential Reinsurance 2026 Limited (Series 2026-2) catastrophe bond remains targeted at $350 million, up from its initial $225 million target, across three tranches of $100 million, $100 million and $150 million.</li>
+<li>The four-year, indemnity-based, per-occurrence reinsurance protection is due to run from 1 December 2026 to 30 November 2030 and covers specified perils including US tropical cyclones, earthquakes, severe thunderstorms, winter storms and wildfires.</li>
+<li>USAA has lowered the price guidance again: Class 2 notes are now at 7.25%–7.75%, Class 3 at 3.75%–4.25%, and Class 5 at 1.75%–2%.</li>
+<li>The notes’ stated initial base expected losses are 6.04% for Class 2, 3.34% for Class 3 and 1.43% for Class 5.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/fermat-founders-on-notable-catastrophe-bond-deals-from-25-years-in-the-ils-business/">Fermat founders on notable catastrophe bond deals from 25 years in the ILS business - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bonds and ILS market history, key topics for Lloyd&#x27;s market coverage.</div><ul><li>Fermat Capital Management, founded by John and Nelson Seo in 2001, marks its 25th anniversary. It reports more than $11 billion under management, over $60 billion in notional ILS traded and lead investor positions in more than 350 catastrophe bond deals.</li>
+<li>The co-founders selected 25 notable catastrophe bonds for their contributions to market growth, including introducing sponsors or perils, innovative structures, payout experience and lessons for investors and sponsors.</li>
+<li>Fermat considers the 2018 Floodsmart Re deal for the US National Flood Insurance Program particularly notable, saying it had worked with Congress on groundwork for the programme’s catastrophe bond transactions.</li>
+<li>The co-founders say sound risk-transfer standards remain important and see potential to broaden catastrophe bonds and ILS to more sponsors, business lines and perils, including risks beyond re/insurance.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/japan-to-simulate-cyberattacks-as-php-flaws-roil-global-internet/">Japan to simulate cyberattacks as PHP flaws roil global internet - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers global cyber threats and PHP vulnerabilities with implications for cyber risk and insurance in the Lloyd&#x27;s market.</div><ul><li>Japan plans to establish a team using AI to simulate cyberattacks and identify weaknesses in technology systems, as organisations respond to vulnerabilities in PHP.</li>
+<li>The PHP flaws prompted millions of hacking attempts and outages affecting government and company websites worldwide. Developers released fixes on Wednesday and urged users to update immediately.</li>
+<li>SoftBank suspended its mobile emergency alert system while addressing a PHP vulnerability; customers can still receive earthquake warnings through services including an app from its Yahoo business.</li>
+<li>Japanese organisations that suspended some online services included Nomura, Mitsubishi UFJ Financial Group, East Japan Railway and government agencies. JR East said some group services had resumed, while others would return once confirmed safe.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/iran-threatens-infrastructure-strikes-across-gulf-countries/">Iran threatens infrastructure strikes across Gulf countries - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Geopolitical risk to Gulf infrastructure and energy assets with insurance implications for Lloyd&#x27;s market.</div><ul><li>Iran is prepared to strike oil facilities, undersea cables, data centres and artificial intelligence facilities in up to seven Gulf countries if the US and Israel launch another attack, according to Mohsen Rezaei, secretary of Iran’s supreme national security council.</li>
+<li>Reza Nasri, an international lawyer described as close to Iran’s foreign ministry, said a third wave of war would completely close the Strait of Hormuz and push the global economy into recession.</li>
+<li>The excerpt provides no further detail on the threatened strikes or their potential effects.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/munich-re-sees-lower-third-quarter-profit/">Munich Re sees lower third-quarter profit - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Munich Re&#x27;s quarterly results update signals global reinsurance market performance affecting Lloyd&#x27;s market dynamics.</div><ul><li>Munich Re reported preliminary third-quarter net profit of €1.7 billion, down 14.9% year on year.</li>
+<li>The reinsurer said results reflected pleasing business operations, strong investment results and major P&amp;C reinsurance losses below average expectations.</li>
+<li>Nine-month profit rose 10.1% to €5.7 billion; Munich Re raised its full-year earnings guidance from €6.3 billion to €6.6 billion.</li>
+<li>Final third-quarter results are due on 12 November.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/airlines-cancel-flights-ahead-of-super-typhoon/">Airlines cancel flights ahead of super typhoon - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Typhoon-driven aviation disruptions imply aviation insurance and catastrophe risk impact for Lloyd&#x27;s market.</div><ul><li>Airlines cancelled nearly 125 flights in Taiwan on Thursday ahead of Super Typhoon Champi, according to The Independent.</li>
+<li>The storm was described as the year’s strongest and equivalent to a Category 5 hurricane.</li>
+<li>Authorities suspended ferry services and closed many tourist attractions.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/aon-pays-tribute-as-uk-reinsurance-leader-passes-away/1460074.article">Aon pays tribute as UK reinsurance leader passes away</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Reports the death of a major market figure (Aon UK reinsurance chief) and potential impact on the Lloyd&#x27;s market ecosystem.</div><ul><li>Aon’s UK reinsurance leader Andrew Laing has died.</li>
+<li>Laing was named UK chief executive for reinsurance in 2025 while retaining his role as global facultative chief executive, which he had held since 2016.</li>
+<li>Aon said Laing devoted more than 40 years to the company and was a trusted colleague, mentor and friend.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/agentic-ai-removes-barrier-for-fraud-investigators-across-different-insurance-lines/1460054.article">Agentic AI removes ‘barrier’ for fraud investigators across different insurance lines</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers UK insurers&#x27; AI-driven fraud prevention, relevant to Lloyd&#x27;s market stakeholders.</div><ul><li>EXL’s 2025 Enterprise AI Study found that 36% of UK insurers had progressed AI in their top use cases, while 52% had deployed generative AI in industry-specific applications beyond the pilot stage.</li>
+<li>Shift Technology’s George Robbins said agentic AI can reduce investigators’ manual work across multiple data sources and make it viable to pursue tasks previously constrained by cost, data volume or complexity.</li>
+<li>Covéa Insurance transformation director Nick Rawlings said AI can process and synthesise data, but human judgement and accountability must remain; investigators need to be able to validate and challenge AI decisions.</li>
+<li>Robbins said investigators should be upskilled in AI and that the main counter-fraud value lies in improving decision quality, detection accuracy and investigation throughput.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/high-five-catch-up-on-the-biggest-stories-this-week/1460076.article">High Five: Catch up on the biggest stories this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions Maksure Risk Solutions as an accredited Lloyd’s broker expanding UK operations, linking to the Lloyd’s market.</div><ul><li>Allianz Partners UK signed a five-year partnership with travel insurance intermediary Coverwise. Allianz will provide underwriting, claims handling and emergency medical assistance to customers of Coverwise and its Southdowns brand.</li>
+<li>Cobra Network appointed Jo Russell as chief executive, succeeding Andy Tedstone. Russell has worked at the network for six years and helped shape its strategy and growth.</li>
+<li>Maksure Risk Solutions expanded its UK operations into direct corporate and public sector insurance broking, offering broking, risk advisory and risk financing to mid-sized and large organisations.</li>
+<li>The FCA said it plans to become an “agentic regulator”, using artificial intelligence to become “sharper, faster and more effective”.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/china-records-29-9b-in-disaster-losses/">China records $29.9B in disaster losses - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Global disaster losses affecting the insurance market, relevant to Lloyd&#x27;s exposures.</div><ul><li>China’s direct losses from natural disasters were 199.4 billion yuan ($29.9 billion) in the first nine months of 2026, down 8% year on year, according to the Ministry of Emergency Management, Reuters reported.</li>
+<li>Rain-triggered landslides and mudslides accounted for 60% of disaster losses.</li>
+<li>Typhoons caused the greatest direct financial damage; seven made landfall on China’s coastline, above historical averages.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-10-24T07:06:01Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
