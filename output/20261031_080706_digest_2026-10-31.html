@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-10-31</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-10-31 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-10-31.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">21 highlights selected for 2026-10-31. Sources include: newsnow.co.uk, www.artemis.bm, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Commentary</li>
+<li>Reinsurance</li>
+<li>Lloyds</li>
+<li>Catastrophe</li>
+<li>Commercial Insurance</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/new-beazley-boss-not-moving-to-london-as-zurichs-greco-confirms-hire-is-medium-term-move/1460130.article">New Beazley boss not moving to London as Zurich’s Greco confirms hire is medium-term move</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.86</div><div class="why"><strong>Why it matters:</strong> Covers Beazley, a key London market insurer with Lloyd&#x27;s ties, and its acquisition by Zurich, including leadership and post‑acquisition integration that impact the London market.</div><ul><li>Zurich chief executive Mario Greco described Kristof Terryn’s appointment to lead Beazley and Zurich Global Specialty as a medium-term role focused on post-acquisition integration, rather than a long-term leadership decision.</li>
+<li>Zurich’s £8.1bn acquisition of Beazley completed on 1 October 2026. Beazley chief executive Adrian Cox stepped down after the deal, and Terryn was appointed in his place.</li>
+<li>Terryn will not relocate to London. Greco said his experience in specialty insurance and connections with US brokers could help introduce Beazley’s underwriters and colleagues to Zurich’s US business opportunities.</li>
+<li>Greco expects integration to continue until roughly 2029. Zurich will reassess the long-term leadership of the business once integration is complete.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/10/30/890982.htm">Binance&#x27;s $6.3 Billion Hack: How Crypto Insurance Works</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.84</div><div class="why"><strong>Why it matters:</strong> Discusses crypto insurance and underwriting in the Lloyd&#x27;s/Bermuda market context.</div><ul><li>Digital asset insurance is a niche market, offered largely by specialist insurers in the Lloyd’s market and Bermuda. Cover can address theft, cyberattacks, technology failures and other business risks, with policy terms varying by asset storage and how a breach occurs.</li>
+<li>Crypto losses may be met through insurance, company capital or emergency reserves. Cover depends on policy limits, deductibles and exclusions; losses above insured amounts must be met through other resources or recovery arrangements.</li>
+<li>Common exclusions include value fluctuations, policyholder fraud and unsecured or negligent key management. Standard crime policies generally do not cover cryptocurrency losses, while cyber policies may exclude the value of stolen or transferred assets unless specific digital asset cover is added.</li>
+<li>Insurers assess how a breach occurred, which systems were compromised and whether security procedures were followed. Whether assets were stolen by an external hacker or deliberately transferred by an employee can affect which policy responds.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/elseco-opens-singapore-office-with-aandh-reinsurance-offering/1460134.article">Elseco opens Singapore office with A&amp;H reinsurance offering</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.84</div><div class="why"><strong>Why it matters:</strong> Direct reference to Lloyd&#x27;s Asia Scheme and an approved Lloyd’s Asia coverholder expanding in Singapore.</div><ul><li>Dubai-based MGA elseco Group has opened a Singapore office, elseco Asia, to expand its specialty reinsurance business into Asia.</li>
+<li>Led by Lisa Leow, the new operation will initially offer facultative accident and health reinsurance through intermediaries to insurers across the region.</li>
+<li>Cover will include personal accident, emergency medical and repatriation, travel, income protection and occupational risks.</li>
+<li>Operating within the Lloyd’s Asia Scheme, elseco Asia Pte Ltd is an approved Lloyd’s Asia coverholder.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/global-insured-natural-catastrophe-losses-reach-91bn-in-9m26-lowest-since-2019-aon/">Global insured natural catastrophe losses reach $91bn in 9M’26, lowest since 2019: Aon - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Catastrophe loss data and risk trends relevant to the Lloyd&#x27;s insurance/underwriting market.</div><ul><li>Aon estimated global insured natural-catastrophe losses at $91bn in the first nine months of 2026, below the five-year average of $135bn but slightly above the 21st-century average of $88bn. Third-quarter insured losses were $29bn, 31% below the 21st-century average.</li>
+<li>Economic losses reached $204bn, the lowest first-nine-month total since 2015 and 31% below the 21st-century average. There were 42 events with economic losses above $1bn and 23 with insured losses above $1bn, both exceeding their respective long-term averages.</li>
+<li>The protection gap was 55%. Severe convective storms were the costliest peril for economic and insured losses, and 62% of global insured losses were recorded in the US; US insured losses totalled $56bn, including more than $43bn from severe convective storms.</li>
+<li>A European drought from May to September generated more than $8.5bn in insured losses, making it the costliest insured event of the year to date. The Venezuela earthquake was the largest economic-loss event, estimated at $25bn.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/hadron-appoints-john-moffatt-as-international-cuo/">Hadron appoints John Moffatt as International CUO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Senior underwriting leadership appointment at a Lloyd&#x27;s/London market participant; relates to market expansion and regulatory approvals.</div><ul><li>Hadron appointed John Moffatt as International Chief Underwriting Officer, subject to approval by the PRA and FCA. He will report to International CEO Colin Johnson.</li>
+<li>Moffatt has more than 25 years’ underwriting experience across Lloyd’s and the London company market. His previous roles include CUO and Director of Underwriting at MSIG-UK, and CUO and Active Underwriter for Argo Global’s Syndicate 1200.</li>
+<li>Hadron promoted Ian Walker, its UK Director of Underwriting since inception, to Deputy International CUO. He will support Moffatt in overseeing underwriting strategy and performance across Hadron’s international platforms.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/aon-and-sage-launch-precision-crop-insurance-program-for-us-states/">Aon and SAGE launch precision crop insurance program for US states - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Describes a new field-level crop insurance program and capital-raising for insurance risk, aligned with Lloyd&#x27;s market interests.</div><ul><li>Aon and agricultural risk intelligence company SAGE have partnered with AgriCap to launch a precision crop insurance programme for corn and soybean farmers in 15 US states for the 2027 crop year. It is designed to complement federal crop insurance with field-level coverage.</li>
+<li>The programme uses SAGE’s AI models and data on soil, water, weather and human interaction to assess differences in risk and resilience between fields; Aon contributes data, analytics and expertise, and connects the solutions with capital providers.</li>
+<li>A four-county Michigan pilot, developed by the Resilience in Agricultural Lending and Insurance Coalition and partly funded by the Michigan Department of Agriculture and Rural Development, covers more than one million agricultural acres—about 12% of Michigan farmland.</li>
+<li>The pilot is intended to provide insights into field-level agricultural intelligence for insurance solutions, with Aon and SAGE working with AgriCap on the 2027 crop cycle.</li></ul></article>
+<article class="story"><h3><a href="http://newsnow.co.uk/h/World+News/Geopolitics">Geopolitics</a></h3><div class="meta">Source: newsnow.co.uk · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Geopolitics with energy disruption, shipping risk, and sanctions—core Lloyd&#x27;s market risk factors.</div><ul><li>The article says the US-Israeli war on Iran began on 28 February 2026 and has disrupted oil supplies, with the Strait of Hormuz effectively closed and oil prices above $100 per barrel.</li>
+<li>It reports that US-brokered Russia-Ukraine peace talks have made no decisive breakthrough, with territorial concessions and proposed Western peacekeeping forces among the obstacles.</li>
+<li>US-China tensions over tariffs, export controls, critical minerals, artificial intelligence and semiconductors are reshaping global supply chains, according to the article.</li>
+<li>The excerpt is a broad geopolitics overview rather than a report focused on insurance; it does not detail specific insurance impacts.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/analysis/in-focus-how-should-hnw-insurers-respond-to-influencer-wealth/1460096.article">In Focus: How should HNW insurers respond to influencer wealth?</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses evolving HNW risks and underwriting implications for influencers and digital assets, relevant to Lloyd&#x27;s market.</div><ul><li>Influencers, creators and entrepreneurs are accumulating wealth in assets that may not fit traditional high-net-worth definitions, including designer clothing, watches, jewellery, technology, digital assets and intellectual property.</li>
+<li>The article says public social-media activity can reveal possessions, routines and travel plans, while personal and commercial risks may overlap when homes are used as studios or equipment serves business purposes.</li>
+<li>Contributors highlight potential exposures including targeted theft, cybercrime, identity theft, fraud and reputational risks, and stress the need to assess clients individually rather than treat all creators as too high risk.</li>
+<li>Suggested responses include tailored cyber protection, cover extensions for digital assets, security advice, appropriate professional valuations and claims expertise in authentication, provenance, condition and current market value.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/bayer-wins-roundup-weedkiller-cancer-trial-while-awaiting-settlement-ruling/">Bayer wins Roundup weedkiller cancer trial while awaiting settlement ruling - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Product liability litigation and settlement risk tied to insurance markets; potential impact on liabilities and pricing for insurers.</div><ul><li>A St Louis jury unanimously found for Bayer-owned Monsanto in a trial brought by three women who said Roundup caused their non-Hodgkin lymphoma; one claimant died before the trial began.</li>
+<li>The case was the first to go to trial after a US Supreme Court ruling in June limited plaintiffs’ legal claims. Bayer said the verdict showed the challenges plaintiffs would face in pursuing cases.</li>
+<li>Bayer is seeking approval from a Missouri state court for a proposed $7.25 billion settlement covering other Roundup cases; the ruling is pending. The three women in the trial are not part of the proposed settlement.</li>
+<li>Bayer faces around 65,000 Roundup claims in US state and federal courts. The article says the company has denied the claims and maintains that glyphosate is safe and does not cause cancer.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/european-cat-pricing-down-high-single-to-low-double-digits-for-very-late-jan-1-renewal-scors-conoscente/">European cat pricing down high single to low double-digits for &#x27;very late&#x27; Jan 1 renewal: SCOR&#x27;s Conoscente - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers reinsurance pricing, renewal timing and market dynamics affecting Lloyd&#x27;s market participants.</div><ul><li>SCOR said it is focused on the 1 January 2027 reinsurance renewals, which CEO of SCOR P&amp;C Jean-Paul Conoscente described as very late, with many submissions not yet received by reinsurers.</li>
+<li>Based on the European submissions seen so far, SCOR is observing catastrophe rate decreases in the high single digits to low double digits; Conoscente said it was still early in the renewal process.</li>
+<li>SCOR expects competition to remain high and said its underwriting priority is margin and quality over volume, with capital deployed only where risk-return is attractive.</li>
+<li>Conoscente said pricing discussions vary by line: loss-impacted marine, energy and war lines have seen significant price increases, while lines less affected by losses face clear pricing pressure.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/competitive-property-insurance-market-isnt-underwater-yet-says-markel-insurance-ceo/">Competitive property insurance market isn&#x27;t underwater yet, says Markel Insurance CEO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses reinsurance pricing and market softness affecting underwriters, relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Markel Insurance CEO Simon Wilson said competition in property insurance is intensifying and margins are narrowing as softer reinsurance conditions put pressure on pricing.</li>
+<li>Wilson said low catastrophe activity and few hurricane landfalls in 2026 are likely to contribute to competitive reinsurance renewals and softer conditions in the primary market. He noted that competition has spread from large structured and layered placements to smaller and medium-sized property business.</li>
+<li>Wilson said property insurance still offers profit, but margins are close to being insufficient; he expects the market may flatten during 2027, with discipline returning.</li>
+<li>He said a fairly major loss event would be needed to materially shift the property market and push reinsurance rates higher.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/10/30/890903.htm">Japan&#x27;s Cyberattack Surge Tests Its Push to Strengthen Defenses</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Surge in AI-driven cyberattacks in Japan; relevant to cyber risk and insurance exposure.</div><ul><li>Japan has reported at least 81 cyber incidents since July, nearly a third of the total recorded over the previous three years; recent victims include an official electricity and gas trading information website and companies in sectors including finance and delivery.</li>
+<li>Experts say attackers are using AI agents and open-source tools to analyse networks, identify vulnerable targets and evade detection. Russian-speaking groups including LockBit and Qilin have been linked to attacks, while the AI tool ARTEX has also been associated with recent breaches.</li>
+<li>The article says many attacks have targeted publicly accessible websites handling personal data, and that small Japanese companies with inadequate IT security have been targeted by financially motivated hackers.</li>
+<li>Japan is shifting towards more proactive cybersecurity, including monitoring online communications traffic, after elevating cybersecurity to a national priority. The government has committed additional funds, but officials identify a shortage of experienced cybersecurity personnel as an urgent challenge.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/foundation-re-iv-ltd-series-2027-1/">Foundation Re IV Ltd. (Series 2027-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses Hartford catastrophe bond (ILS) issuance, a key risk-transfer instrument impacting the Lloyd&#x27;s market ecosystem.</div><ul><li>The Hartford is seeking at least $280 million of multi-peril reinsurance protection through Foundation Re IV Ltd. Series 2027-1, its eighth catastrophe bond.</li>
+<li>The fully collateralised cover is for US named storm and earthquake risks, including Washington, D.C. and Puerto Rico, over four calendar years to the end of 2030.</li>
+<li>The bond has an indemnity trigger and per-occurrence coverage, attaching at $1.3 billion of losses and covering a layer up to $1.7 billion; the $400 million layer leaves scope to increase the issuance.</li>
+<li>The notes have an initial attachment probability of 1.93% and expected loss of 1.56%, with spread guidance of 3% to 3.5%.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/california-earthquake-authority-seeks-600m-reinsurance-with-ursa-re-2026-1-cat-bond/">California Earthquake Authority seeks $600m reinsurance with Ursa Re 2026-1 cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Details a new California Earthquake Authority cat bond issuance and cat bond market dynamics relevant to Lloyd&#x27;s audience.</div><ul><li>The California Earthquake Authority (CEA) is seeking an initial $600 million of fully collateralised earthquake reinsurance through a new Ursa Re Ltd. Series 2026-1 catastrophe bond, its second cat bond sponsorship of 2026.</li>
+<li>The Bermuda-based special purpose insurer plans to issue two tranches, providing roughly four years of protection on an indemnity-trigger and annual-aggregate basis.</li>
+<li>The proposed $350 million Class D tranche attaches at $4.784 billion of losses and has price guidance of 4%–4.5%; the $250 million Class H tranche attaches at $1.5 billion and has guidance of 8.5%–9.5%.</li>
+<li>The article says the Class H tranche has the highest expected loss of any CEA-sponsored cat bond tranche it has tracked.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/ms-amlin-launches-ai-wordings-tool-ahead-of-1/1-renewals/1460131.article">MS Amlin launches AI wordings tool ahead of 1/1 renewals</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> MS Amlin is a Lloyd&#x27;s market underwriter; article discusses an AI tool affecting reinsurance wordings and renewals relevant to Lloyd&#x27;s market.</div><ul><li>MS Amlin has launched “Wordy Bot”, an AI-powered tool that checks reinsurance contracts against its underwriting standards and flags missing clauses, wording differences and potential inconsistencies for human review.</li>
+<li>The insurer expects the tool to cut contract review times by around half and speed up responses to brokers. It can also assess the potential impact of wording changes on coverage and exposure at transaction and portfolio level.</li>
+<li>Wordy Bot is already in use across MS Amlin’s North American property reinsurance portfolio and will support the upcoming 1 January renewals. MS Amlin plans to extend it to North American casualty reinsurance, then its wider reinsurance portfolio and direct insurance business.</li>
+<li>The tool was developed by MS Amlin’s London teams with MSIG Asia in Singapore through the group’s global automation programme. MS Amlin said it supports, but does not replace, underwriting judgement or make underwriting decisions.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/abundant-capacity-gives-credit-reinsurance-buyers-leverage-at-1/1-willis-re/1460128.article">Abundant capacity gives credit reinsurance buyers leverage at 1/1: Willis Re</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers reinsurance market dynamics (capacity, pricing, renewals) affecting the Lloyd&#x27;s market.</div><ul><li>Willis Re expects abundant reinsurance capital and new treaty capacity to favour buyers at the 1 January 2027 renewals, putting downward pressure on terms. Proportional ceding commissions are expected to be broadly stable or modestly higher for clean portfolios, while reinsurers increasingly differentiate between cedents.</li>
+<li>Trade credit remains profitable, but claims and loss ratios are moving back towards historical levels after unusually benign experience from 2021 to 2023. Willis Re identifies large corporate failures and restructurings as a severity concern; it expects US surety support to remain strong, with price rises largely limited to programmes with losses.</li>
+<li>Willis Re highlights data centres as an emerging aggregation and transparency challenge. Exposures can span credit, surety, property, construction and cyber policies, while project financing through special-purpose vehicles may obscure the underlying project and counterparties.</li>
+<li>The excerpt begins a section on sovereign risk, saying treaty capacity is abundant but limits are becoming constrained in some high-demand countries. The article excerpt ends mid-sentence and lacks further detail.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/stonemaker-named-in-verdicts-totaling-100m-over-deadly-disease/">Stonemaker named in verdicts totaling $100M over deadly disease - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses large insurance-related verdicts and rising costs in an at-risk industry, relevant to Lloyd&#x27;s market coverage.</div><ul><li>A California jury awarded $67.7 million to Dennys Rene Rivas Williams, finding Caesarstone Ltd. and Caesarstone USA jointly 69% responsible for his silicosis; his former employer, Primus Marble, was found 30% liable. The award included $60 million in non-economic damages, with most of the remainder for medical expenses and future lost earnings.</li>
+<li>Rivas Williams developed silicosis after seven years fabricating artificial stone and underwent a double-lung transplant. His lawyers said the transplanted lungs are failing and he is expected to need another transplant next year.</li>
+<li>The verdict followed a $33 million award earlier in October for another fabricator with silicosis. Caesarstone and its US subsidiary were found 22% responsible in that case, while the claimant’s stone shop was assigned 70% responsibility.</li>
+<li>The article reports that seven multimillion-dollar US artificial-stone silicosis cases have been tried, with verdicts favouring victims in all but one. It also says insurance costs in the stonemaking industry have soared and about 100,000 US stone fabricators are at risk of the disease, citing a study.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/insured-cat-losses-at-five-year-low-aon/">Insured cat losses at five-year low: Aon - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Covers global catastrophe losses and reinsurance market context relevant to Lloyd&#x27;s market.</div><ul><li>Global insured natural catastrophe losses reached an estimated $91 billion in the first nine months of 2026, below the five-year average of $135 billion and the lowest total for that period since 2019, according to Aon.</li>
+<li>Twenty-three events caused insured losses of at least $1 billion, compared with a historical average of 14.</li>
+<li>European drought caused the largest insured loss of the year to date, exceeding $8.5 billion.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/ursa-re-ltd-series-2026-1/">Ursa Re Ltd. (Series 2026-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Details a California earthquake catastrophe bond (ILS) issuance, pertinent to Lloyd&#x27;s reinsurers and cat bond market activity.</div><ul><li>The California Earthquake Authority (CEA) is seeking about $600 million of fully collateralised earthquake reinsurance through Ursa Re Ltd. Series 2026-1, its second catastrophe bond sponsorship of 2026.</li>
+<li>The Bermuda-based special purpose insurer is offering two tranches, with proceeds collateralising reinsurance agreements with the CEA. The protection is expected to run for roughly four years, on an indemnity trigger and annual aggregate basis.</li>
+<li>The $350 million Class D tranche attaches at $4.784 billion of losses across a $500 million layer. Its initial attachment probability is 2.83%, expected loss is 2.68%, and price guidance is 4%–4.5%.</li>
+<li>The $250 million Class H tranche attaches at $1.5 billion of losses across a $400 million layer. Its initial attachment probability is 6.85%, expected loss is 6.35%, and price guidance is 8.5%–9.5%; the article says this is the highest expected loss for a CEA-sponsored catastrophe bond tranche it has seen.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/the-biggest-people-moves-this-week/1460135.article">The biggest people moves this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions Beazley-Zurich deal and London-market leadership changes, affecting Lloyd&#x27;s market players.</div><ul><li>Ardonagh appointed former Acrisure leader Mark McIlquham as chief executive of Orvia Underwriting. He will work alongside operating partner Chris Lay on the operation’s next phase of growth.</li>
+<li>Qlaims named Chris Boggis claims director, leading its adjusting practice. He brings nearly two decades of experience in insurance claims.</li>
+<li>Arkel promoted Matthew Birney to managing director with immediate effect. He will lead the Atec Group-owned MGA’s strategic direction, commercial performance and partner relationships.</li>
+<li>John Lewis Money appointed Charles Offord director of financial services. The former Co-op Insurance managing director is due to join on 18 November 2026 and take a seat on the John Lewis Finance board.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/washington-paper-mill-faces-77800-in-workplace-safety-fines/">Washington paper mill faces $77,800 in workplace safety fines - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Discusses workplace safety penalties and risk management implications for insurers/underwriting; pertinent to Lloyd&#x27;s market risk.</div><ul><li>Washington regulators cited Nippon Dynawave’s Longview paper mill for workplace safety violations and proposed $77,800 in fines after an employee was exposed to hot pulp in a March spill.</li>
+<li>The employee fell into a sinkhole formed by the spill while trying to close a tank valve, but escaped. Investigators said a valve had been left open and similar spills occurred about every two months, sometimes more often.</li>
+<li>The citations concerned protection from hot materials and engulfment hazards, and the omission of the paper machine pulp system from a required hazardous-materials piping safety programme.</li>
+<li>Management agreed to prohibit employees from entering pulp spill areas and to develop procedures and engineering controls for closing valves safely. The company has 15 days from the citation’s issuance to appeal.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-10-31T08:07:06Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
