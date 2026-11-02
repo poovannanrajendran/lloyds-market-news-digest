@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Digest Run Dashboard · 2026-11-02</title>
+  <style>
+    :root {
+      --ink:#0b1f3b; --slate:#5b6b7a; --teal:#1f7a8c; --sand:#f6f4f0; --line:#d7dee6;
+      --accent:#c9a227;
+    }
+    body { margin:0; font-family:"Source Sans 3","Segoe UI",Arial,sans-serif; background:var(--sand); color:var(--ink); }
+    .wrap { max-width:1200px; margin:0 auto; padding:32px 24px 60px; }
+    header { background:linear-gradient(120deg,#0b1f3b 0%,#12345a 45%,#1f7a8c 100%); color:#fff; padding:24px 28px; border-radius:16px; }
+    header h1 { margin:0 0 6px; font-size:24px; }
+    header .meta { color:rgba(255,255,255,0.75); }
+    .controls { margin-top:14px; }
+    select { padding:8px 10px; border-radius:8px; border:1px solid var(--line); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:20px; }
+    .card { background:#fff; border-radius:14px; padding:16px; border:1px solid var(--line); box-shadow:0 8px 16px rgba(11,31,59,0.05); }
+    .card h2 { margin-top:0; font-size:16px; color:var(--teal); }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+    th { background:#f2f5f8; }
+    details.collapsible { background:#fff; border:1px solid var(--line); border-radius:12px; padding:8px 12px; box-shadow:0 8px 16px rgba(11,31,59,0.05); }
+    details.collapsible summary { cursor:pointer; font-weight:600; color:var(--teal); margin:4px 0 8px; }
+    details.collapsible[open] summary { margin-bottom:12px; }
+    .section { margin-top:24px; }
+    .section h2 { margin-bottom:10px; font-size:18px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Lloyd’s Market Digest · Run Dashboard</h1>
+      <div class="meta">Run date: 2026-11-02 · Started: 2026-Nov-02 08:00:06 · Ended: 2026-Nov-02 08:02:36 · Duration: 00:02:29</div>
+      <div class="controls">
+        <label for="runSelect">Other runs:</label>
+        <select id="runSelect" onchange="if(this.value) window.location.href=this.value;">
+          <option value='run_08e54d2088a04b26a623ef68a7849c4c.html'>2026-11-02 · 08:00:06</option><option value='run_17c2c2510af44c60bb8dc9f23f54e89e.html'>2026-11-01 · 08:00:06</option><option value='run_9b4241c95b494e55a16149f869272c38.html'>2026-10-31 · 08:00:07</option><option value='run_b04cb2625b15492ab116109fe5fe2ba7.html'>2026-10-30 · 08:00:07</option><option value='run_e2351c2be75a45b5950d8fe38fe4bc69.html'>2026-10-29 · 08:00:06</option><option value='run_8e86e6593c084670bb69fa5b2e4559be.html'>2026-10-28 · 08:00:13</option><option value='run_61bb5813561f4595aacb119e6986f80a.html'>2026-10-27 · 08:00:06</option><option value='run_011facb1c5b44bb2ba981ab50f3e35f6.html'>2026-10-26 · 08:00:06</option><option value='run_e4dba5fa1ba34de38cbd8dedba1f8d20.html'>2026-10-25 · 08:00:07</option><option value='run_3e2fbd56f30b41c98a9f4e8acb4a7fe3.html'>2026-10-24 · 08:00:06</option><option value='run_428ae5371b624d14808412e982b6c368.html'>2026-10-23 · 08:00:07</option><option value='run_9f5567ee8daf401ba8ecf1724a142fdb.html'>2026-10-22 · 08:00:06</option><option value='run_2d860a339ab7491da5a43d05336f7f29.html'>2026-10-21 · 08:00:06</option><option value='run_73fc2f68c96542cd9de79f10c4b94ccf.html'>2026-10-20 · 08:00:06</option><option value='run_3e6a364aa01d40abbc0cd48ed8230228.html'>2026-10-19 · 08:00:06</option><option value='run_0b512b044c84411ab9441a3423217227.html'>2026-10-18 · 08:00:06</option><option value='run_dfb2376ca69142dc8c7feb3489de250b.html'>2026-10-17 · 08:00:05</option><option value='run_f3a2682519e7499d9d99f44c9d87240c.html'>2026-10-16 · 08:00:06</option><option value='run_be1d66ecbd7b4f54a8d06659d13edaf5.html'>2026-10-15 · 08:00:06</option><option value='run_81d5029f3c3847cf8c03f82583556bff.html'>2026-10-14 · 08:00:06</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Sources & Candidates</h2>
+        <p>Total sources: 31</p>
+        <p>Total candidates: 1624</p>
+        <p>Filtered by age: 50</p>
+      </div>
+      <div class="card">
+        <h2>Fetch & Extract</h2>
+        <p>Fetched: 50</p>
+        <p>Extracted: 11</p>
+        <p>Articles created: 11</p>
+      </div>
+      <div class="card">
+        <h2>LLM Stages</h2>
+        <p>Relevance calls: 5</p>
+        <p>Classify calls: 2</p>
+        <p>Summarise calls: 2</p>
+        <p>Good articles selected: 2</p>
+      </div>
+      <div class="card">
+        <h2>Errors</h2>
+        <p>Total errors: 0</p>
+        <p>Notes: {"pdf_skipped": 2}</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Rejections by Stage</h2>
+      <table>
+        <tr><th>Stage</th><th>Count</th></tr>
+        <tr><td>keyword_core</td><td>6</td></tr><tr><td>llm_relevance</td><td>3</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Render Stats (HTML + LinkedIn)</h2>
+      <table>
+        <tr><th>Stage</th><th>Model</th><th>Calls</th><th>Avg Latency (ms)</th><th>Prompt Tokens</th><th>Completion Tokens</th></tr>
+        <tr><td>render_linkedin</td><td>gpt-6-luna</td><td>1</td><td>0</td><td>2191</td><td>305</td></tr><tr><td>render_digest:chatgpt</td><td>gpt-6-luna</td><td>5</td><td>8318</td><td>4586</td><td>2562</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Cost Summary</h2>
+      <table>
+        <tr><th>Date</th><th>Stage</th><th>Provider</th><th>Model</th><th>Tier</th><th>Calls</th><th>Total Cost</th></tr>
+        <tr><td>2026-11-02</td><td>render_digest:chatgpt</td><td>openai</td><td>gpt-6-luna</td><td>default</td><td>3</td><td>$0.0008</td></tr><tr><td>2026-11-02</td><td>relevance</td><td>openai</td><td>gpt-5-nano</td><td>flex</td><td>5</td><td>$0.0007</td></tr><tr><td>2026-11-02</td><td>summarise</td><td>openai</td><td>gpt-6-luna</td><td>default</td><td>2</td><td>$0.0005</td></tr><tr><td>2026-11-02</td><td>render_digest:chatgpt</td><td>openai</td><td>gpt-6-luna</td><td>flex</td><td>2</td><td>$0.0003</td></tr><tr><td>2026-11-02</td><td>render_linkedin</td><td>openai</td><td>gpt-6-luna</td><td>flex</td><td>1</td><td>$0.0002</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Run Phase Timings</h2>
+      <table>
+        <tr><th>Phase</th><th>Started</th><th>Ended</th><th>Duration</th></tr>
+        <tr><td>source_discovery</td><td>2026-Nov-02 08:00:07</td><td>2026-Nov-02 08:00:40</td><td>00:00:32</td></tr><tr><td>prefilter_hygiene</td><td>2026-Nov-02 08:00:40</td><td>2026-Nov-02 08:00:40</td><td>00:00:00</td></tr><tr><td>render</td><td>2026-Nov-02 08:02:36</td><td>2026-Nov-02 08:02:36</td><td>00:00:00</td></tr><tr><td>render_html</td><td>2026-Nov-02 08:02:36</td><td>2026-Nov-02 08:03:29</td><td>00:00:53</td></tr><tr><td>render_linkedin</td><td>2026-Nov-02 08:03:30</td><td>2026-Nov-02 08:03:42</td><td>00:00:12</td></tr><tr><td>publish_pages</td><td>2026-Nov-02 08:03:44</td><td>2026-Nov-02 08:03:53</td><td>00:00:09</td></tr><tr><td>classify</td><td></td><td></td><td>00:00:00</td></tr><tr><td>extract_clean</td><td></td><td></td><td>00:01:05</td></tr><tr><td>fetch</td><td></td><td></td><td>00:00:08</td></tr><tr><td>llm_relevance</td><td></td><td></td><td>00:00:17</td></tr><tr><td>relevance_gate</td><td></td><td></td><td>00:00:01</td></tr><tr><td>summarise</td><td></td><td></td><td>00:00:09</td></tr>
+      </table>
+    </div>
+    <div class="section">
+      <details class="collapsible">
+        <summary>Recent Errors</summary>
+        <table>
+          <tr><th>Kind</th><th>Method</th><th>Status</th><th>Error</th><th>URL</th><th>Source</th><th>Started</th></tr>
+          <tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://www.fca.org.uk/firms/check-if-firm-authorised</td><td>regulatory:fca.org.uk</td><td>2026-Nov-02 08:02:32</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://www.insurancejournal.com/forums/</td><td>primary:insurancejournal.com</td><td>2026-Nov-02 08:02:08</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>http://newsnow.co.uk/tv/</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:02:06</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328634849?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:02:04</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328642683?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:02:03</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328633621?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:02:02</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328623375?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:02:00</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328643785?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:59</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328646393?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:52</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328637005?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:50</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328646894?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:49</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328645705?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:48</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328642871?-14432%3A11=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:41</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328643661?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:40</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328612336?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:38</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328623666?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:37</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328616760?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:36</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328636987?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:34</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328627843?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:33</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328631077?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:31</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328631482?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:30</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328637202?-461%3A2192=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:29</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328037762?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:27</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328437631?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:26</td></tr><tr><td>extract</td><td>crawl4ai</td><td>TOO_SHORT</td><td>crawl4ai integration stub</td><td>https://c.newsnow.co.uk/A/1328459152?-15310%3A55=</td><td>primary:newsnow.co.uk</td><td>2026-Nov-02 08:01:25</td></tr>
+        </table>
+      </details>
+    </div>
+  </div>
+</body>
+</html>
