@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-11-05</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-11-05 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-11-05.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">22 highlights selected for 2026-11-05. Sources include: www.businessinsurance.com, www.fca.org.uk, www.globalreinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Reinsurance</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>London Market</li>
+<li>Market News</li>
+<li>Risk</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-restructures-operating-model-to-cut-complexity-and-cost-of-doing-business/">Lloyd’s restructures operating model to cut complexity and cost of doing business - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.92</div><div class="why"><strong>Why it matters:</strong> Details Lloyd&#x27;s operating-model overhaul, governance/oversight changes and leadership appointments affecting the market.</div><ul><li>Lloyd’s is changing its operating model to reduce complexity and the cost of doing business while maintaining oversight standards, following a strategic commitment made in March.</li>
+<li>It is consolidating governance, performance, reserving and syndicate-level capital setting into a single Oversight and Performance function, led by Rachel Turk. Caroline Sandeman-Allen will support the transition before leaving Lloyd’s in 2027.</li>
+<li>Lloyd’s is introducing a global functional model across its offices. Its capital modelling and aggregation teams will report to Chief Financial Officer Jim Bichard.</li>
+<li>Jacob Palmer, formerly a Managing Director and Partner in Boston Consulting Group’s insurance practice, has joined Lloyd’s Executive Leadership Team as Chief Strategy Officer.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/lma-ceo-sheila-cameron-to-step-down-in-2027-as-search-for-successor-gets-under-way/">LMA CEO Sheila Cameron to step down in 2027 as search for successor gets under way - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> LMA leadership change impacting Lloyd&#x27;s market and transition plan.</div><ul><li>Sheila Cameron will step down as CEO of the Lloyd’s Market Association (LMA), a role she has held since 2019, and remain in post into early 2027 to support an orderly transition.</li>
+<li>The LMA has begun the process of appointing her successor. Cameron will then take on a new advisory role in the London market.</li>
+<li>LMA Chair Sean McGovern credited Cameron with strengthening the association’s influence and capabilities, advancing data and digital standards, championing Lloyd’s cultural reform and overseeing the growth of the LMA Academy.</li>
+<li>Lloyd’s CEO Patrick Tiernan said Cameron strengthened the partnership between Lloyd’s and managing agents and held the Corporation accountable on strategy, culture and budgetary issues.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/04/891489.htm">Lloyd&#x27;s of London Forms New Oversight Arm in Efficiency Push</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Covers Lloyd&#x27;s of London restructuring, governance, and market oversight changes.</div><ul><li>Lloyd’s is consolidating governance, performance, reserving and syndicate-level capital setting into a single performance and oversight function, led by Rachel Turk. Chief of market oversight Caroline Sandeman-Allen will leave next year.</li>
+<li>The restructuring may eliminate a “low-teen” number of roles. Lloyd’s says the changes are intended to strengthen oversight and governance of managing agencies, while simplifying how participants operate across regulatory regimes.</li>
+<li>Lloyd’s will introduce a global functional model for greater consistency across its offices. Capital modelling and aggregation teams will report to Chief Financial Officer Jim Bichard, and Jacob Palmer has joined from Boston Consulting Group as chief strategy officer.</li>
+<li>The changes follow Lloyd’s five-year strategy, which includes ambitions to increase its share of the commercial insurance market and attract more third-party capital. Lloyd’s has also scrapped its Blueprint Two digitalisation initiative and says it will continue work on simpler processes, common data standards and modernised technology.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/aon-renews-act-for-2027-lifting-pre-secured-capacity-from-28-5-to-35/">Aon renews ACT for 2027, lifting pre-secured capacity from 28.5% to 35% - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Expansion of ACT capacity to 35% for 2027 backed by Lloyd&#x27;s syndicates.</div><ul><li>Aon has renewed and expanded its Aon Client Treaty (ACT) facility for 2027. From 1 January, eligible clients can access 35% pre-secured Lloyd’s co-insurance capacity, up from 28.5%, on qualifying business placed through Aon’s Global Broking Centre and on facultative reinsurance placed by Reinsurance Solutions.</li>
+<li>The 1.5% ACT Client Dividend will apply to the larger 35% share where permitted by local law and regulation, and subject to eligibility.</li>
+<li>Aon said the increase is particularly significant for facultative reinsurance, which ACT has supported since late 2025. Eligible insurers placing large or complex individual risks can access committed capacity for a larger portion of each placement.</li>
+<li>Led by QBE and backed by Lloyd’s syndicates, ACT has reportedly placed more than $5bn in gross written premium since its launch in 2016.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/sheila-cameron-to-step-down-as-lma-chief-executive/1460186.article">Sheila Cameron to step down as LMA chief executive</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> LMA CEO to step down; leadership change in the Lloyd&#x27;s market.</div><ul><li>Sheila Cameron will step down as chief executive of the Lloyd’s Market Association in early 2027, after more than seven years in the role, which she has held since 2019.</li>
+<li>Cameron will remain in post during the transition and then take on a new advisory role in the London market. The LMA has begun appointing her successor.</li>
+<li>During her tenure, the LMA expanded its representation of Lloyd’s managing agents and its focus on digitalisation, market culture and insurance talent development.</li>
+<li>Cameron chaired the London Market Group’s Data Council and oversaw the expansion of the LMA Academy.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/aon-expands-client-treaty-co-insurance-to-35-for-2027/1460188.article">Aon expands Client Treaty co-insurance to 35% for 2027</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> ACT Client Treaty capacity increase to 35% backed by Lloyd&#x27;s syndicates; Lloyd&#x27;s market capacity news.</div><ul><li>Aon will increase co-insurance through its Aon Client Treaty (ACT) facility from 28.5% to 35% on eligible placements from 1 January 2027, including facultative reinsurance business.</li>
+<li>The increase applies to eligible business placed through Aon’s Global Broking Centre and facultative reinsurance. Subject to eligibility and local regulation, the 1.5% ACT Client Dividend will apply to the larger share.</li>
+<li>Aon said the expansion follows increased client demand for committed capacity and support from market partners. The facility is led by QBE and backed by Lloyd’s syndicates; clients access its capacity on the same terms and pricing as the lead placement.</li>
+<li>ACT has supported facultative reinsurance since late 2025 and has placed more than $5bn in gross written premium since launching in 2016.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/trackers-are-not-for-us-when-the-market-softens-youve-got-to-underwrite-lancashire-ceo/">Trackers are not for us. When the market softens you&#x27;ve got to underwrite: Lancashire CEO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Lancashire&#x27;s comments on a soft market and tracker strategy relate to Lloyd&#x27;s market dynamics.</div><ul><li>Lancashire CEO Alex Maloney said active underwriting and selectivity are increasingly important as insurance and reinsurance markets soften; the company is not interested in broker follow facilities or passive trackers.</li>
+<li>Maloney said Lancashire will deploy capacity only where risk-adjusted returns meet its expectations, while remaining committed to core clients and actively managing capital through the market cycle.</li>
+<li>He cited Lancashire’s broader range of products, reinsurance options, well-capitalised balance sheet, prudent reserves and conservative investment portfolio as tools for managing the cycle.</li>
+<li>Group Chief Underwriting Officer Paul Gregory said product lines move at different speeds and have varying levels of adequacy, giving Lancashire flexibility to reallocate between products, classes and geographies.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/04/891443.htm">Supermarket Fridge Attack Is Just the Start, Says UK Cybersecurity Chief</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses cyber threats to critical infrastructure and AI-enabled risk, with implications for Lloyd&#x27;s market risk/insurance.</div><ul><li>Supermarket fridges and freezers in Sweden, Belgium and France were hit by cyberattacks, exposing vulnerabilities in IT systems and forcing stores to discard large amounts of food.</li>
+<li>The UK National Cyber Security Centre chief said the attacks were an early warning of more frequent disruption, with old technology and known vulnerabilities at risk of exploitation at scale.</li>
+<li>The NCSC said AI is expected to enhance hackers’ capabilities by helping them discover and exploit existing vulnerabilities; it assessed that an AI-powered ransomware attack on UK critical infrastructure by 2028 was highly likely.</li>
+<li>The NCSC chief said UK organisations and supply chains had left themselves vulnerable by relying on cheap technology, and described cyber activity by Russia, Iran and China as a concern.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/medicaid-coverage-losses-drive-up-comp-medical-costs-wcri/">Medicaid coverage losses drive up comp medical costs: WCRI - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses Medicaid disenrollment as a driver of workers&#x27; compensation medical costs and its potential impact on market pricing/risk.</div><ul><li>A Workers Compensation Research Institute study of data from 31 states found average medical payments at 12 months rose 3.1% for lost-time claims after the 2023–24 Medicaid disenrolment process.</li>
+<li>Increases were higher for construction workers (10.1%) and manufacturing workers (6.1%). For lost-time claims overall, hospital payments rose 6.7%, while non-hospital payments fell 3.3%.</li>
+<li>The study found no measurable changes in claim frequency, indemnity benefits, temporary disability duration or attorney representation. Researchers said people losing Medicaid may rely more on workers compensation medical benefits for compensable injuries.</li>
+<li>Researchers cautioned that the claims had only 12 months of maturity and the effects of the 2025 federal law could not yet be measured.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/aon-expands-follow-form-facility-to-35-for-2027/">Aon expands follow-form facility to 35% for 2027 - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s of London syndicates backing the facility; Lloyd&#x27;s market context.</div><ul><li>Aon has renewed and expanded its automatic follow-form facility for 2027, raising its share of eligible placements to 35% from 28.5%, effective 1 January.</li>
+<li>The Aon Client Treaty facility, led by QBE and backed by Lloyd’s syndicates, provides pre-arranged co-insurance on the same terms and pricing as the lead insurer. The expanded capacity applies to eligible business placed through Aon’s global broking centre and to facultative reinsurance placements.</li>
+<li>The facility’s 1.5% premium discount is unchanged and will apply to the larger share of eligible placements where local laws and regulations permit.</li>
+<li>Aon said facultative reinsurance, added to the facility in late 2025, has become a significant area of growth. Since the facility launched in 2016, it has placed more than $5 billion in gross written premium.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/hive-appoints-wiley-as-property-dandf-class-underwriter/1460191.article">HIVE appoints Wiley as property D&amp;F class underwriter</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses a London market MGA (HIVE Underwriters) expansion and hiring for its property direct and facultative team.</div><ul><li>HIVE Underwriters appointed Ed Wiley as class underwriter for property direct and facultative, strengthening its recently established property team.</li>
+<li>Wiley joins from Sompo, where he was head of international property, and has more than 20 years’ experience across international and UK property.</li>
+<li>He will work with head of property Richard Brown to develop HIVE’s global property direct and facultative business.</li>
+<li>HIVE said the business will draw on underwriting expertise and investment in data, analytics and technology.</li></ul></article>
+<article class="story"><h3><a href="https://www.fca.org.uk/news/blogs/act-now-be-resilient-quantum-future">Act now to be resilient in the quantum future</a></h3><div class="meta">Source: www.fca.org.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Discusses UK financial sector PQC readiness and regulatory timelines, impacting insurers&#x27; cyber risk underwriting.</div><ul><li>The article warns that a sufficiently powerful quantum computer could undermine widely used cryptography, putting customer data, financial transactions and market integrity at risk; the timing of such a computer is uncertain.</li>
+<li>Firms are urged to map their use of cryptography and plan and manage migration of hardware and software to post-quantum cryptography (PQC), with sufficient time, investment and resources.</li>
+<li>The NCSC milestones cited are: complete a PQC migration plan by 2028, undertake high-priority migration activities by 2031, and migrate all systems, services and products by 2035. Firms are encouraged to act sooner where safe.</li>
+<li>The regulator is trialling a supervisory self-assessment tool, engaging with industry groups and plans to consult on cyber resilience guidance covering PQC risks and cryptographic controls.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/expert-views/qanda-hiscox-on-the-new-risks-brought-on-by-an-evolving-leisure-sector/1459819.article">Q&amp;A: Hiscox on the new risks brought on by an evolving leisure sector</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.73</div><div class="why"><strong>Why it matters:</strong> Explores evolving leisure-sector risks and broker considerations with underwriting implications.</div><ul><li>Hiscox research found that 57% of consumers tried a new or different leisure activity in the past year, while 59% believe there is more variety than five years ago. Businesses are responding with more interactive and hybrid experiences.</li>
+<li>As customers take part more actively, risks can include injury, equipment or attraction damage, and resulting cancellations or lost income. Hiscox found that 27% of leisure businesses had temporarily closed or lost income because of risky customer behaviour.</li>
+<li>Hiscox found that 75% of leisure operators have added or plan to add a service; among those that added one in the past year, 33% had not checked whether their insurance covered it. Brokers are advised to ask whether the business still matches its renewal description.</li>
+<li>Hiscox found that 79% of leisure operators collect customer data digitally, while 19% of those businesses do not consider themselves data controllers. The article highlights questions about what data is held, where it is stored, who can access it and how it is protected.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/fortitude-re-finalises-3-8bn-long-term-care-reinsurance-deal-with-unum-group/">Fortitude Re finalises $3.8bn long-term care reinsurance deal with Unum Group - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Large LTC reinsurance deal informs market dynamics and risk transfer, affecting Lloyd&#x27;s market capacity.</div><ul><li>Fortitude Re and Unum Group completed a USD $3.8 billion long-term care reinsurance agreement covering approximately 50,000 individual policies, with USD $3.8 billion in statutory reserves and about USD $4.5 billion on a best-estimate basis.</li>
+<li>Unum transferred the policies from its wholly owned subsidiary, Fairwind Insurance Company, before reinsuring them with Fortitude Reinsurance Company Ltd. A separate retrocession arrangement transfers all the portfolio’s LTC insurance risks to a highly rated global reinsurer, leaving Fortitude Re exposed to underlying spread-based risks.</li>
+<li>Unum retains responsibility for administering and servicing the policies. The transaction further reduces its legacy LTC exposure as it restructures its closed block operations.</li>
+<li>Unum said its external LTC reinsurance arrangements completed in 2025 and 2026 have reinsured more than USD $7 billion in statutory reserves. Its remaining LTC business is largely group policies, and the company said employer decisions to end group cover have reduced policy numbers and associated liabilities.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/04/891427.htm">European Supermarkets Rush to Patch Vulnerabilities After Region-Wide Fridge Hack</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> European retail cyberattack with cross-border exposure—relevant to cyber risk and insurance (Lloyd&#x27;s market).</div><ul><li>A second wave of cyberattacks affected supermarkets in eight European countries, with hackers tampering with refrigeration systems and stores discarding large quantities of food. The attacks were reported as identical to those affecting French supermarkets three weeks earlier.</li>
+<li>Sweden’s Coop said it was moving systems from 4G connections to 5G and modern modems. Its seven affected stores were operating again, but their refrigeration systems had been disconnected from the internet while the chain reviewed network vulnerabilities.</li>
+<li>Danfoss advised that refrigeration systems should not be directly accessible via the internet. A Deloitte cybersecurity expert urged retailers to check controllers, internet connections and security updates, and to disconnect systems from the public internet if their status was unknown.</li>
+<li>The article reported attacks at 23 ICA stores in Sweden, one Edeka store in Germany and 15 Carrefour stores in Belgium. ENISA called for European cooperation, rapid information-sharing and coordinated responses to cyber incidents.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/sawmill-loses-bid-to-block-injured-workers-negligence-suit/">Sawmill loses bid to block injured worker’s negligence suit - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Legal ruling on workers&#x27; comp exclusivity and a negligence suit, impacting insurer risk and coverage in employer-employee cases.</div><ul><li>A North Carolina appeals court ruled that Edwards Wood Products cannot rely on workers compensation exclusivity to block a negligence lawsuit by a staffing agency employee injured at its sawmill.</li>
+<li>Arnol Enrique, employed by staffing agency CDT HR and assigned to the sawmill, was permanently paralysed from the waist down after a crane cable snapped in September 2023, causing a steel blade holder to fall on him.</li>
+<li>Mr Enrique claimed workers compensation through CDT HR and later sued the sawmill operator for negligence and gross negligence, seeking compensatory and punitive damages.</li>
+<li>The court found no express or implied employment contract between Mr Enrique and Edwards Wood Products. It also noted the company had previously denied an employment relationship in workers compensation proceedings, and allowed the lawsuit to proceed.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/emea-reinsurers-face-lower-profits-through-2027-sp/">EMEA reinsurers face lower profits through 2027: S&amp;P - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses EMEA reinsurers&#x27; profitability outlook, impacting Lloyd&#x27;s underwriting and reinsurance pricing.</div><ul><li>S&amp;P Global Ratings expects ample capacity from traditional reinsurers and alternative capital providers to soften pricing and reduce large reinsurers’ profitability in Europe, Africa and the Middle East this year and next, through 2027.</li>
+<li>Strong property and casualty reinsurance combined ratios and solid net investment income are expected to cover the sector’s cost of capital, provided natural catastrophe and large man-made losses remain within annual budgets.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/tmk-hires-marsh-res-hughes-for-marine-underwriting-role/">TMK hires Marsh Re&#x27;s Hughes for Marine Underwriting role - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Leadership appointment at Tokio Marine Kiln, a major player in Lloyd&#x27;s market reinsurance.</div><ul><li>Tokio Marine Kiln (TMK) has appointed Ed Hughes as Marine Reinsurance Underwriter as part of its Specialty Reinsurance team’s growth plans.</li>
+<li>Hughes will support the growth of TMK’s specialty marine reinsurance division and enhance its underwriting capabilities. He will report to Claire Wallace, Divisional Head of Marine Reinsurance.</li>
+<li>Hughes joins from Marsh Re, where he was Vice President of its Global Marine, Energy and Technical Lines specialty practice. He has more than three years of specialised marine reinsurance experience.</li>
+<li>Before that, he held reinsurance broking roles in cyber and crisis management, and aviation, at Marsh Re and Guy Carpenter.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/3m-commits-7-35-billion-to-settle-forever-chemicals-related-claims/">3M commits $7.35 billion to settle ‘forever chemicals’-related claims - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> PFAS settlement affects corporate liability risk and insurance claims, impacting underwriting and risk transfer in the insurance market.</div><ul><li>3M said it will commit nearly $7.35 billion over nine years to settle PFAS-related personal injury claims, without admitting liability.</li>
+<li>The settlement addresses about 99% of current personal injury claims inside and outside the AFFF Multi-District Litigation; 115,000 to 120,000 plaintiffs are eligible, according to 3M.</li>
+<li>The payment schedule includes $50 million in 2026, no payments in 2027, and about 20% of payments in the final two years. 3M expects a $5.8 billion pre-tax charge in the fourth quarter, which it says will not affect its previous forecast.</li>
+<li>3M said remaining and future personal injury claims will be handled through several settlement mechanisms. It also said it completed its plan to stop manufacturing PFAS globally by the end of 2025.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/un-launches-first-of-its-kind-disaster-insurance-programme-backed-by-gallagher-re-liberty-mutual/">UN launches first-of-its-kind disaster insurance programme, backed by Gallagher Re &amp; Liberty Mutual - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Involves Gallagher Re and coverage placement in a catastrophe risk program, relevant to Lloyd&#x27;s market activities.</div><ul><li>The UN has launched an insurance programme that could provide up to $40 million in additional funding for anticipatory disaster response. Gallagher Re structured and placed the coverage, with Liberty Mutual as lead insurer.</li>
+<li>Led by OCHA with UNICEF and the World Food Programme, the programme provides extra resources if demand for OCHA funding exceeds an agreed threshold when forecasts warn of an approaching disaster.</li>
+<li>OCHA’s anticipatory action portfolio is worth $150 million and covers more than five million people. The insurance is intended to protect that commitment when several disasters threaten at once and help extend early assistance to more communities.</li>
+<li>UNICEF has taken out parallel cover for its contribution, and the programme is designed to allow more agencies and partners to join over time.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/aig-pulls-back-growth-target-amid-mounting-pricing-pressure/">AIG pulls back growth target amid mounting pricing pressure - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Notes pricing pressure and capacity shifts in P&amp;C markets that could affect Lloyd&#x27;s.</div><ul><li>AIG withdrew its earlier expectation of low- to mid-teens premium growth in 2026, citing increased competition and falling rates in some business lines. CEO Eric Andersen said the insurer would not pursue growth at the expense of underwriting discipline.</li>
+<li>Competition and added capacity are pressuring North American excess and surplus property and casualty pricing, and energy rates are also falling. AIG is reducing its participation in large property and casualty accounts through Lexington and becoming more selective in energy.</li>
+<li>AIG is targeting growth in middle-market and smaller accounts, construction insurance—particularly large data centres—and international property markets, where it said pricing conditions are more favourable.</li>
+<li>Third-quarter net income rose 63% to $844 million, while adjusted after-tax income fell 11% to $1.09 billion. General insurance premiums written increased 7% to $6.65 billion, but underwriting income fell 29% to $564 million and the combined ratio worsened to 91.3%, partly reflecting higher catastrophe charges.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/aon-munich-re-launch-pandemic-reinsurance-facility/">Aon, Munich Re launch pandemic reinsurance facility - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Discusses a new pandemic reinsurance facility from major players, touching on risk transfer that affects the Lloyd&#x27;s market.</div><ul><li>Aon and Munich Re have launched a parametric pandemic reinsurance facility for hospitality risks in Indonesia and the Philippines.</li>
+<li>The facility combines traditional indemnity protection with parametric triggers to address pandemic-related non-damage business interruption losses, which many property and casualty policies exclude.</li>
+<li>The excerpt provides no further detail on the facility’s coverage terms or operation.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-11-05T08:10:27Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
