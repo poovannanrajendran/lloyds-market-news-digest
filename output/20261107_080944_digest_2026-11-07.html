@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-11-07</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-11-07 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-11-07.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">20 highlights selected for 2026-11-07. Sources include: newsnow.co.uk, www.artemis.bm, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Lloyds</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Risk</li>
+<li>Catastrophe</li>
+<li>ILS</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-syndicate-cortina-launched-by-aon-and-blackstone-funds-with-qbe-as-managing-agent/">Lloyd&#x27;s syndicate Cortina launched by Aon and Blackstone funds with QBE as managing agent - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.92</div><div class="why"><strong>Why it matters:</strong> Launch of Cortina syndicate 1956 at Lloyd’s; major capital providers and QBE as managing agent.</div><ul><li>Aon and Blackstone-managed funds have launched Cortina syndicate 1956 at Lloyd’s, with underwriting planned to begin on 1 January 2027 after receiving the Council’s in-principle approval on 16 October 2026.</li>
+<li>The syndicate will provide following capacity on eligible reinsurance treaties, following the lead reinsurer’s terms and claims decisions. QBE will be its managing agent, responsible for underwriting and governance.</li>
+<li>For participating clients, Cortina will write 3% of eligible property catastrophe excess-of-loss treaties and 5% of other eligible treaties arranged by Aon, subject to a defined framework.</li>
+<li>Aon says clients will receive a dividend based on Cortina’s share of their reinsurance programmes and benefit from efficiencies in the syndicate’s structure.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/06/891851.htm">Blackstone, Aon Set Up Lloyd&#x27;s Vehicle in Latest Insurance Push</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.92</div><div class="why"><strong>Why it matters:</strong> Reports a new Lloyd&#x27;s syndicate (Cortina) backed by Blackstone and Aon, directly related to Lloyd&#x27;s market activity.</div><ul><li>Blackstone and Aon have established Cortina, a Lloyd’s syndicate that will provide capital to back reinsurance contracts, subject to final Lloyd’s approval.</li>
+<li>Cortina is set to take a 3% share of Aon-arranged contracts covering insurers’ property portfolios after catastrophe losses exceed an agreed threshold, and 5% of other eligible reinsurance deals facilitated by Aon.</li>
+<li>QBE will be responsible for Cortina’s underwriting and governance. The syndicate plans to begin underwriting on 1 January.</li>
+<li>The article says alternative asset managers are increasingly entering property-and-casualty insurance, and notes Blackstone’s existing backing of other Lloyd’s reinsurance syndicates.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/aon-and-blackstone-funds-launch-cortina-a-new-lloyds-syndicate-offering-efficient-reinsurance/">Aon and Blackstone funds launch Cortina, a new Lloyd&#x27;s syndicate offering efficient reinsurance - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> New Lloyd&#x27;s syndicate Cortina (1956) launch with London Bridge 2 ILS funding; direct Lloyd&#x27;s market activity.</div><ul><li>Aon and Blackstone have announced the launch of Lloyd’s Cortina syndicate 1956, with London Bridge 2 used as part of the initiative to provide long-term reinsurance capacity to Aon clients and a client dividend.</li>
+<li>Cortina is expected to begin underwriting on 1 January 2027, subject to final approval from Lloyd’s. QBE will be the managing agent and oversee underwriting and governance.</li>
+<li>Aon said Cortina will provide following capacity on eligible treaties, including 3% on property catastrophe treaty business and 5% on other treaty lines. The article reports sources’ estimates of around $1.6 billion in premiums and funding mooted at around $500 million.</li>
+<li>QBE’s existing Client Treaty facility with Aon was renewed with an expanded remit: 35% co-insurance of eligible business placed through Aon’s Global Broking Centre and facultative reinsurance business for 2027, up from 28.5% in 2026.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/allianz-commercial-to-launch-lloyds-underwriting-syndicate/">Allianz Commercial to launch Lloyd’s underwriting syndicate - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.87</div><div class="why"><strong>Why it matters:</strong> Direct Lloyd&#x27;s underwriting syndicate launch by Allianz Commercial.</div><ul><li>Allianz Commercial plans to establish Allianz Commercial 1893 as a Lloyd’s direct underwriting syndicate, with trading expected to start on 1 January 2027.</li>
+<li>Lloyd’s has granted the syndicate in-principle approval.</li>
+<li>The syndicate is intended to expand Allianz Commercial’s access to specialty, facilities and selected managing general agent business.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/ms-amlin-syndicate-seeks-100m-in-first-cat-bond/">MS Amlin syndicate seeks $100M in first cat bond - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Mentions MS Amlin&#x27;s Lloyd&#x27;s syndicate issuing its first cat bond.</div><ul><li>MS Amlin Holdings Ltd.’s Lloyd’s syndicate 2001 is seeking $100 million in retrocessional reinsurance through its first catastrophe bond.</li>
+<li>The four-year bond would provide multi-peril, multi-regional cover, using an annual aggregate industry loss index trigger for US named storms, earthquakes in the US and Canada, and European windstorms.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/arthur-re-ltd-kanata-re-2026-1/">Arthur Re Ltd. - Kanata Re 2026-1</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.84</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd’s Syndicate 2001 as a beneficiary/ceding entity in a catastrophe bond (Kanata Re 2026-1), tying it to Lloyd’s market activity.</div><ul><li>Arthur Re Ltd.’s Kanata Re 2026-1 is its fifth catastrophe bond offering and the first to benefit Lloyd’s Syndicate 2001, with coverage also benefiting sub-syndicate 1673; both are managed by MS Amlin Underwriting Limited.</li>
+<li>The deal is targeting $100 million of Class A notes to provide fully collateralised, multi-year retrocessional reinsurance on an annual aggregate, industry loss index basis. Covered perils are US named storm, US and Canada earthquake, and European windstorm.</li>
+<li>The protection is designed to run for four calendar-year risk periods from the start of 2027 to the end of 2030. The notes attach at $600 million and exhaust at $700 million, with franchise deductibles of $10 million for named storms, $25 million for earthquakes and $6 million for European windstorms.</li>
+<li>The targeted notes have an initial attachment probability of 3.01% and expected loss of 2.524%; price guidance is a spread of 4.5% to 5%.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/aon-blackstone-launch-lloyds-syndicate/">Aon, Blackstone launch Lloyd’s syndicate - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.83</div><div class="why"><strong>Why it matters:</strong> Discusses the launch of a Lloyd’s syndicate (Cortina) by Aon/Blackstone, a direct Lloyd’s market development.</div><ul><li>Aon and funds managed by Blackstone have launched Cortina, Lloyd’s syndicate 1956, which is expected to begin underwriting on 1 January 2027, subject to final Lloyd’s approval. QBE will act as managing agent.</li>
+<li>Cortina will write 3% of eligible property catastrophe excess-of-loss treaties and 5% of other eligible treaties arranged by Aon for participating clients.</li>
+<li>The syndicate will follow lead reinsurers’ terms and claims decisions. Participating clients will receive a dividend based on Cortina’s share of their reinsurance programmes.</li>
+<li>Aon also said it had expanded its automatic follow-form co-insurance facility for 2027 to cover 35% of eligible placements, up from 28.5%.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/06/891790.htm">Binance $6.3 Billion Heist to Prompt Closer Scrutiny by Insurers</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Discusses crypto insurance underwriting and Lloyd&#x27;s-related policy exclusions and market implications.</div><ul><li>Insurers are expected to scrutinise crypto firms’ exposure to Binance and assess whether they share vulnerabilities identified in the $6.3 billion theft, particularly at policy renewal; the article says a broad retreat from crypto cover is not expected.</li>
+<li>Underwriters may request more detailed information and require specific security weaknesses identified by the Binance investigation to be resolved. Executives said the implications are likely to become clearer at annual renewals.</li>
+<li>The article says no available crypto insurance policy could cover a loss on the scale suffered by Binance, and even multiple policies would be insufficient.</li>
+<li>Policies may exclude state-backed cyberattacks. The article says such exclusions could complicate claims if an attack is attributed to a state, and their effectiveness in a major geopolitically driven loss remains untested.</li></ul></article>
+<article class="story"><h3><a href="https://www.newsnow.co.uk/h/Industry+Sectors/Banking/Investment+Banks/Blackstone">Blackstone news | Breaking News &amp; Top Stories | NewsNow</a></h3><div class="meta">Source: www.newsnow.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s of London and Lloyd’s vehicle-related insurance news.</div><ul><li>The supplied excerpt is a news listings page, not the article itself; it lacks detail about Blackstone and Aon’s Lloyd’s vehicle.</li></ul></article>
+<article class="story"><h3><a href="http://newsnow.co.uk/h/Industry+Sectors/Banking/Investment+Banks/Blackstone">Blackstone news | Breaking News &amp; Top Stories | NewsNow</a></h3><div class="meta">Source: newsnow.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s of London and Lloyd’s vehicle-related insurance news.</div><ul><li>The supplied excerpt is a news listings page, not the article itself; it lacks detail about Blackstone and Aon’s Lloyd’s vehicle.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/skyward-specialtys-net-income-rises-8-5-to-49-8m-in-q326/">Skyward Specialty’s net income rises 8.5% to $49.8m in Q3’26 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Contains news about a Lloyd&#x27;s specialist (Apollo Group) acquisition and related activity.</div><ul><li>Skyward Specialty reported Q3 2026 net income of $49.8 million, up approximately 8.5% year on year, while total revenue rose 19% to $421 million.</li>
+<li>Gross written premiums increased 9% to $803.5 million, net written premiums rose 14% to $501.8 million, and managed premiums grew 12.5% to $1.32 billion.</li>
+<li>Underwriting income increased 25% to $47.9 million. The combined ratio was 89.9%, compared with 89.2% a year earlier, reflecting a higher loss ratio and a slightly lower expense ratio.</li>
+<li>Net investment income rose 54% to $33.9 million; the company attributed the increase to the addition of the Apollo portfolio, higher yields and a larger asset base.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/the-biggest-people-moves-this-week/1460206.article">The biggest people moves this week</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Covers leadership changes at the Lloyd&#x27;s Market Association (LMA) and related London market moves.</div><ul><li>PIB Group appointed Aviva’s David Martin as chief executive. He will join in early 2027 from his roles as Aviva’s UK commercial managing director and chief distribution officer.</li>
+<li>Aviva split Martin’s responsibilities between two roles. Michelle Taylor, currently broker distribution director, will become chief distribution officer; the UK commercial managing director appointment is yet to be confirmed.</li>
+<li>Axa Commercial appointed Carolyn Rich as marketing and broker development director. She joins from Allianz UK, where she spent 13 years, and will lead its marketing and broker engagement strategies.</li>
+<li>Lloyd’s Market Association chief executive Sheila Cameron will step down in early 2027 after more than seven years in the role. She will remain during the transition, then take an advisory role in the London market; the LMA has begun seeking her successor.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/binance-6-3-billion-heist-to-prompt-closer-scrutiny-by-insurers/">Binance $6.3 billion heist to prompt closer scrutiny by insurers - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Highlights increased scrutiny of crypto risk and underwriting in the insurance market, affecting Lloyd&#x27;s market dynamics.</div><ul><li>Insurers are expected to scrutinise crypto firms’ exposure to Binance and their security controls more closely at new business and renewals, without broadly withdrawing capacity or reducing coverage availability.</li>
+<li>The FBI blamed the $6.3 billion heist on a North Korea-linked group. Binance said attackers compromised two software engineers’ computers using a bogus job interview and software hidden in an advertisement, then used a third computer to steal the crypto.</li>
+<li>The incident may lead underwriters to seek assurances that any specific weaknesses identified in Binance’s security investigation have been addressed, and to reassess aggregate exposure, policy wording and sub-limits across crypto portfolios.</li>
+<li>Experts said available crypto insurance could not cover a loss on the scale suffered by Binance, and many policies exclude state-backed cyberattacks.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/dutch-retailer-projects-up-to-280m-in-lost-sales-after-cyberattack/">Dutch retailer projects up to $280M in lost sales after cyberattack - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.74</div><div class="why"><strong>Why it matters:</strong> Cyberattack impact on retailer signals cyber risk exposure and potential insurance losses for the Lloyd&#x27;s market.</div><ul><li>Koninklijke Ahold Delhaize NV expects the cyberattack on its online shopping networks and supply chains in the Benelux and the US to reduce sales by €200 million to €250 million ($224 million to $280 million).</li>
+<li>The retailer expects additional costs to respond to the attack and repair its systems.</li>
+<li>The excerpt also reports that hackers tampered with refrigerator temperatures at the retailer’s Belgian chain in a separate European supermarket cyberattack this week; it gives no further details.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/safepoint-adds-another-100m-layer-to-its-catastrophe-bond-with-nature-coast-re-2026-4/">SafePoint adds another $100m+ layer to its catastrophe bond with Nature Coast Re 2026-4 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses cat bonds, reinsurance capacity, and market conditions affecting pricing and risk transfer—topic relevant to Lloyd&#x27;s market dynamics.</div><ul><li>SafePoint is offering a further Nature Coast Re Ltd. (Series 2026-4) catastrophe bond, targeting an initial $100 million or more of reinsurance protection above its recently priced $650 million Series 2026-2 deal.</li>
+<li>The proposed single tranche of Class AAA notes would provide indemnity, per-occurrence named-storm cover for SafePoint and its two reciprocal exchanges across nine US states, over four years from 1 December.</li>
+<li>The $100 million tranche attaches at $300 million and exhausts at $900 million; it has an initial attachment probability of 0.6% and expected loss of 0.46%, with spread guidance of 3%–3.5%.</li>
+<li>SafePoint is also marketing a separate $100 million annual aggregate, industry-loss-triggered catastrophe bond. If both new deals succeed, the article says its catastrophe-bond-backed reinsurance could reach $850 million or more across the deals described.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/cat-bond-risk-spreads-fall-to-lowest-level-since-2017-as-tightening-continued-in-october-plenum/">Cat bond risk spreads fall to lowest level since 2017, as tightening continued in October: Plenum - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bond (ILS) market metrics affecting Lloyd&#x27;s reinsurance pricing and risk transfer.</div><ul><li>By 30 October 2026, the catastrophe bond market’s overall coupon yield had fallen to 8.41%, from 8.74% on 25 September. Yields varied by currency: 8.4% in USD, 7.0% in EUR and 4.2% in CHF.</li>
+<li>Outstanding-market insurance risk spreads stood at 4.33%, their lowest since August 2017 and roughly 13% below the same time a year earlier. Spreads narrowed by a further 5% in October, with the pace of tightening slowing.</li>
+<li>Market expected loss rose from 2.25% on 31 October 2025 to 2.55% on 30 October 2026. The article says this reflects the changing profile of outstanding catastrophe bonds, while noting maturities also affect the measure.</li>
+<li>Plenum Investments expected spread tightening to continue more moderately into November, with spreads starting to widen again in December. The article says the effect of lower-priced new issues on market yields remains to be seen as issuance builds.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/floods-expected-to-cause-hundreds-of-millions-in-losses/">Floods expected to cause hundreds of millions in losses - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers insurance losses from a major catastrophe, impacting risk transfer and markets that include Lloyd&#x27;s.</div><ul><li>Aon said recent flooding in the United States caused hundreds of millions of dollars in losses, with economic and insured losses potentially higher as assessments continue.</li>
+<li>Flooding affected Arizona and Colorado from 31 October to 2 November, Florida from 1 to 3 November, and Georgia’s southern Appalachians on 4 November.</li>
+<li>The National Weather Service reported more than 24 inches of rain in about 24 hours in southern Brevard County, Florida; parts of Georgia recorded 5 to 11 inches of rain.</li>
+<li>Aon said much of the damage in the Southwest and Appalachia was to public infrastructure. It expects insured losses to be a fraction of total losses because many residents outside designated flood zones lack flood insurance.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/high-point-re-ltd-series-2027-1/">High Point Re Ltd. (Series 2027-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers ILS/catastrophe bonds and reinsurance—topics impacting the Lloyd&#x27;s market, though not Lloyd&#x27;s-specific.</div><ul><li>Selective Insurance Company is sponsoring its second catastrophe bond, High Point Re Ltd. (Series 2027-1), to renew and expand coverage from its 2023-1 bond, which matures at the end of 2026.</li>
+<li>The transaction targets a single $300 million tranche of Class A notes, providing four years of reinsurance protection through the end of 2030. Coverage is for specified US catastrophe perils across all 50 states and Washington, DC.</li>
+<li>The reinsurance is described as indemnity-triggered and per-occurrence, attaching at $800 million of loss and covering a share of losses up to $1.5 billion.</li>
+<li>The notes have an initial attachment probability of 0.93% and expected loss of 0.6%; indicated spread guidance is 2.75% to 3.25%.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/insurers-urged-to-adapt-reinsurance-structures-as-secondary-peril-losses-climb-marsh-re/">Insurers urged to adapt reinsurance structures as secondary peril losses climb: Marsh Re - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Discusses reinsurance strategies, catastrophe risk, and market dynamics impacting Lloyd&#x27;s market participants, including modeling, exposure management, and ILS, though not mentioning Lloyd&#x27;s explicitly.</div><ul><li>Marsh Re says recurring secondary-peril losses, including severe convective storms, wildfire, winter storms and floods, are increasing pressure on insurers to reassess reinsurance strategies that have traditionally focused on rare, large catastrophes.</li>
+<li>The broker reported that US insured severe convective storm losses have exceeded $30 billion annually since 2020, topping $40 billion in four of those years; the January 2025 Los Angeles wildfire was the largest insured wildfire loss on record.</li>
+<li>Higher retentions following the 2023 reinsurance market reset have reduced the share of catastrophe claims absorbed by reinsurers, leaving primary insurers to bear more of the cost of frequent, smaller events. Marsh Re also found that model estimates can vary materially between releases, with uneven validation, particularly in less mature areas such as urban conflagration.</li>
+<li>Marsh Re recommends combining vendor models with insurers’ claims experience, improving exposure-level mitigation data and reviewing cover for accumulated losses, including annual aggregate covers and second-event layers. It says access to reinsurance capacity will increasingly depend on the quality of insurers’ exposure assessments.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/the-bi-top-10-for-the-week-of-nov-2-2026/">The BI Top 10 for the week of Nov. 2, 2026 - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.62</div><div class="why"><strong>Why it matters:</strong> Mentions launching Lloyd’s underwriting syndicate; overall BI Top 10 page includes Lloyd’s-related item.</div><ul><li>Business Insurance’s most-read story for the week of 2 November 2026 was an Off Beat article about Liberty Mutual’s advertising mascot, Lib erty Biberty, getting his own tea party.</li>
+<li>Other leading stories covered AIG pulling back its growth target amid pricing pressure; Lori Goltermann joining Swiss Re Corporate Solutions; and CNA’s profit halving amid long-term care reserves and catastrophe losses.</li>
+<li>The list also included stories on data centre risks and construction challenges, insurer appointments, Bayer’s Roundup trial, and Aon expanding a follow-form facility to 35% for 2027.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-11-07T08:09:44Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
