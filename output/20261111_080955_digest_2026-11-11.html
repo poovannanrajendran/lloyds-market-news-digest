@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-11-11</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-11-11 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-11-11.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">23 highlights selected for 2026-11-11. Sources include: www.artemis.bm, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Reinsurance</li>
+<li>Commentary</li>
+<li>Lloyds</li>
+<li>UK Insurance</li>
+<li>Catastrophe</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/insurance-market-must-become-more-risk-aware-and-not-risk-off-says-lloyds-turk/">Insurance market must become more ‘risk aware and not risk off,’ says Lloyd’s Turk - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.89</div><div class="why"><strong>Why it matters:</strong> Direct quotes from a Lloyd&#x27;s executive (Rachel Turk) on geopolitical risk and underwriting strategy.</div><ul><li>Rachel Turk, Lloyd’s Chief of Performance &amp; Strategy, said geopolitical and technological risks are interconnected, with events affecting supply chains, trade, energy infrastructure and insurance portfolios.</li>
+<li>Turk urged underwriters to be geopolitically aware and “risk aware, not risk off”, arguing that insurers should seek ways to provide appropriate cover rather than simply exclude emerging risks such as AI. She stressed the need for clear contractual wording on war, AI, sanctions and systemic exposure.</li>
+<li>She warned that fragmented cover for modern vulnerabilities could make insurers less relevant and lead clients to place risks in captives, which she said rarely return to the insurance market.</li>
+<li>Turk set out five priorities: know what is covered; understand portfolio-wide exposures and accumulations; price for current conditions and maintain rate adequacy; adjust before results force action; and protect profitability to support future ambition.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/analysts-view-cortina-and-similar-structures-as-a-negative-for-reinsurers-amid-market-softening/">Analysts view Cortina and similar structures as a negative for reinsurers amid market softening - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.86</div><div class="why"><strong>Why it matters:</strong> Discusses the Cortina syndicate at Lloyd&#x27;s and its capital/pricing implications for the market.</div><ul><li>Aon and funds associated with Blackstone launched Lloyd’s syndicate 1956, Cortina, which received in-principle approval on 16 October 2026 and is expected to begin underwriting on 1 January 2027.</li>
+<li>Cortina will provide dedicated, multi-year reinsurance capacity using institutional capital and a conventional lead/follow approach. It is reported to bring $500 million of capital and write around $1.6 billion of premium.</li>
+<li>Evercore ISI says additional capacity is negative for reinsurers in an already well-capitalised market and could put further pressure on reinsurance pricing, particularly if similar broker-led facilities emerge.</li>
+<li>The analysts suggest these structures may be more disciplined than some past reinsurance start-ups. They expect Cortina to be a modest organic growth tailwind for Aon through volumes, market share and administration fees.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/hdi-secures-lloyds-permission-to-underwrite-for-syndicate-2029/">HDI secures Lloyd’s Permission to Underwrite for Syndicate 2029 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> HDI Global UK &amp; Ireland secures Lloyd’s Permission to Underwrite for Syndicate 2029 and plans its launch, with PoloWorks partnership highlighted.</div><ul><li>HDI Global UK &amp; Ireland has received Lloyd’s Permission to Underwrite for Syndicate 2029, following Approval in Principle earlier this year. The approval clears the way for underwriting ahead of the planned launch on 1 January 2027.</li>
+<li>The syndicate will initially write Specialty and Corporate insurance products, including Credit and Political Risk, Accident and Health, Cyber, Marine Cargo, Financial and Professional Lines, and Medical Malpractice and Clinical Trials.</li>
+<li>Syndicate 2029 will be launched and managed in partnership with PoloWorks.</li>
+<li>HDI said the syndicate’s products align with strategic growth areas and will complement its existing underwriting capabilities.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/samsung-fire-marine-to-increase-canopius-stake-to-80-6-as-kkr-and-kic-retain-minority-holdings/">Samsung Fire &amp; Marine to increase Canopius stake to 80.6% as KKR and KIC retain minority holdings - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Major stake acquisition in Canopius (a Lloyd&#x27;s market specialty insurer) by SFMI with KKR and KIC; signals strategic consolidation.</div><ul><li>Samsung Fire &amp; Marine Insurance has agreed to acquire a further 40.6% of Canopius Group, taking its ownership to 80.6%, subject to minor adjustments at closing.</li>
+<li>After the transaction, KKR-managed funds will hold 12.1% and Korea Investment Corporation (KIC) 7.3%; Canopius’ other existing shareholders are reportedly selling their shares.</li>
+<li>The agreement concludes a seven-year strategic partnership between SFMI and Canopius, which the companies say has involved increased ownership and strategic and operational collaboration.</li>
+<li>SFMI said it intends to preserve Canopius’ strengths and expertise while supporting its ambition to build a leading global specialty insurer across Lloyd’s, the US and Asia-Pacific. KKR said it will support Canopius with its global platform and operational, strategic and M&amp;A expertise.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/london-market-insurers-face-core-technology-overhaul-as-ai-adoption-grows-federato/">London market insurers face core technology overhaul as AI adoption grows: Federato - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Covers London&#x27;s Lloyd&#x27;s market participants and AI/core technology trends impacting Lloyd&#x27;s market.</div><ul><li>Federato’s survey of 245 London market insurance professionals found that 76% of organisations expect significant integration, modernisation or transformation of core technology to meet future requirements; 58% said they already use AI applications in production.</li>
+<li>Technology-related delays reportedly affected commercial performance: 89% said their business had lost opportunities to competitors because of operational speed in the previous 12 months. Only 24% considered gradual improvements to existing core systems sufficient for longer-term needs.</li>
+<li>Respondents cited subscription-based and multi-party underwriting arrangements (43%), managing systems across the policy lifecycle (42%) and integrating core platforms with broker, bureau and settlement processes (38%) as technology challenges.</li>
+<li>Federato found that 42% experienced delays of several weeks or more before underwriting strategy changes reached routine activity. Among firms reporting speed-related losses, 50% prioritised unified platforms or policy administration system modernisation for the next three years, compared with 21% of firms reporting no similar losses.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/hdi-gets-green-light-to-begin-underwriting-through-syndicate-2029/1460237.article">HDI gets green light to begin underwriting through Syndicate 2029</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> HDI gains Lloyd’s approval to underwrite Syndicate 2029 in the Lloyd’s market.</div><ul><li>Lloyd’s has given HDI Global UK and Ireland permission to begin underwriting through Syndicate 2029 ahead of its formal launch; business is due to incept on 1 January 2027.</li>
+<li>The syndicate will write specialty and corporate insurance across a broad portfolio, including credit and political risk, accident and health, cyber, marine cargo, financial and professional lines, and medical malpractice.</li>
+<li>Louise Radford will oversee the syndicate’s underwriting strategy, risk appetite and regulatory compliance.</li>
+<li>Syndicate 2029 will be launched and managed with PoloWorks, which will provide infrastructure and Lloyd’s market expertise.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/hdi-syndicate-2029-gets-lloyds-permission-to-underwrite/1460232.article">HDI Syndicate 2029 gets Lloyd’s permission to underwrite</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Lloyd&#x27;s Permission to Underwrite for Syndicate 2029 and related launch plans.</div><ul><li>HDI Global UK and Ireland has received Lloyd’s Permission to Underwrite for Syndicate 2029, completing its regulatory and operational readiness process ahead of its planned 1 January 2027 launch.</li>
+<li>The syndicate will initially write specialty and corporate business through Lloyd’s, across classes including credit and political risk, accident and health, cyber, marine cargo, and financial and professional lines.</li>
+<li>Louise Radford will serve as active underwriter, overseeing underwriting strategy, risk appetite and regulatory compliance.</li>
+<li>Syndicate 2029 will complement HDI’s existing insurance platforms and form part of its Xcelerate29 growth strategy. It will be launched and managed in partnership with PoloWorks.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/annual-nat-cat-losses-of-100bn-no-longer-enough-to-move-the-needle-gallagher-res-bowen/">Annual nat cat losses of $100bn no longer enough to move the needle: Gallagher Re’s Bowen - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Covers global insured catastrophe losses, market risk management, capital, pricing and resilience—central to Lloyd&#x27;s market dynamics.</div><ul><li>Gallagher Re’s historical loss dataset shows global insured natural catastrophe losses surpassed $100 billion in 2026. The total was $92 billion between January and September, 29% below the 10-year average of $128 billion.</li>
+<li>Gallagher Re Chief Science Officer Steve Bowen said 2026 is the 10th consecutive year to exceed $100 billion in inflation-adjusted losses and the seventh consecutive year in nominal terms.</li>
+<li>Bowen said improved risk management, stronger capital positions, better modelling and more disciplined pricing have strengthened the market’s ability to absorb higher loss costs.</li>
+<li>The most recent five-year average of nominal insured losses is about $150 billion. Bowen said annual losses exceeding $200 billion are increasingly a question of when rather than if.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/insurity-targets-european-mgas-with-reporting-and-localisation-push/1460239.article">Insurity targets European MGAs with reporting and localisation push</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd’s reporting standard for bordereaux and its use in Insurity’s platform.</div><ul><li>Insurity is targeting European MGAs with its Pro Suite platform, which includes policy administration, an underwriting workbench and an integrated general ledger, alongside distribution and claims capabilities.</li>
+<li>The company is developing multi-currency functionality beyond US dollars and plans to add more languages; it sees local-language systems as important for expansion into France, Italy and German-speaking Europe.</li>
+<li>Insurity aims to support carrier oversight of delegated portfolios through reporting, including plans to use a new Lloyd’s reporting standard as the default basis for platform bordereaux. Customers will be able to adapt or supplement the output.</li>
+<li>Insurity said its API layer can transfer data without a conventional bordereau, but some recipients still want to review Excel documents. The company favours MGAs writing multiple lines and seeks lasting customer relationships.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/us-sues-lyft-alleges-discrimination-against-disabled-riders/">US sues Lyft, alleges discrimination against disabled riders - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Lawsuit against Lyft involves liability risk and potential insurance implications for mobility/ride-hailing, relevant to Lloyd&#x27;s market</div><ul><li>The US Justice Department has sued Lyft, alleging that it discriminated against passengers with disabilities, including people using service animals and stowable wheelchairs, in violation of the Americans with Disabilities Act.</li>
+<li>The lawsuit seeks $53 million for affected individuals who submitted complaints to Lyft or the Justice Department, and asks the court to order Lyft to end the alleged discrimination, change its policies and train staff and drivers.</li>
+<li>Lyft said it disagrees with the allegations, has cooperated with the Justice Department’s review and has policies requiring drivers to accommodate service animals and foldable mobility devices.</li>
+<li>The article says the US government sued Uber last year over alleged disability discrimination under the same law; that lawsuit sought $125 million.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ucits-cat-bond-fund-returns-hit-7-87-ytd-after-october-12-month-declines-again-plenum-index/">UCITS cat bond fund returns hit 7.87% YTD after October. 12-month declines again: Plenum Index - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bonds/ILS market performance relevant to Lloyd&#x27;s risk transfer market.</div><ul><li>UCITS catastrophe bond funds returned an average 1.12% from 25 September to 31 October 2026, taking their year-to-date return to 7.87%, up from 6.67% at 25 September.</li>
+<li>The 7.87% year-to-date return was the fourth highest recorded since the Plenum CAT Bond UCITS Fund Index began in 2011. The article says the absence of major natural catastrophe losses helped performance.</li>
+<li>The average rolling 12-month return fell from 9.66% at 25 September to 9.23% at 31 October, compared with 10.99% for the closest comparable period a year earlier.</li>
+<li>For the latest reporting period, lower-risk funds returned 0.99% and higher-risk funds 1.20%; year to date, their returns were 7.56% and 8.05%, respectively. The capital-weighted index returned 1.14% for the period and 8.10% year to date.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/mitsui-sumitomo-launches-construction-cargo-business-in-u-k-2/">Mitsui Sumitomo launches construction, cargo business in U.K. - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Direct reference to UK/London market expansion by a major insurer; relates to Lloyd&#x27;s market activity.</div><ul><li>Mitsui Sumitomo Insurance Company (Europe) Ltd. has launched dedicated construction and marine cargo classes in the UK and London markets.</li>
+<li>The new classes complement the company’s property and casualty offerings, launched last year.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/10/892270.htm">Global Climate Talks Open With Big Questions, Smaller Goals</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers climate policy, energy transition, and infrastructure risks (energy price volatility, renewables, data centers) relevant to Lloyd&#x27;s insurance market.</div><ul><li>COP31 opened in Antalya, Turkey, with a narrower negotiating agenda than any major climate conference in the decade since the Paris Agreement; about 60,000 diplomats, officials and advocates are expected to attend.</li>
+<li>The talks are focused on implementing existing commitments, including transitioning away from fossil fuels, advancing climate finance and adaptation, and preparing for the next global progress assessment through 2028.</li>
+<li>Turkey’s organisers are promoting worldwide electrification to reduce greenhouse gas emissions in transport, industry and heating. Negotiators will also consider oversight of adaptation indicators and a mechanism to protect workers and communities affected by the energy transition.</li>
+<li>The article reports that oil and gas futures prices rose about 67% in the 12 months to the Friday before the summit. Speakers said fuel-price volatility could encourage a shift towards cleaner energy.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/reinsurance-renewal-discussions-shaped-by-abundant-capital-loss-concerns/">Reinsurance renewal discussions shaped by abundant capital, loss concerns - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses reinsurance market dynamics (capacity, pricing, renewal trends) that affect the Lloyd&#x27;s market and its participants.</div><ul><li>Brokers expect property reinsurance rates to fall again at the 1 January renewals, with stronger competition creating opportunities for cedents to seek broader cover and more favourable terms.</li>
+<li>Risk-adjusted property reinsurance rates fell by slightly more than 15% at both the January and mid-year 2026 renewals. Interviewees said similar decreases are expected, following a year without major hurricane claims so far.</li>
+<li>Casualty reinsurance rates are expected to remain relatively flat. Capacity is adequate to plentiful, but reinsurers remain concerned about claims inflation and uncertainty in US liability litigation.</li>
+<li>Interviewees cited higher-than-average loss development in recent casualty accident years and signs that primary casualty rate increases may be moderating.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ice-to-launch-european-wind-futures-in-weather-derivatives-expansion/">ICE to launch European wind futures in weather derivatives expansion - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Wind weather derivatives and weather risk transfer intersect with Lloyd&#x27;s market (ILS, risk hedging, renewables).</div><ul><li>ICE plans to launch 15 cash-settled wind futures contracts on 14 December 2026, subject to regulatory processes. The contracts will be based on wind power output indices published by ENWEX.</li>
+<li>The contracts will cover Denmark, France, Germany, Italy, the Netherlands, Spain and the UK, representing over 70% of Europe’s installed wind generation capacity. Depending on the country, they will cover onshore wind, offshore wind or both.</li>
+<li>ICE says the contracts, alongside its European power futures, will let wind producers, utilities, suppliers and power purchase agreement buyers manage wind-generation volume risk and electricity price risk.</li>
+<li>CME Group is also planning to launch wind power futures and options based on indices provided by Vaisala Xweather, according to the article.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/hannover-re-plans-to-renew-similar-retro-structures-for-2027-in-line-with-growth-althoff/">Hannover Re plans to renew similar retro structures for 2027, in line with growth: Althoff - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Hannover Re&#x27;s retrocession renewals, ILS activity, and capacity trends inform broader Lloyd&#x27;s market dynamics.</div><ul><li>Hannover Re plans to renew its retrocession protection for 2027 with structures similar to the current programme, potentially increasing cover in line with business growth; no structural changes are planned.</li>
+<li>At the 1 January 2026 renewals, Hannover Re increased retrocession protection by about 17% (EUR 200 million) to EUR 1.4 billion, including more capacity for its K-Cessions sidecar and a new parametric earthquake cover.</li>
+<li>The company has created headroom for possible further property catastrophe growth at the January 2027 renewals, but will decide based on market conditions.</li>
+<li>For the Colombia earthquake loss, Hannover Re reported a gross loss of EUR 222.1 million and a net loss of EUR 215.7 million. Althoff said further retrocession recoveries could apply if the gross loss develops further.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/expert-views/the-ai-question-brokers-and-mgas-should-answer-before-someone-else-asks-it-moterra/1459821.article">The AI question brokers and MGAs should answer before someone else asks it – Moterra</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Covers AI adoption, data privacy, and regulatory issues in UK insurance market (brokers, MGAs, insurers) relevant to Lloyd&#x27;s market.</div><ul><li>The article says insurance staff are already using AI for tasks including summarising renewal packs, preparing market submissions and drafting claims updates. It cites an October Bank of England and FCA survey reporting that 86% of UK financial services firms use AI, up from 75% in 2024.</li>
+<li>The author warns that firms may be asked where client data goes and what happens if an AI supplier ceases trading. The article notes that a named senior manager is responsible for AI under the Senior Managers and Certification Regime, and that prompts containing policyholder details are personal data under UK GDPR.</li>
+<li>The author argues that banning public AI tools may drive staff to use them on personal devices, and recommends approved tools that can access firm documents and systems within an environment controlled by the firm.</li>
+<li>The article proposes safeguards including UK-region hosting, not using client data to train models, access based on existing permissions, tamper-resistant request logs and human sign-off for client-facing outputs, plus the ability to keep the tool running if its supplier disappears.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2925/">Reinsurance News archive - page 2925</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers reinsurance market trends/events affecting Lloyd&#x27;s market dynamics</div><ul><li>Macquarie analysts said second-quarter 2016 global catastrophe losses might establish a pricing floor at the January 2017 renewal.</li>
+<li>Swiss Re said recent flooding in China highlighted the need for greater insurance penetration; only a fraction of economic losses was insured.</li>
+<li>Industry reports said Swiss Re was in talks to sell a $1bn stake in its Admin Re unit.</li>
+<li>Aon Benfield reported $30bn in global insured catastrophe losses in the first half of 2016, the highest first-half total since 2011.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/vkb-seeks-reduced-pricing-for-king-max-re-german-multi-peril-cat-bond-renewal/">VKB seeks reduced pricing for King Max Re German multi-peril cat bond renewal - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Catastrophe bond renewal and pricing in Germany; ILS/reinsurance activity relevant to Lloyd&#x27;s market coverage.</div><ul><li>VKB is seeking to renew its €175 million German multi-peril catastrophe bond through King Max Re II DAC Series 2026-1, replacing protection from its debut bond, which is scheduled to mature in early January 2027.</li>
+<li>The new three-year cover is scheduled to begin on 1 January 2027 and will provide VKB Re with indemnity, per-occurrence protection against earthquake, hailstorm, flood and windstorm losses in Germany.</li>
+<li>The renewal has a lower attachment point than the expiring bond; its €175 million target size is unchanged.</li>
+<li>Spread guidance for the notes has been reduced from 3%–3.25% to 2.5%–3%. The notes have an initial expected loss of 1.68%.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/daily-roundup-the-stories-making-headlines-on-10/11/26/1460240.article">Daily Roundup: The stories making headlines on 10/11/26</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s permission to underwrite Syndicate 2029</div><ul><li>Bspoke Commercial appointed Ian Newman as director of digital and transformation. He will lead the development and performance of Bspoke Online and its Acturis eTrade proposition.</li>
+<li>Lloyd’s approved HDI Global UK and Ireland to begin underwriting through Syndicate 2029 before its formal launch next year. Underwriting can start ahead of business incepting on 1 January 2027.</li>
+<li>The ABI reported that motor insurers paid £3.2bn to support road users in Q3 2026, matching Q2’s record and 8% above the same period last year.</li>
+<li>Gallagher appointed Rawden Leigh as head of retail within its financial institutions practice.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/motor-insurance-payouts-remain-at-record-32bn/1460222.article">Motor insurance payouts remain at record £3.2bn</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers UK motor insurance market trends, including premiums and claims costs that affect insurers such as those in the Lloyd&#x27;s market.</div><ul><li>Motor insurers paid out £3.2bn in Q3 2026, matching Q2’s record and 8% more than in Q3 2025.</li>
+<li>The average claim cost was £4,900, up 1% year on year. Average windscreen repair or replacement claims were £298, up 5% on Q2 and 9% year on year.</li>
+<li>The average motor insurance premium was £562, down £4 from Q2. It was £11 (2%) higher than a year earlier, but £7 lower year on year after inflation adjustment.</li>
+<li>The ABI said high claims costs are putting pressure on insurers and described reducing them as a key aim of the government’s motor insurance taskforce.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/insurance-times-awards-2026-instanda-on-pricing-anything-from-one-to-40000-vehicles/1460227.article">Insurance Times Awards 2026: Instanda on pricing anything from one to ‘40,000’ vehicles</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Insurtech partnership and pricing/agency tech involving MGAs, carriers, and brokers—topics relevant to the Lloyd&#x27;s market ecosystem.</div><ul><li>Instanda chief executive and co-founder Tim Hardcastle says the firm entered the Business Partner of the Year – Data and Technology award category to highlight work co-created with client teams.</li>
+<li>Instanda and a tier-one carrier developed a commercial fleet capability that can price from one vehicle to a schedule of 40,000, with pricing decisions remaining under the underwriter’s control.</li>
+<li>A specialist MGA launched its first product in under four months, with subsequent products launched in six weeks; the carrier’s fleet programme grew from 19 integrations to more than 50 using the same blueprint.</li>
+<li>A broker-led business can adjust pricing in hours rather than weeks. Hardcastle says the partnerships’ aim is to move capability to clients and give insurers and MGAs greater control.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/france-links-refrigeration-cyberattacks-to-iran-2/">France links refrigeration cyberattacks to Iran - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Cyberattack affecting refrigeration, risk management and insurance implications; topic relevant to Lloyd&#x27;s market news.</div><ul><li>French officials accused Iran’s Revolutionary Guards of orchestrating cyberattacks last month that raised temperatures in commercial refrigerators and freezers across France; some appliances caught fire.</li>
+<li>France’s intelligence and cybersecurity agencies said Shahid Kaveh, an offensive cyber unit linked to the Revolutionary Guards, targeted 700 commercial sites, including supermarkets, butcher shops and food-processing factories.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-11-11T08:09:55Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
