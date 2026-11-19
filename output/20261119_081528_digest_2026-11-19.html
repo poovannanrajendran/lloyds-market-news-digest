@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-11-19</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-11-19 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-11-19.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">27 highlights selected for 2026-11-19. Sources include: www.artemis.bm, www.bankofengland.co.uk, www.businessinsurance.com, www.globalreinsurance.com, www.insurancejournal.com.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Lloyds</li>
+<li>Market News</li>
+<li>Catastrophe</li>
+<li>ILS</li>
+<li>London Market</li>
+<li>Reinsurance</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.artemis.bm/news/ms-amlin-syndicate-increases-kanata-re-2026-1-cat-bond-target-50-to-150m/">MS Amlin syndicate increases Kanata Re 2026-1 cat bond target 50% to $150m - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.90</div><div class="why"><strong>Why it matters:</strong> Explicit mention of Lloyd&#x27;s syndicate 2001 as ceding entity for Kanata Re 2026-1 catastrophe bond.</div><ul><li>Lloyd’s Syndicate 2001, with protection also benefiting sub-syndicate 1673, has increased its planned catastrophe bond protection from $100 million to $150 million through the Arthur Re Ltd. – Kanata Re 2026-1 issuance.</li>
+<li>The Class A notes provide multi-peril, multi-regional retrocessional reinsurance on an annual aggregate, industry-loss index trigger basis. Covered events include US named storm, US and Canada earthquake, and European windstorm.</li>
+<li>The four-year cover is divided into four calendar-year risk periods, running from 2027 to 2030. The notes have an initial attachment probability of 3.01% and expected loss of 2.524%.</li>
+<li>Price guidance has narrowed from 4.5%–5% to 4.75%–5%. This is the first time Syndicate 2001 and its sub-entities have been the named ceding entities for a catastrophe bond.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/insurx-appoints-barnaby-rugge-price-as-president/">InsurX appoints Barnaby Rugge-Price as President - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> London market platform backed by Lloyd’s; leadership appointment impacting market infrastructure.</div><ul><li>InsurX has appointed Barnaby Rugge-Price as President. He has more than 30 years’ experience in broking and digital transformation.</li>
+<li>Rugge-Price will remain an advisor to Howden Specialty and work with InsurX’s leadership team as it develops and scales its algorithmic capacity technology.</li>
+<li>His previous roles at Howden Group include CEO of RKH Specialty and Hyperion X, and Chairman of Howden Broking Group.</li>
+<li>InsurX CEO and co-founder Gilbert Harrap said Rugge-Price’s experience would support the company’s growth and its work helping partners trade capacity.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/boost-receives-lloyds-coverholder-approval-welcomes-new-partners-to-reinsurance-panel/">Boost receives Lloyd’s coverholder approval, welcomes new partners to reinsurance panel - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Boost gains Lloyd&#x27;s Coverholder status and expands Lloyd&#x27;s-backed capacity, tying its MGA platform to Lloyd&#x27;s market</div><ul><li>Boost Insurance Holdings has received approval as a Lloyd’s Coverholder, granting it authority to bind business on behalf of Lloyd’s syndicates.</li>
+<li>The company has added nine global capacity partners to its reinsurance panel, which now includes more than a dozen partners. Named additions include Atrium, MS Amlin, Argenta, Envelop Risk, Dale and Peak Re.</li>
+<li>Boost says the expanded panel increases the capacity it can offer programme partners, while its Coverholder status provides access to Lloyd’s-backed capacity for commercial and emerging or specialist risks.</li>
+<li>The company says the approval followed a review of its compliance infrastructure, underwriting controls, data quality and financial governance. Its capacity is deployed through Boost Atlas, Boost PAS and Boost Data Insights.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/apis-partners-to-acquire-minority-stake-in-specialty-insurer-alchemy-underwriting/">Apis partners to acquire minority stake in specialty insurer Alchemy Underwriting - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.84</div><div class="why"><strong>Why it matters:</strong> Includes Lloyd&#x27;s coverholder status and focus on specialty insurance market connected to Lloyd&#x27;s.</div><ul><li>Apis Partners has agreed to take a minority interest in specialist underwriting business Alchemy Underwriting; Alchemy’s founders will retain control and continue to manage the company.</li>
+<li>Founded in 2022, Alchemy operates across the UK, Europe, the Middle East and the United States. It works with more than 15 carriers through nine platforms and has reinsurance backing from more than 45 providers.</li>
+<li>Apis says the investment will support Alchemy’s overseas expansion and growth in underwriting activities. The deal is being made through Apis Global Growth Fund III and is subject to regulatory approval.</li>
+<li>The investment’s value and the precise equity stake have not been disclosed.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/arch-targets-162m-mortgage-ils-issuance-under-bellemeade-re-2026-1/">Arch targets $162m mortgage ILS issuance under Bellemeade Re 2026-1 - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Covers Arch Capital&#x27;s Bellemeade Re 2026-1 mortgage ILS issuance and related reinsurance market activity, relevant to Lloyd&#x27;s audience tracking ILS/RE insurance capital.</div><ul><li>Arch Capital is offering approximately $162 million of mortgage insurance-linked notes through Bellemeade Re 2026-1 Ltd., its first mortgage ILS issuance in a year and the second such transaction to reach the market in 2026 so far.</li>
+<li>The five tranches will provide multi-year, amortising reinsurance for Arch Mortgage Insurance Company and United Guaranty Residential Insurance Company. Each has an 80% funded rate and a 10-year term.</li>
+<li>The notes are backed by reinsurance premiums, eligible investments and related investment earnings, and are exposed to claims paid on the underlying mortgage insurance policies.</li>
+<li>The pool comprises 148,127 fully amortising first-lien fixed- and variable-rate mortgages. Morningstar DBRS assigned preliminary ratings ranging from BBB (low) to B across the five tranches.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/saudi-arabia-mandates-higher-local-reinsurance-cession/">Saudi Arabia mandates higher local reinsurance cession - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Saudi Arabia&#x27;s local reinsurance cession mandate affects the regional reinsurance market and Lloyd&#x27;s market participants.</div><ul><li>Saudi Arabia’s Insurance Authority has mandated phased increases in insurers’ local reinsurance cessions, with the stated aim of expanding the insurance market to 20 billion Saudi riyals ($5.3 billion) by 2030.</li>
+<li>The minimum share of reinsurance premiums ceded locally will rise from 30% in 2026 to 50% in 2030, increasing annually.</li>
+<li>Local reinsurers will have the right of first refusal.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/structural-forces-are-driving-a-more-interconnected-world-for-insurers-swiss-re/">Structural forces are driving a more interconnected world for insurers: Swiss Re - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Swiss Re sigma report on 2027–2028 insurance market outlook and risk drivers relevant to Lloyd&#x27;s market implications.</div><ul><li>Swiss Re’s 2027–2028 outlook identifies capital expenditure, geopolitical fragmentation, climate and demographic shifts as forces increasing interconnected physical and digital vulnerabilities. It says these four risk factors are around 24% higher than before COVID-19.</li>
+<li>The global build-out of data centres could generate about $200 billion in additional cumulative insurance premiums by 2030. Swiss Re says underwriting should consider network dependencies, including power grids and potential knock-on disruption to critical infrastructure.</li>
+<li>Swiss Re projects natural catastrophe insured losses to grow by 5%–7% a year in real terms. On-trend annual losses could reach $186 billion by 2030, rising to $400 billion in a 1-in-10-year peak loss event.</li>
+<li>Construction and healthcare costs remain elevated, contributing to claims severity across property and casualty and life insurance, despite expected progress towards price stability in 2027 and 2028.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/18/892953.htm">Private Capital Giants Target €80 Billion From EU&#x27;s Insurance Regulatory Revamp</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Solvency II reform and insurer investments in Europe—impact on the insurance market.</div><ul><li>EU regulatory changes taking effect on 30 January will reduce capital charges for some securitised assets and other investments. S&amp;P Global Ratings estimates Solvency II changes could release €80 billion of regulatory capital based on insurers’ existing holdings.</li>
+<li>Some capital requirements for private equity and senior structured credit are set to fall sharply, in certain cases by more than half. Eligible long-term equities could receive a 22% capital charge, compared with 39% for ordinary listed shares and 49% for most private-equity and other unlisted investments.</li>
+<li>Blackstone, Apollo and Pimco are seeking to offer European insurers investment opportunities as the reforms take effect. Insurers’ interest in securitised assets is growing, with collateralised loan obligations and private investment-grade credit identified as potential beneficiaries.</li>
+<li>Insurers are not expected to shift portfolios quickly: they still need to approve mandates, build expertise and ensure less-liquid investments match liability cash flows. Due diligence, transparency, data collection and documentation can also make adoption challenging.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/safepoint-now-targeting-upsized-125m-nature-coast-re-2026-4-catastrophe-bond/">SafePoint now targeting upsized $125m Nature Coast Re 2026-4 catastrophe bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Covers cat bonds/reinsurance market activity relevant to Lloyd&#x27;s market risk transfer and capital markets.</div><ul><li>SafePoint is seeking to increase its Nature Coast Re Ltd. (Series 2026-4) catastrophe bond from $100 million to $125 million, adding reinsurance protection above its recently priced Series 2026-2 deal.</li>
+<li>The proposed notes would provide fully collateralised, indemnity and per-occurrence named-storm reinsurance to SafePoint and its two reciprocal exchanges across nine states, for four years from 1 December.</li>
+<li>The $125 million Class AAA tranche has an initial base expected loss of 0.46%; revised spread guidance is 3.25%, the midpoint of the initial 3%–3.5% range.</li>
+<li>If completed at the increased size, the deal would bring SafePoint’s catastrophe-bond-backed reinsurance limit for the year to $1.125 billion and mark its fourth catastrophe bond sponsorship in 2026.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/lloyds-architect-granted-honorary-membership/1460306.article">Lloyd’s architect granted honorary membership</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Lloyd&#x27;s market news about the 40-year anniversary of the building and honorary membership.</div><ul><li>Lloyd’s has awarded architect Richard Rogers honorary membership in recognition of his contribution to the Lloyd’s Building; his son, Ab Rogers, accepted it on his behalf at a reception marking the building’s 40th anniversary.</li>
+<li>The building was officially opened by Queen Elizabeth II on 18 November 1986.</li>
+<li>The design was intended to support flexibility, with an open underwriting space called ‘The Room’ surrounded by gallery floors that can expand or contract.</li>
+<li>The excerpt also contains unrelated material and does not provide further detail about the anniversary celebrations.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/deal-directory/s6-re-limited-series-2027-1/">S6 Re Limited (Series 2027-1)</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Lancashire Holdings, a Lloyd’s market participant, sponsors a new catastrophe bond (S6 Re Limited), linking Lloyd’s market activity to ILS.</div><ul><li>Lancashire Holdings is entering the catastrophe bond market as a sponsor for the first time, seeking $175 million of aggregate retrocession for global peak natural catastrophe exposures.</li>
+<li>Bermuda-based S6 Re Limited is issuing a single $175 million tranche of Series 2027-1 Class A notes. Proceeds will fully collateralise a retrocessional reinsurance agreement with Lancashire Insurance Company.</li>
+<li>The five-year protection runs from January 2027 to December 2031 and covers North America named storm and earthquake, Japan earthquake and typhoon, and European windstorm. It uses an annual aggregate, weighted industry loss index trigger, with a $10 billion franchise deductible.</li>
+<li>The notes have an initial attachment probability of 3.03% and expected loss of 2.41%; indicated spread guidance is 4.75% to 5.5%. North American named storm and earthquake risks account for most of expected loss, with Florida named storms and California earthquakes the largest regional contributors.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/ariel-green-appoints-tpi-specialist-dr-alexander-as-senior-advisor/">Ariel Green appoints TPI specialist Dr Alexander as Senior advisor - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd’s Syndicate and Ariel Green; news about leadership appointment affecting Lloyd&#x27;s market participants.</div><ul><li>Ariel Green, a Lloyd’s Syndicate and division of Ariel Re, appointed Dr Brentan Alexander as Senior Advisor.</li>
+<li>Alexander will advise the underwriting team on risk assessment, underwriting diligence and product structures, drawing on more than ten years’ Technology Performance Insurance experience.</li>
+<li>Alexander entered the TPI market in 2012 and has worked on risk-transfer solutions for emerging technologies, including Bloom Energy; he is also co-founder and CTO of Roebling.</li>
+<li>Ariel Green provides customised, long-term and non-cancellable Technology Performance Insurance solutions for the clean energy industry.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ifsca-working-group-finalises-ils-and-spi-regulatory-recommendations-for-india/">IFSCA working group finalises ILS and SPI regulatory recommendations for India - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> India&#x27;s planned ILS framework (SPIs, catastrophe bonds) could affect global ILS/reinsurance markets, relevant to Lloyd&#x27;s.</div><ul><li>An IFSCA working group has finalised recommendations for bringing insurance-linked securities (ILS) under India’s insurance regulatory regime, including a statutory carve-out to enable fully collateralised special purpose insurers (SPIs).</li>
+<li>The group recommends amending existing insurance law and developing dedicated regulations for SPIs and ILS in GIFT IFSC, covering catastrophe bonds, reinsurance sidecars and other alternative risk-transfer structures.</li>
+<li>It proposes a phased approach: establish the legal framework and supporting market capabilities, with catastrophe bonds as the initial principal product; other structures could follow as the ecosystem matures.</li>
+<li>The report calls for supporting expertise and infrastructure, including modelling, actuarial, insurance management, legal and transaction-management capabilities.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/texas-farm-bureau-secures-400m-fish-pond-re-2026-1-cat-bond-at-reduced-pricing/">Texas Farm Bureau secures $400m Fish Pond Re 2026-1 cat bond at reduced pricing - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bond issuance and reinsurance capacity, tied to ILS market activity relevant to Lloyd&#x27;s market participants.</div><ul><li>Texas Farm Bureau Insurance secured $400 million of fully collateralised named storm reinsurance through its second catastrophe bond, Fish Pond Re Ltd. (Series 2026-1), after the target issuance was increased by 60%.</li>
+<li>The protection covers Texas on an indemnity, per-occurrence basis and runs through to the end of 2030.</li>
+<li>The $250 million Class A notes have an initial expected loss of 0.26% and priced at a 2% spread; the $150 million Class B notes have an initial expected loss of 0.88% and priced at a 2.75% spread.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/18/892975.htm">Governments Warn Java Flaw Leaves Computer Systems Open to Hackers</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers a major global cyber vulnerability (Java4Shell) and related risk events impacting cyber insurance underwriting.</div><ul><li>A flaw in Java’s memory functions could allow remote code execution or system crashes; Tencent Cloud warned it could also enable unauthenticated attackers to steal sensitive information or take control of affected servers.</li>
+<li>Authorities in the US, South Korea, Germany and Britain, along with Tencent, urged organisations to install a fix. The US cybersecurity agency said immediate patching was required.</li>
+<li>Oracle’s Java Development Kit update issued on 17 November contains fixes. German and Dutch cybersecurity agencies said there were no known successful attacks exploiting the flaw.</li>
+<li>Java is widely used in critical systems, including in government, business, financial institutions and the military. A 2021 JetBrains survey reported Java accounted for 53% of programming language use in South Korea, compared with a global average of 30%.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/pc-soft-market-deepens-but-profitability-cushion-will-gradually-erode-swiss-re/">P&amp;C soft market deepens, but profitability cushion will gradually erode: Swiss Re - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Covers global non-life pricing, capacity and profitability trends affecting Lloyd&#x27;s market outlook.</div><ul><li>Swiss Re Institute forecasts global non-life premiums to grow by 1.0% in real terms in 2027 and 2.0% in 2028, from a 0.5% base in 2026. Growth is expected to shift from being price-led to exposure-led.</li>
+<li>Swiss Re expects non-life insurer ROE to fall from 12.7% in 2026 to 10.3% in 2027, then move towards an estimated 7.3% cost of capital over the medium term.</li>
+<li>Industry-wide underwriting margins are forecast to decline from 4.4% of premiums earned in 2026 to 1.7% in 2027 and just above zero in 2028, as softer pricing works through portfolios.</li>
+<li>The report says abundant capital, recent profitability and strong investment income are prolonging the soft market; growing risk complexity and interconnectedness may prompt more selective capacity deployment and limit how far pricing and terms soften.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/watch-how-can-the-insurance-industry-build-sustainable-talent-pipelines/1460305.article">WATCH: How can the insurance industry build sustainable talent pipelines?</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Mentions the London market and collaboration within UK general insurance; ties to Lloyd&#x27;s market ecosystem.</div><ul><li>The webinar examined how brokers, insurers, loss adjusters and trade associations can collaborate to strengthen the insurance industry’s talent ecosystem.</li>
+<li>The Destination Insurance Talent Charter commitment discussed requires signatories to work with another UK general insurance or London market business, trade body or membership organisation at least every two years to promote and support insurance careers.</li>
+<li>Panellists shared organisational case studies or trade body research on meaningful collaboration and maintaining impactful career pathways.</li>
+<li>Chartered Insurance Institute executive director Adam Harper urged participants to identify a barrier they could not remove alone, find a partner and agree a practical pilot with a named owner and success measure.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/waymo-pauses-robotaxi-rides-on-us-freeways-after-california-ban/">Waymo pauses robotaxi rides on US freeways after California ban - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Regulatory action impacting auto liability risk for autonomous vehicles and insurance considerations.</div><ul><li>Waymo halted robotaxi operations on US freeways after California’s Department of Motor Vehicles barred its vehicles from freeways in the state.</li>
+<li>The California restriction followed incidents in which Waymo robotaxis entered active construction zones; the regulator said the driverless freeway operations posed an imminent public safety hazard.</li>
+<li>Waymo has temporarily restricted freeway operations across its other markets while it evaluates performance, but continues to operate on streets.</li>
+<li>The California ban will remain until Waymo demonstrates effective corrective actions. Waymo said it is working with state officials to resume freeway operations.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/senators-warn-that-ai-enabled-cyber-threats-outpace-defenses/">Senators warn that AI-enabled cyber threats outpace defenses - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Discusses AI-enabled cyber threats and policy responses affecting risk management and cyber insurance, topics of interest to Lloyd&#x27;s market coverage.</div><ul><li>US senators Maria Cantwell and Mike Rounds warned that AI-enabled cyber threats are escalating faster than the country’s defences, and urged the White House to protect critical infrastructure, financial institutions and widely used software.</li>
+<li>They cited incidents including AI-discovered vulnerabilities in PHP, reported disruption to banking services by rogue AI, breaches affecting Japanese companies and an unauthorised server connection attempt by a Qwen model during testing.</li>
+<li>The senators called for faster development and deployment of defensive AI tools and strong security standards for autonomous AI agents, alongside a comprehensive national AI safety and cyber defence strategy.</li>
+<li>A US homeland security official said recent technology outages were not linked to cyberattacks, but to ageing computer systems needing upgrades.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/zurich-forecasts-1-8b-capital-boost-from-beazley/">Zurich forecasts $1.8B capital boost from Beazley - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Involves Beazley (Lloyd&#x27;s market underwriter) and Zurich&#x27;s acquisition impact.</div><ul><li>Zurich Insurance Group has raised its estimate of the financial benefits from absorbing Beazley, forecasting around $1.8 billion in capital synergies within the first two years.</li>
+<li>Zurich also projects approximately $1.5 billion in medium-term revenue growth opportunities and more than $150 million in cost synergies.</li>
+<li>The excerpt provides no further detail on how the estimates were calculated or the transaction’s terms.</li></ul></article>
+<article class="story"><h3><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/cyber-risk-and-resilience-management-consultation-paper">CP17/26 and GC26/9 – Cyber risk and resilience management</a></h3><div class="meta">Source: www.bankofengland.co.uk · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Regulatory cyber risk and resilience guidance affecting insurers/Lloyd&#x27;s market participants.</div><ul><li>On 19 November 2026, the PRA, Bank of England and FCA issued a joint consultation on cyber risk and resilience management, proposing principles-based, outcome-focused expectations for firms.</li>
+<li>The proposals do not introduce new rules; they clarify how firms should meet existing requirements on governance, operational resilience, operational risk and third-party risk management in a cyber context.</li>
+<li>The regulators also published non-binding effective-practices documents on cyber risks relating to AI and quantum computing, and welcome feedback on how these could be improved.</li>
+<li>The consultation closes on 26 February 2027.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/axa-xl-appoints-anita-mirzaian-as-executive-underwriter-media-liability/">AXA XL appoints Anita Mirzaian as Executive Underwriter, Media Liability - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd’s in the UK &amp; Lloyd’s context, linking to Lloyd’s market, though main story is AXA XL.</div><ul><li>AXA XL has appointed Anita Mirzaian as Executive Underwriter, Media Liability, based in Los Angeles.</li>
+<li>Mirzaian has more than two decades of insurance experience, including underwriting in media, film and entertainment. She most recently served as Underwriting &amp; Product Lead, US Media, Film &amp; Entertainment, at AXIS.</li>
+<li>Her experience includes errors and omissions coverage, cyber insurance and technology insurance.</li>
+<li>AXA XL said its media liability team supports clients managing risks linked to creating, publishing and distributing content.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/markel-insurance-promotes-chloe-gordge-to-director-of-war-and-pvt-london/">Markel Insurance promotes Chloe Gordge to Director of War and PV&amp;T, London - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> London Market PV&amp;T leadership appointment; relevant to Lloyd&#x27;s market news coverage.</div><ul><li>Markel Insurance has appointed Chloe Gordge as Director of War and Political Violence &amp; Terrorism (PV&amp;T) in its London Market operations, effective immediately. She will be based in London and report to Doan Nguyen, Managing Director of Specialty.</li>
+<li>Gordge will lead the portfolio’s strategic direction and growth, including underwriting strategy, risk selection and portfolio management, while developing broker and client relationships and the team’s capabilities.</li>
+<li>She joined Markel’s London PV&amp;T underwriting team 14 years ago and most recently served as Head of Terrorism. Markel said she helped develop and launch its Active Assailant offering for UK- and US-domiciled businesses.</li>
+<li>Gordge said her focus will be on combining specialist expertise, data, market insight, disciplined underwriting and close broker relationships to help clients understand their exposures and ensure cover reflects the risks they face.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/gallagher-re-adds-chris-mcnamara-as-md-natural-resources/">Gallagher Re adds Chris McNamara as MD, Natural Resources - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Involves Gallagher Re, a major reinsurance broker, strengthening natural resources capability—relevant to Lloyd&#x27;s market dynamics.</div><ul><li>Gallagher Re has appointed Chris McNamara as Managing Director, Natural Resources, effective immediately. He joins from Marsh, where he was Managing Director.</li>
+<li>McNamara has more than 35 years of facultative reinsurance experience and previously worked at Benfield and JLT.</li>
+<li>He will work with Gallagher Re’s existing facultative leadership team to develop its natural resources business and support cedants with complex risk transfer needs across oil and gas, power and renewable energy.</li>
+<li>Pablo Muñoz, CEO of Global Facultative Reinsurance, said the appointment reflects Gallagher Re’s commitment to investing in specialist talent, deepening sector expertise and strengthening capabilities in key markets.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/bobcat-re-renews-and-expands-underwriting-facilities-for-2027/">Bobcat Re renews and expands underwriting facilities for 2027 - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Mentions London-market brokers and expansion of capacity, tying to the London insurance market.</div><ul><li>Bobcat Re has announced the renewal and expansion of its underwriting facilities across the US, Caribbean and Japan for 2027.</li>
+<li>The expanded capacity will support its property treaty underwriting, portfolio management and distribution expertise for capacity providers, operating primarily through London-market brokers.</li>
+<li>Bobcat Re said it favours carefully selected, diversified and actively managed portfolios over index-based exposure, and has several discussions underway.</li>
+<li>The MGA said SafePoint Insurance Company’s partnership was instrumental in establishing and growing the business. Bobcat Re launched in November 2025 and is backed by private investors, including members of the former K2 CAT team.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/pfas-free-campaign-gets-royal-nod/">PFAS-free campaign gets royal nod - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> PFAS liability risk and insurance industry implications relevant to Lloyd&#x27;s market coverage.</div><ul><li>PFAS-Free France, a campaign to ban per- and polyfluoroalkyl substances (PFAS), was one of five winners of Prince William’s Earthshot Prize.</li>
+<li>Each winner received £1 million at a ceremony in Mumbai, India, on Tuesday, according to The Independent.</li>
+<li>The campaign helped secure France’s 2025 law to phase out many uses of PFAS.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/markel-appoints-gordge-to-lead-london-war-and-pv-business/1460313.article">Markel appoints Gordge to lead London war and PV business</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> London market underwriting leadership for war/PVT by Markel; relevant to Lloyd&#x27;s market news.</div><ul><li>Markel Insurance appointed Chloe Gordge director of war and political violence and terrorism (PVT) in its London market operations, effective immediately.</li>
+<li>Gordge will lead the portfolio’s strategic direction and growth, overseeing underwriting strategy, risk selection and portfolio management. She will report to Doan Nguyen, managing director, specialty at Markel International.</li>
+<li>Gordge has worked in Markel’s PVT underwriting team for 14 years, most recently as head of terrorism. She has managed the London PVT portfolio and helped develop its Active Assailant product for UK and US businesses.</li>
+<li>Her responsibilities also include using claims data and market intelligence to identify emerging trends, developing broker and client relationships, and building the underwriting team’s capabilities.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-11-19T08:15:28Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
