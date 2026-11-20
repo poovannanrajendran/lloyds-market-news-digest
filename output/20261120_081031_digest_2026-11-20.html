@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-11-20</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-11-20 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-11-20.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">20 highlights selected for 2026-11-20. Sources include: www.artemis.bm, www.bankofengland.co.uk, www.businessinsurance.com, www.fca.org.uk, www.globalreinsurance.com.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Reinsurance</li>
+<li>Risk</li>
+<li>Lloyds</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/microsoft-365-outage-timely-reminder-of-importance-of-operational-resilience/1460326.article">Microsoft 365 outage ‘timely reminder of importance of operational resilience’</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.88</div><div class="why"><strong>Why it matters:</strong> Discusses Lloyd&#x27;s market resilience amid a Microsoft 365 outage, with quotes from Lloyd&#x27;s Market Association.</div><ul><li>A Microsoft 365 outage on 12 November 2026 affected services including Teams, Outlook and Copilot, with disruption reported across several sectors. Microsoft said there was no current indication that the outage resulted from a cyber attack.</li>
+<li>Joe Brace of the Lloyd’s Market Association said the incident had a minor impact on the market, affecting a small section of processes. He described the market’s response and central co-ordination as reassuring.</li>
+<li>Brace said operational resilience is intended to protect policyholders and minimise the impact of incidents on customers through Important Business Services.</li>
+<li>Willis cyber strategy leader Glyn Thoms said the outage showed how failure at a critical technology provider can quickly become a global business interruption event, and stressed that cyber insurance protection depends on policy terms, conditions, exclusions and limits.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-consortium-premiums-forecast-to-surpass-11bn-by-2030-howden-re-reports/">Lloyd’s consortium premiums forecast to surpass £11bn by 2030, Howden Re reports - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Discusses Lloyd&#x27;s consortium underwriting and projected market impact.</div><ul><li>Howden Re’s study projects that Lloyd’s consortium premiums could exceed £11bn by 2030, representing 10%–15% of market gross written premium, compared with around 7% in 2024.</li>
+<li>The research gathered views from 64 senior executives whose syndicates represent 84% of Lloyd’s estimated 2026 gross premium income. More than nine in ten saw consortia as commercially advantageous, and about four-fifths included them in principal business plans.</li>
+<li>For lead syndicates, the most commonly cited advantage was access to larger line sizes; followers most often valued access to underwriters’ specialist product knowledge. Respondents also cited market positioning, fee and profit-share income, and selected risks and portfolios.</li>
+<li>More than 95% of respondents believed consortia offered policyholders advantages, including broader access to capacity and shorter waits for underwriting decisions. Around 90% expected to place new consortia in the next three years.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/most-climate-related-losses-at-data-centres-uninsured-amid-significant-exposure-jupiter/">Most climate-related losses at data centres uninsured amid significant exposure: Jupiter - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Discusses data-centre climate risk, uninsured losses, and insurance/securitisation implications for the Lloyd&#x27;s market.</div><ul><li>Jupiter Intelligence estimates that up to 82% of annual climate-related losses at global data centres are uninsured: expected losses from flood, wind and wildfire are $4.4bn a year, with $3.1bn–$3.6bn lacking cover. Its report analysed 14,073 operating centres in 187 countries.</li>
+<li>Servers, storage and GPUs account for 61% of expected losses and 74% of flood losses. At colocation facilities, tenants own this equipment and bear 24% of global expected losses, compared with 17% for landlords; tenants’ estimated 1-in-100-year loss is $5.8bn.</li>
+<li>The report says the protection gap reflects self-insurance by large operators and limited cover in high-risk regions. China accounts for half of global expected losses despite representing 17% of asset value, while current annual losses are estimated to be 19% higher than under a 1995 climate.</li>
+<li>Jupiter’s stress test found that uninsured five-site securitised pools in Shanghai, São Paulo and Hong Kong have a 4–6% annual chance of breaching cash-trap triggers; tighter insurance terms can reduce breach risk. The report says rating agencies rarely account for hub concentration, policy terms or flood design.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/new-k2-division-summit-risk-partners-launches-as-registered-lloyds-broker/">New K2 division Summit Risk Partners launches as registered Lloyd’s broker - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> New Lloyd&#x27;s broker SRP launched by K2, focusing on delegated authority and programme business in Lloyd’s/London markets; regulatory/licensing details noted.</div><ul><li>Summit Risk Partners Limited (SRP), a new division of K2 Insurance Services, has opened as a registered Lloyd’s broker focused on delegated authority and programme business.</li>
+<li>Co-founded by James Baird and Jamie Beckett, SRP serves coverholders, MGAs, underwriting businesses and capacity providers, with offices in London and Hamburg and operations across UK and European markets.</li>
+<li>At launch, SRP supports specialist Lloyd’s lines covering delegated authority, programmes, binders and structured insurance; further product lines are in development for a planned 2027 rollout.</li>
+<li>A team of Lloyd’s brokers is already servicing onboarded clients, and SRP plans to expand its team and international network.</li></ul></article>
+<article class="story"><h3><a href="https://www.globalreinsurance.com/home/lloyds-consortia-premium-could-exceed-11bn-by-2030-howden-re/1460327.article">Lloyd’s consortia premium could exceed £11bn by 2030: Howden Re</a></h3><div class="meta">Source: www.globalreinsurance.com · Score: 0.85</div><div class="why"><strong>Why it matters:</strong> Reports on Lloyd&#x27;s syndicate consortium placements, their share of GWP, and market impact.</div><ul><li>Howden Re’s research estimates consortium business accounted for 7% of Lloyd’s gross written premium in 2024, up from 3% in 2017; market participants expect it to reach 10%–15% by 2030, potentially exceeding £11bn in GWP.</li>
+<li>The survey covered 64 senior market leaders representing syndicates responsible for 84% of Lloyd’s estimated 2026 premium income. More than 90% said consortia provide a strategic advantage, and around 80% include them in central business planning.</li>
+<li>For leaders, the most commonly cited benefit was deploying larger line sizes; followers most often cited access to specialist product expertise. More than 95% of respondents said consortia directly benefit policyholders, including through improved access to capacity and quicker response times.</li>
+<li>Nine in 10 respondents expect to place new consortia within the next three years. The research identified inconsistent data quality, non-standardised reporting and further digitalisation as areas needing improvement.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/capital-markets-signal-resilience-for-lloyds-despite-rate-softening-narratives-icmr/">Capital markets signal resilience for Lloyd’s despite rate softening narratives: ICMR - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Covers Lloyd&#x27;s market rate softening, capital markets views, and new syndicate activity within Lloyd&#x27;s.</div><ul><li>ICMR says continued rate reductions in the Lloyd’s market have not deterred investor appetite, pointing to new syndicate launches and eight syndicates announced to start next year.</li>
+<li>ICMR warns that additional capacity could intensify rate pressure in affected classes and widen performance differences between stronger cycle managers and those pursuing volume.</li>
+<li>ICMR says inconsistent, client-specific rate data makes the overall effect of softening difficult to measure; it uses capital-market sentiment and its RISX index as broader indicators.</li>
+<li>ICMR reports that RISX data shows strong investor interest, with equity share-price appreciation ahead of expected returns on equity. It says this may reflect investors’ willingness to pay higher price-to-book multiples for resilience and asset leverage, rather than analysts’ combined-ratio forecasts being wrong.</li></ul></article>
+<article class="story"><h3><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-artificial-intelligence">Effective practices: Cyber risk and resilience management relating to artificial intelligence (AI)</a></h3><div class="meta">Source: www.bankofengland.co.uk · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Regulatory guidance on cyber risk, resilience, and AI for financial firms, including Lloyd&#x27;s market participants.</div><ul><li>The PRA, FCA and Bank of England set out effective practices for managing cyber risks associated with AI. These complement, but are separate from, the regulators’ formal cyber and resilience expectations, and are not themselves formal expectations.</li>
+<li>The regulators say AI can strengthen cyber defences but can also help threat actors find and exploit vulnerabilities faster, reducing the time needed from weeks or months to hours or days. Human oversight remains essential.</li>
+<li>Firms are encouraged to move from traditional vulnerability management towards continuous exposure management, with the challenge of prioritising, validating, remediating and recovering from threats at machine speed.</li>
+<li>The publication frames cyber risk as a core business risk and leadership responsibility, emphasising board oversight, senior management accountability, effective controls and faster decision-making and remediation.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/ai-related-cyber-risks-drive-growing-insurance-interest-among-uk-smes-says-brit/">AI-related cyber risks drive growing insurance interest among UK SMEs, says Brit - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Direct discussion of cyber-insurance trends within the Lloyd&#x27;s market context via Brit Insurance.</div><ul><li>Brit Insurance research found 68% of UK SMEs were more inclined to buy cyber insurance because of AI-related risks; 79% believed AI was contributing to more advanced attacks that were harder to defend against.</li>
+<li>Almost two in five SMEs said their current cyber defences might not support their growth plans, rising to 58% among the smallest businesses surveyed. Overall, 64% regarded cyber security as a top or high priority.</li>
+<li>Commercial pressures are influencing security spending: 55% said larger customers increasingly required established cyber security standards, while 43% cited business expansion as the main reason for spending more on protection.</li>
+<li>Among SMEs already holding cyber insurance, 82% expected to increase their cover over the following year; 37% of those without a policy said they were very likely to arrange one. However, more than a third had no dedicated cyber security team or budget, and about a third did not provide staff training.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/19/893157.htm">EU Executive Branch Suffered AI-Driven Cyberattack in October</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> EU Commission cyberattack using AI tools; cyber risk topic relevant to Lloyd&#x27;s market and insurtech.</div><ul><li>The European Commission said it suffered a cyberattack in late October involving misuse of an artificial intelligence tool; it described the incident as an AI-generated cyber campaign.</li>
+<li>The Commission shut down some systems as a precaution and is investigating whether employee data was breached. Its spokesman declined to provide further details while the investigation continues.</li>
+<li>Politico reported that the attack involved ARTEX, a publicly available AI-powered tool for identifying IT vulnerabilities, and claimed personal data was compromised and internal systems disrupted for up to 10 days. The Commission spokesman did not confirm those specifics.</li>
+<li>The article says the Commission has been targeted by hackers before. In March, TeamPCP stole data after accessing an Amazon Web Services account, according to the EU cybersecurity agency CERT-EU.</li></ul></article>
+<article class="story"><h3><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-quantum-computing">Effective practices: Cyber risk and resilience management relating to quantum computing</a></h3><div class="meta">Source: www.bankofengland.co.uk · Score: 0.75</div><div class="why"><strong>Why it matters:</strong> Regulatory guidance on quantum-related cyber risk and migration to post-quantum cryptography applicable to financial sector firms, including insurers in the Lloyd&#x27;s market.</div><ul><li>The PRA, FCA and Bank of England set out effective practices for managing quantum-related cyber risks. These complement existing cyber resilience guidance but are not formal regulatory expectations; firms should apply them proportionately to their size, complexity and risk profile.</li>
+<li>A sufficiently capable cryptographically relevant quantum computer could undermine public-key cryptography used to protect financial transactions, communications, records and data, and to support authentication and digital signatures. No such computers are currently known to exist, but their arrival date is uncertain.</li>
+<li>The regulators say firms have a strong case to prepare early: migration to post-quantum cryptography (PQC) will take time, attackers could collect encrypted data now for later decryption, and quantum technology may advance faster than anticipated.</li>
+<li>Preparation should include identifying and prioritising cryptographic dependencies and vulnerabilities, assessing systems for upgrade or replacement, and managing risks involving third parties and connected organisations. Migration should preserve operational resilience and remain adaptable as threats and standards evolve.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/drone-attack-sinks-lpg-tanker-in-black-sea/">Drone attack sinks LPG tanker in Black Sea - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.74</div><div class="why"><strong>Why it matters:</strong> Drone attack in Black Sea affecting shipping risk and insurance implications relevant to Lloyd&#x27;s market.</div><ul><li>A Liberian-flagged liquefied petroleum gas tanker sank off Bulgaria’s Black Sea coast on Tuesday after being struck by projectiles.</li>
+<li>The incident followed the sinking of a wheat-laden cargo ship in the same area the previous day.</li>
+<li>The article describes the sinking as the latest in a series of drone attacks amid the widening Russia-Ukraine conflict in the Black Sea.</li></ul></article>
+<article class="story"><h3><a href="https://www.fca.org.uk/news/press-releases/uk-financial-watchdogs-clarify-cyber-expectations-attacks-rise">UK financial watchdogs clarify cyber expectations as attacks rise</a></h3><div class="meta">Source: www.fca.org.uk · Score: 0.73</div><div class="why"><strong>Why it matters:</strong> Regulatory cyber risk guidance from BoE/FCA/PRA affecting insurers and cyber insurance, relevant to the Lloyd&#x27;s market.</div><ul><li>The Bank of England, FCA and PRA have jointly proposed guidance to clarify how firms within existing operational resilience requirements should govern, identify, protect against, detect, respond to and recover from cyber risks. It is intended to align with recognised frameworks, including the NCSC Cyber Assessment Framework, while allowing firms flexibility in how they meet expectations.</li>
+<li>The regulators cite cyber as a major potential threat to the UK financial system. In October 2026, the FCA received its second-highest monthly number of cyber incident reports in five years: 52% above the previous high, recorded in May 2025.</li>
+<li>Separate effective-practice materials address cyber risks associated with AI and potential quantum computing. They cover vulnerabilities to AI-using threat actors and the possibility that quantum computing could undermine public-key cryptography used in financial transactions.</li>
+<li>The consultation closes on 26 February 2027, and feedback will inform final guidance next year. The AI and quantum materials are not part of the formal consultation.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/report-up-to-82-of-data-center-disaster-losses-uninsured/">Report: Up to 82% of data center disaster losses uninsured - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Discusses uninsured data center disaster losses and protection gaps relevant to Lloyd&#x27;s underwriting of catastrophe and property risk.</div><ul><li>Up to 82% of annual flood, wind and wildfire losses at global data centres—an estimated $3.1 billion to $3.6 billion—are uninsured, according to Jupiter Intelligence, as reported by Reinsurance News.</li>
+<li>The report attributes the protection gap to major operators choosing to self-insure and a scarcity of cover in high-risk regions.</li>
+<li>China accounts for half of expected global losses despite representing 17% of data-centre asset value.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/19/893171.htm">Mike Lynch Yacht Crew Unaware of Wind Risks, UK Probe Finds</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> UK MAIB findings on yacht safety risks and ongoing investigations with potential insurance/claims impact for maritime markets.</div><ul><li>The UK Marine Accident Investigation Branch found that the Bayesian had an unrecognised vulnerability to high winds because it had never been assessed at anchor with its sails down. It said the extreme winds were not explicitly forecast, leaving the crew without warning of the risk.</li>
+<li>The yacht sank in extreme weather off Porticello, northern Sicily, in the early hours of 19 August 2024. Seven people died and 15 of the 22 passengers and crew were rescued.</li>
+<li>The investigation report said none of the liferafts automatically inflated or released; crew members released them manually, organised survivors in the water and helped them aboard a liferaft before a nearby vessel rescued them.</li>
+<li>The UK findings appear to differ from the focus of the Italian prosecutors’ investigation, which is examining alleged crew negligence rather than a design flaw. Three crew members, including captain James Cutfield, are under investigation; the Italian inquiry was expected to conclude by the following month.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/jpmorgan-visa-mastercard-say-third-party-vendors-targeted-in-cyberattack/">JPMorgan, Visa, Mastercard say third-party vendors targeted in cyberattack - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Covers a major cyberattack on third-party vendors affecting banks and card networks, with implications for cyber risk, coverage, and premiums in the insurance market.</div><ul><li>JPMorgan said third-party service providers were targeted in a cyberattack. Its investigation indicated that attackers accessed marketing data that may include some customer names and email addresses; the bank said it would contact affected customers.</li>
+<li>JPMorgan said the vendor incident was unrelated to transaction-processing problems earlier in the week, which it attributed to a software bug.</li>
+<li>Visa said a third-party service provider in Asia-Pacific was involved, but its systems and payment data were not affected. Mastercard said an incident at a third-party provider exposed a limited number of email addresses from a small subset of cardholders in a specific benefit programme; its payment network was unaffected.</li>
+<li>A cyber extortion group claimed to have obtained cardholder-related data. Reuters said it could not independently verify the authenticity of the data.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/global-securities-watchdog-urges-immediate-action-on-quantum-risks-to-finance/">Global securities watchdog urges immediate action on quantum risks to finance - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Regulatory focus on quantum risk and the need for quantum-resistant cryptography, impacting insurers and underwriting in Lloyd&#x27;s market.</div><ul><li>IOSCO urged financial firms to take immediate action on quantum-computing risks, warning that a sufficiently powerful quantum computer could undermine critical financial market functions, including secure communications, within five years.</li>
+<li>The watchdog said firms should prepare for a transition to quantum-resistant cryptography by developing migration plans, testing technologies and engaging suppliers whose software, cloud services and infrastructure support critical systems.</li>
+<li>Blockchain systems may be particularly exposed, and their migration could be harder because upgrades require coordination across decentralised networks. Sector preparedness remains at an early stage.</li>
+<li>IOSCO warned that the transition could take many years and involve significant operational and governance challenges, amounting to a fundamental redesign rather than a routine software update. It also cautioned regulators about firms overstating quantum technology capabilities.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/insurance-reforms-could-attract-private-capital-investments/">Insurance reforms could attract private capital investments - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.68</div><div class="why"><strong>Why it matters:</strong> Covers Solvency II reforms and capital dynamics in Europe, impacting the Lloyd&#x27;s market regulatory environment and investment landscape.</div><ul><li>Revised Solvency II rules could release up to €80 billion ($88 billion) of insurers’ capital and are attracting major private capital managers to Europe’s insurance investment market.</li>
+<li>The changes take effect on 30 January 2027 and will reduce capital requirements for certain securitised assets, long-term equity investments and structured credit.</li>
+<li>The reforms may encourage insurers to fund infrastructure, defence, digital technology and other projects across the European Union.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2933/">Reinsurance News archive - page 2933</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s market-related item (Lloyd’s index on hold) among broader reinsurance news.</div><ul><li>The excerpt is a collection of headlines and short summaries, with the full articles unavailable, so detail is limited.</li>
+<li>Swiss Re-backed parametric disaster insurance was launched for farmers in China, covering flood, excessive rain and drought.</li>
+<li>Lloyd’s delayed a planned index for diversified insurance risks, while Aon reported second-quarter organic revenue growth of 3% and net revenue down 1% to $2.8bn.</li>
+<li>Swiss Re reported second-quarter group net income of $637m, while catastrophe losses contributed to an underwriting loss in its P&amp;C Re segment.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/axa-xl-hires-subramanian-to-alternative-capital-team-in-london/">AXA XL hires Subramanian to Alternative Capital team in London - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Discusses ILS and alternative capital activities in London, topics pertinent to Lloyd&#x27;s market dynamics.</div><ul><li>AXA XL has appointed Murali Subramanian as a London-based Quantitative Specialist, Investor Relations, in its Alternative Capital team.</li>
+<li>He will focus on developing insurance-linked securities and alternative capital solutions across AXA XL’s portfolio of risks.</li>
+<li>Subramanian joins from Marsh, where he held roles including Vice President of Energy and Power and Account Executive.</li>
+<li>Previously, he was an Associate at Ledger Investing, evaluating casualty ILS opportunities and reviewing reinsurance contracts and offering documents.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/construction-comp-claims-cost-52-more-than-average-wcri/">Construction comp claims cost 52% more than average: WCRI - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Shares workers&#x27; compensation cost trends and drivers that influence underwriting risk in construction and overall market; not Lloyd&#x27;s-specific.</div><ul><li>A Workers Compensation Research Institute report found that lost-time construction workers’ compensation claims averaged $47,657, 52% above the $31,355 average across all industries; higher medical expenses were the main driver.</li>
+<li>Average medical payments for construction claims were $24,682, 63% above the overall average. Construction represented 8% of lost-time claims but 13% of total claim payments.</li>
+<li>Major surgery was involved in 43% of construction claims, compared with 27% overall; inpatient hospital care occurred in 10%, compared with 5.6%.</li>
+<li>Construction claims involved fractures more often (16% versus 10%); average medical payments for these fractures were $30,920, compared with $22,910 overall.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-11-20T08:10:31Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
