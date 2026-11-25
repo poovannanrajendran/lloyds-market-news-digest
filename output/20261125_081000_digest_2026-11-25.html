@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd&#x27;s Market Digest · 2026-11-25</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png" />
+  <link rel="shortcut icon" href="../assets/favicon.ico" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="437496fb-55fb-49de-a10e-e6f4d61e9a73"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --surface-alt: #eef2f7;
+      --ink: #0d1b2a;
+      --ink-soft: #334a62;
+      --line: #d4dde8;
+      --brand: #0f4c81;
+      --brand-strong: #0a3559;
+      --accent: #be8f33;
+      --accent-soft: #f7ecd5;
+      --shadow: 0 18px 45px rgba(13, 27, 42, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(190, 143, 51, 0.18), transparent 36%),
+        radial-gradient(circle at 100% 10%, rgba(15, 76, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f8fa 0%, #eef2f7 100%);
+    }
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 30px 16px 52px;
+    }
+    header {
+      background: linear-gradient(120deg, rgba(10, 53, 89, 0.96), rgba(15, 76, 129, 0.92));
+      color: #f8fbff;
+      padding: 24px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190, 143, 51, 0.34), transparent 70%);
+      pointer-events: none;
+    }
+    header img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    header .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    header .meta {
+      color: rgba(236, 243, 250, 0.95);
+      font-size: 14px;
+    }
+    .digest-nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--brand), var(--brand-strong));
+      border: 1px solid rgba(7, 38, 65, 0.45);
+      padding: 9px 13px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(10, 53, 89, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 26px rgba(10, 53, 89, 0.24);
+    }
+    .nav-btn.nav-home {
+      background: linear-gradient(120deg, #113a5d, #0d2f4b);
+    }
+    .nav-btn.nav-latest {
+      background: linear-gradient(120deg, #7c5c1d, #a97a22);
+      border-color: rgba(124, 92, 29, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.12fr) minmax(0, 0.88fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(13, 27, 42, 0.06);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.15rem;
+      color: var(--brand-strong);
+      letter-spacing: 0.2px;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .summary {
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .visual-expand {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+    .visual-expand summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--brand-strong);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
+    }
+    .visual-expand[open] summary {
+      border-bottom-color: var(--line);
+      background: rgba(15, 76, 129, 0.06);
+    }
+    .visual-expand .visual-body {
+      padding: 10px;
+    }
+    .visual-expand img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: block;
+    }
+    .visual-expand p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .themes ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-soft);
+    }
+    .themes li {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-strong);
+    }
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 20px;
+      color: var(--ink);
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .story {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 14px rgba(13, 27, 42, 0.04);
+    }
+    .story h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .story a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .story a:hover {
+      text-decoration: underline;
+    }
+    .story .meta {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .story .why {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .story ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 20px 12px 42px; }
+      header { padding: 20px 16px; }
+    }
+    @media print {
+      body {
+        background: white;
+        color: var(--ink);
+      }
+      header {
+        background: white !important;
+        color: var(--ink) !important;
+        box-shadow: none;
+        border-bottom: 2px solid var(--ink);
+      }
+      .card,
+      .story {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <img src="London_Lloyds_Market_News_Digest.png" alt="Lloyd's Market Digest logo" />
+      <div class="title-block">
+        <h1>Lloyd's Market Executive Digest</h1>
+        <div class="meta">2026-11-25 · Executive Briefing</div>
+      </div>
+    </header>
+
+    <nav class="digest-nav">
+      <a class="nav-btn nav-home" href="../index.html">Go Back to Home</a>
+      <a class="nav-btn nav-latest" href="digest_2026-11-25.html">Go to the Latest Digest</a>
+    </nav>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Executive summary</h2>
+        <div class="summary">20 highlights selected for 2026-11-25. Sources include: www.artemis.bm, www.businessinsurance.com, www.insurancejournal.com, www.insurancetimes.co.uk, www.reinsurancene.ws.</div>
+        <details class="visual-expand">
+          <summary>View LinkedIn Visual Summary</summary>
+          <div class="visual-body">
+            <img src="{{ linkedin_image_src }}" alt="{{ linkedin_image_alt }}" />
+            <p>Generated from the same day's LinkedIn digest text.</p>
+          </div>
+        </details>
+      </section>
+      <section class="card themes">
+        <h2>Key themes</h2>
+        <ul>
+          <li>Market News</li>
+<li>Commercial Insurance</li>
+<li>Global Market</li>
+<li>Reinsurance</li>
+<li>Risk</li>
+<li>Capital</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="story-grid">
+      <article class="story"><h3><a href="https://www.reinsurancene.ws/lloyds-lma-iua-highlight-resilience-of-uk-insurance-market-following-pra-stress-test/">Lloyd&#x27;s, LMA &amp; IUA highlight resilience of UK insurance market following PRA stress test - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.92</div><div class="why"><strong>Why it matters:</strong> Covers PRA&#x27;s 2026 DyGIST results and responses from Lloyd&#x27;s, LMA and IUA, highlighting market resilience and implications for Lloyd&#x27;s market.</div><ul><li>The PRA’s three-week DyGIST exercise in May 2026 involved 25 major insurers, representing more than 80% of the UK general insurance market, and tested responses to severe, evolving insurance and financial-market stresses.</li>
+<li>Lloyd’s, the LMA and the IUA welcomed the findings, highlighting market resilience. The IUA said sector capital stayed above the regulatory solvency threshold and no participating insurer breached its capital requirement.</li>
+<li>Lloyd’s said it remained able to meet valid claims and continue operating, and tested assumptions about recovery and recapitalisation. It identified the availability, timing and effectiveness of recapitalisation as dependent on market conditions, capital-provider appetite and the underwriting cycle.</li>
+<li>The LMA highlighted lessons around rapid approval of capital reload and post-event growth plans, access to data, and monitoring the continued availability of group support. It also said firms benefited from practising crisis-management and escalation triggers.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/qa-with-bronek-masojada-lord-mayor-of-london/">Q&amp;A with Bronek Masojada, Lord Mayor of London - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.84</div><div class="why"><strong>Why it matters:</strong> Directly discusses London&#x27;s insurance market and Lloyd&#x27;s positioning, with AI and risk topics.</div><ul><li>Bronek Masojada, who took office as Lord Mayor of the City of London on 13 November 2026, said he wants to connect people with career opportunities and attract investment from the UK and abroad.</li>
+<li>He described London’s insurance and reinsurance capabilities as strong, while identifying the challenge of making technology work efficiently across many firms.</li>
+<li>Masojada said AI is speeding up insurance data gathering and submission processes, while changing cyber threats and raising concerns about the accumulation of losses from AI-driven events.</li>
+<li>He said a government-backed pool for catastrophic AI risks may attract more support after real-life examples or a crisis, citing Pool Re’s establishment after events in London.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/pras-dygist-exercise-went-well-beyond-conventional-stress-test/1460371.article">PRA’s DyGIST exercise ‘went well beyond conventional stress test’</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s participation and its disaster-response framework within the DyGIST 2026 stress test and related market resilience discussion.</div><ul><li>The PRA’s DyGIST 2026 simulated a sequence of severe but plausible events over three weeks in May, requiring insurers to assess impacts on their financial positions and activate crisis-management responses in near real time.</li>
+<li>Published on 23 November 2026, the results found that the market downturn was the largest driver of capital erosion and affected all participating insurers. Despite reduced capital coverage, the sector remained above regulatory capital requirements in aggregate, and no participant reported material derivatives-related margin or collateral pressure from the downturn.</li>
+<li>The exercise found that firms’ crisis and risk-management frameworks generally stood up well, identifying areas for refinement rather than wholesale redesign. Lloyd’s said its disaster response framework operated effectively and that the exercise helped test assumptions about market recovery and recapitalisation.</li>
+<li>The PRA will use the findings to consider further supervisory focus on catastrophe loss estimation, reinsurance dependencies and the practical executability of group support under stress. DyGIST 2026 will also inform ongoing work on preparedness, recovery planning and operational resilience.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/expert-views/why-insurers-cannot-afford-to-sit-out-climate-risk-acini/1459823.article">Why insurers cannot afford to sit out climate risk – Acini</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.82</div><div class="why"><strong>Why it matters:</strong> Covers insurance market risk management and Lloyd&#x27;s/UK insurer context; mentions Lloyd&#x27;s and related market tools.</div><ul><li>The article says climate-related uncertainty has led some insurers to withdraw from certain policies or regions and others to limit new business; it cites significant pullbacks in Florida and California in 2023.</li>
+<li>It reports that UK property insurers paid a record £1.2bn in weather-related claims in 2025, within £6.1bn in total property payouts.</li>
+<li>The author argues that neither blanket withdrawal nor taking on excessive risk is sustainable, and recommends using better data and predictive analytics to improve risk assessment, coverage and pricing.</li>
+<li>The article highlights prevention measures including early warnings, Flood Re’s Build Back Better scheme, and activities such as wetland protection, reforestation and floodplain restoration.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/steve-jules-to-succeed-andrew-slater-as-msig-uk-cfo/">Steve Jules to succeed Andrew Slater as MSIG UK CFO - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Leadership appointment in a London market insurer with direct ties to Lloyd&#x27;s and London market experience.</div><ul><li>MSIG UK has appointed Steve Jules as Chief Financial Officer, subject to regulatory approvals. He succeeds Andrew Slater, who is leaving after more than 22 years with MSIG and the wider MS&amp;AD group.</li>
+<li>Slater is expected to remain over the coming months to support the year-end financial close and handover.</li>
+<li>Jules has more than 25 years’ London market experience. His previous roles include interim Group Financial Controller at Hiscox, Chief Accountant at Lloyd’s and Director in PwC’s insurance practice.</li>
+<li>Jules will lead MSIG UK’s finance function, covering financial strategy, capital management, treasury, performance management and operational finance. He will also join the Executive Committee and Board of Directors.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/mga-crux-underwriting-expands-into-property-with-wind-deductible-buy-down-launch/">MGA Crux Underwriting expands into property with wind deductible buy-down launch - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Explicit mention of 100% Lloyd’s capacity backing the Wind Deductible Buy-Down and plans to bring US property business to the London market.</div><ul><li>Crux Underwriting has launched Wind Deductible Buy-Down, its first Property product and third live product, alongside its Terrorism and Liability lines.</li>
+<li>The offering provides US wind deductible buy-down cover for single locations and scheduled portfolios, backed by 100% Lloyd’s capacity, with line sizes of up to USD5 million across all 50 US states.</li>
+<li>Crux says brokers need to provide five core data points, alongside underwriting information such as a statement of values; quoting, binding and document issuance are managed through one connected workflow.</li>
+<li>Crux plans to make the product available through its broker-facing CruxHub platform early next year, allowing brokers to enter risk details or upload an existing submission.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/ms-amlin-syndicate-gets-upsized-150m-aggregate-retro-from-kanata-re-2026-1-cat-bond/">MS Amlin syndicate gets upsized $150m aggregate retro from Kanata Re 2026-1 cat bond - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Covers Lloyd&#x27;s syndicate 2001 cat bond deal and pricing.</div><ul><li>Lloyd’s syndicate 2001, aligned with Mitsui Sumitomo underwriting entity MS Amlin, priced its first catastrophe bond, Kanata Re 2026-1, securing $150 million of retrocession—50% above its initial $100 million target.</li>
+<li>The ceding syndicate is 2001, with coverage also benefiting sub-syndicate 1673; both are managed by MS Amlin Underwriting Limited.</li>
+<li>The four-year protection runs from 2027 to 2030 and covers U.S. named storm, U.S. and Canada earthquake, and European windstorm, on an annual aggregate industry-loss index trigger basis.</li>
+<li>The notes were priced at a 4.9% spread, near the upper end of the initial 4.5%–5% guidance range. Their initial expected loss is 2.524%.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/waymo-recalls-self-driving-cars-over-closed-freeway-lanes-manual-traffic-control/">Waymo recalls self-driving cars over closed freeway lanes, manual traffic control - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.80</div><div class="why"><strong>Why it matters:</strong> Waymo recalls relate to auto liability/product liability and risk management, relevant to insurance markets.</div><ul><li>Waymo filed two safety recalls with the US National Highway Traffic Safety Administration covering how its automated driving system handles closed freeway lanes and intersections with manual traffic control.</li>
+<li>The closed-lane recall concerns vehicles potentially entering and continuing to drive in a closed freeway lane. Waymo said no collisions or injuries had been reported and that it was still working on a remedy.</li>
+<li>The manual-traffic recall aims to improve responses to directions from law enforcement and emergency personnel. It followed a collision after an officer’s directions were temporarily obstructed; Waymo said the update was completed on 6 November.</li>
+<li>Waymo had halted freeway operations in the US after California barred its vehicles from state freeways following incidents involving construction zones. NHTSA had also opened a recall query into nearly 3,000 company-owned vehicles over reports of robotaxis passing stopped school buses.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/markel-names-karanikolas-as-senior-underwriter-transport-logistics-london/">Markel names Karanikolas as Senior Underwriter, Transport &amp; Logistics, London - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Article concerns a leadership appointment in Markel&#x27;s London Market Transport &amp; Logistics operations, a segment within the Lloyd&#x27;s market ecosystem.</div><ul><li>Markel Insurance has appointed Manos Karanikolas as Senior Underwriter for Transport &amp; Logistics in its London Market operations. He will report to Dean Johnson, Head of Transport &amp; Logistics, London.</li>
+<li>Karanikolas will underwrite risks in ports and terminals and logistics, work with claims and actuarial teams on trends and offerings, and support broker engagement, submissions and renewals.</li>
+<li>Before joining Markel, he was Aon’s Technical Director for Marine Liabilities and Ports &amp; Terminals from 2023. Earlier, he spent five years as a Senior Claims Executive at TT Club and began his career in marine and shipping law.</li>
+<li>Johnson said Karanikolas’s experience across claims, broking and the client side would support Markel’s service to clients and brokers and its aim of profitable growth in the portfolio.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/msig-uk-appoints-ex-hiscox-financial-controller-as-new-cfo/1460362.article">MSIG UK appoints ex-Hiscox financial controller as new CFO</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.78</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s and London market experience in the context of an insurer leadership appointment.</div><ul><li>MSIG UK appointed Steve Jules as chief financial officer on 23 November 2026, succeeding Andrew Slater, who is leaving after more than 22 years with the insurer and wider MS&amp;AD group.</li>
+<li>Jules will lead the finance function, covering financial strategy, capital management, treasury, performance management and operational finance. He will also join the executive committee and board.</li>
+<li>Jules has more than 25 years’ London market experience. Most recently, he was interim group financial controller at Hiscox; earlier roles include chief accountant at Lloyd’s and director in PwC’s insurance practice.</li>
+<li>Slater will remain with MSIG UK over the coming months to support the year-end financial close and hand over to Jules.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/riverstone-international-completes-first-rt1-issuance-by-a-legacy-run-off-insurer/">RiverStone International completes first RT1 issuance by a legacy run-off insurer - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.77</div><div class="why"><strong>Why it matters:</strong> Involves London/UK insurance market activity (RiverStone&#x27;s RT1 issue, LPTs, ILS) and includes Lloyds Bank as an arranger, aligning with Lloyd&#x27;s market news.</div><ul><li>RiverStone International completed its inaugural $400 million Restricted Tier 1 (RT1) capital issuance, carrying a 9.875% coupon. It said this is the first RT1 issuance by a legacy run-off insurer and its largest public debt transaction to date.</li>
+<li>RiverStone said the Notes qualify as RT1 regulatory capital and that it had applied for their admission to trading on the London Stock Exchange’s International Securities Market.</li>
+<li>The issuance is RiverStone’s second debt transaction of 2026, following a $150 million Tier 2 issuance in April, bringing the total raised through the two transactions to $550 million.</li>
+<li>RiverStone said the RT1 issuance develops its capital framework, broadens access to capital markets and its fixed-income investor base, and provides greater capital-structure flexibility.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancejournal.com/news/international/2026/11/24/893643.htm">Houthi Attack on Riyadh Tower Injures 11 People, Saudis Say</a></h3><div class="meta">Source: www.insurancejournal.com · Score: 0.77</div><div class="why"><strong>Why it matters:</strong> Impact on Saudi financial district and related markets/investment risk; mentions banks, PIF, and insurance sector exposure.</div><ul><li>Saudi authorities said a Houthi attack on an unnamed tower in Riyadh’s King Abdullah Financial District injured 11 people: two Saudis, two Indians, three Nepalis and four Egyptians. It was the first reported casualty incident from strikes on the area.</li>
+<li>The attack followed damage to the Public Investment Fund’s headquarters in the same district less than a week earlier. The district has been under remote-work orders since earlier strikes on Riyadh’s main airport killed several people.</li>
+<li>Repeated attacks on Riyadh’s financial district are hindering efforts to attract international banks, investors and companies, according to the article. The conflict has also led the government to cancel several high-profile sporting and financial events and postpone the Future Investment Initiative conference until October 2027.</li>
+<li>Saudi Arabia expects its economy to contract by 2.1% this year and its fiscal deficit to reach 4.9% of output. The article also reports continued international interest, including Barclays opening a Riyadh office and several firms participating in a private credit transaction in the kingdom.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/tera-underwriters-expands-into-computing-hardware-risks/">Tera Underwriters expands into computing hardware risks - Reinsurance News</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Mentions Lloyd&#x27;s line slip and Lloyd&#x27;s-linked underwriting expansion.</div><ul><li>Ryan Specialty Underwriting Managers has expanded Tera Underwriters’ international underwriting capacity to cover industrial-scale computing hardware risks in approved territories outside the US.</li>
+<li>The new cover uses a policy form designed for high-value hardware in data centres, including ASICs, GPUs and related networking infrastructure. Tera’s US operations offer up to $625 million in lead primary capacity, with additional excess capacity available case by case.</li>
+<li>Tera has appointed George Frith, based in London, as Head of International. He has more than a decade of insurance and reinsurance experience, including work on data centre and bitcoin mining products and the first Lloyd’s line slip dedicated to Bitcoin mining.</li>
+<li>Tera CEO Keith Burkhardt said the international binder would provide brokers with specialist solutions, capacity and service; Frith said he would focus on expanding the platform into international markets.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/mnrb-extends-deadline-for-labuan-re-acquisition/">MNRB extends deadline for Labuan Re acquisition - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.72</div><div class="why"><strong>Why it matters:</strong> Involves Labuan Re acquisition and pending Lloyd’s approval affecting Lloyd’s market.</div><ul><li>MNRB Holdings Berhad has extended the deadline for its proposed acquisition of the remaining 80% stake in Labuan Reinsurance (L) Ltd. by two months, to 29 January 2027.</li>
+<li>The proposed acquisition is valued at 400 million Malaysian ringgit ($101 million).</li>
+<li>MNRB is awaiting Lloyd’s approval for the indirect change of control over Labuan Re Underwriting Ltd.</li></ul></article>
+<article class="story"><h3><a href="https://www.artemis.bm/news/esma-proposal-to-limit-cat-bonds-in-ucits-funds-leaves-investors-with-greater-risk-plenums-grieger/">ESMA proposal to limit cat bonds in UCITS funds leaves investors with greater risk: Plenum&#x27;s Grieger - Artemis.bm</a></h3><div class="meta">Source: www.artemis.bm · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Covers catastrophe bonds and regulatory debate affecting ILS/insurance markets (relevant to Lloyd&#x27;s market).</div><ul><li>Plenum Investments’ Daniel Grieger criticises ESMA’s proposal to cap catastrophe bond allocations in UCITS funds at 10%, arguing that its risk assessment relies on isolated events and does not adequately compare catastrophe bonds with other asset classes.</li>
+<li>Grieger cites historical figures showing a maximum loss of 15.3% for the Swiss Re Cat Bond Index TR, compared with 57.1% for the MSCI World Net TR Index; recovery took 8.5 months for catastrophe bonds and 5.6 years for equities.</li>
+<li>He says catastrophe bond funds have generally held more than 100 positions, maintained liquidity buffers of 5–10% and experienced relatively stable returns. He also notes that ESMA had granular portfolio data for only five funds when proposing the cap.</li>
+<li>Grieger says catastrophe bonds’ short maturities allow risk models, attachment points and spreads to be repriced regularly. Since 2003, realised losses averaged 0.93% a year, below the modelled expected loss of 2.3% a year.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/global-insurance-premiums-to-barely-grow-in-next-two-years-swiss-re-institute/">Global insurance premiums to barely grow in next two years: Swiss Re Institute - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.70</div><div class="why"><strong>Why it matters:</strong> Covers global insurance premium trends and market dynamics relevant to Lloyd&#x27;s market.</div><ul><li>Swiss Re Institute forecasts global general insurance premiums will grow by 1% in real terms in 2027 and 2% in 2028.</li>
+<li>Growth is expected to come from new assets and demand for more coverage, rather than higher prices.</li>
+<li>The institute says competition is pushing general insurance prices down, while risks are becoming more complex and costs are increasing.</li></ul></article>
+<article class="story"><h3><a href="https://www.insurancetimes.co.uk/news/intact-urges-brokers-to-tackle-widening-gap-in-uk-firms-risk-preparedness/1460356.article">Intact urges brokers to tackle widening gap in UK firms’ risk preparedness</a></h3><div class="meta">Source: www.insurancetimes.co.uk · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Covers UK insurance market risk trends, resilience, and broker roles.</div><ul><li>Intact Insurance’s inaugural Business Resilience Index found that 82% of UK businesses said geopolitical events and instability over the previous 12 months had affected their ability to plan confidently and effectively.</li>
+<li>Concern that international conflict could disrupt supply chains rose from 10% in December 2025 to 29% in July 2026, while only around a quarter of businesses had proactively strengthened their supply chains.</li>
+<li>Only around a third of UK businesses had board-level responsibility for cyber security. The figure was 20% in retail, 24% in construction and 54% in financial services.</li>
+<li>Technology and telecoms ranked as the UK’s most resilient sector overall, followed by manufacturing and financial services; leisure and tourism, retail and construction were among the lowest-ranked sectors with comparable data.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/social-media-companies-escape-liability-in-buffalo-shooting/">Social media companies escape liability in Buffalo shooting - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Discusses product liability risk and insurance implications for social media platforms, relevant to Lloyd&#x27;s market underwriting.</div><ul><li>New York’s highest court ruled that social media companies could not be held liable under product liability law for the 2022 racially motivated supermarket shooting in Buffalo, finding the attack was not a foreseeable consequence of platform design decisions.</li>
+<li>The court upheld dismissal of claims brought by victims and their families against Meta, Alphabet, Snap, Reddit and other companies, ruling that the shooter’s actions were so extraordinary that they severed the causal chain.</li>
+<li>The majority did not decide whether Section 230 protects platforms from claims about allegedly addictive features. A concurring judge said such feature-based claims are not barred by Section 230, while a dissenting judge said the plaintiffs had adequately pleaded defective design and causation.</li></ul></article>
+<article class="story"><h3><a href="https://www.businessinsurance.com/marsh-launches-global-airline-cyber-insurance/">Marsh launches global airline cyber insurance - Business Insurance</a></h3><div class="meta">Source: www.businessinsurance.com · Score: 0.65</div><div class="why"><strong>Why it matters:</strong> Industry insurance market development affecting cyber risk coverage for airlines; involves capacity and underwriting relevant to the Lloyd&#x27;s market.</div><ul><li>Marsh and McLennan Companies has launched a cyber insurance policy for airlines worldwide, offering up to $200 million in follow-form excess capacity.</li>
+<li>U.S. and U.K. cyber insurers are set to underwrite the coverage.</li>
+<li>The policy covers first- and third-party exposures and can be tailored to airlines’ flight operations, booking and ticketing systems, and reliance on third-party technology providers.</li></ul></article>
+<article class="story"><h3><a href="https://www.reinsurancene.ws/reinsurance-news/page/2936/">Reinsurance News archive - page 2936</a></h3><div class="meta">Source: www.reinsurancene.ws · Score: 0.60</div><div class="why"><strong>Why it matters:</strong> Contains Lloyd&#x27;s-related update and broader reinsurance market news affecting Lloyd&#x27;s operations.</div><ul><li>The excerpt is a roundup of Reinsurance News headlines from 20 July to 8 August 2016, with article details mostly truncated.</li>
+<li>Berkshire Hathaway reported a second-quarter 2016 insurance and reinsurance underwriting profit of $337 million, compared with a $38 million loss a year earlier.</li>
+<li>Hannover Re reported first-half net income of €486.1 million, down from €531.9 million a year earlier, and highlighted continued excess supply over demand in property and casualty reinsurance.</li>
+<li>A parametric disaster insurance programme for farmers in China, backed by Swiss Re, was launched to cover flood, excessive rain and drought.</li></ul></article>
+    </div>
+
+    <footer>Generated 2026-11-25T08:10:00Z. Daily digest of public sources; links included for attribution.</footer>
+  </div>
+</body>
+</html>
